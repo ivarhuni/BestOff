@@ -11,9 +11,9 @@
 		22B506DD224DC09A00F66FDB /* BONetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B506DC224DC09A00F66FDB /* BONetworkService.swift */; };
 		22B506E1224E0F4400F66FDB /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22B506E0224E0F4400F66FDB /* SwiftyJSON.framework */; };
 		22CEF330224E187400A6688A /* BOCategoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CEF32F224E187400A6688A /* BOCategoryProtocol.swift */; };
-		22CEF334224E18E900A6688A /* BOCatShopping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CEF331224E18E900A6688A /* BOCatShopping.swift */; };
-		22CEF335224E18E900A6688A /* BOCatAuthor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CEF332224E18E900A6688A /* BOCatAuthor.swift */; };
-		22CEF336224E18E900A6688A /* BOCatShoppingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CEF333224E18E900A6688A /* BOCatShoppingItem.swift */; };
+		22CEF362224E36CC00A6688A /* BOCatShop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CEF35F224E36CC00A6688A /* BOCatShop.swift */; };
+		22CEF363224E36CC00A6688A /* BOCatShopItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CEF360224E36CC00A6688A /* BOCatShopItem.swift */; };
+		22CEF364224E36CC00A6688A /* BOCatAuthor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CEF361224E36CC00A6688A /* BOCatAuthor.swift */; };
 		22EB39BD222E0702001043E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB39BC222E0702001043E2 /* AppDelegate.swift */; };
 		22EB39BF222E0702001043E2 /* BOFeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB39BE222E0702001043E2 /* BOFeedController.swift */; };
 		22EB39C2222E0702001043E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22EB39C0222E0702001043E2 /* Main.storyboard */; };
@@ -51,9 +51,9 @@
 		22B506DE224E044600F66FDB /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		22B506E0224E0F4400F66FDB /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		22CEF32F224E187400A6688A /* BOCategoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCategoryProtocol.swift; sourceTree = "<group>"; };
-		22CEF331224E18E900A6688A /* BOCatShopping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOCatShopping.swift; sourceTree = "<group>"; };
-		22CEF332224E18E900A6688A /* BOCatAuthor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOCatAuthor.swift; sourceTree = "<group>"; };
-		22CEF333224E18E900A6688A /* BOCatShoppingItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOCatShoppingItem.swift; sourceTree = "<group>"; };
+		22CEF35F224E36CC00A6688A /* BOCatShop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOCatShop.swift; sourceTree = "<group>"; };
+		22CEF360224E36CC00A6688A /* BOCatShopItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOCatShopItem.swift; sourceTree = "<group>"; };
+		22CEF361224E36CC00A6688A /* BOCatAuthor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOCatAuthor.swift; sourceTree = "<group>"; };
 		22EB39B9222E0702001043E2 /* BestOff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BestOff.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22EB39BC222E0702001043E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22EB39BE222E0702001043E2 /* BOFeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOFeedController.swift; sourceTree = "<group>"; };
@@ -136,9 +136,9 @@
 		22CEF337224E1BBA00A6688A /* Shopping */ = {
 			isa = PBXGroup;
 			children = (
-				22CEF332224E18E900A6688A /* BOCatAuthor.swift */,
-				22CEF331224E18E900A6688A /* BOCatShopping.swift */,
-				22CEF333224E18E900A6688A /* BOCatShoppingItem.swift */,
+				22CEF361224E36CC00A6688A /* BOCatAuthor.swift */,
+				22CEF35F224E36CC00A6688A /* BOCatShop.swift */,
+				22CEF360224E36CC00A6688A /* BOCatShopItem.swift */,
 				22CEF32F224E187400A6688A /* BOCategoryProtocol.swift */,
 			);
 			path = Shopping;
@@ -466,13 +466,13 @@
 			files = (
 				22EB39BF222E0702001043E2 /* BOFeedController.swift in Sources */,
 				22EB39BD222E0702001043E2 /* AppDelegate.swift in Sources */,
+				22CEF362224E36CC00A6688A /* BOCatShop.swift in Sources */,
 				22EB39EF222E2C28001043E2 /* BOService+Categories.swift in Sources */,
 				22B506DD224DC09A00F66FDB /* BONetworkService.swift in Sources */,
-				22CEF334224E18E900A6688A /* BOCatShopping.swift in Sources */,
-				22CEF335224E18E900A6688A /* BOCatAuthor.swift in Sources */,
-				22CEF336224E18E900A6688A /* BOCatShoppingItem.swift in Sources */,
 				22B506DA224DAF2200F66FDB /* BOEndpoint.swift in Sources */,
+				22CEF364224E36CC00A6688A /* BOCatAuthor.swift in Sources */,
 				22CEF330224E187400A6688A /* BOCategoryProtocol.swift in Sources */,
+				22CEF363224E36CC00A6688A /* BOCatShopItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

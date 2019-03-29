@@ -22,7 +22,7 @@ extension BONetworkService{
         
     }
     
-    func getShopping(completionHandler: @escaping (_ result: [BOCatShopping], _ error: Error?) -> Void){
+    func getShopping(completionHandler: @escaping (_ result: [Any], _ error: Error?) -> Void){
         
         guard let url = URL(string: Endpoint.rvkShopping.path) else {
             completionHandler([], NetworkError.URLError)
@@ -30,19 +30,23 @@ extension BONetworkService{
         }
         
         URLSession.shared.dataTask(with: url) { (data, response, err) in
-            guard let jsonResponse = data else {
-                completionHandler([], NetworkError.dataError)
-                return
-            }
             do {
                 
-                let json = try JSON(data: jsonResponse)
-//                guard let items = json["items"].array else{
-//                    completionHandler([], NetworkError.jsonParseError)
-//                    return
-//                }
-                let shoppingCategory = BOCatShopping.init(fromJson: json)
-                print(shoppingCategory)
+                guard let jsonAsData = data else {
+                    completionHandler([], NetworkError.dataError)
+                    return
+                }
+                let catShopping = try JSONDecoder().decode(BOCatShop.self, from: jsonAsData)
+                print(catShopping)
+                
+//                let json = try JSON(data: jsonResponse)
+////                guard let items = json["items"].array else{
+////                    completionHandler([], NetworkError.jsonParseError)
+////                    return
+////                }
+//                let shoppingCategory = BOCatShopping.init(fromJson: json)
+//                print(shoppingCategory)
+                
                 
             }
             catch let jsonErr {
