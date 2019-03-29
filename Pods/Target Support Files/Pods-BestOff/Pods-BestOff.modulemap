@@ -1,0 +1,6 @@
+framework module Pods_BestOff {
+  umbrella header "Pods-BestOff-umbrella.h"
+
+  export *
+  module * { export * }
+}
