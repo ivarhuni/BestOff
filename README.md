@@ -25,6 +25,9 @@ Xcode version >= 10
 
  open BestOff.xcworkspace & run 
 
-
+# Contact
+   
    Author: Ívar Húni Jóhannesson
+
+
    email: ivarhuni89@gmail.com
