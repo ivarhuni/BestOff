@@ -1,14 +1,16 @@
 //
 //  BOItem.swift
 //  Model Generated using http://www.jsoncafe.com/ 
-//  Created on March 29, 2019
+//  Created on April 1, 2019
 
 import Foundation
 
-struct BOCatShopItem : Codable {
+struct BOItem : Codable {
 
-        let author : BOCatAuthor
+        let contentHtml : String
         let contentText : String
+        let dateModified : String
+        let datePublished : String
         let id : String
         let image : String
         let tags : [String]
@@ -16,8 +18,10 @@ struct BOCatShopItem : Codable {
         let url : String
 
         enum CodingKeys: String, CodingKey {
-                case author = "author"
+                case contentHtml = "content_html"
                 case contentText = "content_text"
+                case dateModified = "date_modified"
+                case datePublished = "date_published"
                 case id = "id"
                 case image = "image"
                 case tags = "tags"
@@ -27,8 +31,10 @@ struct BOCatShopItem : Codable {
     
         init(from decoder: Decoder) throws {
                 let values = try decoder.container(keyedBy: CodingKeys.self)
-                author = try values.decode(BOCatAuthor.self, forKey: .author)
+                contentHtml = try values.decode(String.self, forKey: .contentHtml)
                 contentText = try values.decode(String.self, forKey: .contentText)
+                dateModified = try values.decode(String.self, forKey: .dateModified)
+                datePublished = try values.decode(String.self, forKey: .datePublished)
                 id = try values.decode(String.self, forKey: .id)
                 image = try values.decode(String.self, forKey: .image)
                 tags = try values.decode([String].self, forKey: .tags)

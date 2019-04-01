@@ -1,0 +1,26 @@
+import Foundation
+
+struct {{className}} : Codable {
+
+        {{#properties}}
+        let {{nativeName}} : {{type}}
+        {{/properties}}
+
+        enum CodingKeys: String, CodingKey {
+                {{#properties}}
+                case {{nativeName}} = "{{jsonName}}"
+                {{/properties}}
+        }
+    
+        init(from decoder: Decoder) throws {
+                let values = try decoder.container(keyedBy: CodingKeys.self)
+                {{#properties}}
+                {{#xif "isCustomClass"}}
+                {{nativeName}} = try {{type}}(from: decoder)
+                {{else}}
+                {{nativeName}} = try values.decode({{type}}.self, forKey: .{{nativeName}})
+                {{/xif}}                
+                {{/properties}}
+        }
+
+}

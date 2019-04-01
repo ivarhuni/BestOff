@@ -68,3 +68,7 @@ fileprivate struct BOFeedViewModel{
         }
     }
 }
+
+protocol BOCategoryProtocol {
+    
+}

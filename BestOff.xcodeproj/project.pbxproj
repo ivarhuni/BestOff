@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		22B506DA224DAF2200F66FDB /* BOEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B506D9224DAF2200F66FDB /* BOEndpoint.swift */; };
-		22B506DD224DC09A00F66FDB /* BONetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B506DC224DC09A00F66FDB /* BONetworkService.swift */; };
+		22B506DD224DC09A00F66FDB /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B506DC224DC09A00F66FDB /* NetworkError.swift */; };
 		22B506E1224E0F4400F66FDB /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22B506E0224E0F4400F66FDB /* SwiftyJSON.framework */; };
-		22CEF330224E187400A6688A /* BOCategoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CEF32F224E187400A6688A /* BOCategoryProtocol.swift */; };
-		22CEF362224E36CC00A6688A /* BOCatShop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CEF35F224E36CC00A6688A /* BOCatShop.swift */; };
-		22CEF363224E36CC00A6688A /* BOCatShopItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CEF360224E36CC00A6688A /* BOCatShopItem.swift */; };
-		22CEF364224E36CC00A6688A /* BOCatAuthor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CEF361224E36CC00A6688A /* BOCatAuthor.swift */; };
+		22CEF362224E36CC00A6688A /* BOCatShopping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CEF35F224E36CC00A6688A /* BOCatShopping.swift */; };
+		22D6B82F22529065004A33DE /* BOShopItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6B82E22529065004A33DE /* BOShopItem.swift */; };
+		22D6B834225290EB004A33DE /* BOActivities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6B833225290EB004A33DE /* BOActivities.swift */; };
+		22D6B836225290F2004A33DE /* BOItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6B835225290F2004A33DE /* BOItem.swift */; };
+		22D6B8382252914B004A33DE /* BOCatActivitiesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6B8372252914B004A33DE /* BOCatActivitiesService.swift */; };
 		22EB39BD222E0702001043E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB39BC222E0702001043E2 /* AppDelegate.swift */; };
 		22EB39BF222E0702001043E2 /* BOFeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB39BE222E0702001043E2 /* BOFeedController.swift */; };
 		22EB39C2222E0702001043E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22EB39C0222E0702001043E2 /* Main.storyboard */; };
@@ -21,7 +22,7 @@
 		22EB39C7222E0703001043E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22EB39C5222E0703001043E2 /* LaunchScreen.storyboard */; };
 		22EB39D2222E0703001043E2 /* BestOffTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB39D1222E0703001043E2 /* BestOffTests.swift */; };
 		22EB39DD222E0703001043E2 /* BestOffUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB39DC222E0703001043E2 /* BestOffUITests.swift */; };
-		22EB39EF222E2C28001043E2 /* BOService+Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB39EE222E2C28001043E2 /* BOService+Categories.swift */; };
+		22EB39EF222E2C28001043E2 /* BOCatShoppingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB39EE222E2C28001043E2 /* BOCatShoppingService.swift */; };
 		39DD8B45ECF9C9BA92EB8630 /* Pods_BestOffUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 891561AA4457B83C862E8D58 /* Pods_BestOffUITests.framework */; };
 		4427684C8125FD476322F7B1 /* Pods_BestOff.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23D15D311242B54A326E2C9F /* Pods_BestOff.framework */; };
 		5DC8DE16556E0AAB8125408F /* Pods_BestOffTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20E0E67D1EEFED2DADD21D2E /* Pods_BestOffTests.framework */; };
@@ -47,13 +48,14 @@
 /* Begin PBXFileReference section */
 		20E0E67D1EEFED2DADD21D2E /* Pods_BestOffTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestOffTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		22B506D9224DAF2200F66FDB /* BOEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOEndpoint.swift; sourceTree = "<group>"; };
-		22B506DC224DC09A00F66FDB /* BONetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BONetworkService.swift; sourceTree = "<group>"; };
+		22B506DC224DC09A00F66FDB /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		22B506DE224E044600F66FDB /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		22B506E0224E0F4400F66FDB /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		22CEF32F224E187400A6688A /* BOCategoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCategoryProtocol.swift; sourceTree = "<group>"; };
-		22CEF35F224E36CC00A6688A /* BOCatShop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOCatShop.swift; sourceTree = "<group>"; };
-		22CEF360224E36CC00A6688A /* BOCatShopItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOCatShopItem.swift; sourceTree = "<group>"; };
-		22CEF361224E36CC00A6688A /* BOCatAuthor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOCatAuthor.swift; sourceTree = "<group>"; };
+		22CEF35F224E36CC00A6688A /* BOCatShopping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOCatShopping.swift; sourceTree = "<group>"; };
+		22D6B82E22529065004A33DE /* BOShopItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOShopItem.swift; sourceTree = "<group>"; };
+		22D6B833225290EB004A33DE /* BOActivities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOActivities.swift; sourceTree = "<group>"; };
+		22D6B835225290F2004A33DE /* BOItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOItem.swift; sourceTree = "<group>"; };
+		22D6B8372252914B004A33DE /* BOCatActivitiesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCatActivitiesService.swift; sourceTree = "<group>"; };
 		22EB39B9222E0702001043E2 /* BestOff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BestOff.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22EB39BC222E0702001043E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22EB39BE222E0702001043E2 /* BOFeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOFeedController.swift; sourceTree = "<group>"; };
@@ -67,7 +69,7 @@
 		22EB39D8222E0703001043E2 /* BestOffUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BestOffUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		22EB39DC222E0703001043E2 /* BestOffUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestOffUITests.swift; sourceTree = "<group>"; };
 		22EB39DE222E0703001043E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		22EB39EE222E2C28001043E2 /* BOService+Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BOService+Categories.swift"; sourceTree = "<group>"; };
+		22EB39EE222E2C28001043E2 /* BOCatShoppingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCatShoppingService.swift; sourceTree = "<group>"; };
 		23D15D311242B54A326E2C9F /* Pods_BestOff.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestOff.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AAE9F091A4026DD5612C114 /* Pods-BestOff.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BestOff.release.xcconfig"; path = "Target Support Files/Pods-BestOff/Pods-BestOff.release.xcconfig"; sourceTree = "<group>"; };
 		833CCF5BE5C2950B6C95E771 /* Pods-BestOff.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BestOff.debug.xcconfig"; path = "Target Support Files/Pods-BestOff/Pods-BestOff.debug.xcconfig"; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 		22B506D8224DAEE800F66FDB /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				22B506DC224DC09A00F66FDB /* NetworkError.swift */,
 				22B506DB224DC08300F66FDB /* Services */,
 				22B506D9224DAF2200F66FDB /* BOEndpoint.swift */,
 			);
@@ -127,8 +130,8 @@
 		22B506DB224DC08300F66FDB /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				22EB39EE222E2C28001043E2 /* BOService+Categories.swift */,
-				22B506DC224DC09A00F66FDB /* BONetworkService.swift */,
+				22EB39EE222E2C28001043E2 /* BOCatShoppingService.swift */,
+				22D6B8372252914B004A33DE /* BOCatActivitiesService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -136,10 +139,8 @@
 		22CEF337224E1BBA00A6688A /* Shopping */ = {
 			isa = PBXGroup;
 			children = (
-				22CEF361224E36CC00A6688A /* BOCatAuthor.swift */,
-				22CEF35F224E36CC00A6688A /* BOCatShop.swift */,
-				22CEF360224E36CC00A6688A /* BOCatShopItem.swift */,
-				22CEF32F224E187400A6688A /* BOCategoryProtocol.swift */,
+				22D6B82E22529065004A33DE /* BOShopItem.swift */,
+				22CEF35F224E36CC00A6688A /* BOCatShopping.swift */,
 			);
 			path = Shopping;
 			sourceTree = "<group>";
@@ -147,9 +148,19 @@
 		22CEF338224E1BC500A6688A /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				22D6B832225290E0004A33DE /* Activities */,
 				22CEF337224E1BBA00A6688A /* Shopping */,
 			);
 			path = Categories;
+			sourceTree = "<group>";
+		};
+		22D6B832225290E0004A33DE /* Activities */ = {
+			isa = PBXGroup;
+			children = (
+				22D6B835225290F2004A33DE /* BOItem.swift */,
+				22D6B833225290EB004A33DE /* BOActivities.swift */,
+			);
+			path = Activities;
 			sourceTree = "<group>";
 		};
 		22EB39B0222E0702001043E2 = {
@@ -464,15 +475,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22D6B82F22529065004A33DE /* BOShopItem.swift in Sources */,
 				22EB39BF222E0702001043E2 /* BOFeedController.swift in Sources */,
 				22EB39BD222E0702001043E2 /* AppDelegate.swift in Sources */,
-				22CEF362224E36CC00A6688A /* BOCatShop.swift in Sources */,
-				22EB39EF222E2C28001043E2 /* BOService+Categories.swift in Sources */,
-				22B506DD224DC09A00F66FDB /* BONetworkService.swift in Sources */,
+				22D6B834225290EB004A33DE /* BOActivities.swift in Sources */,
+				22D6B8382252914B004A33DE /* BOCatActivitiesService.swift in Sources */,
+				22CEF362224E36CC00A6688A /* BOCatShopping.swift in Sources */,
+				22EB39EF222E2C28001043E2 /* BOCatShoppingService.swift in Sources */,
+				22D6B836225290F2004A33DE /* BOItem.swift in Sources */,
+				22B506DD224DC09A00F66FDB /* NetworkError.swift in Sources */,
 				22B506DA224DAF2200F66FDB /* BOEndpoint.swift in Sources */,
-				22CEF364224E36CC00A6688A /* BOCatAuthor.swift in Sources */,
-				22CEF330224E187400A6688A /* BOCategoryProtocol.swift in Sources */,
-				22CEF363224E36CC00A6688A /* BOCatShopItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

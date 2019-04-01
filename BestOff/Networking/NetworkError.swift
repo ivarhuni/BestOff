@@ -1,5 +1,5 @@
 //
-//  BOCategoryProtocol.swift
+//  NetworkService.swift
 //  BestOff
 //
 //  Created by Ivar Johannesson on 29/03/2019.
@@ -8,7 +8,9 @@
 
 import Foundation
 
-protocol BOCategoryProtocol {
-    
-    
+enum NetworkError : Error{
+    case URLError
+    case dataError
+    case jsonParseError
 }
+
