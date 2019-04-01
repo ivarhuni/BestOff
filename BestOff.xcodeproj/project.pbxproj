@@ -12,9 +12,15 @@
 		22B506E1224E0F4400F66FDB /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22B506E0224E0F4400F66FDB /* SwiftyJSON.framework */; };
 		22CEF362224E36CC00A6688A /* BOCatShopping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CEF35F224E36CC00A6688A /* BOCatShopping.swift */; };
 		22D6B82F22529065004A33DE /* BOShopItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6B82E22529065004A33DE /* BOShopItem.swift */; };
-		22D6B834225290EB004A33DE /* BOActivities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6B833225290EB004A33DE /* BOActivities.swift */; };
-		22D6B836225290F2004A33DE /* BOItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6B835225290F2004A33DE /* BOItem.swift */; };
+		22D6B834225290EB004A33DE /* BOCatActivities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6B833225290EB004A33DE /* BOCatActivities.swift */; };
+		22D6B836225290F2004A33DE /* BOActivitiesItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6B835225290F2004A33DE /* BOActivitiesItem.swift */; };
 		22D6B8382252914B004A33DE /* BOCatActivitiesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6B8372252914B004A33DE /* BOCatActivitiesService.swift */; };
+		22D6B83D2252934D004A33DE /* BOCatDrinking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6B83B2252934D004A33DE /* BOCatDrinking.swift */; };
+		22D6B841225293B0004A33DE /* BOCatDrinkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6B840225293B0004A33DE /* BOCatDrinkingService.swift */; };
+		22D6B84822529896004A33DE /* BOCatDining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6B84622529896004A33DE /* BOCatDining.swift */; };
+		22D6B84B2252990A004A33DE /* BODiningItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6B84A2252990A004A33DE /* BODiningItem.swift */; };
+		22D6B84D22529936004A33DE /* BODrinkingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6B84C22529936004A33DE /* BODrinkingItem.swift */; };
+		22D6B84F22529998004A33DE /* BOCatDiningService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6B84E22529998004A33DE /* BOCatDiningService.swift */; };
 		22EB39BD222E0702001043E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB39BC222E0702001043E2 /* AppDelegate.swift */; };
 		22EB39BF222E0702001043E2 /* BOFeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB39BE222E0702001043E2 /* BOFeedController.swift */; };
 		22EB39C2222E0702001043E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22EB39C0222E0702001043E2 /* Main.storyboard */; };
@@ -53,9 +59,15 @@
 		22B506E0224E0F4400F66FDB /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		22CEF35F224E36CC00A6688A /* BOCatShopping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOCatShopping.swift; sourceTree = "<group>"; };
 		22D6B82E22529065004A33DE /* BOShopItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOShopItem.swift; sourceTree = "<group>"; };
-		22D6B833225290EB004A33DE /* BOActivities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOActivities.swift; sourceTree = "<group>"; };
-		22D6B835225290F2004A33DE /* BOItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOItem.swift; sourceTree = "<group>"; };
+		22D6B833225290EB004A33DE /* BOCatActivities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOCatActivities.swift; sourceTree = "<group>"; };
+		22D6B835225290F2004A33DE /* BOActivitiesItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOActivitiesItem.swift; sourceTree = "<group>"; };
 		22D6B8372252914B004A33DE /* BOCatActivitiesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCatActivitiesService.swift; sourceTree = "<group>"; };
+		22D6B83B2252934D004A33DE /* BOCatDrinking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOCatDrinking.swift; sourceTree = "<group>"; };
+		22D6B840225293B0004A33DE /* BOCatDrinkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCatDrinkingService.swift; sourceTree = "<group>"; };
+		22D6B84622529896004A33DE /* BOCatDining.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOCatDining.swift; sourceTree = "<group>"; };
+		22D6B84A2252990A004A33DE /* BODiningItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BODiningItem.swift; path = BestOff/Models/Categories/Drinking/BODiningItem.swift; sourceTree = SOURCE_ROOT; };
+		22D6B84C22529936004A33DE /* BODrinkingItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BODrinkingItem.swift; sourceTree = "<group>"; };
+		22D6B84E22529998004A33DE /* BOCatDiningService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCatDiningService.swift; sourceTree = "<group>"; };
 		22EB39B9222E0702001043E2 /* BestOff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BestOff.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22EB39BC222E0702001043E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22EB39BE222E0702001043E2 /* BOFeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOFeedController.swift; sourceTree = "<group>"; };
@@ -130,8 +142,7 @@
 		22B506DB224DC08300F66FDB /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				22EB39EE222E2C28001043E2 /* BOCatShoppingService.swift */,
-				22D6B8372252914B004A33DE /* BOCatActivitiesService.swift */,
+				22D6B842225297F2004A33DE /* BOCategoriesService */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -148,6 +159,8 @@
 		22CEF338224E1BC500A6688A /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				22D6B8452252988F004A33DE /* Dining */,
+				22D6B839225292CD004A33DE /* Drinking */,
 				22D6B832225290E0004A33DE /* Activities */,
 				22CEF337224E1BBA00A6688A /* Shopping */,
 			);
@@ -157,10 +170,39 @@
 		22D6B832225290E0004A33DE /* Activities */ = {
 			isa = PBXGroup;
 			children = (
-				22D6B835225290F2004A33DE /* BOItem.swift */,
-				22D6B833225290EB004A33DE /* BOActivities.swift */,
+				22D6B835225290F2004A33DE /* BOActivitiesItem.swift */,
+				22D6B833225290EB004A33DE /* BOCatActivities.swift */,
 			);
 			path = Activities;
+			sourceTree = "<group>";
+		};
+		22D6B839225292CD004A33DE /* Drinking */ = {
+			isa = PBXGroup;
+			children = (
+				22D6B84C22529936004A33DE /* BODrinkingItem.swift */,
+				22D6B83B2252934D004A33DE /* BOCatDrinking.swift */,
+			);
+			path = Drinking;
+			sourceTree = "<group>";
+		};
+		22D6B842225297F2004A33DE /* BOCategoriesService */ = {
+			isa = PBXGroup;
+			children = (
+				22EB39EE222E2C28001043E2 /* BOCatShoppingService.swift */,
+				22D6B8372252914B004A33DE /* BOCatActivitiesService.swift */,
+				22D6B840225293B0004A33DE /* BOCatDrinkingService.swift */,
+				22D6B84E22529998004A33DE /* BOCatDiningService.swift */,
+			);
+			path = BOCategoriesService;
+			sourceTree = "<group>";
+		};
+		22D6B8452252988F004A33DE /* Dining */ = {
+			isa = PBXGroup;
+			children = (
+				22D6B84A2252990A004A33DE /* BODiningItem.swift */,
+				22D6B84622529896004A33DE /* BOCatDining.swift */,
+			);
+			path = Dining;
 			sourceTree = "<group>";
 		};
 		22EB39B0222E0702001043E2 = {
@@ -476,13 +518,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				22D6B82F22529065004A33DE /* BOShopItem.swift in Sources */,
+				22D6B84D22529936004A33DE /* BODrinkingItem.swift in Sources */,
+				22D6B841225293B0004A33DE /* BOCatDrinkingService.swift in Sources */,
 				22EB39BF222E0702001043E2 /* BOFeedController.swift in Sources */,
 				22EB39BD222E0702001043E2 /* AppDelegate.swift in Sources */,
-				22D6B834225290EB004A33DE /* BOActivities.swift in Sources */,
+				22D6B834225290EB004A33DE /* BOCatActivities.swift in Sources */,
 				22D6B8382252914B004A33DE /* BOCatActivitiesService.swift in Sources */,
+				22D6B84B2252990A004A33DE /* BODiningItem.swift in Sources */,
+				22D6B83D2252934D004A33DE /* BOCatDrinking.swift in Sources */,
 				22CEF362224E36CC00A6688A /* BOCatShopping.swift in Sources */,
 				22EB39EF222E2C28001043E2 /* BOCatShoppingService.swift in Sources */,
-				22D6B836225290F2004A33DE /* BOItem.swift in Sources */,
+				22D6B84F22529998004A33DE /* BOCatDiningService.swift in Sources */,
+				22D6B84822529896004A33DE /* BOCatDining.swift in Sources */,
+				22D6B836225290F2004A33DE /* BOActivitiesItem.swift in Sources */,
 				22B506DD224DC09A00F66FDB /* NetworkError.swift in Sources */,
 				22B506DA224DAF2200F66FDB /* BOEndpoint.swift in Sources */,
 			);

@@ -1,16 +1,16 @@
 //
-//  BOActivities.swift
+//  BOCatDrinking.swift
 //  Model Generated using http://www.jsoncafe.com/ 
 //  Created on April 1, 2019
 
 import Foundation
 
-struct BOActivities : Codable {
+struct BOCatDrinking : Codable {
 
         let descriptionField : String
         let feedUrl : String
         let homePageUrl : String
-        let items : [BOItem]
+        let items : [BODrinkingItem]
         let title : String
         let userComment : String
         let version : String
@@ -30,7 +30,7 @@ struct BOActivities : Codable {
                 descriptionField = try values.decode(String.self, forKey: .descriptionField)
                 feedUrl = try values.decode(String.self, forKey: .feedUrl)
                 homePageUrl = try values.decode(String.self, forKey: .homePageUrl)
-                items = try values.decode([BOItem].self, forKey: .items)
+                items = try values.decode([BODrinkingItem].self, forKey: .items)
                 title = try values.decode(String.self, forKey: .title)
                 userComment = try values.decode(String.self, forKey: .userComment)
                 version = try values.decode(String.self, forKey: .version)

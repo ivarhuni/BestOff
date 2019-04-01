@@ -29,6 +29,7 @@ struct BOCatShoppingService{
                     completionHandler([], NetworkError.dataError)
                     return
                 }
+                print(jsonAsData)
                 let catShopping = try JSONDecoder().decode(BOCatShopping.self, from: jsonAsData)
                 print(catShopping)
                 

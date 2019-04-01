@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct BOItem : Codable {
+struct BODrinkingItem: Codable {
 
         let contentHtml : String
         let contentText : String

@@ -58,13 +58,37 @@ fileprivate struct BOFeedViewModel{
     
     init(){
         
-        let nService = BONetworkService()
+        let nService = BOCatShoppingService()
         nService.getShopping() { (arrData, error) in
+
+            if error != nil{
+                print(error)
+            }
+
+        }
+        
+        let nServiceActivities = BOCatActivitiesService()
+        nServiceActivities.getActivities { (data, error) in
+        
+            if error != nil{
+                print(error)
+            }
+        }
+        
+        let drinkService = BOCatDrinkingService()
+        drinkService.getDrinks { (data, error) in
+
+            if error != nil{
+                print(error)
+            }
+        }
+        
+        let diningService = BOCatDiningService()
+        diningService.getDiners { (data, error) in
             
             if error != nil{
                 print(error)
             }
-            
         }
     }
 }
