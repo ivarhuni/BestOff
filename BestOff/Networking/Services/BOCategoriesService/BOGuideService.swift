@@ -10,7 +10,7 @@ import Foundation
 
 struct BOGuideService{
     
-    func getGuides(completionHandler: @escaping (_ result: BOSuperGuide?, _ error: Error?) -> Void){
+    func getGuides(completionHandler: @escaping (_ result: BOCatGuide?, _ error: Error?) -> Void){
         
         guard let url = URL(string: Endpoint.guides.path) else {
             completionHandler(nil, NetworkError.URLError)
@@ -24,11 +24,13 @@ struct BOGuideService{
                     completionHandler(nil, NetworkError.dataError)
                     return
                 }
-                var superGuides = try JSONDecoder().decode(BOSuperGuide.self, from: jsonAsData)
-                print()
-                //let arrDetailItems = catShopping.items.compactMap{ DetailItemFactory.createCategoryDetailFromText(categoryItemContentText: $0.contentText, strHTML: $0.contentHtml) }
-                //catShopping.detailItems = arrDetailItems
-                //completionHandler([BOCatShopping], nil)
+                var superGuides = try JSONDecoder().decode(BOCatGuide.self, from: jsonAsData)
+                print("")
+                let arrDetailItems = superGuides.items.compactMap{ DetailItemFactory.createCategoryDetailFromText(categoryItemContentText: $0.contentText, strHTML: $0.contentHtml) }
+                print("")
+                
+//                catShopping.detailItems = arrDetailItems
+//                completionHandler([BOCatShopping], nil)
 //                catShopping.detailItems = arrDetailItems
 //                completionHandler(catShopping, nil)
             }

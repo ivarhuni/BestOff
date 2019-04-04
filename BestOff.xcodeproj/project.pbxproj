@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		226E0ACD22569F73006AB3E2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226E0ACC22569F73006AB3E2 /* Extensions.swift */; };
-		226E0AD62256B34A006AB3E2 /* BOGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226E0AD32256B34A006AB3E2 /* BOGuide.swift */; };
-		226E0AD72256B34A006AB3E2 /* BOSuperGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226E0AD42256B34A006AB3E2 /* BOSuperGuide.swift */; };
+		226E0AD62256B34A006AB3E2 /* BOGuideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226E0AD32256B34A006AB3E2 /* BOGuideItem.swift */; };
+		226E0AD72256B34A006AB3E2 /* BOCatGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226E0AD42256B34A006AB3E2 /* BOCatGuide.swift */; };
 		226E0AD82256B34A006AB3E2 /* BOAuthor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226E0AD52256B34A006AB3E2 /* BOAuthor.swift */; };
 		226E0ADA2256B397006AB3E2 /* BOGuideService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226E0AD92256B397006AB3E2 /* BOGuideService.swift */; };
 		22B506DA224DAF2200F66FDB /* BOEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B506D9224DAF2200F66FDB /* BOEndpoint.swift */; };
@@ -60,8 +60,8 @@
 /* Begin PBXFileReference section */
 		20E0E67D1EEFED2DADD21D2E /* Pods_BestOffTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestOffTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		226E0ACC22569F73006AB3E2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		226E0AD32256B34A006AB3E2 /* BOGuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOGuide.swift; sourceTree = "<group>"; };
-		226E0AD42256B34A006AB3E2 /* BOSuperGuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOSuperGuide.swift; sourceTree = "<group>"; };
+		226E0AD32256B34A006AB3E2 /* BOGuideItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOGuideItem.swift; sourceTree = "<group>"; };
+		226E0AD42256B34A006AB3E2 /* BOCatGuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOCatGuide.swift; sourceTree = "<group>"; };
 		226E0AD52256B34A006AB3E2 /* BOAuthor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BOAuthor.swift; sourceTree = "<group>"; };
 		226E0AD92256B397006AB3E2 /* BOGuideService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOGuideService.swift; sourceTree = "<group>"; };
 		22B506D9224DAF2200F66FDB /* BOEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOEndpoint.swift; sourceTree = "<group>"; };
@@ -136,7 +136,6 @@
 		222BF8AD222F44600006D920 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				226E0AD22256B2AF006AB3E2 /* Guides */,
 				22CEF338224E1BC500A6688A /* Categories */,
 			);
 			path = Models;
@@ -146,8 +145,8 @@
 			isa = PBXGroup;
 			children = (
 				226E0AD52256B34A006AB3E2 /* BOAuthor.swift */,
-				226E0AD32256B34A006AB3E2 /* BOGuide.swift */,
-				226E0AD42256B34A006AB3E2 /* BOSuperGuide.swift */,
+				226E0AD32256B34A006AB3E2 /* BOGuideItem.swift */,
+				226E0AD42256B34A006AB3E2 /* BOCatGuide.swift */,
 			);
 			path = Guides;
 			sourceTree = "<group>";
@@ -182,6 +181,7 @@
 		22CEF338224E1BC500A6688A /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				226E0AD22256B2AF006AB3E2 /* Guides */,
 				22D6B8452252988F004A33DE /* Dining */,
 				22D6B839225292CD004A33DE /* Drinking */,
 				22D6B832225290E0004A33DE /* Activities */,
@@ -552,7 +552,7 @@
 				22D6B834225290EB004A33DE /* BOCatActivities.swift in Sources */,
 				22D6B8382252914B004A33DE /* BOCatActivitiesService.swift in Sources */,
 				22D6B8532252A3B4004A33DE /* BODetailItem.swift in Sources */,
-				226E0AD62256B34A006AB3E2 /* BOGuide.swift in Sources */,
+				226E0AD62256B34A006AB3E2 /* BOGuideItem.swift in Sources */,
 				22D6B84B2252990A004A33DE /* BODiningItem.swift in Sources */,
 				22D6B83D2252934D004A33DE /* BOCatDrinking.swift in Sources */,
 				226E0AD82256B34A006AB3E2 /* BOAuthor.swift in Sources */,
@@ -560,7 +560,7 @@
 				22EB39EF222E2C28001043E2 /* BOCatShoppingService.swift in Sources */,
 				226E0ADA2256B397006AB3E2 /* BOGuideService.swift in Sources */,
 				22D6B84F22529998004A33DE /* BOCatDiningService.swift in Sources */,
-				226E0AD72256B34A006AB3E2 /* BOSuperGuide.swift in Sources */,
+				226E0AD72256B34A006AB3E2 /* BOCatGuide.swift in Sources */,
 				22D6B84822529896004A33DE /* BOCatDining.swift in Sources */,
 				22D6B836225290F2004A33DE /* BOActivitiesItem.swift in Sources */,
 				22B506DD224DC09A00F66FDB /* NetworkError.swift in Sources */,

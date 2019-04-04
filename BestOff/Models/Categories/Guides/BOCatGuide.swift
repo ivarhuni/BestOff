@@ -5,15 +5,16 @@
 
 import Foundation
 
-struct BOSuperGuide : Codable {
+struct BOCatGuide : Codable {
 
         let descriptionField : String
         let feedUrl : String
         let homePageUrl : String
-        let items : [BOGuide]
+        let items : [BOGuideItem]
         let title : String
         let userComment : String
         let version : String
+        var detailItems: [BOCategoryDetail]
 
         enum CodingKeys: String, CodingKey {
                 case descriptionField = "description"
@@ -30,10 +31,12 @@ struct BOSuperGuide : Codable {
                 descriptionField = try values.decode(String.self, forKey: .descriptionField)
                 feedUrl = try values.decode(String.self, forKey: .feedUrl)
                 homePageUrl = try values.decode(String.self, forKey: .homePageUrl)
-                items = try values.decode([BOGuide].self, forKey: .items)
+                items = try values.decode([BOGuideItem].self, forKey: .items)
                 title = try values.decode(String.self, forKey: .title)
                 userComment = try values.decode(String.self, forKey: .userComment)
                 version = try values.decode(String.self, forKey: .version)
+                //Populated with DetailItemFactory
+                detailItems = []
         }
 
 }

@@ -35,6 +35,7 @@ struct BOCatDining : Codable {
                 title = try values.decode(String.self, forKey: .title)
                 userComment = try values.decode(String.self, forKey: .userComment)
                 version = try values.decode(String.self, forKey: .version)
+            //  Populated in DetailItemFactory
                 detailItems = []
         }
 
