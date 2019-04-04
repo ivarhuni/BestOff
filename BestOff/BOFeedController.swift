@@ -90,6 +90,13 @@ fileprivate struct BOFeedViewModel{
                 print(error)
             }
         }
+        let guideService = BOGuideService()
+        guideService.getGuides { (data, error) in
+            
+            if error != nil{
+                print(error)
+            }
+        }
     }
 }
 

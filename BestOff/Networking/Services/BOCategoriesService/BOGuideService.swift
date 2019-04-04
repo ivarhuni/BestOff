@@ -1,18 +1,18 @@
 //
-//  Service+Categories.swift
+//  BOGuideService.swift
 //  BestOff
 //
-//  Created by Ivar Johannesson on 05/03/2019.
+//  Created by Ivar Johannesson on 04/04/2019.
 //  Copyright © 2019 Ivar Johannesson. All rights reserved.
 //
 
 import Foundation
 
-struct BOCatShoppingService{
+struct BOGuideService{
     
-    func getShopping(completionHandler: @escaping (_ result: BOCatShopping?, _ error: Error?) -> Void){
+    func getGuides(completionHandler: @escaping (_ result: BOSuperGuide?, _ error: Error?) -> Void){
         
-        guard let url = URL(string: Endpoint.rvkShopping.path) else {
+        guard let url = URL(string: Endpoint.guides.path) else {
             completionHandler(nil, NetworkError.URLError)
             return
         }
@@ -24,13 +24,13 @@ struct BOCatShoppingService{
                     completionHandler(nil, NetworkError.dataError)
                     return
                 }
-                var catShopping = try JSONDecoder().decode(BOCatShopping.self, from: jsonAsData)
-                
-                let arrDetailItems = catShopping.items.compactMap{ DetailItemFactory.createCategoryDetailFromText(categoryItemContentText: $0.contentText, strHTML: $0.contentHtml) }
+                var superGuides = try JSONDecoder().decode(BOSuperGuide.self, from: jsonAsData)
+                print()
+                //let arrDetailItems = catShopping.items.compactMap{ DetailItemFactory.createCategoryDetailFromText(categoryItemContentText: $0.contentText, strHTML: $0.contentHtml) }
                 //catShopping.detailItems = arrDetailItems
                 //completionHandler([BOCatShopping], nil)
-                catShopping.detailItems = arrDetailItems
-                completionHandler(catShopping, nil)
+//                catShopping.detailItems = arrDetailItems
+//                completionHandler(catShopping, nil)
             }
             catch let jsonErr {
                 completionHandler(nil, jsonErr)

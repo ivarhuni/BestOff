@@ -13,6 +13,7 @@ enum Endpoint {
     case rvkActivities
     case rvkShopping
     case rvkDining
+    case guides
     
     var path: String{
         
@@ -21,6 +22,7 @@ enum Endpoint {
         case .rvkActivities: return "https://grapevine.is/best-of-reykjavik/2019/activities-2019/feed/json"
         case .rvkShopping: return "https://grapevine.is/best-of-reykjavik/2019/shopping-2019/feed/json"
         case .rvkDining: return "https://grapevine.is/best-of-reykjavik/2019/dining-2019/feed/json"
+        case .guides: return "https://grapevine.is/best-of-reykjavik/2019/guides-2019/feed/json"
         }
     }
 }

@@ -1,20 +1,19 @@
 //
-//  BOCatShopping.swift
+//  BOGuide.swift
 //  Model Generated using http://www.jsoncafe.com/ 
-//  Created on March 29, 2019
+//  Created on April 4, 2019
 
 import Foundation
 
-struct BOCatShopping : Codable {
+struct BOSuperGuide : Codable {
 
         let descriptionField : String
         let feedUrl : String
         let homePageUrl : String
-        let items : [BOShopItem]
+        let items : [BOGuide]
         let title : String
         let userComment : String
         let version : String
-        var detailItems: [BOCategoryDetail]
 
         enum CodingKeys: String, CodingKey {
                 case descriptionField = "description"
@@ -31,11 +30,10 @@ struct BOCatShopping : Codable {
                 descriptionField = try values.decode(String.self, forKey: .descriptionField)
                 feedUrl = try values.decode(String.self, forKey: .feedUrl)
                 homePageUrl = try values.decode(String.self, forKey: .homePageUrl)
-                items = try values.decode([BOShopItem].self, forKey: .items)
+                items = try values.decode([BOGuide].self, forKey: .items)
                 title = try values.decode(String.self, forKey: .title)
                 userComment = try values.decode(String.self, forKey: .userComment)
                 version = try values.decode(String.self, forKey: .version)
-                detailItems = []
         }
 
 }

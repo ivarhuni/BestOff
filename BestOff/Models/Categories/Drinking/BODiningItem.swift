@@ -40,6 +40,7 @@ struct BODiningItem : Codable {
                 tags = try values.decode([String].self, forKey: .tags)
                 title = try values.decode(String.self, forKey: .title)
                 url = try values.decode(String.self, forKey: .url)
+            
+            
         }
-
 }

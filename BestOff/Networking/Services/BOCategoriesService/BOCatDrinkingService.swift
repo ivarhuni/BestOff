@@ -10,28 +10,26 @@ import Foundation
 
 struct BOCatDrinkingService{
     
-    func getDrinks(completionHandler: @escaping (_ result: [Any], _ error: Error?) -> Void){
+    func getDrinks(completionHandler: @escaping (_ result: BOCatDrinking?, _ error: Error?) -> Void){
         
         guard let url = URL(string: Endpoint.rvkDrink.path) else {
-            completionHandler([], NetworkError.URLError)
+            completionHandler(nil, NetworkError.URLError)
             return
         }
-        
+        print("Fetching URL" + url.absoluteString)
         URLSession.shared.dataTask(with: url) { (data, response, err) in
             do {
-                
                 guard let jsonAsData = data else {
-                    completionHandler([], NetworkError.dataError)
+                    completionHandler(nil, NetworkError.dataError)
                     return
                 }
-                print(jsonAsData)
-                let catDrinks = try JSONDecoder().decode(BOCatDrinking.self, from: jsonAsData)
-                print(catDrinks)
-                
-                
+                var catDrinks = try JSONDecoder().decode(BOCatDrinking.self, from: jsonAsData)
+                let arrDetailItems = catDrinks.items.compactMap{ DetailItemFactory.createCategoryDetailFromText(categoryItemContentText: $0.contentText, strHTML: $0.contentHtml) }
+                catDrinks.detailItems = arrDetailItems
+                completionHandler(catDrinks, nil)
             }
             catch let jsonErr {
-                completionHandler([], jsonErr)
+                completionHandler(nil, jsonErr)
             }
             }.resume()
     }

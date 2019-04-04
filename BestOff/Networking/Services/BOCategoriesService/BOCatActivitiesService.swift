@@ -10,28 +10,29 @@ import Foundation
 
 struct BOCatActivitiesService{
     
-    func getActivities(completionHandler: @escaping (_ result: [Any], _ error: Error?) -> Void){
+    func getActivities(completionHandler: @escaping (_ result: BOCatActivities?, _ error: Error?) -> Void){
         
         guard let url = URL(string: Endpoint.rvkActivities.path) else {
-            completionHandler([], NetworkError.URLError)
+            completionHandler(nil, NetworkError.URLError)
             return
         }
         
+        print("Fetching URL" + url.absoluteString)
         URLSession.shared.dataTask(with: url) { (data, response, err) in
             do {
                 
                 guard let jsonAsData = data else {
-                    completionHandler([], NetworkError.dataError)
+                    completionHandler(nil, NetworkError.dataError)
                     return
                 }
-               // print(jsonAsData)
-                let catActivities = try JSONDecoder().decode(BOCatActivities.self, from: jsonAsData)
-                print(catActivities)
+                var catActivities = try JSONDecoder().decode(BOCatActivities.self, from: jsonAsData)
                 
-                
+                let arrDetailItems = catActivities.items.compactMap{ DetailItemFactory.createCategoryDetailFromText(categoryItemContentText: $0.contentText, strHTML: $0.contentHtml) }
+                catActivities.detailItems = arrDetailItems
+                completionHandler(catActivities, nil)
             }
             catch let jsonErr {
-                completionHandler([], jsonErr)
+                completionHandler(nil, jsonErr)
             }
             }.resume()
     }
