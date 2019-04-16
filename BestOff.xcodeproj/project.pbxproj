@@ -195,7 +195,6 @@
 		22EB39BB222E0702001043E2 /* BestOff */ = {
 			isa = PBXGroup;
 			children = (
-				22F8979B226613A8001E48BE /* Misc Files */,
 				22F8979A2266139B001E48BE /* App */,
 				22F8978E2265FBE3001E48BE /* ViewControllers & ViewModels */,
 				22F897892265FA3E001E48BE /* Navigation */,
@@ -262,13 +261,6 @@
 				22EB39BC222E0702001043E2 /* AppDelegate.swift */,
 			);
 			path = App;
-			sourceTree = "<group>";
-		};
-		22F8979B226613A8001E48BE /* Misc Files */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Misc Files";
 			sourceTree = "<group>";
 		};
 		72FB35C968BA2CE6BDF0A816 /* Pods */ = {

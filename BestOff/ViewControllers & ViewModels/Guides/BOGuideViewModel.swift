@@ -15,11 +15,6 @@ class BOGuideViewModel{
     let arrGuideCategory = Observable<[BOCategoryModel]>([])
     let shouldShowError = Observable<Bool>(false)
     
-    init(){
-        
-        
-    }
-    
     //MARK: Networking
     public func getGuides(){
         

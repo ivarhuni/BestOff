@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import ReactiveKit
+import Bond
 
 class BOGuideViewController: UIViewController {
 
     private let viewModel: BOGuideViewModel
+    private let disposeBag = DisposeBag()
     
     //MARK: Initalization
     init(viewModel: BOGuideViewModel){
@@ -27,5 +30,30 @@ class BOGuideViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .blue
+        setupBindings()
+    }
+}
+
+//MARK UI Bindings
+extension BOGuideViewController{
+    
+    func setupBindings(){
+        
+//        This is an alternative way of writing
+//        ---------
+//                _ = viewModel.arrGuideCategory.observeNext{ [weak self] array in
+//                    guard let this = self else{ return }
+//                    print("Detected new value for guide array")
+//                }.dispose(in: disposeBag)
+//        ---------
+//        Here we don't have to dispose of the binding since it's bound to self
+//        And hence deallocates with it when self is destroyed
+//        And we dont have to worry about
+//        threading, retain cycles and disposing because bindings take care of all that automatically
+        
+        _ = viewModel.arrGuideCategory.bind(to: self){ me, array in
+            
+            print("Detected new value for guide array")
+        }
     }
 }
