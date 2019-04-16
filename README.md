@@ -26,7 +26,7 @@ Cocoapods installed on your mac
  open BestOff.xcworkspace & press Run
 
 
-##Self-Checklist  
+## Self-Checklist  
 
 Networking [X]  
 
@@ -41,7 +41,7 @@ VCs[ ]
 Unit Tests [ongoing]  
 
 Analytics / Tracking [ ]  
- 
+
 
 
 
