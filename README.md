@@ -29,7 +29,9 @@ Cocoapods installed on your mac
 ## Code Comments 
 Each ViewController binds to a datasource in it's viewmodel to display data  
 
-Some VC.swift Example Code:
+Some VC.swift Example Code:  
+
+
  `func setupBindings(){  
 
  	....  
@@ -39,7 +41,7 @@ Some VC.swift Example Code:
             print("Detected new value for guide array")  
 
  	  }  
- 	  
+
  	 ....  
  }`
 
