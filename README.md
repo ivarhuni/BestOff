@@ -25,40 +25,6 @@ Cocoapods installed on your mac
 
  open BestOff.xcworkspace & press Run
 
-
-## Code Comments 
-Each ViewController binds to a datasource in it's viewmodel to display data  
-
-Some VC.swift Example Code:  
-
-
- `func setupBindings(){  
-
- 	....  
-
- 	_ = viewModel.arrGuideCategory.bind(to: self){ me, array in  
-
-            print("Detected new value for guide array")  
-
- 	  }  
-
- 	 ....  
- }`
-
-This is an alternative way of writing
-_ = viewModel.arrGuideCategory.observeNext{ [weak self] array in
-guard let this = self else{ return }
-print("Detected new value for guide array")
-}.dispose(in: disposeBag)  
-
-Here we don't have to dispose of the binding since it's bound to self
-And hence deallocates with it when self is destroyed
-And we dont have to worry about
-threading, retain cycles and disposing because bindings take care of all that automatically
-
-
-
-
 # Contact
    
    Author: Ívar Húni Jóhannesson
