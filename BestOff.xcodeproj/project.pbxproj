@@ -144,9 +144,9 @@
 		22B506D8224DAEE800F66FDB /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				22B506DC224DC09A00F66FDB /* NetworkError.swift */,
 				22B506DB224DC08300F66FDB /* Services */,
 				22B506D9224DAF2200F66FDB /* BOEndpoint.swift */,
+				22B506DC224DC09A00F66FDB /* NetworkError.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -154,7 +154,6 @@
 		22B506DB224DC08300F66FDB /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				22D6B842225297F2004A33DE /* BOCategoriesService */,
 				22267C2022654E19007E7B40 /* BOCategoryService.swift */,
 			);
 			path = Services;
@@ -169,13 +168,6 @@
 				22F897852265F87C001E48BE /* BOCatItem.swift */,
 			);
 			path = Categories;
-			sourceTree = "<group>";
-		};
-		22D6B842225297F2004A33DE /* BOCategoriesService */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = BOCategoriesService;
 			sourceTree = "<group>";
 		};
 		22EB39B0222E0702001043E2 = {
@@ -203,12 +195,13 @@
 		22EB39BB222E0702001043E2 /* BestOff */ = {
 			isa = PBXGroup;
 			children = (
+				22F8979B226613A8001E48BE /* Misc Files */,
+				22F8979A2266139B001E48BE /* App */,
 				22F8978E2265FBE3001E48BE /* ViewControllers & ViewModels */,
 				22F897892265FA3E001E48BE /* Navigation */,
 				22267C2422656142007E7B40 /* Extensions */,
 				22B506D8224DAEE800F66FDB /* Networking */,
 				222BF8AD222F44600006D920 /* Models */,
-				22EB39BC222E0702001043E2 /* AppDelegate.swift */,
 				22EB39BE222E0702001043E2 /* BOFeedController.swift */,
 				22EB39C3222E0703001043E2 /* Assets.xcassets */,
 				22EB39C5222E0703001043E2 /* LaunchScreen.storyboard */,
@@ -261,6 +254,21 @@
 				22F897942265FC17001E48BE /* BOGuideViewModel.swift */,
 			);
 			path = Guides;
+			sourceTree = "<group>";
+		};
+		22F8979A2266139B001E48BE /* App */ = {
+			isa = PBXGroup;
+			children = (
+				22EB39BC222E0702001043E2 /* AppDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		22F8979B226613A8001E48BE /* Misc Files */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Misc Files";
 			sourceTree = "<group>";
 		};
 		72FB35C968BA2CE6BDF0A816 /* Pods */ = {
