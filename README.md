@@ -8,7 +8,7 @@ So far I've been experiencing with code generation of datamodels curtesy of http
 
 coupled with Swift's new Codable protocol, you can generate your data models easily by setting the  
 
-generator to Swift Decodable 
+code generator to Swift Decodable and input a sample json 
 
 The app is written in MVVM and uses ReactiveKit and Bond for databindings. 
 
@@ -24,6 +24,26 @@ Cocoapods installed on your mac
 
 
  open BestOff.xcworkspace & press Run
+
+
+##Self-Checklist  
+
+Networking [X]  
+
+Reactive Pattern setup [X]
+
+Navigation Pattern [X]  
+
+Datamodels [X]  
+
+VCs[ ]   
+
+Unit Tests [ongoing]  
+
+Analytics / Tracking [ ]  
+ 
+
+
 
 # Contact
    
