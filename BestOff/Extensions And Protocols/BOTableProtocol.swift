@@ -8,15 +8,18 @@
 
 import Foundation
 import UIKit
+import ReactiveKit
+import Bond
 
 //Tableviews conform to these protocols to enforce consistency
 protocol BOTableDataSource : class{
-    var arrItems: [BOCatItem] { get }
-    init(arrItems: [BOCatItem], tableView: UITableView)
-    func item(at indexPath: IndexPath) -> BOCatItem
+    var categoryModel: Observable<BOCategoryModel?> { get }
+    init(categoryModel: BOCategoryModel, tableView: UITableView)
+    
+    func item(at indexPath: IndexPath) -> BOCatItem?
     func numberOfRows() -> Int
     func numberOfSections() -> Int
-    func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> BOGuideCell
+    func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell
 }
 
 protocol BOTableDelegate{

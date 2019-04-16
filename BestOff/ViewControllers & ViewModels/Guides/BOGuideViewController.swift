@@ -58,20 +58,36 @@ extension BOGuideViewController{
 //        And we dont have to worry about
 //        threading, retain cycles and disposing because bindings take care of all that automatically
         
-//        _ = viewModel.arrGuideCategory.bind(to: self){ me, array in
-//            
-//            print("Detected new value for guide array")
-//            
-//        }
+        _ = viewModel.category.skip(first: 1).bind(to: self){ this, array in
+
+            print("Detected new value for guide category in GuideVC")
+            this.setupTable()
+        }
+        
+        
     }
 }
 
 //MARK: Tableview Setup
-extension BOGuideViewController{
+extension BOGuideViewController: UITableViewDelegate{
     
 
     private func setupTable(){
         
-        //tableDataSource = BOGuideTableDataSource(arrItems: viewModel.ar, tableView: <#T##UITableView#>)
+        guard let category = self.viewModel.category.value else{
+            print("category in guide viewmodel has nil as value")
+            return
+        }
+        print("category in guide viewmodel has value, setting up table")
+        let guideCellNib = UINib(nibName: "BOGuideCell", bundle: nil)
+        tableView.register(guideCellNib, forCellReuseIdentifier: BOGuideCell.reuseIdentifier())
+        tableDataSource = BOGuideTableDataSource(categoryModel: category, tableView: tableView)
+        tableView.dataSource = tableDataSource
+        tableView.delegate = self
+        tableView.reloadData()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
 }

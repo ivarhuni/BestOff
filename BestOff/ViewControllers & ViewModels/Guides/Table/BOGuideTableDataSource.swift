@@ -7,39 +7,48 @@
 //
 
 import UIKit
+import ReactiveKit
+import Bond
 
 class BOGuideTableDataSource: NSObject, BOTableDataSource {
     
-    let arrItems: [BOCatItem]
+    var categoryModel = Observable<BOCategoryModel?>(nil)
     let tableView: UITableView
-    let cellIdentifier = "guideCellIdentifier"
     
-    required init(arrItems: [BOCatItem], tableView: UITableView){
-        self.arrItems = arrItems
+    required init(categoryModel: BOCategoryModel,tableView: UITableView){
         self.tableView = tableView
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        self.categoryModel.value = categoryModel
     }
     
-    func item(at indexPath: IndexPath) -> BOCatItem {
-        return arrItems[indexPath.row]
+    func item(at indexPath: IndexPath) -> BOCatItem? {
+        guard let model = self.categoryModel.value else{
+            return nil
+        }
+        return model.items[indexPath.row]
     }
     
     func numberOfRows() -> Int {
-        return arrItems.count
+        
+        guard let model = self.categoryModel.value else{
+            return 0
+        }
+        print("arrItems Count: ")
+        print(model.items.count)
+        return model.items.count
     }
     
     func numberOfSections() -> Int {
         return 1
     }
     
-    func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> BOGuideCell {
+    func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? BOGuideCell else {
-            let cell = BOGuideCell()
-            cell.setup()
-            return cell
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: BOGuideCell.reuseIdentifier()) as! BOGuideCell
+        guard let myItem = item(at: indexPath) else{
+            return UITableViewCell()
         }
-        cell.setup()
+        print("reusing cell")
+        cell.setupWithGuide(myItem)
         return cell
     }
 }

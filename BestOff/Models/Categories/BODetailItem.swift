@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 //Each category item actually contains three items within the CategoryItem.contentText
 //The Winner for that category item [Best Burger, Best Late Night Restaurant, etc] plus two runner ups
 //The API doesn't have properties CategoryItem.winner or CategoryItem.runnerUp

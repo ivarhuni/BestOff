@@ -13,17 +13,10 @@ import Bond
 class BOViewModel: ViewModelErrorProtocol, CategoryItemProtocol{
     
     //MARK: CategoryItem Protocol
-    var arrCategory = Observable<[BOCategoryModel]>([])
-    
-    func getCategory() -> BOCategoryModel? {
-        guard let category = arrCategory.value[safe: 0] else{
-            return nil
-        }
-        return category
-    }
+    var category = Observable<BOCategoryModel?>(nil)
     
     func getCategoryItems() -> [BOCatItem] {
-        guard let category = getCategory() else{
+        guard let category = self.category.value else{
             return []
         }
         return category.items
@@ -61,10 +54,10 @@ extension BOViewModel: ViewModelNetworkProtocol{
             //Populate the data array with the model from the network callback
             //The VC has data bindings to the dataArray and will display data on it's screen on the array's value change
             guard let categoryModel = model else {
-                this.arrCategory.value = []
+                this.category.value = nil
                 return
             }
-            this.arrCategory.value = [categoryModel]
+            this.category.value = categoryModel
         }
     }
 }

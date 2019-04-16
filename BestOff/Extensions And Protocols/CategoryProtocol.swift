@@ -12,7 +12,6 @@ import Bond
 
 protocol CategoryItemProtocol{
     
-    var arrCategory: Observable<[BOCategoryModel]> { get }
+    var category: Observable<BOCategoryModel?> { get }
     func getCategoryItems() -> [BOCatItem]
-    func getCategory() -> BOCategoryModel?
 }

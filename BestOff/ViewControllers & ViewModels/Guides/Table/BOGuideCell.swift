@@ -28,7 +28,14 @@ class BOGuideCell: UITableViewCell {
 
 extension BOGuideCell{
     
-    func setup(){
-        someLabel.text = "Custom text"
+    func setupWithGuide(_ guide: BOCatItem){
+        
+        someLabel.text = "some text"
+    }
+}
+
+extension BOGuideCell{
+    public static func reuseIdentifier() -> String{
+        return "BOGuideCell"
     }
 }
