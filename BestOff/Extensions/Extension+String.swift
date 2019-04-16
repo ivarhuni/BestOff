@@ -1,20 +1,12 @@
 //
-//  Extensions.swift
+//  Extension+String.swift
 //  BestOff
 //
-//  Created by Ivar Johannesson on 04/04/2019.
+//  Created by Ivar Johannesson on 16/04/2019.
 //  Copyright © 2019 Ivar Johannesson. All rights reserved.
 //
 
 import Foundation
-
-
-//returns an optional value item, if an item exists at the index
-extension Collection where Indices.Iterator.Element == Index {
-    subscript (safe index: Index) -> Iterator.Element? {
-        return indices.contains(index) ? self[index] : nil
-    }
-}
 
 //Checks if string contains a URL, returns the absolute strings if there are any
 extension String {
