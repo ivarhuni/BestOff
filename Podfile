@@ -7,7 +7,6 @@ target 'BestOff' do
   # Pods for BestOff
   pod 'ReactiveKit'
   pod 'Bond'
-  pod 'SwiftyJSON', '~> 4.0'
 
   target 'BestOffTests' do
     inherit! :search_paths

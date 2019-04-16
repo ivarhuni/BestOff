@@ -38,5 +38,4 @@ struct BOCatDining : Codable {
             //  Populated in DetailItemFactory
                 detailItems = []
         }
-
 }

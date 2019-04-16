@@ -32,9 +32,9 @@ extension BOFeedController{
     
     fileprivate func setupBindings(){
         
-        _ = viewModel.arrData.observeOn(.main).observeNext(with: { (arrCourses) in
-            arrCourses.isEmpty ? self.style(.emptyOrError) : self.style(.success)
-        })
+        //        _ = viewModel.arrData.observeOn(.main).observeNext(with: { (arrCourses) in
+        //            arrCourses.isEmpty ? self.style(.emptyOrError) : self.style(.success)
+        //        })
     }
     
     fileprivate func style(_ type: BOFeedViewModel.styleType){
@@ -54,52 +54,43 @@ fileprivate struct BOFeedViewModel{
         case emptyOrError
     }
     
-    fileprivate let arrData = Observable<[BOCategoryProtocol]>([])
+    //fileprivate let arrData = Observable<[BOCategoryProtocol]>([])
     
     init(){
         
-        let nService = BOCatShoppingService()
-        nService.getShopping() { (arrData, error) in
-
-            if error != nil{
-                print(error)
-            }
-
-        }
+        let shoppingService = BOCategoryService()
         
-        let nServiceActivities = BOCatActivitiesService()
-        nServiceActivities.getActivities { (data, error) in
-        
-            if error != nil{
-                print(error)
+        shoppingService.getCategory(.rvkShopping) { (model, error) in
+            if(error != nil){
+                print(error!)
             }
         }
         
-        let drinkService = BOCatDrinkingService()
-        drinkService.getDrinks { (data, error) in
-
-            if error != nil{
-                print(error)
+        let diningService = BOCategoryService()
+        diningService.getCategory(.rvkDining) { (model, error) in
+            if(error != nil){
+                print(error!)
             }
         }
         
-        let diningService = BOCatDiningService()
-        diningService.getDiners { (data, error) in
-            
-            if error != nil{
-                print(error)
+        let drinkingSerivce = BOCategoryService()
+        drinkingSerivce.getCategory(.rvkDrink) { (model, error) in
+            if(error != nil){
+                print(error!)
             }
         }
-        let guideService = BOGuideService()
-        guideService.getGuides { (data, error) in
-            
-            if error != nil{
-                print(error)
+        
+        let activityService = BOCategoryService()
+        activityService.getCategory(.rvkActivities) { (model, error) in
+            if(error != nil){
+                print(error!)
+            }
+        }
+        
+        shoppingService.getCategory(.guides) { (model, error) in
+            if(error != nil){
+                print(error!)
             }
         }
     }
-}
-
-protocol BOCategoryProtocol {
-    
 }
