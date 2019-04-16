@@ -19,12 +19,17 @@
 		22D6B8532252A3B4004A33DE /* BODetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6B8522252A3B4004A33DE /* BODetailItem.swift */; };
 		22EB39BD222E0702001043E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB39BC222E0702001043E2 /* AppDelegate.swift */; };
 		22EB39BF222E0702001043E2 /* BOFeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB39BE222E0702001043E2 /* BOFeedController.swift */; };
-		22EB39C2222E0702001043E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22EB39C0222E0702001043E2 /* Main.storyboard */; };
 		22EB39C4222E0703001043E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22EB39C3222E0703001043E2 /* Assets.xcassets */; };
 		22EB39C7222E0703001043E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22EB39C5222E0703001043E2 /* LaunchScreen.storyboard */; };
 		22EB39D2222E0703001043E2 /* BestOffTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB39D1222E0703001043E2 /* BestOffTests.swift */; };
 		22EB39DD222E0703001043E2 /* BestOffUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB39DC222E0703001043E2 /* BestOffUITests.swift */; };
 		22F897862265F87C001E48BE /* BOCatItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F897852265F87C001E48BE /* BOCatItem.swift */; };
+		22F897882265FA10001E48BE /* BOCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F897872265FA10001E48BE /* BOCoordinator.swift */; };
+		22F897922265FC09001E48BE /* BOGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F897902265FC09001E48BE /* BOGuideViewController.swift */; };
+		22F897932265FC09001E48BE /* BOGuideViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22F897912265FC09001E48BE /* BOGuideViewController.xib */; };
+		22F897952265FC17001E48BE /* BOGuideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F897942265FC17001E48BE /* BOGuideViewModel.swift */; };
+		22F897972265FC4A001E48BE /* BOMainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F897962265FC4A001E48BE /* BOMainCoordinator.swift */; };
+		22F897992265FC78001E48BE /* BOAppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F897982265FC78001E48BE /* BOAppCoordinator.swift */; };
 		39DD8B45ECF9C9BA92EB8630 /* Pods_BestOffUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 891561AA4457B83C862E8D58 /* Pods_BestOffUITests.framework */; };
 		4427684C8125FD476322F7B1 /* Pods_BestOff.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23D15D311242B54A326E2C9F /* Pods_BestOff.framework */; };
 		5DC8DE16556E0AAB8125408F /* Pods_BestOffTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20E0E67D1EEFED2DADD21D2E /* Pods_BestOffTests.framework */; };
@@ -63,7 +68,6 @@
 		22EB39B9222E0702001043E2 /* BestOff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BestOff.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22EB39BC222E0702001043E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22EB39BE222E0702001043E2 /* BOFeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOFeedController.swift; sourceTree = "<group>"; };
-		22EB39C1222E0702001043E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		22EB39C3222E0703001043E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		22EB39C6222E0703001043E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		22EB39C8222E0703001043E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -74,6 +78,12 @@
 		22EB39DC222E0703001043E2 /* BestOffUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestOffUITests.swift; sourceTree = "<group>"; };
 		22EB39DE222E0703001043E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		22F897852265F87C001E48BE /* BOCatItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCatItem.swift; sourceTree = "<group>"; };
+		22F897872265FA10001E48BE /* BOCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCoordinator.swift; sourceTree = "<group>"; };
+		22F897902265FC09001E48BE /* BOGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOGuideViewController.swift; sourceTree = "<group>"; };
+		22F897912265FC09001E48BE /* BOGuideViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BOGuideViewController.xib; sourceTree = "<group>"; };
+		22F897942265FC17001E48BE /* BOGuideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOGuideViewModel.swift; sourceTree = "<group>"; };
+		22F897962265FC4A001E48BE /* BOMainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOMainCoordinator.swift; sourceTree = "<group>"; };
+		22F897982265FC78001E48BE /* BOAppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOAppCoordinator.swift; sourceTree = "<group>"; };
 		23D15D311242B54A326E2C9F /* Pods_BestOff.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestOff.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AAE9F091A4026DD5612C114 /* Pods-BestOff.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BestOff.release.xcconfig"; path = "Target Support Files/Pods-BestOff/Pods-BestOff.release.xcconfig"; sourceTree = "<group>"; };
 		833CCF5BE5C2950B6C95E771 /* Pods-BestOff.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BestOff.debug.xcconfig"; path = "Target Support Files/Pods-BestOff/Pods-BestOff.debug.xcconfig"; sourceTree = "<group>"; };
@@ -193,12 +203,13 @@
 		22EB39BB222E0702001043E2 /* BestOff */ = {
 			isa = PBXGroup;
 			children = (
+				22F8978E2265FBE3001E48BE /* ViewControllers & ViewModels */,
+				22F897892265FA3E001E48BE /* Navigation */,
 				22267C2422656142007E7B40 /* Extensions */,
 				22B506D8224DAEE800F66FDB /* Networking */,
 				222BF8AD222F44600006D920 /* Models */,
 				22EB39BC222E0702001043E2 /* AppDelegate.swift */,
 				22EB39BE222E0702001043E2 /* BOFeedController.swift */,
-				22EB39C0222E0702001043E2 /* Main.storyboard */,
 				22EB39C3222E0703001043E2 /* Assets.xcassets */,
 				22EB39C5222E0703001043E2 /* LaunchScreen.storyboard */,
 				22EB39C8222E0703001043E2 /* Info.plist */,
@@ -222,6 +233,34 @@
 				22EB39DE222E0703001043E2 /* Info.plist */,
 			);
 			path = BestOffUITests;
+			sourceTree = "<group>";
+		};
+		22F897892265FA3E001E48BE /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				22F897872265FA10001E48BE /* BOCoordinator.swift */,
+				22F897962265FC4A001E48BE /* BOMainCoordinator.swift */,
+				22F897982265FC78001E48BE /* BOAppCoordinator.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		22F8978E2265FBE3001E48BE /* ViewControllers & ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				22F8978F2265FBEE001E48BE /* Guides */,
+			);
+			path = "ViewControllers & ViewModels";
+			sourceTree = "<group>";
+		};
+		22F8978F2265FBEE001E48BE /* Guides */ = {
+			isa = PBXGroup;
+			children = (
+				22F897902265FC09001E48BE /* BOGuideViewController.swift */,
+				22F897912265FC09001E48BE /* BOGuideViewController.xib */,
+				22F897942265FC17001E48BE /* BOGuideViewModel.swift */,
+			);
+			path = Guides;
 			sourceTree = "<group>";
 		};
 		72FB35C968BA2CE6BDF0A816 /* Pods */ = {
@@ -357,9 +396,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22F897932265FC09001E48BE /* BOGuideViewController.xib in Resources */,
 				22EB39C7222E0703001043E2 /* LaunchScreen.storyboard in Resources */,
 				22EB39C4222E0703001043E2 /* Assets.xcassets in Resources */,
-				22EB39C2222E0702001043E2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,7 +521,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				22267C2122654E19007E7B40 /* BOCategoryService.swift in Sources */,
+				22F897952265FC17001E48BE /* BOGuideViewModel.swift in Sources */,
+				22F897972265FC4A001E48BE /* BOMainCoordinator.swift in Sources */,
 				22EB39BF222E0702001043E2 /* BOFeedController.swift in Sources */,
+				22F897882265FA10001E48BE /* BOCoordinator.swift in Sources */,
+				22F897922265FC09001E48BE /* BOGuideViewController.swift in Sources */,
 				22EB39BD222E0702001043E2 /* AppDelegate.swift in Sources */,
 				22267C2322654E8E007E7B40 /* BOCategoryModel.swift in Sources */,
 				22D6B8532252A3B4004A33DE /* BODetailItem.swift in Sources */,
@@ -492,6 +535,7 @@
 				22267C2A22656175007E7B40 /* Extension+String.swift in Sources */,
 				22B506DD224DC09A00F66FDB /* NetworkError.swift in Sources */,
 				22B506DA224DAF2200F66FDB /* BOEndpoint.swift in Sources */,
+				22F897992265FC78001E48BE /* BOAppCoordinator.swift in Sources */,
 				22267C2E22656C34007E7B40 /* StyleGuideAutoGenerated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -528,14 +572,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		22EB39C0222E0702001043E2 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				22EB39C1222E0702001043E2 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		22EB39C5222E0703001043E2 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

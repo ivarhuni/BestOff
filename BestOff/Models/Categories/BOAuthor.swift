@@ -23,5 +23,4 @@ struct BOAuthor : Codable {
                 name = try values.decode(String.self, forKey: .name)
                 url = try values.decode(String.self, forKey: .url)
         }
-
 }
