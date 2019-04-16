@@ -14,7 +14,8 @@ import Bond
 //Tableviews conform to these protocols to enforce consistency
 protocol BOTableDataSource : class{
     var categoryModel: Observable<BOCategoryModel?> { get }
-    init(categoryModel: BOCategoryModel, tableView: UITableView)
+    
+    init(categoryModel: BOCategoryModel)
     
     func item(at indexPath: IndexPath) -> BOCatItem?
     func numberOfRows() -> Int

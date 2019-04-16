@@ -69,9 +69,8 @@ extension BOGuideViewController{
 }
 
 //MARK: Tableview Setup
-extension BOGuideViewController: UITableViewDelegate{
+extension BOGuideViewController{
     
-
     private func setupTable(){
         
         guard let category = self.viewModel.category.value else{
@@ -81,13 +80,20 @@ extension BOGuideViewController: UITableViewDelegate{
         print("category in guide viewmodel has value, setting up table")
         let guideCellNib = UINib(nibName: "BOGuideCell", bundle: nil)
         tableView.register(guideCellNib, forCellReuseIdentifier: BOGuideCell.reuseIdentifier())
-        tableDataSource = BOGuideTableDataSource(categoryModel: category, tableView: tableView)
+        tableDataSource = BOGuideTableDataSource(categoryModel: category)
         tableView.dataSource = tableDataSource
         tableView.delegate = self
         tableView.reloadData()
     }
+}
+
+extension BOGuideViewController: UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("did select")
     }
 }

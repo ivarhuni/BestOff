@@ -13,10 +13,8 @@ import Bond
 class BOGuideTableDataSource: NSObject, BOTableDataSource {
     
     var categoryModel = Observable<BOCategoryModel?>(nil)
-    let tableView: UITableView
     
-    required init(categoryModel: BOCategoryModel,tableView: UITableView){
-        self.tableView = tableView
+    required init(categoryModel: BOCategoryModel){
         self.categoryModel.value = categoryModel
     }
     
@@ -43,7 +41,7 @@ class BOGuideTableDataSource: NSObject, BOTableDataSource {
     
     func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: BOGuideCell.reuseIdentifier()) as! BOGuideCell
+        let cell = myTableView.dequeueReusableCell(withIdentifier: BOGuideCell.reuseIdentifier()) as! BOGuideCell
         guard let myItem = item(at: indexPath) else{
             return UITableViewCell()
         }
