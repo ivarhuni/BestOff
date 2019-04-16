@@ -13,7 +13,8 @@ import Bond
 class BOGuideViewController: UIViewController {
 
     private let viewModel: BOGuideViewModel
-    private let disposeBag = DisposeBag()
+    @IBOutlet weak var tableView: UITableView!
+    var tableDataSource: BOGuideTableDataSource?
     
     //MARK: Initalization
     init(viewModel: BOGuideViewModel){
@@ -28,8 +29,14 @@ class BOGuideViewController: UIViewController {
     //MARK: ViewCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .blue
+        setupVC()
+    }
+}
+
+extension BOGuideViewController{
+    
+    private func setupVC(){
+        setupTable()
         setupBindings()
     }
 }
@@ -37,7 +44,7 @@ class BOGuideViewController: UIViewController {
 //MARK UI Bindings
 extension BOGuideViewController{
     
-    func setupBindings(){
+    private func setupBindings(){
         
 //        This is an alternative way of writing
 //        ---------
@@ -51,9 +58,20 @@ extension BOGuideViewController{
 //        And we dont have to worry about
 //        threading, retain cycles and disposing because bindings take care of all that automatically
         
-        _ = viewModel.arrGuideCategory.bind(to: self){ me, array in
-            
-            print("Detected new value for guide array")
-        }
+//        _ = viewModel.arrGuideCategory.bind(to: self){ me, array in
+//            
+//            print("Detected new value for guide array")
+//            
+//        }
+    }
+}
+
+//MARK: Tableview Setup
+extension BOGuideViewController{
+    
+
+    private func setupTable(){
+        
+        //tableDataSource = BOGuideTableDataSource(arrItems: viewModel.ar, tableView: <#T##UITableView#>)
     }
 }

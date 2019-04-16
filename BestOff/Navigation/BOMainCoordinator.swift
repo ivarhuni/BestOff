@@ -27,7 +27,7 @@ class BOMainCoordinator: BOCoordinator{
     public func start() {
         
         let guideVM = BOGuideViewModel()
-       //guideVM.getGuides()
+       guideVM.getGuides()
         let guideVC = BOGuideViewController(viewModel: guideVM)
         navController.viewControllers = [guideVC]
     }
