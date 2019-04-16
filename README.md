@@ -31,10 +31,15 @@ Each ViewController binds to a datasource in it's viewmodel to display data
 
 Some VC.swift Example Code:
  `func setupBindings(){  
- 	....
- 	_ = viewModel.arrGuideCategory.bind(to: self){ me, array in    
+
+ 	....  
+
+ 	_ = viewModel.arrGuideCategory.bind(to: self){ me, array in  
+
             print("Detected new value for guide array")  
- 	  }
+
+ 	  }  
+ 	  
  	 ....  
  }`
 
