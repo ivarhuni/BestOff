@@ -13,7 +13,7 @@ struct BOCategoryModel: Codable{
     let descriptionField : String
     let feedUrl : String
     let homePageUrl : String
-    let items : [BOShopItem]
+    let items : [BOCatItem]
     let title : String
     let userComment : String
     let version : String
@@ -34,7 +34,7 @@ struct BOCategoryModel: Codable{
         descriptionField = try values.decode(String.self, forKey: .descriptionField)
         feedUrl = try values.decode(String.self, forKey: .feedUrl)
         homePageUrl = try values.decode(String.self, forKey: .homePageUrl)
-        items = try values.decode([BOShopItem].self, forKey: .items)
+        items = try values.decode([BOCatItem].self, forKey: .items)
         title = try values.decode(String.self, forKey: .title)
         userComment = try values.decode(String.self, forKey: .userComment)
         version = try values.decode(String.self, forKey: .version)
