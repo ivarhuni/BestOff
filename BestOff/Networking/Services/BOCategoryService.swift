@@ -35,6 +35,5 @@ struct BOCategoryService{
                 completionHandler(nil, jsonErr)
             }
             }.resume()
-        
     }
 }

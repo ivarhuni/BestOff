@@ -10,12 +10,17 @@ import UIKit
 import ReactiveKit
 import Bond
 
-class BOGuideTableDataSource: NSObject, BOTableDataSource {
+class BOGuideTableDataSource: NSObject, BOTableDataSourceProtocol {
     
     var categoryModel = Observable<BOCategoryModel?>(nil)
     
-    required init(categoryModel: BOCategoryModel){
+    convenience init(categoryModel: BOCategoryModel){
+        self.init()
         self.categoryModel.value = categoryModel
+    }
+    
+    func setDataModel(model: BOCategoryModel) {
+        categoryModel.value = model
     }
     
     func item(at indexPath: IndexPath) -> BOCatItem? {

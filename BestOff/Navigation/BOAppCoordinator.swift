@@ -28,6 +28,7 @@ class BOAppCoordinator: BOCoordinator{
     public func start() {
         
         let mainCoordinator = BOMainCoordinator(navigationController: navController)
+        childCoordinators.append(mainCoordinator)
         mainCoordinator.start()
         self.window.makeKeyAndVisible()
     }

@@ -12,11 +12,11 @@ import ReactiveKit
 import Bond
 
 //Tableviews conform to these protocols to enforce consistency
-protocol BOTableDataSource : class{
+protocol BOTableDataSourceProtocol : UITableViewDataSource{
+    
     var categoryModel: Observable<BOCategoryModel?> { get }
     
-    init(categoryModel: BOCategoryModel)
-    
+    func setDataModel(model: BOCategoryModel)
     func item(at indexPath: IndexPath) -> BOCatItem?
     func numberOfRows() -> Int
     func numberOfSections() -> Int

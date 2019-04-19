@@ -20,3 +20,8 @@ protocol ViewModelErrorProtocol {
 protocol ViewModelNetworkProtocol {
     func getCategoryFromJSON(type: Endpoint)
 }
+
+protocol ViewModelDataSourceProtocol{
+    var dataSource: Observable<BOTableDataSourceProtocol?> { get }
+    var numberOfSections: Int { get }
+}

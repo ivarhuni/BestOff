@@ -11,10 +11,9 @@ import ReactiveKit
 import Bond
 
 class BOGuideViewController: UIViewController {
-
-    private let viewModel: BOGuideViewModel
+    
+    private let  viewModel: BOGuideViewModel
     @IBOutlet weak var tableView: UITableView!
-    var tableDataSource: BOGuideTableDataSource?
     
     //MARK: Initalization
     init(viewModel: BOGuideViewModel){
@@ -41,49 +40,21 @@ extension BOGuideViewController{
     }
 }
 
-//MARK UI Bindings
-extension BOGuideViewController{
-    
-    private func setupBindings(){
-        
-//        This is an alternative way of writing
-//        ---------
-//                _ = viewModel.arrGuideCategory.observeNext{ [weak self] array in
-//                    guard let this = self else{ return }
-//                    print("Detected new value for guide array")
-//                }.dispose(in: disposeBag)
-//        ---------
-//        Here we don't have to dispose of the binding since it's bound to self
-//        And hence deallocates with it when self is destroyed
-//        And we dont have to worry about
-//        threading, retain cycles and disposing because bindings take care of all that automatically
-        
-        _ = viewModel.category.skip(first: 1).bind(to: self){ this, array in
-
-            print("Detected new value for guide category in GuideVC")
-            this.setupTable()
-        }
-        
-        
-    }
-}
-
 //MARK: Tableview Setup
 extension BOGuideViewController{
     
     private func setupTable(){
-        
-        guard let category = self.viewModel.category.value else{
-            print("category in guide viewmodel has nil as value")
-            return
-        }
-        print("category in guide viewmodel has value, setting up table")
+        registerCell()
+        registerDelegate()
+    }
+    
+    private func registerCell(){
         let guideCellNib = UINib(nibName: "BOGuideCell", bundle: nil)
         tableView.register(guideCellNib, forCellReuseIdentifier: BOGuideCell.reuseIdentifier())
-        tableDataSource = BOGuideTableDataSource(categoryModel: category)
-        tableView.dataSource = tableDataSource
+    }
+    
+    private func registerDelegate(){
         tableView.delegate = self
-        tableView.reloadData()
     }
 }
 
@@ -95,5 +66,19 @@ extension BOGuideViewController: UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("did select")
+    }
+}
+
+//MARK: UI Bindings
+extension BOGuideViewController{
+    
+    private func setupBindings(){
+        
+        _ = viewModel.dataSource.value?.categoryModel.observeOn(.main).observeNext{ [weak self] something in
+            
+            guard let this = self else{ return }
+            this.tableView.dataSource = this.viewModel.dataSource.value
+            this.tableView.reloadData()
+        }
     }
 }
