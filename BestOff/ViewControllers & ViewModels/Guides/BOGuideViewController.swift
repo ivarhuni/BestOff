@@ -60,11 +60,11 @@ extension BOGuideViewController{
 
 extension BOGuideViewController: UITableViewDelegate{
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    private func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    private func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("did select")
     }
 }
