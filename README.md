@@ -35,7 +35,7 @@ Unit Tests [ongoing]
 Analytics / Tracking [not started]  
 
 
-## Tools / Miscellaneous  
+## Tools / Miscellaneous / Code generation  
 
 Datamodels generated with http://www.jsoncafe.com/  
 
@@ -43,7 +43,7 @@ coupled with Swift's new Codable protocol, you can generate your data models eas
 
 code generator to Swift Decodable and input a sample json. Highly recommend it!
 
-The app is written in MVVM and uses ReactiveKit and Bond for databindings:  
+The app is written in MVVM and uses ReactiveKit and Bond for UI databinding:  
   
   https://github.com/DeclarativeHub/ReactiveKit  
   https://github.com/DeclarativeHub/Bond  
