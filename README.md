@@ -4,14 +4,6 @@
 This is the repo for the Reykjavik Grapevine Best Off iOS App.
 The app is under active development, scheduled to be released in April/May 2019.
 
-So far I've been experiencing with code generation of datamodels curtesy of http://www.jsoncafe.com/  
-
-coupled with Swift's new Codable protocol, you can generate your data models easily by setting the  
-
-code generator to Swift Decodable and input a sample json 
-
-The app is written in MVVM and uses ReactiveKit and Bond for databindings. 
-
 ## Setup
 Xcode version 10  
 Swift 4.2  
@@ -41,6 +33,22 @@ VCs[ ]
 Unit Tests [ongoing]  
 
 Analytics / Tracking [ ]  
+
+
+## Tools / Miscellaneous  
+
+Datamodels generated with http://www.jsoncafe.com/  
+
+coupled with Swift's new Codable protocol, you can generate your data models easily by setting the  
+
+code generator to Swift Decodable and input a sample json. Highly recommend it!
+
+The app is written in MVVM and uses ReactiveKit and Bond for databindings:  
+  
+  https://github.com/DeclarativeHub/ReactiveKit  
+  https://github.com/DeclarativeHub/Bond  
+
+  
 
 
 
