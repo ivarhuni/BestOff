@@ -25,3 +25,15 @@ protocol ViewModelDataSourceProtocol{
     var dataSource: Observable<BOTableDataSourceProtocol?> { get }
     var numberOfSections: Int { get }
 }
+
+protocol vmTableViewDelegate{
+    
+    func tableViewPressedAt(_ index: Int)
+    
+    func getCellHeight() -> CGFloat
+}
+
+protocol initWithIndexIndicator{
+    
+    init(withIndexIndicator index: Int)
+}

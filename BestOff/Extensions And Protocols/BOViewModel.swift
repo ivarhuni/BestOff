@@ -33,9 +33,8 @@ class BOViewModel: ViewModelErrorProtocol, CategoryItemProtocol{
     }
 }
 
-    //MARK: VMNetworkProtocol
+//MARK: VMNetworkProtocol
 extension BOViewModel: ViewModelNetworkProtocol{
-    
     
     func getCategoryFromJSON(type: Endpoint) {
         let categoryNetworkService = BOCategoryService()

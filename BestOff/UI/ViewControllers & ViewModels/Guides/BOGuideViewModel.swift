@@ -11,25 +11,30 @@ import ReactiveKit
 import Bond
 import UIKit
 
-class BOGuideViewModel: BOViewModel, ViewModelDataSourceProtocol{
+class BOGuideViewModel: BOViewModel, ViewModelDataSourceProtocol, initWithIndexIndicator{
     
     //MARK: Protocol properties
     var dataSource = Observable<BOTableDataSourceProtocol?>(nil)
     var numberOfSections = 0
+    let swipeIndexIndicator = Observable<Int>(0)
     
     //MARK: Other Properties
     let type = Endpoint.guides
     let disposeBag = DisposeBag()
     
     //MARK: Init
-    override init(){
+    required init(withIndexIndicator index: Int){
         super.init()
         self.dataSource.value = BOGuideTableDataSource()
         createBonding()
+        swipeIndexIndicator.value = index
     }
+}
+
+//MARK: Databindings
+extension BOGuideViewModel{
     
-    //MARK: UI Bindings
-    func createBonding(){
+    private func createBonding(){
 
         _ = self.category.observeNext{ model in
             
@@ -41,11 +46,23 @@ class BOGuideViewModel: BOViewModel, ViewModelDataSourceProtocol{
             }
             dataSource.setDataModel(model: dataModel)
         }.dispose(in: disposeBag)
-        
     }
-    
-    //MARK: Networking
+}
+
+//MARK: Networking
+extension BOGuideViewModel{
     func getGuides(){
         getCategoryFromJSON(type: self.type)
+    }
+}
+
+extension BOGuideViewModel: vmTableViewDelegate{
+    
+    func tableViewPressedAt(_ index: Int) {
+        print("table pressed at index")
+    }
+    
+    func getCellHeight() -> CGFloat {
+        return 100
     }
 }

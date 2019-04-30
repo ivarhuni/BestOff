@@ -61,11 +61,11 @@ extension BOGuideViewController{
 extension BOGuideViewController: UITableViewDelegate{
     
     private func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return viewModel.getCellHeight()
     }
     
     private func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("did select")
+        viewModel.tableViewPressedAt(indexPath.row)
     }
 }
 
@@ -74,6 +74,9 @@ extension BOGuideViewController{
     
     private func setupBindings(){
         
+        //Each time the datamodel property 'categoryModel' has a new value
+        //Tableview is refreshed
+        //Performed on main thread
         _ = viewModel.dataSource.value?.categoryModel.observeOn(.main).observeNext{ [weak self] something in
             
             guard let this = self else{ return }
