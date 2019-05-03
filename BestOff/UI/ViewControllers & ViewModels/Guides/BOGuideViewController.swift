@@ -14,6 +14,8 @@ class BOGuideViewController: UIViewController {
     
     private let  viewModel: BOGuideViewModel
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableViewHeader: BOTableViewHeader!
+    
     
     //MARK: Initalization
     init(viewModel: BOGuideViewModel){
@@ -35,8 +37,22 @@ class BOGuideViewController: UIViewController {
 extension BOGuideViewController{
     
     private func setupVC(){
+        setupHeader()
+        setupBackground()
         setupTable()
         setupBindings()
+    }
+}
+
+//MARK: Header
+extension BOGuideViewController{
+    
+    func setupHeader(){
+
+    }
+    
+    func setupBackground(){
+        view.backgroundColor = UIColor.colorRed
     }
 }
 
@@ -83,5 +99,7 @@ extension BOGuideViewController{
             this.tableView.dataSource = this.viewModel.dataSource.value
             this.tableView.reloadData()
         }
+        
+        
     }
 }

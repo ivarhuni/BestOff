@@ -32,8 +32,3 @@ protocol vmTableViewDelegate{
     
     func getCellHeight() -> CGFloat
 }
-
-protocol initWithIndexIndicator{
-    
-    init(withIndexIndicator index: Int)
-}

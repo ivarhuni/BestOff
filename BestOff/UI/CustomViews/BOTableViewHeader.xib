@@ -12,7 +12,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BOTableViewHeader" customModule="BestOff" customModuleProvider="target">
             <connections>
+                <outlet property="btnHamburger" destination="Xg1-8x-tOT" id="I5K-Jl-L9k"/>
                 <outlet property="imgLeftIcon" destination="twg-WR-K47" id="JGg-MR-yX1"/>
+                <outlet property="lblTitle" destination="aEw-CV-OaH" id="Jac-7l-hl4"/>
                 <outlet property="view" destination="iN0-l3-epB" id="gTN-Wd-cgI"/>
             </connections>
         </placeholder>
@@ -28,15 +30,22 @@
                         <constraint firstAttribute="width" constant="27" id="ZDR-mT-wle"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aEw-CV-OaH">
-                    <rect key="frame" x="152" y="42" width="42" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aEw-CV-OaH">
+                    <rect key="frame" x="166.5" y="41.5" width="42" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xg1-8x-tOT">
-                    <rect key="frame" x="309" y="37" width="46" height="30"/>
-                    <state key="normal" title="Button"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xg1-8x-tOT">
+                    <rect key="frame" x="315" y="32" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="7iA-FT-mJb"/>
+                        <constraint firstAttribute="height" constant="40" id="zy1-zf-B48"/>
+                    </constraints>
+                    <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                    <connections>
+                        <action selector="btnPressed:" destination="-1" eventType="touchUpInside" id="Gtd-vP-pA7"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

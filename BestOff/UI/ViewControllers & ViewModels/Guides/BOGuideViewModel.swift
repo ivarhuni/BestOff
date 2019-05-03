@@ -11,7 +11,7 @@ import ReactiveKit
 import Bond
 import UIKit
 
-class BOGuideViewModel: BOViewModel, ViewModelDataSourceProtocol, initWithIndexIndicator{
+class BOGuideViewModel: BOViewModel, ViewModelDataSourceProtocol {
     
     //MARK: Protocol properties
     var dataSource = Observable<BOTableDataSourceProtocol?>(nil)
@@ -23,11 +23,15 @@ class BOGuideViewModel: BOViewModel, ViewModelDataSourceProtocol, initWithIndexI
     let disposeBag = DisposeBag()
     
     //MARK: Init
-    required init(withIndexIndicator index: Int){
+    required init(index: Int? = 0){
+        
         super.init()
         self.dataSource.value = BOGuideTableDataSource()
         createBonding()
-        swipeIndexIndicator.value = index
+        guard let idx = index else{
+            return
+        }
+        swipeIndexIndicator.value = idx
     }
 }
 
@@ -64,5 +68,13 @@ extension BOGuideViewModel: vmTableViewDelegate{
     
     func getCellHeight() -> CGFloat {
         return 100
+    }
+}
+
+//MARK: Header
+extension BOGuideViewModel{
+    
+    func setHeaderHeight(){
+        
     }
 }

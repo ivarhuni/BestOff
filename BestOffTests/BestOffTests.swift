@@ -19,6 +19,10 @@ class BestOffTests: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
+}
+
+
+extension BestOffTests{
     
     //MARK: Datamodel
     func testCategoryModelJSONMapping() throws {
@@ -52,8 +56,11 @@ class BestOffTests: XCTestCase {
         //3. Then
         XCTAssertThrowsError(try JSONDecoder().decode(BOCategoryModel.self, from: json), "FAIL-JSON actually succeeds")
     }
+}
+
+//MARK: Table methods
+extension BestOffTests{
     
-    //MARK: Table Data Source
     func testTblSDataSourceInit() throws{
         
         //1. Given
@@ -131,19 +138,10 @@ class BestOffTests: XCTestCase {
         //3. Then
         XCTAssert(datasource.numberOfSections() == 1, "Guides datasource should have numberOfSections = 1")
     }
-    
-    //MARK: ViewModel
-    func testIsGuideVCFirstVCWhenAppStarts(){
-        
-        //1. Given
-        let mainCoord = BOMainCoordinator.init(navigationController: UINavigationController())
-        
-        //2. When
-        mainCoord.start()
-        
-        //3. Then
-        XCTAssert(mainCoord.navController.viewControllers.first! is BOGuideViewController, "First Screen should be guide screen")
-    }
+}
+
+//MARK: ViewModel
+extension BestOffTests{
 
     func testGetCategoryItemsWhenThereAreNone(){
         
@@ -195,5 +193,43 @@ class BestOffTests: XCTestCase {
         
         //3. Then
         XCTAssertFalse(vm.shouldShowError.value, "VM should not show error after hideDataError is called")
+    }
+}
+
+//MARK: Coordinators
+extension BestOffTests{
+    
+    func testIsGuideVCFirstVCWhenAppStarts(){
+        
+        //1. Given
+        let mainCoord = BOMainCoordinator.init(navigationController: UINavigationController())
+        
+        //2. When
+        mainCoord.start()
+        
+        //3. Then
+        XCTAssert(mainCoord.navController.viewControllers.first! is BOGuideViewController, "First Screen should be guide screen")
+    }
+}
+
+//MARK: Image Asset Helper
+extension BestOffTests{
+    
+    func testImageAssetHelper() {
+        
+        //1. Given all the assets in the Assets folder
+        Asset.allCases.forEach {strImg in
+            
+            //2. When
+            guard let img = UIImage(named: strImg.rawValue) else{
+                
+                //3. Then
+                XCTFail(strImg.rawValue + "Failed to initialize in Asset Helper")
+                return
+            }
+            
+            //3. Then
+            XCTAssertNotNil(img)
+        }
     }
 }

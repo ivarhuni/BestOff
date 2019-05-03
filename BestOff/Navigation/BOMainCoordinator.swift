@@ -22,14 +22,24 @@ class BOMainCoordinator: BOCoordinator{
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+    //MARK: Start the app
+extension BOMainCoordinator{
     
-    //MARK:
     public func start() {
         
-        let guideVM = BOGuideViewModel(withIndexIndicator: 0)
-       guideVM.getGuides()
+        setupNavBar(navController: self.navController)
+        let guideVM = BOGuideViewModel()
+        guideVM.getGuides()
         let guideVC = BOGuideViewController(viewModel: guideVM)
         navController.viewControllers = [guideVC]
     }
 }
 
+extension BOMainCoordinator{
+    
+    func setupNavBar(navController: UINavigationController){
+        navController.isNavigationBarHidden = true
+    }
+}
