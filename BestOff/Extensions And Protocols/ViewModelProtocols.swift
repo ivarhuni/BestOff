@@ -29,6 +29,5 @@ protocol ViewModelDataSourceProtocol{
 protocol vmTableViewDelegate{
     
     func tableViewPressedAt(_ index: Int)
-    
     static func getCellHeightAt(indexPath: IndexPath) -> CGFloat
 }

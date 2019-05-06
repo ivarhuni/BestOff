@@ -30,6 +30,10 @@ extension BOGuideCell{
     public static func reuseIdentifier() -> String{
         return "BOGuideCell"
     }
+    
+    public static func nibName() -> String{
+        return "BOGuideCell"
+    }
 }
 
 extension BOGuideCell: GuideCell{

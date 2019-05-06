@@ -60,6 +60,7 @@ extension BOGuideViewController{
 extension BOGuideViewController{
     
     private func setupTable(){
+        
         registerCells()
         registerDelegate()
         styleTable()
@@ -67,6 +68,7 @@ extension BOGuideViewController{
     
     private func styleTable(){
         tableView.separatorStyle = .none
+        tableView.layer.cornerRadius = 10
     }
     
     private func registerCells(){
@@ -74,8 +76,11 @@ extension BOGuideViewController{
         let topCellNib = UINib(nibName: "TopGuideCell", bundle: nil)
         tableView.register(topCellNib, forCellReuseIdentifier: TopGuideCell.reuseIdentifier())
         
-        let guideCellNib = UINib(nibName: "BOGuideCell", bundle: nil)
+        let guideCellNib = UINib(nibName: BOGuideCell.nibName(), bundle: nil)
         tableView.register(guideCellNib, forCellReuseIdentifier: BOGuideCell.reuseIdentifier())
+        
+        let headerCell = UINib(nibName: BOCatHeaderCell.nibName(), bundle: nil)
+        tableView.register(headerCell, forCellReuseIdentifier: BOCatHeaderCell.reuseIdentifier())
     }
     
     private func registerDelegate(){

@@ -69,10 +69,8 @@ extension BOGuideViewModel: vmTableViewDelegate{
     
     static func getCellHeightAt(indexPath: IndexPath) -> CGFloat {
         
-        if indexPath.row == 0{
-            return 295
-            
-        }
+        if indexPath.row == 0 { return 71 }
+        if indexPath.row == 1 { return 295 }
         return 268
     }
 }

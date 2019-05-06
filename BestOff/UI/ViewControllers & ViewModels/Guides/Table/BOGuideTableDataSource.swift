@@ -30,7 +30,7 @@ extension BOGuideTableDataSource{
         guard let model = self.categoryModel.value else{
             return nil
         }
-        return model.items[indexPath.row]
+        return model.items[indexPath.row-1]
     }
     
     func numberOfRows() -> Int {
@@ -38,7 +38,7 @@ extension BOGuideTableDataSource{
         guard let model = self.categoryModel.value else{
             return 0
         }
-        return model.items.count
+        return model.items.count + 1
     }
     
     func numberOfSections() -> Int {
@@ -47,11 +47,17 @@ extension BOGuideTableDataSource{
     
     func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         
+        if indexPath.row == 0{
+            let headerCell = myTableView.dequeueReusableCell(withIdentifier: BOCatHeaderCell.reuseIdentifier()) as! BOCatHeaderCell
+            headerCell.setup()
+            return headerCell
+        }
+        
         guard let myItem = item(at: indexPath) else{
             return UITableViewCell()
         }
         
-        if indexPath.row == 0{
+        if ( indexPath.row == 1) {
             let topCell = myTableView.dequeueReusableCell(withIdentifier: TopGuideCell.reuseIdentifier()) as! TopGuideCell
             topCell.setupWith(item: myItem)
             return topCell
