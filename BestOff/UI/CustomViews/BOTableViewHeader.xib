@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BOTableViewHeader" customModule="BestOff" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BOAppHeaderView" customModule="BestOff" customModuleProvider="target">
             <connections>
                 <outlet property="btnHamburger" destination="Xg1-8x-tOT" id="I5K-Jl-L9k"/>
                 <outlet property="imgLeftIcon" destination="twg-WR-K47" id="JGg-MR-yX1"/>
@@ -23,7 +23,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="104"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Grapevine-icon" translatesAutoresizingMaskIntoConstraints="NO" id="twg-WR-K47">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Grapevine-icon" translatesAutoresizingMaskIntoConstraints="NO" id="twg-WR-K47">
                     <rect key="frame" x="20" y="37" width="27" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="TvF-Zw-8d5"/>
@@ -37,10 +37,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xg1-8x-tOT">
-                    <rect key="frame" x="315" y="32" width="40" height="40"/>
+                    <rect key="frame" x="318" y="39.5" width="25" height="25"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="40" id="7iA-FT-mJb"/>
-                        <constraint firstAttribute="height" constant="40" id="zy1-zf-B48"/>
+                        <constraint firstAttribute="width" constant="25" id="7iA-FT-mJb"/>
+                        <constraint firstAttribute="height" constant="25" id="zy1-zf-B48"/>
                     </constraints>
                     <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                     <connections>
@@ -50,7 +50,7 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Xg1-8x-tOT" secondAttribute="trailing" constant="20" id="5ca-5Q-SiH"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Xg1-8x-tOT" secondAttribute="trailing" constant="32" id="5ca-5Q-SiH"/>
                 <constraint firstItem="Xg1-8x-tOT" firstAttribute="centerY" secondItem="aEw-CV-OaH" secondAttribute="centerY" id="HP3-P3-5HY"/>
                 <constraint firstItem="twg-WR-K47" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="Mtw-Z8-NJI"/>
                 <constraint firstItem="aEw-CV-OaH" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="Uw1-G9-FdQ"/>

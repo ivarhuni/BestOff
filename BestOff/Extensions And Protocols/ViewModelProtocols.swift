@@ -30,5 +30,5 @@ protocol vmTableViewDelegate{
     
     func tableViewPressedAt(_ index: Int)
     
-    func getCellHeight() -> CGFloat
+    static func getCellHeightAt(indexPath: IndexPath) -> CGFloat
 }

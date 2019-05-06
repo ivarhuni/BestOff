@@ -13,7 +13,7 @@ import ReactiveKit
 struct BOHeaderViewModel{
     
     let animationDuration = 3.0
-    let btnAlphaValue: CGFloat = 0.75
+    let btnAlphaValue: CGFloat = 0.8
     
     static func getImageForButtonState(button: UIButton) -> UIImage{
         if button.state != .normal{

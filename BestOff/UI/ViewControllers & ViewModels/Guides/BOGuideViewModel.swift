@@ -49,6 +49,7 @@ extension BOGuideViewModel{
                 return
             }
             dataSource.setDataModel(model: dataModel)
+            
         }.dispose(in: disposeBag)
     }
 }
@@ -66,8 +67,13 @@ extension BOGuideViewModel: vmTableViewDelegate{
         print("table pressed at index")
     }
     
-    func getCellHeight() -> CGFloat {
-        return 100
+    static func getCellHeightAt(indexPath: IndexPath) -> CGFloat {
+        
+        if indexPath.row == 0{
+            return 295
+            
+        }
+        return 268
     }
 }
 

@@ -22,6 +22,9 @@ class BOGuideTableDataSource: NSObject, BOTableDataSourceProtocol {
     func setDataModel(model: BOCategoryModel) {
         categoryModel.value = model
     }
+}
+
+extension BOGuideTableDataSource{
     
     func item(at indexPath: IndexPath) -> BOCatItem? {
         guard let model = self.categoryModel.value else{
@@ -35,8 +38,6 @@ class BOGuideTableDataSource: NSObject, BOTableDataSourceProtocol {
         guard let model = self.categoryModel.value else{
             return 0
         }
-        print("arrItems Count: ")
-        print(model.items.count)
         return model.items.count
     }
     
@@ -46,13 +47,19 @@ class BOGuideTableDataSource: NSObject, BOTableDataSourceProtocol {
     
     func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = myTableView.dequeueReusableCell(withIdentifier: BOGuideCell.reuseIdentifier()) as! BOGuideCell
         guard let myItem = item(at: indexPath) else{
             return UITableViewCell()
         }
-        print("reusing cell")
-        cell.setupWithGuide(myItem)
-        return cell
+        
+        if indexPath.row == 0{
+            let topCell = myTableView.dequeueReusableCell(withIdentifier: TopGuideCell.reuseIdentifier()) as! TopGuideCell
+            topCell.setupWith(item: myItem)
+            return topCell
+        }
+        
+        let regularCell = myTableView.dequeueReusableCell(withIdentifier: BOGuideCell.reuseIdentifier()) as! BOGuideCell
+        regularCell.setupWith(item: myItem)
+        return regularCell
     }
 }
 

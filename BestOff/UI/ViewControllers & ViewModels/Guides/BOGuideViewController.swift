@@ -14,7 +14,7 @@ class BOGuideViewController: UIViewController {
     
     private let  viewModel: BOGuideViewModel
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var tableViewHeader: BOTableViewHeader!
+    @IBOutlet weak var tableViewHeader: BOAppHeaderView!
     
     
     //MARK: Initalization
@@ -60,11 +60,20 @@ extension BOGuideViewController{
 extension BOGuideViewController{
     
     private func setupTable(){
-        registerCell()
+        registerCells()
         registerDelegate()
+        styleTable()
     }
     
-    private func registerCell(){
+    private func styleTable(){
+        tableView.separatorStyle = .none
+    }
+    
+    private func registerCells(){
+        
+        let topCellNib = UINib(nibName: "TopGuideCell", bundle: nil)
+        tableView.register(topCellNib, forCellReuseIdentifier: TopGuideCell.reuseIdentifier())
+        
         let guideCellNib = UINib(nibName: "BOGuideCell", bundle: nil)
         tableView.register(guideCellNib, forCellReuseIdentifier: BOGuideCell.reuseIdentifier())
     }
@@ -76,11 +85,11 @@ extension BOGuideViewController{
 
 extension BOGuideViewController: UITableViewDelegate{
     
-    private func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return viewModel.getCellHeight()
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return BOGuideViewModel.getCellHeightAt(indexPath: indexPath)
     }
     
-    private func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.tableViewPressedAt(indexPath.row)
     }
 }

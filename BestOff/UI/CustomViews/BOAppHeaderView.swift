@@ -10,7 +10,7 @@ import UIKit
 import Bond
 import ReactiveKit
 
-class BOTableViewHeader: UIView {
+class BOAppHeaderView: UIView {
 
     //MARK: Properties
     @IBOutlet weak var imgLeftIcon: UIImageView!
@@ -47,7 +47,7 @@ class BOTableViewHeader: UIView {
 }
 
 //MARK: View Setup
-extension BOTableViewHeader{
+extension BOAppHeaderView{
     
     private func initView(){
         
@@ -65,7 +65,7 @@ extension BOTableViewHeader{
     }
     
     private func setupButton(){
-        btnHamburger.imageEdgeInsets = UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)
+
     }
     
     private func setText(){
@@ -91,7 +91,8 @@ extension BOTableViewHeader{
         
         btnHamburger.alpha = viewModel.btnAlphaValue
         btnHamburger.setTitleColor(.colorWhite, for: .normal)
-        btnHamburger.backgroundColor = .clear
+        
+        lblTitle.textColor = .white
     }
     
     private func setupFonts(){
@@ -101,7 +102,7 @@ extension BOTableViewHeader{
 }
 
 //MARK: UI Actions
-extension BOTableViewHeader{
+extension BOAppHeaderView{
     
     func toggleImage(){
         

@@ -7,6 +7,7 @@ target 'BestOff' do
   # Pods for BestOff
   pod 'ReactiveKit'
   pod 'Bond'
+  pod 'SDWebImage'
 
   target 'BestOffTests' do
     inherit! :search_paths
