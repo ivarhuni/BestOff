@@ -73,7 +73,7 @@ extension BOGuideViewController{
     
     private func registerCells(){
         
-        let topCellNib = UINib(nibName: "TopGuideCell", bundle: nil)
+        let topCellNib = UINib(nibName: TopGuideCell.nibName(), bundle: nil)
         tableView.register(topCellNib, forCellReuseIdentifier: TopGuideCell.reuseIdentifier())
         
         let guideCellNib = UINib(nibName: BOGuideCell.nibName(), bundle: nil)

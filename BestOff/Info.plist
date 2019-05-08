@@ -2,10 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Blanco-Regular.otf</string>
+		<string>Blanco-MediumItalic.otf</string>
+		<string>Blanco-Medium.otf</string>
+		<string>Blanco-Italic.otf</string>
+		<string>Blanco-ExtraBold.otf</string>
+		<string>Blanco-Bold.otf</string>
+		<string>Blanco-BoldItalic.otf</string>
+		<string>Blanco-ExtraBoldItalic.otf</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Grapevine's Best Off</string>
+	<string>Grapevine&apos;s Best Off</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

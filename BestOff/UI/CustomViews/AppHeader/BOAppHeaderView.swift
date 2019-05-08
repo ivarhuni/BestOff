@@ -101,7 +101,7 @@ extension BOAppHeaderView{
     
     private func setupFonts(){
         
-        //lblTitle.font = UIFont.guideHeadline
+        lblTitle.font = UIFont.guideHeadline
     }
 }
 

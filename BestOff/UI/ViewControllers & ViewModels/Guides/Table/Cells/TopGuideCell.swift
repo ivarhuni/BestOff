@@ -41,6 +41,10 @@ extension TopGuideCell{
         
         return "TopGuideCell"
     }
+    
+    static func nibName() -> String{
+        return "TopGuideCell"
+    }
 }
 
 //MARK:
@@ -84,9 +88,9 @@ extension TopGuideCell{
     
     private func setFonts(){
         
-        lblTitle.font = lblTitle.font.withSize(18)
-        lblDate.font = lblDate.font.withSize(14)
-        lblGrapevine.font = UIFont.boldSystemFont(ofSize: 14)
+        lblTitle.font = UIFont.categoryHeadline
+        lblDate.font = UIFont.gvImageText
+        lblGrapevine.font = UIFont.gvImageHeadline
     }
 }
 

@@ -8,150 +8,163 @@
 
 import UIKit
 
+
+//MARK: Generated Font Code from Zeplin
 extension UIFont {
 
   class var hugeHeadline: UIFont {
-    return UIFont(name: "Stratos-Bold", size: 40.0)!
+    return UIFont(name: "Blanco-ExtraBold", size: 40.0)!
   }
 
   class var categoryType: UIFont {
-    return UIFont(name: "Stratos-Bold", size: 24.0)!
+    return UIFont(name: "Blanco-ExtraBold", size: 24.0)!
   }
 
   class var catDtlItemTitle: UIFont {
-    return UIFont(name: "Stratos-Bold", size: 22.0)!
+    return UIFont(name: "Blanco-ExtraBold", size: 22.0)!
   }
 
   class var guideHeadline: UIFont {
-    return UIFont(name: "Stratos-Bold", size: 22.0)!
+    return UIFont(name: "Blanco-ExtraBold", size: 22.0)!
   }
 
   class var itemTitle: UIFont {
-    return UIFont(name: "Stratos-Bold", size: 22.0)!
+    return UIFont(name: "Blanco-ExtraBold", size: 22.0)!
   }
 
   class var catDtlItemSeperator: UIFont {
-    return UIFont(name: "Stratos-Bold", size: 20.0)!
+    return UIFont(name: "Blanco-ExtraBold", size: 20.0)!
   }
 
   class var favouriteOn: UIFont {
-    return UIFont(name: "Stratos-Bold", size: 20.0)!
+    return UIFont(name: "Blanco-ExtraBold", size: 20.0)!
   }
 
   class var catItemAbout: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 20.0)!
+    return UIFont(name: "Blanco", size: 20.0)!
   }
 
   class var wordsBy: UIFont {
-    return UIFont(name: "Stratos-Bold", size: 18.0)!
+    return UIFont(name: "Blanco-ExtraBold", size: 18.0)!
   }
 
   class var categoryHeadline: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 18.0)!
+    
+    for family in UIFont.familyNames {
+        
+        let sName: String = family as String
+        print("family: \(sName)")
+        
+        for name in UIFont.fontNames(forFamilyName: sName) {
+            print("name: \(name as String)")
+        }
+    }
+    
+    return UIFont(name: "Blanco", size: 18.0)!
   }
 
   class var favCatTitle: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 18.0)!
+    return UIFont(name: "Blanco", size: 18.0)!
   }
 
   class var favEditTxt: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 18.0)!
+    return UIFont(name: "Blanco", size: 18.0)!
   }
 
   class var favouriteOff: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 18.0)!
+    return UIFont(name: "Blanco", size: 18.0)!
   }
 
   class var categoryImageTitle: UIFont {
-    return UIFont(name: "Stratos-Bold", size: 16.0)!
+    return UIFont(name: "Blanco-ExtraBold", size: 16.0)!
   }
 
   class var redDirectionText: UIFont {
-    return UIFont(name: "Stratos-Bold", size: 16.0)!
+    return UIFont(name: "Blanco-ExtraBold", size: 16.0)!
   }
 
   class var catItemType: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 16.0)!
+    return UIFont(name: "Blanco", size: 16.0)!
   }
 
   class var favBtnSaveChanges: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 16.0)!
+    return UIFont(name: "Blanco", size: 16.0)!
   }
 
   class var catDtlItemYears: UIFont {
-    return UIFont(name: "Stratos-Bold", size: 14.0)!
+    return UIFont(name: "Blanco-ExtraBold", size: 14.0)!
   }
 
   class var gvImageHeadline: UIFont {
-    return UIFont(name: "Stratos-Bold", size: 14.0)!
+    return UIFont(name: "Blanco-ExtraBold", size: 14.0)!
   }
 
   class var authorName: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 14.0)!
+    return UIFont(name: "Blanco", size: 14.0)!
   }
 
   class var browseMoreCatItems: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 14.0)!
+    return UIFont(name: "Blanco", size: 14.0)!
   }
 
   class var catDtlItemAddressTitle: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 14.0)!
+    return UIFont(name: "Blanco", size: 14.0)!
   }
 
   class var catDtlItemBottomBack: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 14.0)!
+    return UIFont(name: "Blanco", size: 14.0)!
   }
 
   class var catDtlItemYearWinner: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 14.0)!
+    return UIFont(name: "Blanco", size: 14.0)!
   }
 
   class var catItemImgName: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 14.0)!
+    return UIFont(name: "Blanco", size: 14.0)!
   }
 
   class var gvImageText: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 14.0)!
+    return UIFont(name: "Blanco", size: 14.0)!
   }
 
   class var guideItem: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 14.0)!
+    return UIFont(name: "Blanco", size: 14.0)!
   }
 
   class var load: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 14.0)!
+    return UIFont(name: "Blanco", size: 14.0)!
   }
 
   class var rBlueBtnBorder: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 14.0)!
+    return UIFont(name: "Blanco", size: 14.0)!
   }
 
   class var rPeachBtnText: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 14.0)!
+    return UIFont(name: "Blanco", size: 14.0)!
   }
 
   class var rRedBtnText: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 14.0)!
+    return UIFont(name: "Blanco", size: 14.0)!
   }
 
   class var rvGrSmallBlack: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 14.0)!
+    return UIFont(name: "Blanco", size: 14.0)!
   }
 
   class var rYlwBtnText: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 14.0)!
+    return UIFont(name: "Blanco", size: 14.0)!
   }
 
   class var swipeRightTxt: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 14.0)!
+    return UIFont(name: "Blanco", size: 14.0)!
   }
 
   class var smallGrayRvg: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 14.0)!
+    return UIFont(name: "Blanco", size: 14.0)!
   }
 
   class var favBtnRemove: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 12.0)!
+    return UIFont(name: "Blanco", size: 12.0)!
   }
 
 }

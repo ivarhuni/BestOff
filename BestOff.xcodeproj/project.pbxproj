@@ -30,6 +30,17 @@
 		22AA85902277DC60003B15F1 /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA858F2277DC60003B15F1 /* UIColor+Additions.swift */; };
 		22B506DA224DAF2200F66FDB /* BOEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B506D9224DAF2200F66FDB /* BOEndpoint.swift */; };
 		22B506DD224DC09A00F66FDB /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B506DC224DC09A00F66FDB /* NetworkError.swift */; };
+		22D573852282553500748CF1 /* Blanco-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 22D5737D2282553400748CF1 /* Blanco-Italic.otf */; };
+		22D573862282553500748CF1 /* Blanco-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 22D5737E2282553400748CF1 /* Blanco-MediumItalic.otf */; };
+		22D573872282553500748CF1 /* Blanco-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 22D5737F2282553500748CF1 /* Blanco-ExtraBold.otf */; };
+		22D573882282553500748CF1 /* Blanco-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 22D573802282553500748CF1 /* Blanco-Medium.otf */; };
+		22D573892282553500748CF1 /* Blanco-ExtraBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 22D573812282553500748CF1 /* Blanco-ExtraBoldItalic.otf */; };
+		22D5738A2282553500748CF1 /* Blanco-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 22D573822282553500748CF1 /* Blanco-Regular.otf */; };
+		22D5738B2282553500748CF1 /* Blanco-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 22D573832282553500748CF1 /* Blanco-Bold.otf */; };
+		22D5738C2282553500748CF1 /* Blanco-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 22D573842282553500748CF1 /* Blanco-BoldItalic.otf */; };
+		22D5739522825C2400748CF1 /* BOMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5739422825C2400748CF1 /* BOMenuViewModel.swift */; };
+		22D5739722825E9300748CF1 /* BOMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5739622825E9300748CF1 /* BOMenuView.swift */; };
+		22D5739C22825F8300748CF1 /* BOMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22D5739B22825F8300748CF1 /* BOMenuView.xib */; };
 		22D6B8532252A3B4004A33DE /* BODetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D6B8522252A3B4004A33DE /* BODetailItem.swift */; };
 		22EB39BD222E0702001043E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB39BC222E0702001043E2 /* AppDelegate.swift */; };
 		22EB39BF222E0702001043E2 /* BOFeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB39BE222E0702001043E2 /* BOFeedController.swift */; };
@@ -97,6 +108,17 @@
 		22AA858F2277DC60003B15F1 /* UIColor+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Additions.swift"; sourceTree = "<group>"; };
 		22B506D9224DAF2200F66FDB /* BOEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOEndpoint.swift; sourceTree = "<group>"; };
 		22B506DC224DC09A00F66FDB /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		22D5737D2282553400748CF1 /* Blanco-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Blanco-Italic.otf"; sourceTree = "<group>"; };
+		22D5737E2282553400748CF1 /* Blanco-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Blanco-MediumItalic.otf"; sourceTree = "<group>"; };
+		22D5737F2282553500748CF1 /* Blanco-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Blanco-ExtraBold.otf"; sourceTree = "<group>"; };
+		22D573802282553500748CF1 /* Blanco-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Blanco-Medium.otf"; sourceTree = "<group>"; };
+		22D573812282553500748CF1 /* Blanco-ExtraBoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Blanco-ExtraBoldItalic.otf"; sourceTree = "<group>"; };
+		22D573822282553500748CF1 /* Blanco-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Blanco-Regular.otf"; sourceTree = "<group>"; };
+		22D573832282553500748CF1 /* Blanco-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Blanco-Bold.otf"; sourceTree = "<group>"; };
+		22D573842282553500748CF1 /* Blanco-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Blanco-BoldItalic.otf"; sourceTree = "<group>"; };
+		22D5739422825C2400748CF1 /* BOMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOMenuViewModel.swift; sourceTree = "<group>"; };
+		22D5739622825E9300748CF1 /* BOMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOMenuView.swift; sourceTree = "<group>"; };
+		22D5739B22825F8300748CF1 /* BOMenuView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BOMenuView.xib; sourceTree = "<group>"; };
 		22D6B8522252A3B4004A33DE /* BODetailItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BODetailItem.swift; sourceTree = "<group>"; };
 		22EB39B9222E0702001043E2 /* BestOff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BestOff.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22EB39BC222E0702001043E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -164,7 +186,6 @@
 		22267C2422656142007E7B40 /* Extensions And Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				22267C2D22656C34007E7B40 /* StyleGuideAutoGenerated.swift */,
 				22267C252265615E007E7B40 /* Extension+Collection.swift */,
 				22267C2922656175007E7B40 /* Extension+String.swift */,
 				22F8979E226625CF001E48BE /* BOTableProtocol.swift */,
@@ -230,6 +251,7 @@
 		22AA85882277D4E3003B15F1 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				22D5739822825E9E00748CF1 /* MenuView */,
 				222D8B8F227FC41A0039C860 /* AppHeader */,
 			);
 			path = CustomViews;
@@ -282,6 +304,47 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
+		22D5737B2282551800748CF1 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				22D5737C2282551F00748CF1 /* Fonts */,
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		22D5737C2282551F00748CF1 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				22267C2D22656C34007E7B40 /* StyleGuideAutoGenerated.swift */,
+				22D573832282553500748CF1 /* Blanco-Bold.otf */,
+				22D573842282553500748CF1 /* Blanco-BoldItalic.otf */,
+				22D5737F2282553500748CF1 /* Blanco-ExtraBold.otf */,
+				22D573812282553500748CF1 /* Blanco-ExtraBoldItalic.otf */,
+				22D5737D2282553400748CF1 /* Blanco-Italic.otf */,
+				22D573802282553500748CF1 /* Blanco-Medium.otf */,
+				22D5737E2282553400748CF1 /* Blanco-MediumItalic.otf */,
+				22D573822282553500748CF1 /* Blanco-Regular.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		22D5739322825C1000748CF1 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		22D5739822825E9E00748CF1 /* MenuView */ = {
+			isa = PBXGroup;
+			children = (
+				22D5739422825C2400748CF1 /* BOMenuViewModel.swift */,
+				22D5739622825E9300748CF1 /* BOMenuView.swift */,
+				22D5739B22825F8300748CF1 /* BOMenuView.xib */,
+			);
+			path = MenuView;
+			sourceTree = "<group>";
+		};
 		22EB39B0222E0702001043E2 = {
 			isa = PBXGroup;
 			children = (
@@ -307,6 +370,7 @@
 		22EB39BB222E0702001043E2 /* BestOff */ = {
 			isa = PBXGroup;
 			children = (
+				22D5737B2282551800748CF1 /* New Group */,
 				22AA85892277D4E9003B15F1 /* UI */,
 				22F8979A2266139B001E48BE /* App */,
 				22F897892265FA3E001E48BE /* Navigation */,
@@ -352,6 +416,7 @@
 		22F8978E2265FBE3001E48BE /* ViewControllers & ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				22D5739322825C1000748CF1 /* Menu */,
 				22AA85852277C97F003B15F1 /* Launch Screen */,
 				22F8978F2265FBEE001E48BE /* Guides */,
 			);
@@ -517,12 +582,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22D5739C22825F8300748CF1 /* BOMenuView.xib in Resources */,
 				22F897932265FC09001E48BE /* BOGuideViewController.xib in Resources */,
+				22D5738B2282553500748CF1 /* Blanco-Bold.otf in Resources */,
 				22EB39C4222E0703001043E2 /* Assets.xcassets in Resources */,
+				22D573872282553500748CF1 /* Blanco-ExtraBold.otf in Resources */,
+				22D573852282553500748CF1 /* Blanco-Italic.otf in Resources */,
+				22D573892282553500748CF1 /* Blanco-ExtraBoldItalic.otf in Resources */,
+				22D573862282553500748CF1 /* Blanco-MediumItalic.otf in Resources */,
 				22AA85872277C99A003B15F1 /* LaunchScreen.storyboard in Resources */,
 				222D8B99227FC8130039C860 /* BOCatHeaderCell.xib in Resources */,
+				22D5738A2282553500748CF1 /* Blanco-Regular.otf in Resources */,
+				22D573882282553500748CF1 /* Blanco-Medium.otf in Resources */,
 				22F897A6226630DB001E48BE /* BOGuideCell.xib in Resources */,
 				223EE428227BC6630048D42E /* TopGuideCell.xib in Resources */,
+				22D5738C2282553500748CF1 /* Blanco-BoldItalic.otf in Resources */,
 				22AA858D2277D518003B15F1 /* BOTableViewHeader.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -655,10 +729,12 @@
 				22AA85842277C53B003B15F1 /* ShowsErrorProtocol.swift in Sources */,
 				22F897A122662D63001E48BE /* BOGuideTableDataSource.swift in Sources */,
 				22F897AE22663B7F001E48BE /* ViewModelProtocols.swift in Sources */,
+				22D5739722825E9300748CF1 /* BOMenuView.swift in Sources */,
 				22EB39BF222E0702001043E2 /* BOFeedController.swift in Sources */,
 				22F8979F226625CF001E48BE /* BOTableProtocol.swift in Sources */,
 				22F897882265FA10001E48BE /* BOCoordinator.swift in Sources */,
 				22446C9B227F29F50017512F /* GuideCell.swift in Sources */,
+				22D5739522825C2400748CF1 /* BOMenuViewModel.swift in Sources */,
 				22F897922265FC09001E48BE /* BOGuideViewController.swift in Sources */,
 				22EB39BD222E0702001043E2 /* AppDelegate.swift in Sources */,
 				223EE427227BC6630048D42E /* TopGuideCell.swift in Sources */,
