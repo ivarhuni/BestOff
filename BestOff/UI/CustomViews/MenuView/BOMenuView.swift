@@ -28,6 +28,17 @@ class BOMenuView: UIView{
     @IBOutlet weak var imgViewFavourites: UIImageView!
     @IBOutlet weak var lblFavourites: UILabel!
     
+    @IBOutlet weak var leadingSelectionRvk: NSLayoutConstraint!
+    @IBOutlet weak var leadingSelectionIce: NSLayoutConstraint!
+    @IBOutlet weak var leadingSelFav: NSLayoutConstraint!
+    @IBOutlet weak var leadingImgRvk: NSLayoutConstraint!
+    @IBOutlet weak var leadingImgIce: NSLayoutConstraint!
+    @IBOutlet weak var leadingImgFav: NSLayoutConstraint!
+    @IBOutlet weak var leadingLblRvk: NSLayoutConstraint!
+    @IBOutlet weak var leadingLblIce: NSLayoutConstraint!
+    @IBOutlet weak var leadingLblFav: NSLayoutConstraint!
+    
+    
     private var viewModel: BOMenuViewModel
     
     override init(frame: CGRect) {
@@ -44,7 +55,7 @@ class BOMenuView: UIView{
         commonInit()
     }
     
-    func commonInit(){
+    private func commonInit(){
         initView()
         setupView()
     }
@@ -63,45 +74,26 @@ extension BOMenuView{
     
     func setupView(){
         
+        style()
         setBindings()
-        styleDefault()
         setupChildViews()
-        
+        setupGestureRec()
     }
     
-    func styleFor(screenType: ScreenType){
+    func setupGestureRec(){
         
-        switch screenType {
+        let rvkTap = UITapGestureRecognizer(target: self, action: #selector(self.handleTapRvk(_:)))
+        viewReykjavik.addGestureRecognizer(rvkTap)
+        viewReykjavik.isUserInteractionEnabled = true
         
-        case .reykjavik:
-            
+        let iceTap = UITapGestureRecognizer(target: self, action: #selector(self.handleTapIce(_:)))
+        viewIceland.addGestureRecognizer(iceTap)
+        viewIceland.isUserInteractionEnabled = true
         
-        case .iceland:
-            
-        case .favourites:
-            
-        }
-    }
-    
-    func styleViewFor(screenType: ScreenType){
+        let favTap = UITapGestureRecognizer(target: self, action: #selector(self.handleTapFav(_:)))
+        viewFavourites.addGestureRecognizer(favTap)
+        viewFavourites.isUserInteractionEnabled = true
         
-        switch screenType {
-            
-        case .reykjavik:
-            lblRvk.font = UIFont.favouriteOn
-            lblFavourites.font = UIFont.favouriteOff
-            lblIceland.font = UIFont.favouriteOff
-            
-        case .iceland:
-            lblIceland.font = UIFont.favouriteOn
-            lblRvk.font = UIFont.favouriteOff
-            lblFavourites.font = UIFont.favouriteOff
-            
-        case .favourites:
-            lblFavourites.font = UIFont.favouriteOn
-            lblIceland.font = UIFont.favouriteOff
-            lblRvk.font = UIFont.favouriteOff
-        }
     }
     
     func setupChildViews(){
@@ -111,7 +103,31 @@ extension BOMenuView{
         
         lblRvk.text = "BEST OF REYKJAVÍK"
         lblIceland.text = "BEST OF ICELAND"
-        lblFavourites.text = "Favourites"
+        lblFavourites.text = "FAVOURITES"
+        
+        lblRvk.font = UIFont.favouriteOn
+        lblIceland.font = UIFont.favouriteOff
+        lblFavourites.font = UIFont.favouriteOff
+    }
+    
+    func style(){
+        
+        self.view.backgroundColor = .colorRed
+        viewReykjavik.backgroundColor = .colorRed
+        viewIceland.backgroundColor = .colorRed
+        viewFavourites.backgroundColor = .colorRed
+        
+        lblRvk.textColor = .white
+        lblIceland.textColor = .white
+        lblFavourites.textColor = .white
+    }
+}
+
+//MARK: Public methods
+extension BOMenuView{
+    
+    public func setupWithType(screenType: ScreenType){
+        viewModel.selectedScreenType.value = screenType
     }
 }
 
@@ -119,6 +135,132 @@ extension BOMenuView{
     
     private func setBindings(){
         
-        print("setup bindings")
+        _ = viewModel.selectedScreenType.observeOn(.main).observeNext{ [weak self] selectedType in
+            guard let this = self else { return }
+            
+            this.animateSelectionForScreenType(screenType: selectedType)
+        }
+    }
+}
+
+//MARK: Action methods
+extension BOMenuView{
+    
+    private func styleViewFor(screenType: ScreenType){
+        
+        switch screenType {
+            
+        case .reykjavik:
+            lblRvk.font = UIFont.favouriteOn
+            lblFavourites.font = UIFont.favouriteOff
+            lblIceland.font = UIFont.favouriteOff
+            leadingSelectionRvk.constant = viewModel.leadingConstantOn
+            leadingSelFav.constant = viewModel.leadingConstantOff
+            leadingSelectionIce.constant = viewModel.leadingConstantOff
+            
+            
+        case .iceland:
+            lblIceland.font = UIFont.favouriteOn
+            lblRvk.font = UIFont.favouriteOff
+            lblFavourites.font = UIFont.favouriteOff
+            leadingSelectionRvk.constant = viewModel.leadingConstantOff
+            leadingSelFav.constant = viewModel.leadingConstantOff
+            leadingSelectionIce.constant = viewModel.leadingConstantOn
+            
+        case .favourites:
+            lblFavourites.font = UIFont.favouriteOn
+            lblIceland.font = UIFont.favouriteOff
+            lblRvk.font = UIFont.favouriteOff
+            leadingSelectionRvk.constant = viewModel.leadingConstantOff
+            leadingSelFav.constant = viewModel.leadingConstantOn
+            leadingSelectionIce.constant = viewModel.leadingConstantOff
+        }
+    }
+    
+    private func animateSelectionForScreenType(screenType: ScreenType){
+        
+        self.view.layoutIfNeeded()
+        switch screenType {
+        case .reykjavik:
+            
+            UIView.animate(withDuration: viewModel.animationDuration, animations: {
+                
+                self.leadingSelectionRvk.constant = self.viewModel.leadingConstantOn
+                self.leadingSelFav.constant = self.viewModel.leadingConstantOff
+                self.leadingSelectionIce.constant = self.viewModel.leadingConstantOff
+                
+                self.leadingImgRvk.constant = self.viewModel.leadingImgConstantOn
+                self.leadingImgIce.constant = self.viewModel.leadingImgConstantOff
+                self.leadingImgFav.constant = self.viewModel.leadingImgConstantOff
+                
+                self.leadingLblRvk.constant = self.viewModel.leadingLblConstantOn
+                self.leadingLblIce.constant = self.viewModel.leadingLblConstantOff
+                self.leadingLblFav.constant = self.viewModel.leadingLblConstantOff
+                
+                self.styleViewFor(screenType: screenType)
+                
+                self.view.layoutIfNeeded()
+            }) { _ in }
+            
+        case .iceland:
+            
+            UIView.animate(withDuration: viewModel.animationDuration, animations: {
+                
+                self.leadingSelectionRvk.constant = self.viewModel.leadingConstantOff
+                self.leadingSelFav.constant = self.viewModel.leadingConstantOff
+                self.leadingSelectionIce.constant = self.viewModel.leadingConstantOn
+                
+                self.leadingImgRvk.constant = self.viewModel.leadingImgConstantOff
+                self.leadingImgIce.constant = self.viewModel.leadingImgConstantOn
+                self.leadingImgFav.constant = self.viewModel.leadingImgConstantOff
+                
+                self.leadingLblRvk.constant = self.viewModel.leadingLblConstantOff
+                self.leadingLblIce.constant = self.viewModel.leadingLblConstantOn
+                self.leadingLblFav.constant = self.viewModel.leadingLblConstantOff
+                
+                self.styleViewFor(screenType: screenType)
+                
+                self.view.layoutIfNeeded()
+            }) { _ in }
+            
+        case .favourites:
+            
+            UIView.animate(withDuration: viewModel.animationDuration, animations: {
+                
+                self.leadingSelectionRvk.constant = self.viewModel.leadingConstantOff
+                self.leadingSelFav.constant = self.viewModel.leadingConstantOn
+                self.leadingSelectionIce.constant = self.viewModel.leadingConstantOff
+                
+                self.leadingImgRvk.constant = self.viewModel.leadingImgConstantOff
+                self.leadingImgIce.constant = self.viewModel.leadingImgConstantOff
+                self.leadingImgFav.constant = self.viewModel.leadingImgConstantOn
+                
+                self.leadingLblRvk.constant = self.viewModel.leadingLblConstantOff
+                self.leadingLblIce.constant = self.viewModel.leadingLblConstantOff
+                self.leadingLblFav.constant = self.viewModel.leadingLblConstantOn
+                
+                self.styleViewFor(screenType: screenType)
+                
+                self.view.layoutIfNeeded()
+            }) { _ in }
+        }
+    }
+}
+
+extension BOMenuView{
+    
+    @objc func handleTapRvk(_ sender: UITapGestureRecognizer) {
+        
+        animateSelectionForScreenType(screenType: .reykjavik)
+    }
+    
+    @objc func handleTapIce(_ sender: UITapGestureRecognizer) {
+        
+        animateSelectionForScreenType(screenType: .iceland)
+    }
+    
+    @objc func handleTapFav(_ sender: UITapGestureRecognizer) {
+        
+        animateSelectionForScreenType(screenType: .favourites)
     }
 }

@@ -27,6 +27,10 @@ extension UIFont {
   class var guideHeadline: UIFont {
     return UIFont(name: "Blanco-ExtraBold", size: 22.0)!
   }
+    
+  class var guideHeadlineFav: UIFont {
+    return UIFont(name: "Blanco-ExtraBold", size: 20.0)!
+  }
 
   class var itemTitle: UIFont {
     return UIFont(name: "Blanco-ExtraBold", size: 22.0)!

@@ -15,6 +15,7 @@
                 <outlet property="tableView" destination="k8a-cX-C0R" id="7q5-3C-E2Q"/>
                 <outlet property="tableViewHeader" destination="mdM-CR-r9D" id="Sm8-E5-MG6"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="viewMenu" destination="D4N-cA-N2p" id="6jC-4t-DZe"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -33,15 +34,23 @@
                         <constraint firstAttribute="height" constant="90" id="rSa-FW-tna"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D4N-cA-N2p" customClass="BOMenuView" customModule="BestOff" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="110" width="375" height="557"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="mdM-CR-r9D" secondAttribute="trailing" id="2Sk-HN-awJ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="D4N-cA-N2p" secondAttribute="trailing" id="4ee-Fa-6dH"/>
                 <constraint firstAttribute="trailingMargin" secondItem="k8a-cX-C0R" secondAttribute="trailing" id="EV5-3U-wpG"/>
                 <constraint firstItem="k8a-cX-C0R" firstAttribute="top" secondItem="mdM-CR-r9D" secondAttribute="bottom" id="JXK-7k-N9Y"/>
                 <constraint firstAttribute="bottomMargin" secondItem="k8a-cX-C0R" secondAttribute="bottom" id="OOF-xH-9rF"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="D4N-cA-N2p" secondAttribute="bottom" id="SXH-Qg-Khm"/>
+                <constraint firstItem="D4N-cA-N2p" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Ube-qL-yxo"/>
                 <constraint firstItem="mdM-CR-r9D" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="WyC-tG-Sq7"/>
                 <constraint firstItem="mdM-CR-r9D" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="jCU-hc-DSh"/>
+                <constraint firstItem="D4N-cA-N2p" firstAttribute="top" secondItem="mdM-CR-r9D" secondAttribute="bottom" id="pWu-gm-vak"/>
                 <constraint firstItem="k8a-cX-C0R" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="qLI-fe-u0M"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>

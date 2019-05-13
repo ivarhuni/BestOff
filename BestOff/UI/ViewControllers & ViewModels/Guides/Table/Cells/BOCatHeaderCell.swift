@@ -11,6 +11,7 @@ import UIKit
 class BOCatHeaderCell: UITableViewCell {
 
     @IBOutlet weak var lblCategoryTitle: UILabel!
+    @IBOutlet weak var lblSwipe: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -40,5 +41,9 @@ extension BOCatHeaderCell{
         lblCategoryTitle.textColor = .colorBlack
         lblCategoryTitle.text = "GUIDES"
         lblCategoryTitle.font = UIFont.categoryType
+        
+        lblSwipe.textColor = .colorGreyDot
+        lblSwipe.text = "Swipe Right"
+        lblSwipe.font = UIFont.swipeRightTxt
     }
 }

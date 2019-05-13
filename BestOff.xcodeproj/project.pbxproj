@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		221EC5AE228A10E50051EC42 /* DoubleItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221EC5AC228A10E50051EC42 /* DoubleItemCell.swift */; };
+		221EC5AF228A10E50051EC42 /* DoubleItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 221EC5AD228A10E50051EC42 /* DoubleItemCell.xib */; };
 		22267C2122654E19007E7B40 /* BOCategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22267C2022654E19007E7B40 /* BOCategoryService.swift */; };
 		22267C2322654E8E007E7B40 /* BOCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22267C2222654E8E007E7B40 /* BOCategoryModel.swift */; };
 		22267C262265615E007E7B40 /* Extension+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22267C252265615E007E7B40 /* Extension+Collection.swift */; };
@@ -85,6 +87,8 @@
 
 /* Begin PBXFileReference section */
 		20E0E67D1EEFED2DADD21D2E /* Pods_BestOffTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestOffTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		221EC5AC228A10E50051EC42 /* DoubleItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleItemCell.swift; sourceTree = "<group>"; };
+		221EC5AD228A10E50051EC42 /* DoubleItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DoubleItemCell.xib; sourceTree = "<group>"; };
 		22267C2022654E19007E7B40 /* BOCategoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCategoryService.swift; sourceTree = "<group>"; };
 		22267C2222654E8E007E7B40 /* BOCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCategoryModel.swift; sourceTree = "<group>"; };
 		22267C252265615E007E7B40 /* Extension+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Collection.swift"; sourceTree = "<group>"; };
@@ -183,6 +187,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		221EC5B0228A11210051EC42 /* DoubleItemCell */ = {
+			isa = PBXGroup;
+			children = (
+				221EC5AC228A10E50051EC42 /* DoubleItemCell.swift */,
+				221EC5AD228A10E50051EC42 /* DoubleItemCell.xib */,
+			);
+			path = DoubleItemCell;
+			sourceTree = "<group>";
+		};
 		22267C2422656142007E7B40 /* Extensions And Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,6 +264,7 @@
 		22AA85882277D4E3003B15F1 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				221EC5B0228A11210051EC42 /* DoubleItemCell */,
 				22D5739822825E9E00748CF1 /* MenuView */,
 				222D8B8F227FC41A0039C860 /* AppHeader */,
 			);
@@ -326,13 +340,6 @@
 				22D573822282553500748CF1 /* Blanco-Regular.otf */,
 			);
 			path = Fonts;
-			sourceTree = "<group>";
-		};
-		22D5739322825C1000748CF1 /* Menu */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Menu;
 			sourceTree = "<group>";
 		};
 		22D5739822825E9E00748CF1 /* MenuView */ = {
@@ -416,7 +423,6 @@
 		22F8978E2265FBE3001E48BE /* ViewControllers & ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				22D5739322825C1000748CF1 /* Menu */,
 				22AA85852277C97F003B15F1 /* Launch Screen */,
 				22F8978F2265FBEE001E48BE /* Guides */,
 			);
@@ -596,6 +602,7 @@
 				22D573882282553500748CF1 /* Blanco-Medium.otf in Resources */,
 				22F897A6226630DB001E48BE /* BOGuideCell.xib in Resources */,
 				223EE428227BC6630048D42E /* TopGuideCell.xib in Resources */,
+				221EC5AF228A10E50051EC42 /* DoubleItemCell.xib in Resources */,
 				22D5738C2282553500748CF1 /* Blanco-BoldItalic.otf in Resources */,
 				22AA858D2277D518003B15F1 /* BOTableViewHeader.xib in Resources */,
 			);
@@ -739,6 +746,7 @@
 				22EB39BD222E0702001043E2 /* AppDelegate.swift in Sources */,
 				223EE427227BC6630048D42E /* TopGuideCell.swift in Sources */,
 				22267C2322654E8E007E7B40 /* BOCategoryModel.swift in Sources */,
+				221EC5AE228A10E50051EC42 /* DoubleItemCell.swift in Sources */,
 				22F897AC22663AFF001E48BE /* BOViewModel.swift in Sources */,
 				22D6B8532252A3B4004A33DE /* BODetailItem.swift in Sources */,
 				22267C262265615E007E7B40 /* Extension+Collection.swift in Sources */,

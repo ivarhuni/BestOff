@@ -20,11 +20,21 @@ struct BOMenuViewModel{
     
     let selectedScreenType = Observable<ScreenType>(.reykjavik)
     
-    init(withSelectedScreen: ScreenType){
-        
+    let leadingConstantOff: CGFloat = -5.0
+    let leadingConstantOn: CGFloat = 0.0
+    let leadingImgConstantOn: CGFloat = 25.0
+    let leadingImgConstantOff: CGFloat = 20
+    let leadingLblConstantOff: CGFloat = 66
+    let leadingLblConstantOn: CGFloat = 71
+    
+    let animationDuration = 0.25
+    
+    init(withSelectedScreen type: ScreenType){
+        selectedScreenType.value = type
     }
     
-    func select(screen: ScreenType){
-        
+    func select(screenType: ScreenType){
+        selectedScreenType.value = screenType
     }
+    
 }

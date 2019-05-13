@@ -12,18 +12,25 @@ import ReactiveKit
 
 
 
-
+protocol BOAppHeaderViewDelegate: AnyObject {
+    
+    func didPressRightButton(shouldShowMenu: Bool)
+}
 
 class BOAppHeaderView: UIView {
-
+    
     //MARK: Properties
     @IBOutlet weak var imgLeftIcon: UIImageView!
     @IBOutlet var view: UIView!
     @IBOutlet weak var btnHamburger: UIButton!
     @IBOutlet weak var lblTitle: UILabel!
+
     
     //MARK: Properties
     let viewModel = BOHeaderViewModel()
+    
+    //MARK: Button Delegate
+    weak var delegate:BOAppHeaderViewDelegate?
     
     override init(frame: CGRect) {
         
@@ -42,10 +49,18 @@ class BOAppHeaderView: UIView {
         initView()
         setupView()
         styleView()
+        setBindings()
     }
     
     @IBAction func btnPressed(_ sender: Any) {
-        toggleImage()
+        guard let btnDelegate = self.delegate else {
+            
+            print("Button Header Delegate Not Set")
+            return
+        }
+        
+        self.viewModel.didPressRightButton()
+        btnDelegate.didPressRightButton(shouldShowMenu: !self.viewModel.isHamburgerActive.value)
     }
     
 }
@@ -65,11 +80,6 @@ extension BOAppHeaderView{
         
         setIcons()
         setText()
-        setupButton()
-    }
-    
-    private func setupButton(){
-
     }
     
     private func setText(){
@@ -105,15 +115,71 @@ extension BOAppHeaderView{
     }
 }
 
-//MARK: UI Actions
 extension BOAppHeaderView{
     
-    func toggleImage(){
+    func setBindings(){
         
-        //??
-        UIView.animate(withDuration: viewModel.animationDuration) {
+        _ = viewModel.isHamburgerActive.observeOn(.main).observeNext{ value in
             
-            self.btnHamburger.setBackgroundImage(BOHeaderViewModel.getImageForButtonState(button: self.btnHamburger), for: .normal)
+            if value{
+                self.animateToHamburger()
+                self.animateToNormalText()
+            }
+            else{
+                self.animateToXIcon()
+                self.animateToFavouriteTxt()
+            }
         }
+    }
+    
+    func animateToHamburger(){
+        
+        UIView.transition(with: self.btnHamburger,
+                          duration: self.viewModel.btnAnimationDuration,
+                          options: .transitionCrossDissolve,
+                          animations: { [weak self] in
+                            
+                            guard let this = self else { return }
+                            this.btnHamburger.setBackgroundImage(Asset.hamburger.img, for: .normal)
+            }, completion: nil)
+    }
+    
+    func animateToXIcon(){
+        
+        UIView.transition(with: self.btnHamburger,
+                          duration: self.viewModel.btnAnimationDuration,
+                          options: .transitionCrossDissolve,
+                          animations: { [weak self] in
+                            
+                            guard let this = self else { return }
+                            this.btnHamburger.setBackgroundImage(Asset.xIcon.img, for: .normal)
+            }, completion: nil)
+    }
+    
+    func animateToFavouriteTxt(){
+        
+        UIView.transition(with: self.lblTitle,
+                          duration: self.viewModel.btnAnimationDuration,
+                          options: .transitionCrossDissolve,
+                          animations: { [weak self] in
+                            
+                            guard let this = self else { return }
+                            this.lblTitle.font = UIFont.guideHeadlineFav
+                            this.lblTitle.text = "REYKJAVÍK GRAPEVINE"
+            }, completion: nil)
+    }
+    
+    func animateToNormalText(){
+        
+        
+        UIView.transition(with: self.lblTitle,
+                          duration: self.viewModel.btnAnimationDuration,
+                          options: .transitionCrossDissolve,
+                          animations: { [weak self] in
+                            
+                            guard let this = self else { return }
+                            this.lblTitle.font = UIFont.guideHeadline
+                            this.lblTitle.text = "BEST OF REYKJAVÍK"
+            }, completion: nil)
     }
 }

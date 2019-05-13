@@ -10,15 +10,22 @@ import Foundation
 import Bond
 import ReactiveKit
 
+//protocol BOHeaderViewBtnProtocol {
+//
+//
+//}
+
 struct BOHeaderViewModel{
     
-    let animationDuration = 3.0
     let btnAlphaValue: CGFloat = 0.7
+    let isHamburgerActive = Observable<Bool>(true)
+    let btnAnimationDuration:Double = 0.4
+    var headerText = "BEST OF REYKJAVIK"
     
-    static func getImageForButtonState(button: UIButton) -> UIImage{
-        if button.state != .normal{
-            return Asset.xIcon.img
-        }
-        return Asset.hamburger.img
+    func didPressRightButton(){
+        
+        self.isHamburgerActive.value = !self.isHamburgerActive.value
     }
+    
+    
 }

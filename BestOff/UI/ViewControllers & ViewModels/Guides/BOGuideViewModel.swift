@@ -22,6 +22,9 @@ class BOGuideViewModel: BOViewModel, ViewModelDataSourceProtocol {
     let type = Endpoint.guides
     let disposeBag = DisposeBag()
     
+    //MARK: Menu
+    let menuOpen = Observable<Bool>(false)
+    
     //MARK: Init
     required init(index: Int? = 0){
         

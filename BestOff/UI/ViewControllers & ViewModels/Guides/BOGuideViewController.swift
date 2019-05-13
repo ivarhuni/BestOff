@@ -10,12 +10,18 @@ import UIKit
 import ReactiveKit
 import Bond
 
+protocol MenuController{
+    
+    func openMenu()
+    func hideMenu()
+}
+
 class BOGuideViewController: UIViewController {
     
     private let  viewModel: BOGuideViewModel
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewHeader: BOAppHeaderView!
-    
+    @IBOutlet weak var viewMenu: BOMenuView!
     
     //MARK: Initalization
     init(viewModel: BOGuideViewModel){
@@ -37,7 +43,8 @@ class BOGuideViewController: UIViewController {
 extension BOGuideViewController{
     
     private func setupVC(){
-        setupHeader()
+        setupMenu()
+        setupHeaderDelegate()
         setupBackground()
         setupTable()
         setupBindings()
@@ -47,9 +54,19 @@ extension BOGuideViewController{
 //MARK: Header
 extension BOGuideViewController{
     
-    func setupHeader(){
-
+    func setupMenu(){
+        print("")
+        viewMenu.setupWithType(screenType: .reykjavik)
+        viewMenu.alpha = 0
+        print("")
     }
+    
+    func setupHeaderDelegate(){
+        tableViewHeader.delegate = self
+    }
+}
+
+extension BOGuideViewController{
     
     func setupBackground(){
         view.backgroundColor = UIColor.colorRed
@@ -114,6 +131,37 @@ extension BOGuideViewController{
             this.tableView.reloadData()
         }
         
+        _ = viewModel.menuOpen.observeOn(.main).observeNext{ value in
+            
+            if value{
+                self.openMenu()
+            }
+            else{
+                self.hideMenu()
+            }
+        }
+    }
+}
+
+extension BOGuideViewController: BOAppHeaderViewDelegate{
+    
+    func didPressRightButton(shouldShowMenu: Bool) {
+        self.viewModel.menuOpen.value = shouldShowMenu
+    }
+}
+
+extension BOGuideViewController: MenuController{
+    
+    func openMenu() {
         
+        UIView.animate(withDuration: 0.5) {
+            self.viewMenu.alpha = 1
+        }
+    }
+    
+    func hideMenu() {
+        UIView.animate(withDuration: 0.5) {
+            self.viewMenu.alpha = 0
+        }
     }
 }

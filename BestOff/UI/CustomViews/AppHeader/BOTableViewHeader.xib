@@ -37,10 +37,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xg1-8x-tOT">
-                    <rect key="frame" x="318" y="39.5" width="25" height="25"/>
+                    <rect key="frame" x="327" y="40.5" width="23" height="23"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="25" id="7iA-FT-mJb"/>
-                        <constraint firstAttribute="height" constant="25" id="zy1-zf-B48"/>
+                        <constraint firstAttribute="width" constant="23" id="7iA-FT-mJb"/>
+                        <constraint firstAttribute="height" constant="23" id="zy1-zf-B48"/>
                     </constraints>
                     <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                     <connections>
@@ -50,7 +50,7 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Xg1-8x-tOT" secondAttribute="trailing" constant="32" id="5ca-5Q-SiH"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Xg1-8x-tOT" secondAttribute="trailing" constant="25" id="5ca-5Q-SiH"/>
                 <constraint firstItem="twg-WR-K47" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="Mtw-Z8-NJI"/>
                 <constraint firstItem="aEw-CV-OaH" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="Uw1-G9-FdQ"/>
                 <constraint firstItem="twg-WR-K47" firstAttribute="centerY" secondItem="aEw-CV-OaH" secondAttribute="centerY" id="VGX-ti-pqO"/>
@@ -63,11 +63,6 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="87" y="55"/>
         </view>
-        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0uh-dj-la5">
-            <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <state key="normal" title="Button"/>
-        </button>
     </objects>
     <resources>
         <image name="Grapevine-icon" width="89" height="100"/>
