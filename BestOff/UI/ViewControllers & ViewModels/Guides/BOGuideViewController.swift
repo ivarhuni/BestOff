@@ -55,10 +55,8 @@ extension BOGuideViewController{
 extension BOGuideViewController{
     
     func setupMenu(){
-        print("")
         viewMenu.setupWithType(screenType: .reykjavik)
         viewMenu.alpha = 0
-        print("")
     }
     
     func setupHeaderDelegate(){
@@ -84,8 +82,11 @@ extension BOGuideViewController{
     }
     
     private func styleTable(){
+        
+        let tableCornerRadius:CGFloat = 10.0
         tableView.separatorStyle = .none
-        tableView.layer.cornerRadius = 10
+        tableView.layer.cornerRadius = tableCornerRadius
+        tableView.allowsSelection = false
     }
     
     private func registerCells(){
@@ -93,11 +94,11 @@ extension BOGuideViewController{
         let topCellNib = UINib(nibName: TopGuideCell.nibName(), bundle: nil)
         tableView.register(topCellNib, forCellReuseIdentifier: TopGuideCell.reuseIdentifier())
         
-        let guideCellNib = UINib(nibName: BOGuideCell.nibName(), bundle: nil)
-        tableView.register(guideCellNib, forCellReuseIdentifier: BOGuideCell.reuseIdentifier())
-        
         let headerCell = UINib(nibName: BOCatHeaderCell.nibName(), bundle: nil)
         tableView.register(headerCell, forCellReuseIdentifier: BOCatHeaderCell.reuseIdentifier())
+        
+        let doubleItemCell = UINib(nibName: DoubleItemCell.nibName(), bundle: nil)
+        tableView.register(doubleItemCell, forCellReuseIdentifier: DoubleItemCell.reuseIdentifier())
     }
     
     private func registerDelegate(){
@@ -131,13 +132,14 @@ extension BOGuideViewController{
             this.tableView.reloadData()
         }
         
-        _ = viewModel.menuOpen.observeOn(.main).observeNext{ value in
+        _ = viewModel.menuOpen.observeOn(.main).observeNext{ [weak self] value in
             
+            guard let this = self else{ return }
             if value{
-                self.openMenu()
+                this.openMenu()
             }
             else{
-                self.hideMenu()
+                this.hideMenu()
             }
         }
     }
@@ -154,14 +156,16 @@ extension BOGuideViewController: MenuController{
     
     func openMenu() {
         
-        UIView.animate(withDuration: 0.5) {
-            self.viewMenu.alpha = 1
+        UIView.animate(withDuration: viewModel.menuAnimationDuration) { [weak self] in
+            guard let this = self else { return }
+            this.viewMenu.alpha = this.viewModel.alphaVisible
         }
     }
     
     func hideMenu() {
-        UIView.animate(withDuration: 0.5) {
-            self.viewMenu.alpha = 0
+        UIView.animate(withDuration: viewModel.menuAnimationDuration) { [weak self] in
+            guard let this = self else { return }
+            this.viewMenu.alpha = this.viewModel.alphaInvisible
         }
     }
 }

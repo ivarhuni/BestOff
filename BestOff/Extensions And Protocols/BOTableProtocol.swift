@@ -17,7 +17,7 @@ protocol BOTableDataSourceProtocol : UITableViewDataSource{
     var categoryModel: Observable<BOCategoryModel?> { get }
     
     func setDataModel(model: BOCategoryModel)
-    func item(at indexPath: IndexPath) -> BOCatItem?
+    func items(at indexPath: IndexPath) -> [BOCatItem]
     func numberOfRows() -> Int
     func numberOfSections() -> Int
     func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell

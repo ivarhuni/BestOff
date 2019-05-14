@@ -22,6 +22,11 @@ class BOGuideViewModel: BOViewModel, ViewModelDataSourceProtocol {
     let type = Endpoint.guides
     let disposeBag = DisposeBag()
     
+    //MARK: Magic number animation/duration constants
+    let menuAnimationDuration: Double = 0.5
+    let alphaVisible: CGFloat = 1.0
+    let alphaInvisible: CGFloat = 0
+    
     //MARK: Menu
     let menuOpen = Observable<Bool>(false)
     
@@ -72,16 +77,29 @@ extension BOGuideViewModel: vmTableViewDelegate{
     
     static func getCellHeightAt(indexPath: IndexPath) -> CGFloat {
         
-        if indexPath.row == 0 { return 71 }
-        if indexPath.row == 1 { return 295 }
-        return 268
-    }
-}
-
-//MARK: Header
-extension BOGuideViewModel{
-    
-    func setHeaderHeight(){
+        let txtHeaderRowHeight:CGFloat = 71.0
+        if indexPath.row == 0 { return txtHeaderRowHeight }
         
+        let bigCellRowHeight:CGFloat = 310
+        if indexPath.row == 1 { return bigCellRowHeight }
+        
+        //DoubleItemCellHeight
+        let leftSpacingToItemImg:CGFloat = 20.0
+        let rightSpacingToItemImg:CGFloat = 10.0
+        
+        let itemImgWidthAndHeight = (UIScreen.main.bounds.width - 2 * ( leftSpacingToItemImg - rightSpacingToItemImg))/2.0
+        
+        print("itemImgWidthAndHeight")
+        print(itemImgWidthAndHeight)
+        
+        let lblTitleSpacingToImg:CGFloat = 10
+        let lblTitleSpacginToBottom:CGFloat = 10
+        
+        let lblHeight:CGFloat = 42.0
+        
+        let itemRowHeight:CGFloat = itemImgWidthAndHeight + lblTitleSpacingToImg + lblTitleSpacginToBottom + lblHeight
+        
+        
+        return itemRowHeight
     }
 }

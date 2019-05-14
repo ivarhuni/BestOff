@@ -65,12 +65,16 @@ extension TopGuideCell{
         setColors()
         setFonts()
         setDefaults()
+        self.clipsToBounds = true
+        self.imgViewBig.clipsToBounds = true
+        self.imgViewBig.contentMode = .scaleAspectFill
+        self.imgViewIcon.contentMode = .scaleAspectFill
     }
     
     private func setDefaults(){
         
         lblGrapevine.text = "Reykjavík Grapevine"
-        lblDate.text = "13. march 19'"
+        lblDate.text = ""
         imgViewIcon.image = Asset.grapevineIcon.img
         lblTitle.minimumScaleFactor = 0.25
         lblTitle.numberOfLines = 0
@@ -107,6 +111,7 @@ extension TopGuideCell: GuideCell{
     
     private func setTextsFrom(item: BOCatItem){
         lblTitle.text = item.title
+        
     }
     
     private func setImageWithImgURL(strURL: String){

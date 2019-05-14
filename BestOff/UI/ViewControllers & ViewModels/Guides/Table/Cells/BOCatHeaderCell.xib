@@ -20,19 +20,19 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LN3-a6-rhS">
-                        <rect key="frame" x="20" y="36.5" width="42" height="21"/>
+                        <rect key="frame" x="20" y="35.5" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8W-hy-hoV">
-                        <rect key="frame" x="225" y="41.5" width="42" height="21"/>
+                        <rect key="frame" x="225" y="38.5" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="HNB-GL-0yU">
-                        <rect key="frame" x="277" y="33.5" width="23" height="37"/>
+                        <rect key="frame" x="277" y="30.5" width="23" height="37"/>
                         <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="currentPageIndicatorTintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </pageControl>
@@ -41,12 +41,12 @@
                     <constraint firstItem="HNB-GL-0yU" firstAttribute="leading" secondItem="c8W-hy-hoV" secondAttribute="trailing" constant="10" id="6ru-vn-4WB"/>
                     <constraint firstItem="c8W-hy-hoV" firstAttribute="centerY" secondItem="HNB-GL-0yU" secondAttribute="centerY" id="Gf3-rI-9EK"/>
                     <constraint firstAttribute="trailing" secondItem="HNB-GL-0yU" secondAttribute="trailing" constant="20" id="V6X-xW-8Ln"/>
-                    <constraint firstItem="HNB-GL-0yU" firstAttribute="centerY" secondItem="LN3-a6-rhS" secondAttribute="centerY" constant="5" id="aLp-UC-k8e"/>
+                    <constraint firstItem="HNB-GL-0yU" firstAttribute="centerY" secondItem="LN3-a6-rhS" secondAttribute="centerY" constant="3" id="aLp-UC-k8e"/>
                     <constraint firstItem="LN3-a6-rhS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="yfQ-ma-bAa"/>
                 </constraints>
             </tableViewCellContentView>
             <constraints>
-                <constraint firstItem="LN3-a6-rhS" firstAttribute="centerY" secondItem="njF-e1-oar" secondAttribute="centerY" id="pmx-fF-Leh"/>
+                <constraint firstItem="LN3-a6-rhS" firstAttribute="centerY" secondItem="njF-e1-oar" secondAttribute="centerY" constant="-1" id="pmx-fF-Leh"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>

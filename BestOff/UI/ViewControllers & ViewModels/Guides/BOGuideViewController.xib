@@ -23,8 +23,8 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="k8a-cX-C0R">
-                    <rect key="frame" x="16" y="110" width="343" height="557"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k8a-cX-C0R">
+                    <rect key="frame" x="0.0" y="110" width="375" height="557"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mdM-CR-r9D" customClass="BOAppHeaderView" customModule="BestOff" customModuleProvider="target">
@@ -43,15 +43,15 @@
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="mdM-CR-r9D" secondAttribute="trailing" id="2Sk-HN-awJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="D4N-cA-N2p" secondAttribute="trailing" id="4ee-Fa-6dH"/>
-                <constraint firstAttribute="trailingMargin" secondItem="k8a-cX-C0R" secondAttribute="trailing" id="EV5-3U-wpG"/>
                 <constraint firstItem="k8a-cX-C0R" firstAttribute="top" secondItem="mdM-CR-r9D" secondAttribute="bottom" id="JXK-7k-N9Y"/>
+                <constraint firstItem="k8a-cX-C0R" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="L3K-yO-Yne"/>
                 <constraint firstAttribute="bottomMargin" secondItem="k8a-cX-C0R" secondAttribute="bottom" id="OOF-xH-9rF"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="D4N-cA-N2p" secondAttribute="bottom" id="SXH-Qg-Khm"/>
                 <constraint firstItem="D4N-cA-N2p" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Ube-qL-yxo"/>
                 <constraint firstItem="mdM-CR-r9D" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="WyC-tG-Sq7"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="k8a-cX-C0R" secondAttribute="trailing" id="gTW-oT-SO8"/>
                 <constraint firstItem="mdM-CR-r9D" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="jCU-hc-DSh"/>
                 <constraint firstItem="D4N-cA-N2p" firstAttribute="top" secondItem="mdM-CR-r9D" secondAttribute="bottom" id="pWu-gm-vak"/>
-                <constraint firstItem="k8a-cX-C0R" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="qLI-fe-u0M"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="120.8" y="146.17691154422789"/>

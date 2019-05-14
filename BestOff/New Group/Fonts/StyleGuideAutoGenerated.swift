@@ -53,17 +53,6 @@ extension UIFont {
   }
 
   class var categoryHeadline: UIFont {
-    
-    for family in UIFont.familyNames {
-        
-        let sName: String = family as String
-        print("family: \(sName)")
-        
-        for name in UIFont.fontNames(forFamilyName: sName) {
-            print("name: \(name as String)")
-        }
-    }
-    
     return UIFont(name: "Blanco", size: 18.0)!
   }
 
@@ -105,6 +94,10 @@ extension UIFont {
 
   class var authorName: UIFont {
     return UIFont(name: "Blanco", size: 14.0)!
+  }
+    
+  class var smallAuthorName: UIFont{
+    return UIFont(name: "Blanco", size: 12.0)!
   }
 
   class var browseMoreCatItems: UIFont {
