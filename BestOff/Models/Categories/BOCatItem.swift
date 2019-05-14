@@ -19,6 +19,7 @@ struct BOCatItem : Codable {
     let title : String
     let url : String
     let author: BOAuthor
+    let strTimeStamp: String
     
     enum CodingKeys: String, CodingKey {
         case contentText = "content_text"
@@ -41,5 +42,23 @@ struct BOCatItem : Codable {
         title = try values.decode(String.self, forKey: .title)
         url = try values.decode(String.self, forKey: .url)
         author = try values.decode(BOAuthor.self, forKey: .author)
+        strTimeStamp = ""
+       
     }
+    
+    func getStrDateFromStrURL(strURL: String) -> String{
+        
+        let arrURL = self.url.split(separator: "/")
+        
+        let indexOfLastObject = arrURL.count - 1
+        
+        guard let strDay = arrURL[safe: indexOfLastObject] else { return "" }
+        guard let strMonth = arrURL[safe: indexOfLastObject - 1] else { return "" }
+        guard let strYear = arrURL[safe: indexOfLastObject - 2 ] else { return "" }
+
+        
+        return strDay + ". " + strMonth + " " + strYear + "'"
+    }
+    
+    
 }
