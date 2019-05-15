@@ -112,6 +112,8 @@ extension TopGuideCell: GuideCell{
     private func setTextsFrom(item: BOCatItem){
         lblTitle.text = item.title
         
+        guard let strDate = BOCatItem.getStrDateFromStrURL(strURL: item.url) else { return }
+        lblDate.text = strDate
     }
     
     private func setImageWithImgURL(strURL: String){

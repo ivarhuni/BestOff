@@ -24,6 +24,10 @@ class BOAppHeaderView: UIView {
     @IBOutlet var view: UIView!
     @IBOutlet weak var btnHamburger: UIButton!
     @IBOutlet weak var lblTitle: UILabel!
+    
+    @IBOutlet weak var btnWidth: NSLayoutConstraint!
+    @IBOutlet weak var btnHeight: NSLayoutConstraint!
+    
 
     
     //MARK: Properties
@@ -134,6 +138,7 @@ extension BOAppHeaderView{
     
     func animateToHamburger(){
         
+        self.setNeedsLayout()
         UIView.transition(with: self.btnHamburger,
                           duration: self.viewModel.btnAnimationDuration,
                           options: .transitionCrossDissolve,
@@ -141,11 +146,15 @@ extension BOAppHeaderView{
                             
                             guard let this = self else { return }
                             this.btnHamburger.setBackgroundImage(Asset.hamburger.img, for: .normal)
+                            this.btnWidth.constant = this.viewModel.originalBtnWidthHeight
+                            this.btnHeight.constant = this.viewModel.originalBtnWidthHeight
+                            this.view.layoutIfNeeded()
             }, completion: nil)
     }
     
     func animateToXIcon(){
         
+        self.setNeedsLayout()
         UIView.transition(with: self.btnHamburger,
                           duration: self.viewModel.btnAnimationDuration,
                           options: .transitionCrossDissolve,
@@ -153,6 +162,10 @@ extension BOAppHeaderView{
                             
                             guard let this = self else { return }
                             this.btnHamburger.setBackgroundImage(Asset.xIcon.img, for: .normal)
+                            this.btnWidth.constant = this.viewModel.xIconWidthHeight
+                            this.btnHeight.constant = this.viewModel.xIconWidthHeight
+                            this.view.layoutIfNeeded()
+                            
             }, completion: nil)
     }
     

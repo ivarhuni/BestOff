@@ -13,6 +13,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BOAppHeaderView" customModule="BestOff" customModuleProvider="target">
             <connections>
                 <outlet property="btnHamburger" destination="Xg1-8x-tOT" id="I5K-Jl-L9k"/>
+                <outlet property="btnHeight" destination="zy1-zf-B48" id="ndi-cW-ALa"/>
+                <outlet property="btnWidth" destination="7iA-FT-mJb" id="Rrp-2n-qUn"/>
                 <outlet property="imgLeftIcon" destination="twg-WR-K47" id="JGg-MR-yX1"/>
                 <outlet property="lblTitle" destination="aEw-CV-OaH" id="Jac-7l-hl4"/>
                 <outlet property="view" destination="iN0-l3-epB" id="gTN-Wd-cgI"/>
@@ -37,10 +39,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xg1-8x-tOT">
-                    <rect key="frame" x="327" y="40.5" width="23" height="23"/>
+                    <rect key="frame" x="325" y="39.5" width="25" height="25"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="23" id="7iA-FT-mJb"/>
-                        <constraint firstAttribute="height" constant="23" id="zy1-zf-B48"/>
+                        <constraint firstAttribute="width" constant="25" id="7iA-FT-mJb"/>
+                        <constraint firstAttribute="height" constant="25" id="zy1-zf-B48"/>
                     </constraints>
                     <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                     <connections>

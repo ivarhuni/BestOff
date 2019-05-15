@@ -22,6 +22,9 @@ struct BOHeaderViewModel{
     let btnAnimationDuration:Double = 0.4
     var headerText = "BEST OF REYKJAVIK"
     
+    let originalBtnWidthHeight:CGFloat = 25.0
+    let xIconWidthHeight:CGFloat = 20.0
+    
     func didPressRightButton(){
         
         self.isHamburgerActive.value = !self.isHamburgerActive.value
