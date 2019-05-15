@@ -86,7 +86,6 @@ extension BOGuideViewController{
         let tableCornerRadius:CGFloat = 10.0
         tableView.separatorStyle = .none
         tableView.layer.cornerRadius = tableCornerRadius
-        tableView.allowsSelection = false
     }
     
     private func registerCells(){

@@ -45,5 +45,7 @@ extension BOCatHeaderCell{
         lblSwipe.textColor = .colorGreyDot
         lblSwipe.text = "Swipe Right"
         lblSwipe.font = UIFont.swipeRightTxt
+        
+        self.selectionStyle = .none
     }
 }

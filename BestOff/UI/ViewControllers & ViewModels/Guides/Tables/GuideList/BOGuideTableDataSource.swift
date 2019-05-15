@@ -10,7 +10,7 @@ import UIKit
 import ReactiveKit
 import Bond
 
-class BOGuideTableDataSource: NSObject, BOTableDataSourceProtocol {
+class BOGuideTableDataSource: NSObject, BOCategoryListDataSourceProtocol {
     
     var categoryModel = Observable<BOCategoryModel?>(nil)
     
@@ -67,11 +67,11 @@ extension BOGuideTableDataSource{
         if indexPath.row == BigCellIndexRow + 1 {
             
             guard let leftItem = model.items[safe: 1] else {
-                print("no right item bigcellIndexRow + 1")
+                print("no right item bigcellIndexRow + 1 BOGUIDETABLEDATASOURCE")
                 return []
             }
             guard let rightItem = model.items[safe: 2] else {
-                print("no Right Item bigCellindexRow + 1")
+                print("no Right Item bigCellindexRow + 1 BOGUIDETABLEDATASOURCE")
                 return [leftItem]
             }
             return [ leftItem, rightItem ]
@@ -79,17 +79,15 @@ extension BOGuideTableDataSource{
         
         guard let leftItem = model.items[safe: indexPath.row] else {
             
-            print("no left item  >= 3")
+            print("no left item  >= 3   BOGUIDETABLEDATASOURCE")
             return []
         }
         guard let rightItem = model.items[safe: indexPath.row + 2] else {
             
-            print("no right item >= 3")
+            print("no right item >= 3 BOGUIDETABLEDATASOURCE")
             return [leftItem]
         }
-        print("indexPathRow: ")
-        print(indexPath.row)
-        print("both right and left")
+
         return [leftItem, rightItem]
     }
     

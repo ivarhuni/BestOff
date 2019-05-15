@@ -22,7 +22,7 @@ protocol ViewModelNetworkProtocol {
 }
 
 protocol ViewModelDataSourceProtocol{
-    var dataSource: Observable<BOTableDataSourceProtocol?> { get }
+    var dataSource: Observable<BOCategoryListDataSourceProtocol?> { get }
     var numberOfSections: Int { get }
 }
 

@@ -14,7 +14,7 @@ import UIKit
 class BOGuideViewModel: BOViewModel, ViewModelDataSourceProtocol {
     
     //MARK: Protocol properties
-    var dataSource = Observable<BOTableDataSourceProtocol?>(nil)
+    var dataSource = Observable<BOCategoryListDataSourceProtocol?>(nil)
     var numberOfSections = 0
     let swipeIndexIndicator = Observable<Int>(0)
     
@@ -72,7 +72,11 @@ extension BOGuideViewModel{
 extension BOGuideViewModel: vmTableViewDelegate{
     
     func tableViewPressedAt(_ index: Int) {
-        print("table pressed at index")
+        
+        if index == 1{
+            
+            
+        }
     }
     
     static func getCellHeightAt(indexPath: IndexPath) -> CGFloat {
@@ -88,9 +92,6 @@ extension BOGuideViewModel: vmTableViewDelegate{
         let rightSpacingToItemImg:CGFloat = 10.0
         
         let itemImgWidthAndHeight = (UIScreen.main.bounds.width - 2 * ( leftSpacingToItemImg - rightSpacingToItemImg))/2.0
-        
-        print("itemImgWidthAndHeight")
-        print(itemImgWidthAndHeight)
         
         let lblTitleSpacingToImg:CGFloat = 10
         let lblTitleSpacginToBottom:CGFloat = 10

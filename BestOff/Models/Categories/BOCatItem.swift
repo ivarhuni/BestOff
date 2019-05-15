@@ -19,6 +19,8 @@ struct BOCatItem : Codable {
     let title : String
     let url : String
     let author: BOAuthor
+    var detailItem: BOCategoryDetail?
+    var strTimeStamp: String?
     
     enum CodingKeys: String, CodingKey {
         case contentText = "content_text"
@@ -41,12 +43,36 @@ struct BOCatItem : Codable {
         title = try values.decode(String.self, forKey: .title)
         url = try values.decode(String.self, forKey: .url)
         author = try values.decode(BOAuthor.self, forKey: .author)
+        detailItem = nil
+        strTimeStamp = nil
+        
+        setDetailItem()
+        tryToSetTimeStamp()
     }
 }
 
 extension BOCatItem{
     
-    static func getStrDateFromStrURL(strURL: String) -> String?{
+    mutating func setDetailItem(){
+        
+        guard let categoryDetail = DetailItemFactory.createCategoryDetailFromText(categoryItemContentText: contentText, strHTML: contentHtml) else {
+            
+            print("Creating CategoryDetail failed in :" + self.title)
+            return
+        }
+        detailItem = categoryDetail
+    }
+}
+
+
+extension BOCatItem{
+    
+    mutating func tryToSetTimeStamp(){
+        guard let timeStampFromURL = getStrDateFromStrURL(strURL: self.url) else { return }
+        strTimeStamp = timeStampFromURL
+    }
+    
+    func getStrDateFromStrURL(strURL: String) -> String?{
         
         let arrURL = strURL.split(separator: "/")
         
@@ -54,7 +80,7 @@ extension BOCatItem{
         
         guard let strDay = arrURL[safe: indexOfLastObject-1] else { return nil }
         guard let strMonth = arrURL[safe: indexOfLastObject - 2] else { return nil }
-        guard let strMonthName = getMonthNameFromStrMonthNumber(strMonthName: String(strMonth)) else { return nil }
+        guard let strMonthName = BOCatItem.getMonthNameFromStrMonthNumber(strMonthName: String(strMonth)) else { return nil }
         guard let strYear = arrURL[safe: indexOfLastObject - 3] else { return nil }
         
         if strYear.count != 4 { return nil }

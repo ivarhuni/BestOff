@@ -69,6 +69,8 @@ extension TopGuideCell{
         self.imgViewBig.clipsToBounds = true
         self.imgViewBig.contentMode = .scaleAspectFill
         self.imgViewIcon.contentMode = .scaleAspectFill
+        
+        self.selectionStyle = .none
     }
     
     private func setDefaults(){
@@ -106,13 +108,11 @@ extension TopGuideCell: GuideCell{
         
         setTextsFrom(item: item)
         setImageWithImgURL(strURL: item.image)
-        
     }
     
     private func setTextsFrom(item: BOCatItem){
         lblTitle.text = item.title
-        
-        guard let strDate = BOCatItem.getStrDateFromStrURL(strURL: item.url) else { return }
+        guard let strDate = item.strTimeStamp else { return }
         lblDate.text = strDate
     }
     
@@ -121,7 +121,6 @@ extension TopGuideCell: GuideCell{
         guard let urlFromString = URL.init(string: strURL) else { return }
         imgView.contentMode = .scaleAspectFill
         imgView.sd_setImage(with: urlFromString, placeholderImage: nil, options: [], completed: nil)
-        print(imgView.frame.size.height)
     }
 }
 

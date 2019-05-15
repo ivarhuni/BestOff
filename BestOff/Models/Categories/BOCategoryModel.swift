@@ -17,7 +17,6 @@ struct BOCategoryModel: Codable{
     let title : String
     let userComment : String
     let version : String
-    var detailItems: [BOCategoryDetail]
     
     enum CodingKeys: String, CodingKey {
         case descriptionField = "description"
@@ -38,7 +37,5 @@ struct BOCategoryModel: Codable{
         title = try values.decode(String.self, forKey: .title)
         userComment = try values.decode(String.self, forKey: .userComment)
         version = try values.decode(String.self, forKey: .version)
-        //  Populated in DetailItemFactory
-        detailItems = []
     }
 }

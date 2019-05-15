@@ -77,6 +77,7 @@ extension DoubleItemCell{
     
     func setupWithItems(arrItems: [BOCatItem]){
         
+        disableSelection()
         styleBackgroundViews()
         setupLabels()
         setupImgViews()
@@ -86,6 +87,10 @@ extension DoubleItemCell{
         guard let rightItem = arrItems[safe: 1] else { return }
         setupWithRightItem(item: rightItem)
      }
+    
+    func disableSelection(){
+        self.selectionStyle = .none
+    }
     
     func setupImgViews(){
         

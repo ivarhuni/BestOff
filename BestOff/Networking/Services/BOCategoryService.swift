@@ -28,7 +28,7 @@ struct BOCategoryService{
                 var categoryData = try JSONDecoder().decode(BOCategoryModel.self, from: jsonAsData)
                 
                 let arrDetailItems = categoryData.items.compactMap{ DetailItemFactory.createCategoryDetailFromText(categoryItemContentText: $0.contentText, strHTML: $0.contentHtml) }
-                categoryData.detailItems = arrDetailItems
+                //categoryData.detailItems = arrDetailItems
                 completionHandler(categoryData, nil)
             }
             catch let jsonErr {
