@@ -14,9 +14,11 @@ import UIKit
 class BOGuideViewModel: BOViewModel, ViewModelDataSourceProtocol {
     
     //MARK: Protocol properties
-    var dataSource = Observable<BOCategoryListDataSourceProtocol?>(nil)
+    var listDataSource = Observable<BOCategoryListDataSourceProtocol?>(nil)
+    var detailListDataSource = Observable<BOCategoryDetailListProtocol?>(nil)
     var numberOfSections = 0
     let swipeIndexIndicator = Observable<Int>(0)
+    let tableDataSourceAnimationDuration:Double = 0.4
     
     //MARK: Other Properties
     let type = Endpoint.guides
@@ -27,6 +29,9 @@ class BOGuideViewModel: BOViewModel, ViewModelDataSourceProtocol {
     let alphaVisible: CGFloat = 1.0
     let alphaInvisible: CGFloat = 0
     
+    //RowHeights used in both types of tables
+    let bigCellRowHeight:CGFloat = 310
+    
     //MARK: Menu
     let menuOpen = Observable<Bool>(false)
     
@@ -34,7 +39,7 @@ class BOGuideViewModel: BOViewModel, ViewModelDataSourceProtocol {
     required init(index: Int? = 0){
         
         super.init()
-        self.dataSource.value = BOGuideTableDataSource()
+        self.listDataSource.value = BOGuideTableDataSource()
         createBonding()
         guard let idx = index else{
             return
@@ -53,7 +58,7 @@ extension BOGuideViewModel{
             guard let dataModel = model else{
                 return
             }
-            guard let dataSource = self.dataSource.value else{
+            guard let dataSource = self.listDataSource.value else{
                 return
             }
             dataSource.setDataModel(model: dataModel)
@@ -73,18 +78,54 @@ extension BOGuideViewModel: vmTableViewDelegate{
     
     func tableViewPressedAt(_ index: Int) {
         
-        if index == 1{
-            
-            
-        }
+        let bigCellIndex = 1
+        
+        if index == bigCellIndex{ changeDataSourceToDetail() }
     }
     
-    static func getCellHeightAt(indexPath: IndexPath) -> CGFloat {
+    func getListCellHeightAt(indexPath: IndexPath) -> CGFloat {
+        
+        if isDetailDataSourceActive(){
+            return getDetailDataSourceHeightFor(indexPath: indexPath)
+        }
+        else{
+            return getRegularListDataSourceHeightFor(indexPath: indexPath)
+        }
+    }
+
+    
+    private func changeDataSourceToDetail(){
+        
+        guard let topCellItem = listDataSource.value?.categoryModel.value?.items[safe: 0] else {
+            
+            print("unable to get topcell item")
+            return
+        }
+        
+        detailListDataSource.value = BOGuideDetailTableDataSource(catItem: topCellItem)
+    }
+    
+    private func isDetailDataSourceActive() -> Bool{
+        if detailListDataSource.value == nil { return false }
+        return true
+    }
+    
+    private func getDetailDataSourceHeightFor(indexPath: IndexPath) -> CGFloat{
+        
+        let bigImgTopCellIndex = 0
+        
+        if indexPath.row == bigImgTopCellIndex{
+            return bigCellRowHeight
+        }
+        return 10
+    }
+    
+    private func getRegularListDataSourceHeightFor(indexPath: IndexPath) -> CGFloat{
         
         let txtHeaderRowHeight:CGFloat = 71.0
         if indexPath.row == 0 { return txtHeaderRowHeight }
         
-        let bigCellRowHeight:CGFloat = 310
+        
         if indexPath.row == 1 { return bigCellRowHeight }
         
         //DoubleItemCellHeight
@@ -100,7 +141,14 @@ extension BOGuideViewModel: vmTableViewDelegate{
         
         let itemRowHeight:CGFloat = itemImgWidthAndHeight + lblTitleSpacingToImg + lblTitleSpacginToBottom + lblHeight
         
-        
         return itemRowHeight
+    }
+}
+
+extension BOGuideViewModel{
+    
+    func changeDataSourceTo(dataSource: BOCategoryListDataSourceProtocol){
+        
+        
     }
 }

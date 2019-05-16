@@ -25,6 +25,8 @@ struct BOHeaderViewModel{
     let originalBtnWidthHeight:CGFloat = 25.0
     let xIconWidthHeight:CGFloat = 20.0
     
+    let isDetailActive = Observable<Bool>(false)
+    
     func didPressRightButton(){
         
         self.isHamburgerActive.value = !self.isHamburgerActive.value

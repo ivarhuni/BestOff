@@ -16,8 +16,11 @@
                 <outlet property="btnHeight" destination="zy1-zf-B48" id="ndi-cW-ALa"/>
                 <outlet property="btnWidth" destination="7iA-FT-mJb" id="Rrp-2n-qUn"/>
                 <outlet property="imgLeftIcon" destination="twg-WR-K47" id="JGg-MR-yX1"/>
+                <outlet property="imgViewBackBtn" destination="Dei-2T-Daj" id="1QP-t3-jDE"/>
+                <outlet property="lblBackTitle" destination="SBM-bA-rzD" id="hoI-nX-6EA"/>
                 <outlet property="lblTitle" destination="aEw-CV-OaH" id="Jac-7l-hl4"/>
                 <outlet property="view" destination="iN0-l3-epB" id="gTN-Wd-cgI"/>
+                <outlet property="viewBackBtn" destination="tdr-BT-DLG" id="b7j-Y3-hcI"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -49,11 +52,41 @@
                         <action selector="btnPressed:" destination="-1" eventType="touchUpInside" id="Gtd-vP-pA7"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tdr-BT-DLG">
+                    <rect key="frame" x="20" y="32" width="285" height="40"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SBM-bA-rzD">
+                            <rect key="frame" x="25" y="8.5" width="260" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dei-2T-Daj">
+                            <rect key="frame" x="0.0" y="13" width="8" height="14"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="14" id="WTl-DG-W1p"/>
+                                <constraint firstAttribute="width" constant="8" id="Xcb-cE-NKr"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="SBM-bA-rzD" secondAttribute="trailing" id="8fv-Sr-COR"/>
+                        <constraint firstItem="SBM-bA-rzD" firstAttribute="leading" secondItem="Dei-2T-Daj" secondAttribute="leading" constant="25" id="Dy0-UN-05p"/>
+                        <constraint firstItem="Dei-2T-Daj" firstAttribute="leading" secondItem="tdr-BT-DLG" secondAttribute="leading" id="b3u-bg-whp"/>
+                        <constraint firstItem="SBM-bA-rzD" firstAttribute="centerY" secondItem="Dei-2T-Daj" secondAttribute="centerY" constant="-1" id="jno-FW-fMA"/>
+                        <constraint firstAttribute="height" constant="40" id="x7b-E9-rQV"/>
+                        <constraint firstItem="Dei-2T-Daj" firstAttribute="centerY" secondItem="tdr-BT-DLG" secondAttribute="centerY" id="zBA-uX-WSH"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Xg1-8x-tOT" secondAttribute="trailing" constant="25" id="5ca-5Q-SiH"/>
                 <constraint firstItem="twg-WR-K47" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="Mtw-Z8-NJI"/>
+                <constraint firstItem="Xg1-8x-tOT" firstAttribute="leading" secondItem="tdr-BT-DLG" secondAttribute="trailing" constant="20" id="RnN-Se-QJr"/>
+                <constraint firstItem="tdr-BT-DLG" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="TG1-1w-HEo"/>
+                <constraint firstItem="tdr-BT-DLG" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="TY8-Um-y6j"/>
                 <constraint firstItem="aEw-CV-OaH" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="Uw1-G9-FdQ"/>
                 <constraint firstItem="twg-WR-K47" firstAttribute="centerY" secondItem="aEw-CV-OaH" secondAttribute="centerY" id="VGX-ti-pqO"/>
                 <constraint firstItem="twg-WR-K47" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="cU8-3Z-Cj6"/>
@@ -63,7 +96,7 @@
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="87" y="55"/>
+            <point key="canvasLocation" x="85.599999999999994" y="54.872563718140931"/>
         </view>
     </objects>
     <resources>

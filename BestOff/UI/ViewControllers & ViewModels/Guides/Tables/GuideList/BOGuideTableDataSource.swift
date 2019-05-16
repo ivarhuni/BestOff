@@ -129,6 +129,7 @@ extension BOGuideTableDataSource{
         let arrItems = items(at: indexPath)
         let doubleItemCell = myTableView.dequeueReusableCell(withIdentifier: DoubleItemCell.reuseIdentifier()) as! DoubleItemCell
         doubleItemCell.setupWithItems(arrItems: arrItems)
+        
         return doubleItemCell
     }
 }

@@ -100,8 +100,8 @@ extension TopGuideCell{
     }
 }
 
-//MARK:
-extension TopGuideCell: GuideCell{
+//MARK: Guide List Setup
+extension TopGuideCell{
     public func setupWith(item: BOCatItem) {
         
         setupDefault()
@@ -123,5 +123,3 @@ extension TopGuideCell: GuideCell{
         imgView.sd_setImage(with: urlFromString, placeholderImage: nil, options: [], completed: nil)
     }
 }
-
-

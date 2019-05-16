@@ -9,7 +9,3 @@
 import Foundation
 import UIKit
 
-protocol GuideCell{
-    
-    func setupWith(item: BOCatItem)
-}

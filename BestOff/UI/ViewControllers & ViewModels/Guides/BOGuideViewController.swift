@@ -47,7 +47,52 @@ extension BOGuideViewController{
         setupHeaderDelegate()
         setupBackground()
         setupTable()
+        setupSwipeGestureRec()
         setupBindings()
+    }
+}
+
+extension BOGuideViewController{
+    
+    func setupSwipeGestureRec(){
+        
+        setupLeftSwipe()
+        setupRightSwipe()
+    }
+    
+    func setupLeftSwipe(){
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeLeft.direction = .left
+        swipeLeft.cancelsTouchesInView = false
+        tableView.isUserInteractionEnabled = true
+        tableView.addGestureRecognizer(swipeLeft)
+    }
+    
+    func setupRightSwipe(){
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeRight.direction = .right
+        swipeRight.cancelsTouchesInView = false
+        tableView.isUserInteractionEnabled = true
+        tableView.addGestureRecognizer(swipeRight)
+    }
+    
+    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+
+        guard let swipeGesture = gesture as? UISwipeGestureRecognizer else { return }
+        
+        switch swipeGesture.direction {
+
+        case .right:
+            
+            print("right")
+        
+        case .left:
+            print("left")
+        default:
+            break
+        }
     }
 }
 
@@ -78,17 +123,29 @@ extension BOGuideViewController{
         
         registerCells()
         registerDelegate()
-        styleTable()
+        styleTableDefault()
     }
     
-    private func styleTable(){
+    private func styleTableDefault(){
         
         let tableCornerRadius:CGFloat = 10.0
         tableView.separatorStyle = .none
-        tableView.layer.cornerRadius = tableCornerRadius
+        
+        tableView.roundCorners(corners: .topLeft, radius: tableCornerRadius)
     }
     
     private func registerCells(){
+        
+        registerGuideListCells()
+        
+    }
+    
+    private func registerGuideDetail(){
+        
+        
+    }
+    
+    private func registerGuideListCells(){
         
         let topCellNib = UINib(nibName: TopGuideCell.nibName(), bundle: nil)
         tableView.register(topCellNib, forCellReuseIdentifier: TopGuideCell.reuseIdentifier())
@@ -108,7 +165,7 @@ extension BOGuideViewController{
 extension BOGuideViewController: UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return BOGuideViewModel.getCellHeightAt(indexPath: indexPath)
+        return viewModel.getListCellHeightAt(indexPath: indexPath)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -124,22 +181,35 @@ extension BOGuideViewController{
         //Each time the datamodel property 'categoryModel' has a new value
         //Tableview is refreshed
         //Performed on main thread
-        _ = viewModel.dataSource.value?.categoryModel.observeOn(.main).observeNext{ [weak self] something in
+        _ = viewModel.listDataSource.value?.categoryModel.observeOn(.main).observeNext{ [weak self] catModelValue in
             
             guard let this = self else{ return }
-            this.tableView.dataSource = this.viewModel.dataSource.value
-            this.tableView.reloadData()
+            
+            if catModelValue != nil {
+                
+                this.tableView.dataSource = this.viewModel.listDataSource.value
+                UIView.transition(with: this.tableView,
+                                  duration: this.viewModel.tableDataSourceAnimationDuration,
+                                  options: .transitionCrossDissolve,
+                                  animations: { this.tableView.reloadData() })
+            }
+        }
+        
+        _ = viewModel.detailListDataSource.observeOn(.main).observeNext{ [weak self] detailListDataSourceValue in
+            
+            guard let this = self else { return }
+            
+            if detailListDataSourceValue != nil{
+                
+                this.setupForDetail()
+            }
         }
         
         _ = viewModel.menuOpen.observeOn(.main).observeNext{ [weak self] value in
             
             guard let this = self else{ return }
-            if value{
-                this.openMenu()
-            }
-            else{
-                this.hideMenu()
-            }
+            
+            value ? this.openMenu() : this.hideMenu()
         }
     }
 }
@@ -166,5 +236,46 @@ extension BOGuideViewController: MenuController{
             guard let this = self else { return }
             this.viewMenu.alpha = this.viewModel.alphaInvisible
         }
+    }
+}
+
+extension BOGuideViewController{
+    
+    func setupForDetail(){
+        
+        
+        self.tableView.dataSource = self.viewModel.detailListDataSource.value
+        styleVCForDetail()
+        animateReloadDataDetail()
+       
+        animateHeaderToDetail()
+    }
+    
+    func animateHeaderToDetail(){
+        
+//        UIView.transition(with: tableViewHeader,
+//                          duration: self.viewModel.tableDataSourceAnimationDuration,
+//                          options: .transitionCrossDissolve,
+//                          animations: { self.tableViewHeader.showDetail() })
+        
+        UIView.animate(withDuration: self.viewModel.tableDataSourceAnimationDuration, delay: 0, options: .curveEaseInOut, animations: {
+            
+            self.tableViewHeader.showDetail()
+        }, completion: nil)
+    }
+    
+    func animateReloadDataDetail(){
+        UIView.transition(with: self.tableView,
+                          duration: self.viewModel.tableDataSourceAnimationDuration,
+                          options: .transitionCrossDissolve,
+                          animations: {
+                            
+                            self.tableView.reloadData()
+        })
+    }
+    
+    func styleVCForDetail(){
+        
+        tableView.roundCorners(corners: .topLeft, radius: 0)
     }
 }

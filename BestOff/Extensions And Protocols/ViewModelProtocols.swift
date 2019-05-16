@@ -22,12 +22,16 @@ protocol ViewModelNetworkProtocol {
 }
 
 protocol ViewModelDataSourceProtocol{
-    var dataSource: Observable<BOCategoryListDataSourceProtocol?> { get }
+    var listDataSource: Observable<BOCategoryListDataSourceProtocol?> { get }
     var numberOfSections: Int { get }
+}
+
+protocol viewModelDetailSourceProtocol {
+    var detailListDataSource: Observable<BOCatItem> { get }
 }
 
 protocol vmTableViewDelegate{
     
     func tableViewPressedAt(_ index: Int)
-    static func getCellHeightAt(indexPath: IndexPath) -> CGFloat
+    func getListCellHeightAt(indexPath: IndexPath) -> CGFloat
 }

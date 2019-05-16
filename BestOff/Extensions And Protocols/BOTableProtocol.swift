@@ -11,6 +11,8 @@ import UIKit
 import ReactiveKit
 import Bond
 
+
+
 //Tableviews conform to these protocols to enforce consistency
 protocol BOCategoryListDataSourceProtocol: UITableViewDataSource{
     
@@ -23,11 +25,10 @@ protocol BOCategoryListDataSourceProtocol: UITableViewDataSource{
     func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell
 }
 
-protocol BOGuideDetailTableSourceProtocol: UITableViewDataSource{
+protocol BOCategoryDetailListProtocol: UITableViewDataSource {
     
-    var detailItem: Observable<BOCategoryDetail?> { get }
-    
-    func setDataModel(model: BOCategoryDetail)
+    var catItem: Observable<BOCatItem?> { get }
+    func setCatItemTo(item: BOCatItem)
     func numberOfRows() -> Int
     func numberOfSections() -> Int
     func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell
