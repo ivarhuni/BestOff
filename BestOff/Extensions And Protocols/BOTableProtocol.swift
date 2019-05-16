@@ -14,9 +14,11 @@ import Bond
 
 
 //Tableviews conform to these protocols to enforce consistency
-protocol BOCategoryListDataSourceProtocol: UITableViewDataSource{
+protocol BOCategoryListDataSourceProtocol: UITableViewDataSource, UITableViewDelegate{
     
     var categoryModel: Observable<BOCategoryModel?> { get }
+    
+    var tableDelegate: didPressListAtIndexDelegate? { get set }
     
     func setDataModel(model: BOCategoryModel)
     func items(at indexPath: IndexPath) -> [BOCatItem]
@@ -25,7 +27,7 @@ protocol BOCategoryListDataSourceProtocol: UITableViewDataSource{
     func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell
 }
 
-protocol BOCategoryDetailListProtocol: UITableViewDataSource {
+protocol BOCategoryDetailListProtocol: UITableViewDataSource, UITableViewDelegate {
     
     var catItem: Observable<BOCatItem?> { get }
     func setCatItemTo(item: BOCatItem)
@@ -33,6 +35,7 @@ protocol BOCategoryDetailListProtocol: UITableViewDataSource {
     func numberOfSections() -> Int
     func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell
 }
+
 
 protocol BOTableDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)

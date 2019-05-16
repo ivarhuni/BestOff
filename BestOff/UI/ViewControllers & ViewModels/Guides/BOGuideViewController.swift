@@ -18,6 +18,7 @@ protocol MenuController{
 
 class BOGuideViewController: UIViewController {
     
+    //MARK: Properties
     private let  viewModel: BOGuideViewModel
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewHeader: BOAppHeaderView!
@@ -40,6 +41,7 @@ class BOGuideViewController: UIViewController {
     }
 }
 
+//MARK: Setup
 extension BOGuideViewController{
     
     private func setupVC(){
@@ -52,6 +54,8 @@ extension BOGuideViewController{
     }
 }
 
+
+//MARK: Swipe handling
 extension BOGuideViewController{
     
     func setupSwipeGestureRec(){
@@ -96,8 +100,8 @@ extension BOGuideViewController{
     }
 }
 
-//MARK: Header
-extension BOGuideViewController{
+//MARK: Header Methods
+extension BOGuideViewController: BOAppHeaderViewDelegate{
     
     func setupMenu(){
         viewMenu.setupWithType(screenType: .reykjavik)
@@ -107,120 +111,17 @@ extension BOGuideViewController{
     func setupHeaderDelegate(){
         tableViewHeader.delegate = self
     }
-}
-
-extension BOGuideViewController{
-    
-    func setupBackground(){
-        view.backgroundColor = UIColor.colorRed
-    }
-}
-
-//MARK: Tableview Setup
-extension BOGuideViewController{
-    
-    private func setupTable(){
-        
-        registerCells()
-        registerDelegate()
-        styleTableDefault()
-    }
-    
-    private func styleTableDefault(){
-        
-        let tableCornerRadius:CGFloat = 10.0
-        tableView.separatorStyle = .none
-        
-        tableView.roundCorners(corners: .topLeft, radius: tableCornerRadius)
-    }
-    
-    private func registerCells(){
-        
-        registerGuideListCells()
-        
-    }
-    
-    private func registerGuideDetail(){
-        
-        
-    }
-    
-    private func registerGuideListCells(){
-        
-        let topCellNib = UINib(nibName: TopGuideCell.nibName(), bundle: nil)
-        tableView.register(topCellNib, forCellReuseIdentifier: TopGuideCell.reuseIdentifier())
-        
-        let headerCell = UINib(nibName: BOCatHeaderCell.nibName(), bundle: nil)
-        tableView.register(headerCell, forCellReuseIdentifier: BOCatHeaderCell.reuseIdentifier())
-        
-        let doubleItemCell = UINib(nibName: DoubleItemCell.nibName(), bundle: nil)
-        tableView.register(doubleItemCell, forCellReuseIdentifier: DoubleItemCell.reuseIdentifier())
-    }
-    
-    private func registerDelegate(){
-        tableView.delegate = self
-    }
-}
-
-extension BOGuideViewController: UITableViewDelegate{
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return viewModel.getListCellHeightAt(indexPath: indexPath)
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.tableViewPressedAt(indexPath.row)
-    }
-}
-
-//MARK: UI Bindings
-extension BOGuideViewController{
-    
-    private func setupBindings(){
-        
-        //Each time the datamodel property 'categoryModel' has a new value
-        //Tableview is refreshed
-        //Performed on main thread
-        _ = viewModel.listDataSource.value?.categoryModel.observeOn(.main).observeNext{ [weak self] catModelValue in
-            
-            guard let this = self else{ return }
-            
-            if catModelValue != nil {
-                
-                this.tableView.dataSource = this.viewModel.listDataSource.value
-                UIView.transition(with: this.tableView,
-                                  duration: this.viewModel.tableDataSourceAnimationDuration,
-                                  options: .transitionCrossDissolve,
-                                  animations: { this.tableView.reloadData() })
-            }
-        }
-        
-        _ = viewModel.detailListDataSource.observeOn(.main).observeNext{ [weak self] detailListDataSourceValue in
-            
-            guard let this = self else { return }
-            
-            if detailListDataSourceValue != nil{
-                
-                this.setupForDetail()
-            }
-        }
-        
-        _ = viewModel.menuOpen.observeOn(.main).observeNext{ [weak self] value in
-            
-            guard let this = self else{ return }
-            
-            value ? this.openMenu() : this.hideMenu()
-        }
-    }
-}
-
-extension BOGuideViewController: BOAppHeaderViewDelegate{
     
     func didPressRightButton(shouldShowMenu: Bool) {
         self.viewModel.menuOpen.value = shouldShowMenu
     }
+    
+    func didPressBack() {
+        self.viewModel.changeDataSourceToDefault()
+    }
 }
 
+//MARK: Menu
 extension BOGuideViewController: MenuController{
     
     func openMenu() {
@@ -239,24 +140,157 @@ extension BOGuideViewController: MenuController{
     }
 }
 
+//MARK: Styling
+extension BOGuideViewController{
+    
+    func setupBackground(){
+        view.backgroundColor = UIColor.colorRed
+    }
+}
+
+//MARK: Tableview Setup
+extension BOGuideViewController{
+    
+    private func setupTable(){
+        
+        registerCells()
+        registerDelegateDefault()
+        styleTableDefault()
+    }
+    
+    private func styleTableDefault(){
+        
+        tableView.separatorStyle = .none
+        
+//        tableView.clipsToBounds = true
+//        tableView.layer.maskedCorners = [.layerMinXMinYCorner]
+//        tableView.layoutSubviews()
+//        tableView.roundCorners(corners: .topLeft, radius: tableCornerRadius)
+    }
+    
+    private func registerCells(){
+        
+        registerGuideListCells()
+        registerGuideDetail()
+    }
+    
+    private func registerGuideDetail(){
+        
+        let dtlItemTxtCell = UINib(nibName: BOCatItemTextDescriptionCell.nibName(), bundle: nil)
+        tableView.register(dtlItemTxtCell, forCellReuseIdentifier: BOCatItemTextDescriptionCell.reuseIdentifier())
+    }
+    
+    private func registerGuideListCells(){
+        
+        let topCellNib = UINib(nibName: TopGuideCell.nibName(), bundle: nil)
+        tableView.register(topCellNib, forCellReuseIdentifier: TopGuideCell.reuseIdentifier())
+        
+        let headerCell = UINib(nibName: BOCatHeaderCell.nibName(), bundle: nil)
+        tableView.register(headerCell, forCellReuseIdentifier: BOCatHeaderCell.reuseIdentifier())
+        
+        let doubleItemCell = UINib(nibName: DoubleItemCell.nibName(), bundle: nil)
+        tableView.register(doubleItemCell, forCellReuseIdentifier: DoubleItemCell.reuseIdentifier())
+    }
+    
+    private func registerDelegateDefault(){
+        
+        tableView.delegate = viewModel.listDataSource.value
+    }
+    
+    private func registerDelegateDetail(){
+        tableView.delegate = viewModel.detailListDataSource.value
+    }
+}
+
+extension BOGuideViewController: didPressListAtIndexDelegate{
+    
+    func didPressAtIndexPath(indexPath: IndexPath) {
+        viewModel.tableViewPressedAt(indexPath.row)
+    }
+}
+
+//MARK: UI Bindings
+extension BOGuideViewController{
+    
+    private func setupBindings(){
+        
+        //regular list
+        _ = viewModel.listDataSource.value?.categoryModel.observeOn(.main).observeNext{ [weak self] catModelValue in
+            
+            guard let this = self else{ return }
+            
+            if catModelValue != nil {
+                
+                guard let listDataSource = this.viewModel.listDataSource.value else { return }
+                this.tableView.delegate = this.viewModel.listDataSource.value
+                listDataSource.tableDelegate = this
+                this.setTableToDefault()
+            }
+        }
+        
+        //Detail Item being viewed
+        _ = viewModel.detailListDataSource.observeOn(.main).observeNext{ [weak self] detailListDataSourceValue in
+            
+            guard let this = self else { return }
+            
+            if detailListDataSourceValue != nil{
+                
+                this.setupForDetail()
+                return
+            }
+            
+            this.setTableToDefault()
+        }
+        
+        //Menu open
+        _ = viewModel.menuOpen.observeOn(.main).observeNext{ [weak self] value in
+            
+            guard let this = self else{ return }
+            
+            value ? this.openMenu() : this.hideMenu()
+        }
+    }
+}
+
+//MARK: Default Setup
+extension BOGuideViewController{
+    
+    private func animateToDefault(){
+        
+                UIView.transition(with: self.tableView,
+                                  duration: self.viewModel.tableDataSourceAnimationDuration,
+                                  options: .transitionCrossDissolve,
+                                  animations: { [weak self] in
+                                    guard let this = self else { return }
+        
+                                    this.tableViewHeader.viewModel.isDetailActive.value = false
+                                    this.tableView.reloadData()
+                })
+    }
+    
+    private func setTableToDefault(){
+        
+        tableView.dataSource = viewModel.listDataSource.value
+
+        registerDelegateDefault()
+        
+        animateToDefault()
+    }
+}
+
+//MARK: Detail Screen setup
 extension BOGuideViewController{
     
     func setupForDetail(){
         
-        
-        self.tableView.dataSource = self.viewModel.detailListDataSource.value
+        tableView.dataSource = viewModel.detailListDataSource.value
+        registerDelegateDetail()
         styleVCForDetail()
         animateReloadDataDetail()
-       
         animateHeaderToDetail()
     }
     
     func animateHeaderToDetail(){
-        
-//        UIView.transition(with: tableViewHeader,
-//                          duration: self.viewModel.tableDataSourceAnimationDuration,
-//                          options: .transitionCrossDissolve,
-//                          animations: { self.tableViewHeader.showDetail() })
         
         UIView.animate(withDuration: self.viewModel.tableDataSourceAnimationDuration, delay: 0, options: .curveEaseInOut, animations: {
             
@@ -265,6 +299,7 @@ extension BOGuideViewController{
     }
     
     func animateReloadDataDetail(){
+        
         UIView.transition(with: self.tableView,
                           duration: self.viewModel.tableDataSourceAnimationDuration,
                           options: .transitionCrossDissolve,
@@ -275,7 +310,8 @@ extension BOGuideViewController{
     }
     
     func styleVCForDetail(){
-        
-        tableView.roundCorners(corners: .topLeft, radius: 0)
+//        tableView.layer.maskedCorners = []
+//        //tableView.layoutSubviews()
+//        //tableView.roundCorners(corners: .topLeft, radius: 0)
     }
 }

@@ -63,6 +63,10 @@ extension UIFont {
   class var favEditTxt: UIFont {
     return UIFont(name: "Blanco", size: 18.0)!
   }
+    
+  class var cellItemText: UIFont {
+    return UIFont(name: "Stratos-Regular", size: 14.0)!
+  }
 
   class var favouriteOff: UIFont {
     return UIFont(name: "Blanco", size: 18.0)!

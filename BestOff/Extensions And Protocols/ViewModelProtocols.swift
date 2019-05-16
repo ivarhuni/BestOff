@@ -31,7 +31,5 @@ protocol viewModelDetailSourceProtocol {
 }
 
 protocol vmTableViewDelegate{
-    
     func tableViewPressedAt(_ index: Int)
-    func getListCellHeightAt(indexPath: IndexPath) -> CGFloat
 }

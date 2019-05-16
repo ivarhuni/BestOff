@@ -53,10 +53,10 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tdr-BT-DLG">
-                    <rect key="frame" x="20" y="32" width="285" height="40"/>
+                    <rect key="frame" x="20" y="32" width="140" height="40"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SBM-bA-rzD">
-                            <rect key="frame" x="25" y="8.5" width="260" height="21"/>
+                            <rect key="frame" x="25" y="8.5" width="115" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -69,10 +69,11 @@
                             </constraints>
                         </imageView>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="SBM-bA-rzD" secondAttribute="trailing" id="8fv-Sr-COR"/>
                         <constraint firstItem="SBM-bA-rzD" firstAttribute="leading" secondItem="Dei-2T-Daj" secondAttribute="leading" constant="25" id="Dy0-UN-05p"/>
+                        <constraint firstAttribute="width" constant="140" id="Qnn-VM-FiN"/>
                         <constraint firstItem="Dei-2T-Daj" firstAttribute="leading" secondItem="tdr-BT-DLG" secondAttribute="leading" id="b3u-bg-whp"/>
                         <constraint firstItem="SBM-bA-rzD" firstAttribute="centerY" secondItem="Dei-2T-Daj" secondAttribute="centerY" constant="-1" id="jno-FW-fMA"/>
                         <constraint firstAttribute="height" constant="40" id="x7b-E9-rQV"/>
@@ -84,7 +85,6 @@
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Xg1-8x-tOT" secondAttribute="trailing" constant="25" id="5ca-5Q-SiH"/>
                 <constraint firstItem="twg-WR-K47" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="Mtw-Z8-NJI"/>
-                <constraint firstItem="Xg1-8x-tOT" firstAttribute="leading" secondItem="tdr-BT-DLG" secondAttribute="trailing" constant="20" id="RnN-Se-QJr"/>
                 <constraint firstItem="tdr-BT-DLG" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="TG1-1w-HEo"/>
                 <constraint firstItem="tdr-BT-DLG" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="TY8-Um-y6j"/>
                 <constraint firstItem="aEw-CV-OaH" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="Uw1-G9-FdQ"/>

@@ -83,17 +83,6 @@ extension BOGuideViewModel: vmTableViewDelegate{
         if index == bigCellIndex{ changeDataSourceToDetail() }
     }
     
-    func getListCellHeightAt(indexPath: IndexPath) -> CGFloat {
-        
-        if isDetailDataSourceActive(){
-            return getDetailDataSourceHeightFor(indexPath: indexPath)
-        }
-        else{
-            return getRegularListDataSourceHeightFor(indexPath: indexPath)
-        }
-    }
-
-    
     private func changeDataSourceToDetail(){
         
         guard let topCellItem = listDataSource.value?.categoryModel.value?.items[safe: 0] else {
@@ -109,46 +98,30 @@ extension BOGuideViewModel: vmTableViewDelegate{
         if detailListDataSource.value == nil { return false }
         return true
     }
-    
-    private func getDetailDataSourceHeightFor(indexPath: IndexPath) -> CGFloat{
-        
-        let bigImgTopCellIndex = 0
-        
-        if indexPath.row == bigImgTopCellIndex{
-            return bigCellRowHeight
-        }
-        return 10
-    }
-    
-    private func getRegularListDataSourceHeightFor(indexPath: IndexPath) -> CGFloat{
-        
-        let txtHeaderRowHeight:CGFloat = 71.0
-        if indexPath.row == 0 { return txtHeaderRowHeight }
-        
-        
-        if indexPath.row == 1 { return bigCellRowHeight }
-        
-        //DoubleItemCellHeight
-        let leftSpacingToItemImg:CGFloat = 20.0
-        let rightSpacingToItemImg:CGFloat = 10.0
-        
-        let itemImgWidthAndHeight = (UIScreen.main.bounds.width - 2 * ( leftSpacingToItemImg - rightSpacingToItemImg))/2.0
-        
-        let lblTitleSpacingToImg:CGFloat = 10
-        let lblTitleSpacginToBottom:CGFloat = 10
-        
-        let lblHeight:CGFloat = 42.0
-        
-        let itemRowHeight:CGFloat = itemImgWidthAndHeight + lblTitleSpacingToImg + lblTitleSpacginToBottom + lblHeight
-        
-        return itemRowHeight
-    }
 }
 
 extension BOGuideViewModel{
     
-    func changeDataSourceTo(dataSource: BOCategoryListDataSourceProtocol){
+    func changeDataSourceToDefault(){
         
+        detailListDataSource.value = nil
         
+    }
+}
+
+extension String {
+    
+    func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
+        
+        return ceil(boundingBox.height)
+    }
+    
+    func width(withConstrainedHeight height: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
+        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
+        
+        return ceil(boundingBox.width)
     }
 }

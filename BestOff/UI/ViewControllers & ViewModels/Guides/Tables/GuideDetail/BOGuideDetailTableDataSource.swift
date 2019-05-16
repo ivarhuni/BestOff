@@ -15,6 +15,9 @@ class BOGuideDetailTableDataSource: NSObject, BOCategoryDetailListProtocol{
     
     var catItem = Observable<BOCatItem?>(nil)
     
+    //RowHeights used in both types of tables
+    let bigCellRowHeight:CGFloat = 310
+    
     convenience init(catItem: BOCatItem){
         self.init()
         self.catItem.value = catItem
@@ -30,7 +33,11 @@ class BOGuideDetailTableDataSource: NSObject, BOCategoryDetailListProtocol{
 extension BOGuideDetailTableDataSource{
 
     func numberOfRows() -> Int {
-        return 1
+        
+        guard let item = self.catItem.value else { return 0 }
+        guard let count = item.detailItem?.arrItems.count else { return 0}
+        
+        return count
     }
 
     func numberOfSections() -> Int {
@@ -46,7 +53,6 @@ extension BOGuideDetailTableDataSource{
             topCell.setupWith(item: item)
             return topCell
         }
-        
         return UITableViewCell()
     }
 
@@ -56,5 +62,28 @@ extension BOGuideDetailTableDataSource{
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return cellForRowAtIndexPathIn(myTableView: tableView, indexPath: indexPath)
+    }
+}
+
+extension BOGuideDetailTableDataSource: UITableViewDelegate{
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        let bigImgTopCellIndex = 0
+        let txtDescCell = 1
+        // let txtDescCellHeight =
+        
+        if indexPath.row == bigImgTopCellIndex{
+            return bigCellRowHeight
+        }
+        if indexPath.row == txtDescCell{
+            
+        }
+        
+        return 10
     }
 }

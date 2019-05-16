@@ -10,15 +10,24 @@ import UIKit
 import ReactiveKit
 import Bond
 
+protocol didPressListAtIndexDelegate: AnyObject {
+    func didPressAtIndexPath(indexPath: IndexPath)
+}
+
 class BOGuideTableDataSource: NSObject, BOCategoryListDataSourceProtocol {
     
     var categoryModel = Observable<BOCategoryModel?>(nil)
+    
+    weak var tableDelegate: didPressListAtIndexDelegate?
     
     let headerCellIndexRow = 0
     let BigCellIndexRow = 1
     let firstSplitCellIndexRow = 2
     
     let indexRowCountThreshold = 3
+    
+    //RowHeights used in both types of tables
+    let bigCellRowHeight:CGFloat = 310
     
     
     convenience init(categoryModel: BOCategoryModel){
@@ -32,19 +41,6 @@ class BOGuideTableDataSource: NSObject, BOCategoryListDataSourceProtocol {
 }
 
 extension BOGuideTableDataSource{
-    
-    
-    //count = 0, noR = 1 (CatHeaderCell)
-    
-    //c = 1, noR = 2 (CatHeaderCell + BigCell)
-    //c = 2, noR = 3 (CatHeaderCell + BigCell + smallCell)
-    //c = 3, noR = 3 (CatHeaderCell + BigCell + 2 x doubleItemCell)
-    //c = 4, noR = 4 (CatHeaderCell + BigCell + 3 x doubleItemCell)
-    //c = 5, noR = 4 (CatHeaderCell + BigCell + 3 x doubleItemCell)
-    //c = 6, nOR = 5 (CatHeaderCell + BigCell + 4 x doubleItemCell)
-    //...
-    //N > 3, c = n, noR = n, n is even
-    //N > 3, c = n, noR = n-1, n is odd
     
     func items(at indexPath: IndexPath) -> [BOCatItem] {
         
@@ -146,6 +142,41 @@ extension BOGuideTableDataSource: UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.numberOfSections()
+    }
+}
+
+extension BOGuideTableDataSource: UITableViewDelegate{
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let delegate = tableDelegate else {
+            print("tableview delegate not set in BOGuideTableDataSource")
+            return
+        }
+        delegate.didPressAtIndexPath(indexPath: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        let txtHeaderRowHeight:CGFloat = 71.0
+        if indexPath.row == 0 { return txtHeaderRowHeight }
+        
+        
+        if indexPath.row == 1 { return bigCellRowHeight }
+        
+        //DoubleItemCellHeight
+        let leftSpacingToItemImg:CGFloat = 20.0
+        let rightSpacingToItemImg:CGFloat = 10.0
+        
+        let itemImgWidthAndHeight = (UIScreen.main.bounds.width - 2 * ( leftSpacingToItemImg - rightSpacingToItemImg))/2.0
+        
+        let lblTitleSpacingToImg:CGFloat = 10
+        let lblTitleSpacginToBottom:CGFloat = 10
+        
+        let lblHeight:CGFloat = 42.0
+        
+        let itemRowHeight:CGFloat = itemImgWidthAndHeight + lblTitleSpacingToImg + lblTitleSpacginToBottom + lblHeight
+        
+        return itemRowHeight
     }
 }
 

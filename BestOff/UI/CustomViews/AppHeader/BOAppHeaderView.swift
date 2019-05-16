@@ -13,6 +13,7 @@ import ReactiveKit
 protocol BOAppHeaderViewDelegate: AnyObject {
     
     func didPressRightButton(shouldShowMenu: Bool)
+    func didPressBack()
 }
 
 
@@ -53,7 +54,7 @@ class BOAppHeaderView: UIView {
     private func commonInit(){
         
         initView()
-        setupView()
+        setupViewDefault()
         styleView()
         setBindings()
     }
@@ -82,10 +83,18 @@ extension BOAppHeaderView{
         view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
     
-    private func setupView(){
+    func setupViewDefault(){
         
         setIcons()
         setText()
+        setGestureRec()
+    }
+    
+    private func setGestureRec(){
+    
+        let backTap = UITapGestureRecognizer(target: self, action: #selector(self.handleBackTap(_:)))
+        viewBackBtn.addGestureRecognizer(backTap)
+        viewBackBtn.isUserInteractionEnabled = true
     }
     
     private func setText(){
@@ -134,6 +143,18 @@ extension BOAppHeaderView{
 
 extension BOAppHeaderView{
     
+    @objc func handleBackTap(_ sender: UITapGestureRecognizer) {
+        
+        guard let delegate = delegate else {
+            print("delegate for headerview not set while pressing back")
+            return
+        }
+        delegate.didPressBack()
+    }
+}
+
+extension BOAppHeaderView{
+    
     func setBindings(){
         
         _ = viewModel.isHamburgerActive.observeOn(.main).observeNext{ value in
@@ -151,10 +172,13 @@ extension BOAppHeaderView{
         
         _ = viewModel.isDetailActive.observeOn(.main).observeNext{ [weak self] isDetailActiveValue in
             
+            guard let this = self else { return }
             if isDetailActiveValue{
-                guard let this = self else { return }
+                
                 this.showDetail()
+                return
             }
+            this.showDefault()
         }
     }
     
