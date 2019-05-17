@@ -32,6 +32,7 @@ class BOAppHeaderView: UIView {
     @IBOutlet weak var lblBackTitle: UILabel!
     @IBOutlet weak var imgViewBackBtn: UIImageView!
     
+    @IBOutlet weak var viewSep: UIView!
     
     //MARK: Properties
     let viewModel = BOHeaderViewModel()
@@ -132,6 +133,7 @@ extension BOAppHeaderView{
         
         lblTitle.textColor = .white
         lblBackTitle.textColor = .black
+//        viewSep.backgroundColor = .greySep
     }
     
     private func setupFonts(){
@@ -249,8 +251,13 @@ extension BOAppHeaderView{
 
 extension BOAppHeaderView{
     
+    func showSeperator(){
+        viewSep.isHidden = false
+    }
+    
     func showDetail(){
         
+        showSeperator()
         setupTextForDetail()
         setCornerRadiusForDetail()
         layoutIfNeeded()
@@ -291,6 +298,7 @@ extension BOAppHeaderView{
     
     func showDefault(){
         
+        viewSep.isHidden = true
         layoutIfNeeded()
         UIView.transition(with: self,
                           duration: self.viewModel.btnAnimationDuration,

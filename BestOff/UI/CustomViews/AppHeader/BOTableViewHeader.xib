@@ -21,6 +21,7 @@
                 <outlet property="lblTitle" destination="aEw-CV-OaH" id="Jac-7l-hl4"/>
                 <outlet property="view" destination="iN0-l3-epB" id="gTN-Wd-cgI"/>
                 <outlet property="viewBackBtn" destination="tdr-BT-DLG" id="b7j-Y3-hcI"/>
+                <outlet property="viewSep" destination="P0M-ds-ffc" id="feV-tk-obU"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -80,11 +81,21 @@
                         <constraint firstItem="Dei-2T-Daj" firstAttribute="centerY" secondItem="tdr-BT-DLG" secondAttribute="centerY" id="zBA-uX-WSH"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P0M-ds-ffc">
+                    <rect key="frame" x="16" y="103" width="359" height="1"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="7gQ-7K-0LI"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="P0M-ds-ffc" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="5X8-hO-NJR"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Xg1-8x-tOT" secondAttribute="trailing" constant="25" id="5ca-5Q-SiH"/>
+                <constraint firstItem="P0M-ds-ffc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="MFk-vR-uFV"/>
                 <constraint firstItem="twg-WR-K47" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="Mtw-Z8-NJI"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="P0M-ds-ffc" secondAttribute="trailing" id="RkU-jh-g1g"/>
                 <constraint firstItem="tdr-BT-DLG" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="TG1-1w-HEo"/>
                 <constraint firstItem="tdr-BT-DLG" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="TY8-Um-y6j"/>
                 <constraint firstItem="aEw-CV-OaH" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="Uw1-G9-FdQ"/>

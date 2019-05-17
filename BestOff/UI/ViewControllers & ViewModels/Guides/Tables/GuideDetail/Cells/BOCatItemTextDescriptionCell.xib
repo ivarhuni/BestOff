@@ -12,29 +12,32 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="BOCatItemTextDescriptionCell" customModule="BestOff" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="98" id="KGk-i7-Jjw" customClass="BOCatItemTextDescriptionCell" customModule="BestOff" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="98"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="97.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VHN-oK-Z6S">
-                        <rect key="frame" x="139" y="11.5" width="42" height="21"/>
+                        <rect key="frame" x="20" y="0.0" width="280" height="97.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="VHN-oK-Z6S" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="8dq-DA-rYv"/>
-                    <constraint firstItem="VHN-oK-Z6S" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="AZg-SM-Scz"/>
+                    <constraint firstAttribute="bottom" secondItem="VHN-oK-Z6S" secondAttribute="bottom" id="0DV-6x-5U6"/>
+                    <constraint firstItem="VHN-oK-Z6S" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="DEx-qO-DBA"/>
+                    <constraint firstItem="VHN-oK-Z6S" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="dud-gf-Kzg"/>
+                    <constraint firstAttribute="trailing" secondItem="VHN-oK-Z6S" secondAttribute="trailing" constant="20" id="evV-1y-yu0"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="lblDescription" destination="VHN-oK-Z6S" id="dad-qV-ckT"/>
             </connections>
+            <point key="canvasLocation" x="52.799999999999997" y="72.863568215892059"/>
         </tableViewCell>
     </objects>
 </document>

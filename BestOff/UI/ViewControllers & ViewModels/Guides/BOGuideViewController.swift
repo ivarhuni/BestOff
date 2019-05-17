@@ -161,11 +161,6 @@ extension BOGuideViewController{
     private func styleTableDefault(){
         
         tableView.separatorStyle = .none
-        
-//        tableView.clipsToBounds = true
-//        tableView.layer.maskedCorners = [.layerMinXMinYCorner]
-//        tableView.layoutSubviews()
-//        tableView.roundCorners(corners: .topLeft, radius: tableCornerRadius)
     }
     
     private func registerCells(){
@@ -178,6 +173,9 @@ extension BOGuideViewController{
         
         let dtlItemTxtCell = UINib(nibName: BOCatItemTextDescriptionCell.nibName(), bundle: nil)
         tableView.register(dtlItemTxtCell, forCellReuseIdentifier: BOCatItemTextDescriptionCell.reuseIdentifier())
+        
+        let detailImgCell = UINib(nibName: GuideItemCell.nibName(), bundle: nil)
+        tableView.register(detailImgCell, forCellReuseIdentifier: GuideItemCell.reuseIdentifier())
     }
     
     private func registerGuideListCells(){
@@ -193,8 +191,8 @@ extension BOGuideViewController{
     }
     
     private func registerDelegateDefault(){
-        
         tableView.delegate = viewModel.listDataSource.value
+        viewModel.listDataSource.value?.tableDelegate = self
     }
     
     private func registerDelegateDetail(){
@@ -221,9 +219,7 @@ extension BOGuideViewController{
             
             if catModelValue != nil {
                 
-                guard let listDataSource = this.viewModel.listDataSource.value else { return }
-                this.tableView.delegate = this.viewModel.listDataSource.value
-                listDataSource.tableDelegate = this
+                this.registerDelegateDefault()
                 this.setTableToDefault()
             }
         }
@@ -265,7 +261,10 @@ extension BOGuideViewController{
         
                                     this.tableViewHeader.viewModel.isDetailActive.value = false
                                     this.tableView.reloadData()
-                })
+                }) { (finished) in
+                    
+                    self.scrollToTopDefault()
+                }
     }
     
     private func setTableToDefault(){
@@ -275,6 +274,14 @@ extension BOGuideViewController{
         registerDelegateDefault()
         
         animateToDefault()
+    }
+    
+    private func scrollToTopDefault(){
+        
+        let indexPath = IndexPath(row: 0, section: 0)
+        if viewModel.listDataSource.value?.categoryModel.value != nil {
+            self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        }
     }
 }
 
@@ -306,12 +313,27 @@ extension BOGuideViewController{
                           animations: {
                             
                             self.tableView.reloadData()
+                            
         })
+        
+        UIView.transition(with: self.tableView, duration: self.viewModel.tableDataSourceAnimationDuration, options: .transitionCrossDissolve, animations: {
+            
+            self.tableView.reloadData()
+        }) { (finished) in
+            
+            self.scrollToTopDetail()
+        }
+    }
+    
+    func scrollToTopDetail(){
+        let indexPath = IndexPath(row: 0, section: 0)
+        
+        if viewModel.detailListDataSource.value?.catItem.value != nil {
+            self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        }
     }
     
     func styleVCForDetail(){
-//        tableView.layer.maskedCorners = []
-//        //tableView.layoutSubviews()
-//        //tableView.roundCorners(corners: .topLeft, radius: 0)
+        
     }
 }

@@ -36,12 +36,19 @@ extension BOCatItemTextDescriptionCell{
 
 extension BOCatItemTextDescriptionCell{
     
-    func style(){
+    private func style(){
+        
+        lblDescription.minimumScaleFactor = 0.25
+        lblDescription.numberOfLines = 0
+        lblDescription.lineBreakMode = .byClipping
         lblDescription.font = UIFont.cellItemText
-        lblDescription.textColor = .greyishBrown
+        lblDescription.textColor = .colorGrayishBrown
+        
+        self.selectionStyle = .none
     }
     
     func setText(text: String){
+        style()
         lblDescription.text = text
     }
 }

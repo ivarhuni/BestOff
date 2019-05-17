@@ -102,12 +102,17 @@ extension TopGuideCell{
 
 //MARK: Guide List Setup
 extension TopGuideCell{
-    public func setupWith(item: BOCatItem) {
+    
+    func setupWith(item: BOCatItem) {
         
         setupDefault()
         
         setTextsFrom(item: item)
         setImageWithImgURL(strURL: item.image)
+    }
+    
+    public func styleForDetail(){
+        lblTitle.font = UIFont.boldImgTitle
     }
     
     private func setTextsFrom(item: BOCatItem){

@@ -64,8 +64,16 @@ extension UIFont {
     return UIFont(name: "Blanco", size: 18.0)!
   }
     
+    class var boldImgTitle: UIFont {
+        return UIFont(name: "Blanco-ExtraBold", size: 18.0)!
+    }
+    
+    class var cellItemName: UIFont {
+        return UIFont(name: "BLanco-ExtraBold", size: 20.0)!
+    }
+    
   class var cellItemText: UIFont {
-    return UIFont(name: "Stratos-Regular", size: 14.0)!
+    return UIFont(name: "Blanco", size: 14.0)!
   }
 
   class var favouriteOff: UIFont {

@@ -134,20 +134,20 @@ struct DetailItemFactory{
             
             guard let itemName = arrText[safe: nextItemNameIndex] else {
                 
-                print("error fetching item name")
+                //print("error fetching item name")
                 return detailItems }
             guard let itemAddress = arrText[safe: nextItemAddressIndex] else {
                 
-                print("Error fetching itemAddress")
+                //print("Error fetching itemAddress")
                 return detailItems
             }
             guard let itemDescription = arrText[safe: nextItemDescriptionIndex] else {
                 
-                print("Error fetching itemDescription")
+                //print("Error fetching itemDescription")
                 return detailItems }
             guard let itemImgURL = arrImageURLs[safe: index] else {
                 
-                print("Error fetching img URL")
+                //print("Error fetching img URL")
                 return detailItems
             }
             
