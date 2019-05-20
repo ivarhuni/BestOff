@@ -54,52 +54,6 @@ extension BOGuideViewController{
     }
 }
 
-
-//MARK: Swipe handling
-extension BOGuideViewController{
-    
-    func setupSwipeGestureRec(){
-        
-        setupLeftSwipe()
-        setupRightSwipe()
-    }
-    
-    func setupLeftSwipe(){
-        
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeLeft.direction = .left
-        swipeLeft.cancelsTouchesInView = false
-        tableView.isUserInteractionEnabled = true
-        tableView.addGestureRecognizer(swipeLeft)
-    }
-    
-    func setupRightSwipe(){
-        
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeRight.direction = .right
-        swipeRight.cancelsTouchesInView = false
-        tableView.isUserInteractionEnabled = true
-        tableView.addGestureRecognizer(swipeRight)
-    }
-    
-    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-
-        guard let swipeGesture = gesture as? UISwipeGestureRecognizer else { return }
-        
-        switch swipeGesture.direction {
-
-        case .right:
-            
-            print("right")
-        
-        case .left:
-            print("left")
-        default:
-            break
-        }
-    }
-}
-
 //MARK: Header Methods
 extension BOGuideViewController: BOAppHeaderViewDelegate{
     
@@ -335,5 +289,51 @@ extension BOGuideViewController{
     
     func styleVCForDetail(){
         
+    }
+}
+
+
+//MARK: Swipe handling
+extension BOGuideViewController{
+    
+    func setupSwipeGestureRec(){
+        
+        setupLeftSwipe()
+        setupRightSwipe()
+    }
+    
+    func setupLeftSwipe(){
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeLeft.direction = .left
+        swipeLeft.cancelsTouchesInView = false
+        tableView.isUserInteractionEnabled = true
+        tableView.addGestureRecognizer(swipeLeft)
+    }
+    
+    func setupRightSwipe(){
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeRight.direction = .right
+        swipeRight.cancelsTouchesInView = false
+        tableView.isUserInteractionEnabled = true
+        tableView.addGestureRecognizer(swipeRight)
+    }
+    
+    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        
+        guard let swipeGesture = gesture as? UISwipeGestureRecognizer else { return }
+        
+        switch swipeGesture.direction {
+            
+        case .right:
+            
+            print("right")
+            
+        case .left:
+            print("left")
+        default:
+            break
+        }
     }
 }

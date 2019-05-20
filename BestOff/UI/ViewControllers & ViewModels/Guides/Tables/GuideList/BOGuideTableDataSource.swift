@@ -160,8 +160,12 @@ extension BOGuideTableDataSource: UITableViewDelegate{
         let txtHeaderRowHeight:CGFloat = 71.0
         if indexPath.row == 0 { return txtHeaderRowHeight }
         
-        
         if indexPath.row == 1 { return bigCellRowHeight }
+        
+        return getDoubleItemCellHeight()
+    }
+    
+    func getDoubleItemCellHeight() -> CGFloat{
         
         //DoubleItemCellHeight
         let leftSpacingToItemImg:CGFloat = 20.0
@@ -177,13 +181,5 @@ extension BOGuideTableDataSource: UITableViewDelegate{
         let itemRowHeight:CGFloat = itemImgWidthAndHeight + lblTitleSpacingToImg + lblTitleSpacginToBottom + lblHeight
         
         return itemRowHeight
-    }
-}
-
-extension Int{
-    
-    func isEven() -> Bool{
-        if self % 2 == 0 { return true }
-        return false
     }
 }

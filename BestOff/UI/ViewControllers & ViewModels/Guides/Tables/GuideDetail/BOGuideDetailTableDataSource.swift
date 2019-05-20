@@ -90,6 +90,18 @@ extension BOGuideDetailTableDataSource{
             return bigImgCell
         }
         
+        if indexPath.row == 3{
+            
+            guard let nextItem = catItem.value?.detailItem?.arrItems[safe: (indexPath.row)/2 - 1 ] else {
+                
+                print("no item")
+                return UITableViewCell()
+            }
+            let txtCell = myTableView.dequeueReusableCell(withIdentifier: BOCatItemTextDescriptionCell.reuseIdentifier()) as! BOCatItemTextDescriptionCell
+            txtCell.setText(text: nextItem.itemDescription)
+            return txtCell
+        }
+        
         guard let nextItem = catItem.value?.detailItem?.arrItems[safe: (indexPath.row)/2 - 2 ] else {
             
             print("no item")
@@ -159,6 +171,12 @@ extension BOGuideDetailTableDataSource{
             guard let itemText = catItem.value?.detailItem?.arrItems[safe: (indexPath.row)/2 - 1]?.itemDescription else { return 1 }
             
             return itemText.height(withConstrainedWidth: constraintedWidth, font: textDescFont)
+        }
+        
+        if indexPath.row == 3 {
+            
+            guard let itemText = catItem.value?.detailItem?.arrItems[safe: (indexPath.row)/2 - 1]?.itemDescription else { return 1 }
+            return itemText.height(withConstrainedWidth: constraintedWidth, font: textDescFont) + (2*topAndBotMargin)
         }
         
         guard let itemText = catItem.value?.detailItem?.arrItems[safe: (indexPath.row)/2 - 2]?.itemDescription else { return 1 }
