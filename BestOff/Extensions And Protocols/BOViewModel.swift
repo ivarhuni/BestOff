@@ -12,11 +12,6 @@ import Bond
 
 class BOViewModel: ViewModelErrorProtocol{
     
-    //MARK: CategoryItem Protocol
-
-    
-
-    
     //MARK: ViewModelErrorProtocol
     var shouldShowError = Observable<Bool>(false)
     func showDataError(){

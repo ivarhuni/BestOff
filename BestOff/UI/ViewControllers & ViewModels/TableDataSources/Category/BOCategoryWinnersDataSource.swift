@@ -25,48 +25,37 @@ class BOCategoryWinnersDataSource: NSObject{
     
     private let cellWidthToHeightRatio = 375/350
     
-    private let dining = Observable<BOCategoryModel?>(nil)
-    private let drinking = Observable<BOCategoryModel?>(nil)
-    private let activities = Observable<BOCategoryModel?>(nil)
-    private let shopping = Observable<BOCategoryModel?>(nil)
+    let dining = Observable<BOCategoryModel?>(nil)
+    private var randomDiningItem: BOCatItem?
+    
+    let drinking = Observable<BOCategoryModel?>(nil)
+    private var randomDrinkingItem: BOCatItem?
+    
+    let activities = Observable<BOCategoryModel?>(nil)
+    private var randomActivitiesItem: BOCatItem?
+    
+    let shopping = Observable<BOCategoryModel?>(nil)
+    private var randomShoppingItem: BOCatItem?
 }
 
 //MARK: Setters - public
-extension BOCategoryWinnersDataSource{
-    
-    func setDiningModel(catModel: BOCategoryModel){
-        self.dining.value = catModel
-    }
-    
-    func setDrinkingModel(catModel: BOCategoryModel){
-        self.drinking.value = catModel
-    }
-    
-    func setActivitiesModel(catModel: BOCategoryModel){
-        self.activities.value = catModel
-    }
-    
-    func setShoppingModel(catModel: BOCategoryModel){
-        self.shopping.value = catModel
-    }
-}
 
 extension BOCategoryWinnersDataSource{
     
-    func getCellForDining() -> UITableViewCell{
+    func getCellForDiningFor(tableView: UITableView) -> UITableViewCell{
         
         return UITableViewCell()
     }
     
-    func getCellForDrinking() -> UITableViewCell{
+    func getCellForDrinkingFor(tableView: UITableView) -> UITableViewCell{
         return UITableViewCell()
     }
     
-    func getCellForShopping() -> UITableViewCell{
+    func getCellForShoppingFor(tableView: UITableView) -> UITableViewCell{
         return UITableViewCell()
     }
     
-    func getCellForActivities() -> UITableViewCell{
+    func getCellForActivitiesFor(tableView: UITableView) -> UITableViewCell{
         return UITableViewCell()
     }
 }
@@ -85,8 +74,27 @@ extension BOCategoryWinnersDataSource: BOCategoryWinnerListProtocol{
     func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         
         let cell = myTableView.dequeueReusableCell(withIdentifier: CategoryWinnerCell.reuseIdentifier()) as! CategoryWinnerCell
+
+        if indexPath.row == diningIndex{
+            cell.setupWithCategory(category: dining.value, .rvkDining, randomItem: randomDiningItem)
+            return cell
+        }
         
-        cell.setupWithCategory()
+        if indexPath.row == drinkingIndex{
+            cell.setupWithCategory(category: drinking.value,  .rvkDrink, randomItem: randomDrinkingItem)
+            return cell
+        }
+        
+        if indexPath.row == activitiesIndex{
+            cell.setupWithCategory(category: activities.value, .rvkActivities, randomItem: randomActivitiesItem)
+            return cell
+        }
+        
+        if indexPath.row == shoppingIndex{
+            cell.setupWithCategory(category: shopping.value, .rvkShopping, randomItem: randomShoppingItem)
+            return cell
+        }
+        
         return cell
     }
     
@@ -100,6 +108,37 @@ extension BOCategoryWinnersDataSource: BOCategoryWinnerListProtocol{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return rowHeight
+    }
+}
+
+extension BOCategoryWinnersDataSource{
+    
+    func setDiningModel(catModel: BOCategoryModel){
+        self.dining.value = catModel
+        
+        guard let randomItem = catModel.items.randomItem() else { return }
+        randomDiningItem = randomItem
+    }
+    
+    func setDrinkingModel(catModel: BOCategoryModel){
+        self.drinking.value = catModel
+        
+        guard let randomItem = catModel.items.randomItem() else { return }
+        randomDrinkingItem = randomItem
+    }
+    
+    func setActivitiesModel(catModel: BOCategoryModel){
+        self.activities.value = catModel
+        
+        guard let randomItem = catModel.items.randomItem() else { return }
+        randomActivitiesItem = randomItem
+    }
+    
+    func setShoppingModel(catModel: BOCategoryModel){
+        self.shopping.value = catModel
+        
+        guard let randomItem = catModel.items.randomItem() else { return }
+        randomShoppingItem = randomItem
     }
 }
 

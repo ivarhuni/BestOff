@@ -23,6 +23,8 @@ class BOGuideViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewHeader: BOAppHeaderView!
     @IBOutlet weak var viewMenu: BOMenuView!
+    private var swipeLeft: UISwipeGestureRecognizer?
+    private var swipeRight: UISwipeGestureRecognizer?
     
     //MARK: Initalization
     init(viewModel: BOGuideViewModel){
@@ -154,22 +156,24 @@ extension BOGuideViewController{
     
     private func registerDelegateDetail(){
         tableView.delegate = viewModel.guideDetailDataSource.value
+        viewModel.guideListDataSource.value?.tableDelegate = nil
     }
     
     private func registerDelegateCategoryWinner(){
         tableView.delegate = viewModel.categoryWinnerListDataSource.value
+        viewModel.guideListDataSource.value?.tableDelegate = self
     }
 }
 
 extension BOGuideViewController: didPressListDelegate{
     
     func didPressAtIndexPath(indexPath: IndexPath) {
-        print("didPress")
+        
         viewModel.tableViewPressedAt(indexPath.row)
     }
     
     func didPressItem(item: BOCatItem){
-        print("didPress")
+        
         viewModel.changeDataSourceToDetailWith(item: item)
     }
 }
@@ -184,15 +188,25 @@ extension BOGuideViewController{
             
             guard let this = self else{ return }
             
-            (catModelValue != nil) ? this.setTableToDefault() : print("nothing")
+            if catModelValue != nil{
+                this.setTableToDefault()
+            }
+            else{
+                print("nothing in guidelistdatasourcevalue binding")
+            }
         }
         
         //Detail Item being viewed
         _ = viewModel.guideDetailDataSource.observeOn(.main).observeNext{ [weak self] detailListDataSourceValue in
             
             guard let this = self else { return }
-            
-            (detailListDataSourceValue != nil) ? this.setupForDetail() : this.setTableToDefault()
+           
+            if detailListDataSourceValue == nil{
+                this.setTableToDefault()
+            }
+            else{
+                this.setupForDetail()
+            }
         }
         
         //Menu open
@@ -208,6 +222,31 @@ extension BOGuideViewController{
             
             guard let this = self else { return }
             (newActivePage == .right) ? this.setupForCategoryWinners() : this.setTableToDefault()
+        }
+        
+        //CategoryWinners
+        _ = viewModel.categoryWinnerListDataSource.value?.dining.observeOn(.main).observeNext{ [weak self] _ in
+            
+            guard let this = self else { return }
+            this.viewModel.shouldRefreshTableWithNewCategoryWinner() ? this.reloadWith(winner: .rvkDining) : print("notReloadingDining")
+        }
+        
+        _ = viewModel.categoryWinnerListDataSource.value?.drinking.observeOn(.main).observeNext{ [weak self] _ in
+            
+            guard let this = self else { return }
+            this.viewModel.shouldRefreshTableWithNewCategoryWinner() ? this.reloadWith(winner: .rvkDrink) : print("notReloadingDrinking")
+        }
+        
+        _ = viewModel.categoryWinnerListDataSource.value?.activities.observeOn(.main).observeNext{ [weak self] _ in
+            
+            guard let this = self else { return }
+            this.viewModel.shouldRefreshTableWithNewCategoryWinner() ? this.reloadWith(winner: .rvkActivities) : print("notReloadingActivities")
+        }
+        
+        _ = viewModel.categoryWinnerListDataSource.value?.shopping.observeOn(.main).observeNext{ [weak self] _ in
+            
+            guard let this = self else { return }
+            this.viewModel.shouldRefreshTableWithNewCategoryWinner() ? this.reloadWith(winner: .rvkShopping) : print("notReloadingShopping")
         }
     }
 }
@@ -225,19 +264,18 @@ extension BOGuideViewController{
         
                                     this.tableViewHeader.viewModel.isDetailActive.value = false
                                     this.tableView.reloadData()
-                }) { (finished) in
-                    
-                    self.scrollToTopDefault()
+                }) { [weak self] (finished) in
+                    guard let this = self else { return }
+                    this.scrollToTopDefault()
                 }
     }
     
     private func setTableToDefault(){
         
         tableView.dataSource = viewModel.guideListDataSource.value
-
         registerDelegateDefault()
-        
         animateToDefault()
+        enableSwipe()
     }
     
     private func scrollToTopDefault(){
@@ -250,15 +288,35 @@ extension BOGuideViewController{
 //MARK: Detail Screen setup
 extension BOGuideViewController{
     
-    func setupForDetail(){
+    private func setupForDetail(){
         
         tableView.dataSource = viewModel.guideDetailDataSource.value
+        
         registerDelegateDetail()
         animateReloadDataDetail()
         animateHeaderToDetail()
+        disableSwipe()
     }
     
-    func animateHeaderToDetail(){
+    private func disableSwipe(){
+        if let leftSwipe = self.swipeLeft{
+            leftSwipe.isEnabled = false
+        }
+        if let rightSwipe = self.swipeRight{
+            rightSwipe.isEnabled = false
+        }
+    }
+    
+    private func enableSwipe(){
+        if let leftSwipe = self.swipeLeft{
+            leftSwipe.isEnabled = true
+        }
+        if let rightSwipe = self.swipeRight{
+            rightSwipe.isEnabled = true
+        }
+    }
+    
+    private func animateHeaderToDetail(){
         
         UIView.animate(withDuration: self.viewModel.tableDataSourceAnimationDuration, delay: 0, options: .curveEaseInOut, animations: {
             
@@ -266,7 +324,7 @@ extension BOGuideViewController{
         }, completion: nil)
     }
     
-    func animateReloadDataDetail(){
+    private func animateReloadDataDetail(){
         
         UIView.transition(with: self.tableView, duration: self.viewModel.tableDataSourceAnimationDuration, options: .transitionCrossDissolve, animations: {
             
@@ -277,7 +335,7 @@ extension BOGuideViewController{
         }
     }
     
-    func scrollToTopDetail(){
+    private func scrollToTopDetail(){
         let indexPath = IndexPath(row: 0, section: 0)
         
         (viewModel.guideDetailDataSource.value?.catItem.value != nil) ? self.tableView.scrollToRow(at: indexPath, at: .top, animated: true) : print("")
@@ -293,6 +351,7 @@ extension BOGuideViewController{
         tableView.dataSource = viewModel.categoryWinnerListDataSource.value
         registerDelegateCategoryWinner()
         animateReloadDataWinners()
+        enableSwipe()
     }
     
     private func animateReloadDataWinners(){
@@ -300,15 +359,28 @@ extension BOGuideViewController{
         UIView.transition(with: tableView, duration: viewModel.tableDataSourceAnimationDuration, options: .transitionCrossDissolve, animations: { [weak self] in
             
             guard let this = self else { return }
+            this.tableViewHeader.viewModel.isDetailActive.value = false
             this.tableView.reloadData()
-        }) { [weak self] (finished) in
-            
-            guard let this = self else { return }
-            this.scrollToTopCatWinner()
+        }) { (finished) in }
+    }
+    
+    private func reloadWith(winner: Endpoint){
+        
+        switch winner {
+        case .rvkDining:
+            tableView.reloadRows(at: [IndexPath(item: 0, section: 0)], with: .left)
+        case .rvkDrink:
+            tableView.reloadRows(at: [IndexPath(item: 1, section: 0)], with: .left)
+        case .rvkShopping:
+            tableView.reloadRows(at: [IndexPath(item: 2, section: 0)], with: .left)
+        case .rvkActivities:
+            tableView.reloadRows(at: [IndexPath(item: 3, section: 0)], with: .left)
+        default:
+            print("")
         }
     }
     
-    func scrollToTopCatWinner(){
+    private func scrollToTopCatWinner(){
         
         let indexPath = IndexPath(row: 0, section: 0)
         (viewModel.categoryWinnerListDataSource.value != nil) ?  self.tableView.scrollToRow(at: indexPath, at: .top, animated: true) : print("")
@@ -319,28 +391,43 @@ extension BOGuideViewController{
 //MARK: Swipe handling
 extension BOGuideViewController{
     
-    func setupSwipeGestureRec(){
+    private func setupSwipeGestureRec(){
         
         setupLeftSwipe()
         setupRightSwipe()
+        enableSwipe()
     }
     
-    func setupLeftSwipe(){
+    private func setupLeftSwipe(){
         
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeLeft.direction = .left
-        swipeLeft.cancelsTouchesInView = false
+        
+        swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        guard let swLeft = swipeLeft else { return }
+        
+        swLeft.direction = .left
+        swLeft.cancelsTouchesInView = false
         tableView.isUserInteractionEnabled = true
-        tableView.addGestureRecognizer(swipeLeft)
+        tableView.addGestureRecognizer(swLeft)
     }
     
-    func setupRightSwipe(){
+    private func setupRightSwipe(){
         
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeRight.direction = .right
-        swipeRight.cancelsTouchesInView = false
+        swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        guard let swRight = swipeRight else { return }
+        
+        swRight.direction = .right
+        swRight.cancelsTouchesInView = false
         tableView.isUserInteractionEnabled = true
-        tableView.addGestureRecognizer(swipeRight)
+        tableView.addGestureRecognizer(swRight)
+    }
+    
+    
+    
+    static func clearGestureRecForView(view: UIView){
+        
+        for recognizer in view.gestureRecognizers ?? [] {
+            view.removeGestureRecognizer(recognizer)
+        }
     }
     
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
@@ -360,7 +447,7 @@ extension BOGuideViewController{
         }
     }
     
-    func disableTableDelegate(){
+    private func disableTableDelegate(){
         tableView.delegate = nil
     }
 }

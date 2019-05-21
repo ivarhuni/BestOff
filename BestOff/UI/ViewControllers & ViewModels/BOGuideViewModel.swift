@@ -27,7 +27,7 @@ class BOGuideViewModel: BOViewModel {
     //MARK: Protocol properties
     let guideListDataSource = Observable<BOCategoryListDataSourceProtocol?>(nil)
     let guideDetailDataSource = Observable<BOCategoryDetailListProtocol?>(nil)
-    let categoryWinnerListDataSource = Observable<BOCategoryWinnerListProtocol?>(nil)
+    let categoryWinnerListDataSource = Observable<BOCategoryWinnersDataSource?>(nil)
     
     let tableDataSourceAnimationDuration:Double = 0.4
     
@@ -45,8 +45,6 @@ class BOGuideViewModel: BOViewModel {
     private var rvkActivities = Observable<BOCategoryModel?>(nil)
     private var rvkShopping = Observable<BOCategoryModel?>(nil)
     private var rvkDining = Observable<BOCategoryModel?>(nil)
-    
-
 
     //RowHeights used in both types of tables
     private let bigCellRowHeight:CGFloat = 310
@@ -76,29 +74,38 @@ extension BOGuideViewModel{
         }.dispose(in: disposeBag)
         
         
-        _ = self.rvkShopping.observeNext{ [weak self] model in
         
+        _ = self.rvkDining.observeNext{ [weak self] model in
+            
             guard let this = self else { return }
+            guard let catWinnerDSource = this.categoryWinnerListDataSource.value else { return }
+            guard let model = model else { return }
             
-            
+            catWinnerDSource.setDiningModel(catModel: model)
         }
         
         _ = self.rvkDrink.observeNext{ [weak self] model in
             
             guard let this = self else { return }
-           
+            guard let catWinnerDSource = this.categoryWinnerListDataSource.value else { return }
+            guard let model = model else { return }
+            catWinnerDSource.setDrinkingModel(catModel: model)
         }
         
-        _ = self.rvkDining.observeNext{ [weak self] model in
-            
+        _ = self.rvkShopping.observeNext{ [weak self] model in
+        
             guard let this = self else { return }
-            
+            guard let catWinnerDSource = this.categoryWinnerListDataSource.value else { return }
+            guard let model = model else { return }
+            catWinnerDSource.setShoppingModel(catModel: model)
         }
         
         _ = self.rvkActivities.observeNext{ [weak self] model in
             
             guard let this = self else { return }
-            
+            guard let catWinnerDSource = this.categoryWinnerListDataSource.value else { return }
+            guard let model = model else { return }
+            catWinnerDSource.setActivitiesModel(catModel: model)
         }
     }
 }
@@ -110,7 +117,10 @@ extension BOGuideViewModel: vmTableViewDelegate{
     func tableViewPressedAt(_ index: Int) {
         
         let bigGuideCellIndex = 1
-        if index == bigGuideCellIndex { changeDataSourceToFirstDetail() }
+        
+        if shouldRespondToTableIndexPress(){
+            if index == bigGuideCellIndex { changeDataSourceToFirstDetail() }
+        }
     }
     
     func changeDataSourceToDetailWith(item: BOCatItem){
@@ -267,5 +277,13 @@ extension BOGuideViewModel{
     
     func setActivePage(page: ActivePage){
         self.activePage.value = page
+    }
+    
+    func shouldRefreshTableWithNewCategoryWinner() -> Bool{
+        return activePage.value == .right
+    }
+    
+    func shouldRespondToTableIndexPress() -> Bool{
+        return activePage.value == .left
     }
 }

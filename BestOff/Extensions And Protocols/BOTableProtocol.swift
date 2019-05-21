@@ -32,6 +32,10 @@ protocol BOCategoryWinnerListProtocol: UITableViewDataSource, UITableViewDelegat
     func numberOfRows() -> Int
     func numberOfSections() -> Int
     func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell
+    func setDiningModel(catModel: BOCategoryModel)
+    func setDrinkingModel(catModel: BOCategoryModel)
+    func setActivitiesModel(catModel: BOCategoryModel)
+    func setShoppingModel(catModel: BOCategoryModel)
 }
 
 protocol BOCategoryDetailListProtocol: UITableViewDataSource, UITableViewDelegate {

@@ -147,6 +147,7 @@ extension BOAppHeaderView{
     
     @objc func handleBackTap(_ sender: UITapGestureRecognizer) {
         
+        print("back pressed")
         guard let delegate = delegate else {
             print("delegate for headerview not set while pressing back")
             return
@@ -159,37 +160,35 @@ extension BOAppHeaderView{
     
     func setBindings(){
         
-        _ = viewModel.isHamburgerActive.observeOn(.main).observeNext{ value in
+        _ = viewModel.isHamburgerActive.observeOn(.main).observeNext{ [weak self] value in
             
+            guard let this = self else { return }
             
             if value{
-                self.animateToHamburger()
-                self.animateToNormalText()
+                this.showDefault()
                 return
             }
-            
-            self.animateToXIcon()
-            self.animateToFavouriteTxt()
+            this.animateToXIcon()
+            this.animateToFavouriteTxt()
         }
         
         _ = viewModel.isDetailActive.observeOn(.main).observeNext{ [weak self] isDetailActiveValue in
             
             guard let this = self else { return }
             if isDetailActiveValue{
-                
                 this.showDetail()
                 return
             }
             this.showDefault()
         }
     }
-    
 }
 
 extension BOAppHeaderView{
     
-    func animateToHamburger(){
+    private func animateToHamburger(){
         
+        self.layoutIfNeeded()
         self.setNeedsLayout()
         UIView.transition(with: self.btnHamburger,
                           duration: self.viewModel.btnAnimationDuration,
@@ -201,11 +200,13 @@ extension BOAppHeaderView{
                             this.btnWidth.constant = this.viewModel.originalBtnWidthHeight
                             this.btnHeight.constant = this.viewModel.originalBtnWidthHeight
                             this.view.layoutIfNeeded()
+                            this.layoutIfNeeded()
             }, completion: nil)
     }
     
-    func animateToXIcon(){
+    private func animateToXIcon(){
         
+        self.layoutIfNeeded()
         self.setNeedsLayout()
         UIView.transition(with: self.btnHamburger,
                           duration: self.viewModel.btnAnimationDuration,
@@ -217,12 +218,14 @@ extension BOAppHeaderView{
                             this.btnWidth.constant = this.viewModel.xIconWidthHeight
                             this.btnHeight.constant = this.viewModel.xIconWidthHeight
                             this.view.layoutIfNeeded()
-                            
+                            this.layoutIfNeeded()
             }, completion: nil)
     }
     
-    func animateToFavouriteTxt(){
+    private func animateToFavouriteTxt(){
         
+        self.layoutIfNeeded()
+        self.setNeedsLayout()
         UIView.transition(with: self.lblTitle,
                           duration: self.viewModel.btnAnimationDuration,
                           options: .transitionCrossDissolve,
@@ -231,12 +234,15 @@ extension BOAppHeaderView{
                             guard let this = self else { return }
                             this.lblTitle.font = UIFont.guideHeadlineFav
                             this.lblTitle.text = "REYKJAVÍK GRAPEVINE"
+                            this.view.layoutIfNeeded()
+                            this.layoutIfNeeded()
             }, completion: nil)
     }
     
-    func animateToNormalText(){
+    private func animateToNormalText(){
         
-        
+        self.layoutIfNeeded()
+        self.setNeedsLayout()
         UIView.transition(with: self.lblTitle,
                           duration: self.viewModel.btnAnimationDuration,
                           options: .transitionCrossDissolve,
@@ -245,6 +251,8 @@ extension BOAppHeaderView{
                             guard let this = self else { return }
                             this.lblTitle.font = UIFont.guideHeadline
                             this.lblTitle.text = "BEST OF REYKJAVÍK"
+                            this.view.layoutIfNeeded()
+                            this.layoutIfNeeded()
             }, completion: nil)
     }
 }
@@ -260,7 +268,7 @@ extension BOAppHeaderView{
         showSeperator()
         setupTextForDetail()
         setCornerRadiusForDetail()
-        layoutIfNeeded()
+        self.layoutIfNeeded()
         UIView.transition(with: self,
                           duration: self.viewModel.btnAnimationDuration,
                           options: .transitionCrossDissolve,
@@ -281,10 +289,11 @@ extension BOAppHeaderView{
                             this.roundCorners(corners: [.topLeft, .topRight], radius: 10)
                             
                             this.view.layoutIfNeeded()
+                            this.layoutIfNeeded()
             }, completion: nil)
     }
     
-    func setCornerRadiusForDetail(){
+    private func setCornerRadiusForDetail(){
         self.view.clipsToBounds = true
         clipsToBounds = true
         
@@ -292,11 +301,11 @@ extension BOAppHeaderView{
         self.view.layer.cornerRadius = 10
     }
     
-    func setupTextForDetail(){
+    private func setupTextForDetail(){
         lblBackTitle.text = "GUIDES"
     }
     
-    func showDefault(){
+    private func showDefault(){
         
         viewSep.isHidden = true
         layoutIfNeeded()
@@ -316,9 +325,11 @@ extension BOAppHeaderView{
                             this.backgroundColor = .colorRed
                             
                             this.view.layoutIfNeeded()
+                            this.layoutIfNeeded()
             }, completion: nil)
         
-
+        animateToHamburger()
+        animateToNormalText()
     }
 }
 
@@ -330,5 +341,13 @@ extension UIView{
         let mask = CAShapeLayer()
         mask.path = path.cgPath
         layer.mask = mask
+    }
+}
+
+extension BOAppHeaderView{
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.view.layoutIfNeeded()
     }
 }

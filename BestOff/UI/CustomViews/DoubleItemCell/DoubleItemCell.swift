@@ -210,7 +210,7 @@ extension DoubleItemCell{
         
         guard let leftView = leftView else { return }
         
-        clearGestureRecForView(view: leftView)
+        BOGuideViewController.clearGestureRecForView(view: leftView)
         
         let leftTap = UITapGestureRecognizer(target: self, action: #selector(self.handleTapOnLeftView(_:)))
         leftView.addGestureRecognizer(leftTap)
@@ -221,18 +221,11 @@ extension DoubleItemCell{
         
         guard let rightView = rightView else { return }
         
-        clearGestureRecForView(view: rightView)
+        BOGuideViewController.clearGestureRecForView(view: rightView)
         
         let rightTap = UITapGestureRecognizer(target: self, action: #selector(self.handleTapOnRightView(_:)))
         rightView.addGestureRecognizer(rightTap)
         rightView.isUserInteractionEnabled = true
-    }
-    
-    func clearGestureRecForView(view: UIView){
-        
-        for recognizer in view.gestureRecognizers ?? [] {
-            view.removeGestureRecognizer(recognizer)
-        }
     }
     
     @objc func handleTapOnLeftView(_ sender: UITapGestureRecognizer) {

@@ -131,6 +131,10 @@ extension UIFont {
   class var catItemImgName: UIFont {
     return UIFont(name: "Blanco", size: 14.0)!
   }
+    
+    class var catItemImgNameBigger: UIFont {
+        return UIFont(name: "Blanco-Bold", size: 16.0)!
+    }
 
   class var gvImageText: UIFont {
     return UIFont(name: "Blanco", size: 14.0)!
