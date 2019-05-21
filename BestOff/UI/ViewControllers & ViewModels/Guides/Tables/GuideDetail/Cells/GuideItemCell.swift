@@ -16,7 +16,6 @@ class GuideItemCell: UITableViewCell {
     @IBOutlet weak var lblAddress: UILabel!
     @IBOutlet weak var viewSep: UIView!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

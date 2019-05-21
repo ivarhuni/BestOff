@@ -97,7 +97,7 @@ struct DetailItemFactory{
     
     static func createCategoryDetailFromText(categoryItemContentText: String, strHTML: String) -> BOCategoryDetail?{
         
-        var arrText = categoryItemContentText.components(separatedBy: "\n")
+        let arrText = categoryItemContentText.components(separatedBy: "\n")
         
         guard let catDescription = arrText[safe: arrIndexItems.catDescription.rawValue] else{
             print("--!-- MODEL ERROR: CategoryItemDescription unavailable --!-- ")
@@ -114,7 +114,7 @@ struct DetailItemFactory{
     //DetailItems are the items contained within ContentItem.Text
     private static func createDetailItemsFromTextArrays(arrTextContent: [String], strHTML: String) -> [BOCategoryDetailItem]{
         
-        var arrText = filterNonItemsOutOfTextArray(arrayToFilter: arrTextContent)
+        let arrText = filterNonItemsOutOfTextArray(arrayToFilter: arrTextContent)
         
         let indexGapForNewItem = 3
         

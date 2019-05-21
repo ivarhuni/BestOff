@@ -73,10 +73,6 @@ extension BOGuideViewController: BOAppHeaderViewDelegate{
     func didPressBack() {
         self.viewModel.changeDataSourceToDefault()
     }
-}
-
-//MARK: Menu
-extension BOGuideViewController: MenuController{
     
     func openMenu() {
         
@@ -154,10 +150,14 @@ extension BOGuideViewController{
     }
 }
 
-extension BOGuideViewController: didPressListAtIndexDelegate{
+extension BOGuideViewController: didPressListDelegate{
     
     func didPressAtIndexPath(indexPath: IndexPath) {
         viewModel.tableViewPressedAt(indexPath.row)
+    }
+    
+    func didPressItem(item: BOCatItem){
+        viewModel.changeDataSourceToDetailWith(item: item)
     }
 }
 
@@ -173,7 +173,6 @@ extension BOGuideViewController{
             
             if catModelValue != nil {
                 
-                this.registerDelegateDefault()
                 this.setTableToDefault()
             }
         }
@@ -193,11 +192,11 @@ extension BOGuideViewController{
         }
         
         //Menu open
-        _ = viewModel.menuOpen.observeOn(.main).observeNext{ [weak self] value in
+        _ = viewModel.menuOpen.observeOn(.main).observeNext{ [weak self] shouldOpen in
             
             guard let this = self else{ return }
             
-            value ? this.openMenu() : this.hideMenu()
+            shouldOpen ? this.openMenu() : this.hideMenu()
         }
     }
 }

@@ -18,7 +18,7 @@ protocol BOCategoryListDataSourceProtocol: UITableViewDataSource, UITableViewDel
     
     var categoryModel: Observable<BOCategoryModel?> { get }
     
-    var tableDelegate: didPressListAtIndexDelegate? { get set }
+    var tableDelegate: didPressListDelegate? { get set }
     
     func setDataModel(model: BOCategoryModel)
     func items(at indexPath: IndexPath) -> [BOCatItem]

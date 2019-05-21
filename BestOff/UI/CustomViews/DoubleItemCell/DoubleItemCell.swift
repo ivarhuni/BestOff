@@ -30,7 +30,10 @@ class DoubleItemCell: UITableViewCell {
     @IBOutlet weak var viewBgLeft: UIView!
     @IBOutlet weak var viewBgRight: UIView!
     
+    private var leftItem: BOCatItem?
+    private var rightItem: BOCatItem?
     
+    weak var onPressDelegate: DoubleCellPressed?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,6 +44,25 @@ class DoubleItemCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+}
+
+
+protocol DoubleCellPressed: AnyObject {
+    
+    func doubleCellPressed(item: BOCatItem)
+}
+
+extension DoubleItemCell: DoubleCellPressed{
+    
+    func doubleCellPressed(item: BOCatItem){
+        
+        guard let delegate = onPressDelegate else {
+            print("Delegate not set for doubleitemcell")
+            return
+        }
+        
+        delegate.doubleCellPressed(item: item)
     }
 }
 
@@ -75,24 +97,28 @@ extension DoubleItemCell{
 //MARK: Setup
 extension DoubleItemCell{
     
-    func setupWithItems(arrItems: [BOCatItem]){
+    func setupWithItems(arrItems: [BOCatItem], onPressDelegate: DoubleCellPressed){
         
         disableSelection()
         styleBackgroundViews()
         setupLabels()
         setupImgViews()
+        
+        self.onPressDelegate = onPressDelegate
+        
         guard let leftItem = arrItems[safe: 0] else { return }
         setupWithLeftItem(item: leftItem)
         
         guard let rightItem = arrItems[safe: 1] else { return }
         setupWithRightItem(item: rightItem)
+    
      }
     
-    func disableSelection(){
+    private func disableSelection(){
         self.selectionStyle = .none
     }
     
-    func setupImgViews(){
+    private func setupImgViews(){
         
         imgViewAuthorRight.contentMode = .scaleAspectFill
         imgViewAuthorLeft.contentMode = .scaleAspectFill
@@ -104,7 +130,7 @@ extension DoubleItemCell{
         imgViewLeft.clipsToBounds = true
     }
     
-    func styleBackgroundViews(){
+    private func styleBackgroundViews(){
         
         let bgAlpha:CGFloat = 0.05
         viewBgLeft.backgroundColor = .black
@@ -114,20 +140,20 @@ extension DoubleItemCell{
         viewBgLeft.alpha = bgAlpha
     }
     
-    func setupLabels(){
+    private func setupLabels(){
         
         setupFonts()
         setupLabelScalingForLabel(label: lblLeft)
         setupLabelScalingForLabel(label: lblRight)
     }
     
-    func setupLabelScalingForLabel(label: UILabel){
+    private func setupLabelScalingForLabel(label: UILabel){
         
         label.numberOfLines = 2
         label.lineBreakMode = .byTruncatingTail
     }
     
-    func setupFonts(){
+    private func setupFonts(){
         
         lblLeft.textColor = .colorBlackText
         lblRight.textColor = .colorBlackText
@@ -139,31 +165,88 @@ extension DoubleItemCell{
         lblRightAuthor.font = UIFont.authorName
         lblLeftAuthor.font = UIFont.authorName
     }
+}
+
+//MARK: Left item
+extension DoubleItemCell{
     
-    func setupWithLeftItem(item: BOCatItem){
+    private func setupWithLeftItem(item: BOCatItem){
         
         UIImageView.setSDImageViewImageWithURL(imageView: imgViewAuthorLeft, strURL: item.author.avatar)
         UIImageView.setSDImageViewImageWithURL(imageView: imgViewLeft, strURL: item.image)
         
         lblLeftAuthor.text = item.author.name
         lblLeft.text = item.title
+        
+        leftItem = item
+        setupTapGestureForLeftView()
         clearRight()
     }
     
-    func clearRight(){
+    private func clearRight(){
         lblRight.text = ""
         imgViewRight.image = nil
         lblRightAuthor.text = ""
         imgViewAuthorRight.image = nil
     }
+
+}
+
+extension DoubleItemCell{
     
-    
-    func setupWithRightItem(item: BOCatItem){
+    private func setupWithRightItem(item: BOCatItem){
         
         UIImageView.setSDImageViewImageWithURL(imageView: imgViewAuthorRight, strURL: item.author.avatar)
         UIImageView.setSDImageViewImageWithURL(imageView: imgViewRight, strURL: item.image)
         
         lblRightAuthor.text = item.author.name
         lblRight.text = item.title
+        
+        rightItem = item
+        setupTapGestureForRightView()
+    }
+}
+
+extension DoubleItemCell{
+    
+    func setupTapGestureForLeftView(){
+        
+        guard let leftView = leftView else { return }
+        
+        clearGestureRecForView(view: leftView)
+        
+        let leftTap = UITapGestureRecognizer(target: self, action: #selector(self.handleTapOnLeftView(_:)))
+        leftView.addGestureRecognizer(leftTap)
+        leftView.isUserInteractionEnabled = true
+    }
+    
+    func setupTapGestureForRightView(){
+        
+        guard let rightView = rightView else { return }
+        
+        clearGestureRecForView(view: rightView)
+        
+        let rightTap = UITapGestureRecognizer(target: self, action: #selector(self.handleTapOnRightView(_:)))
+        rightView.addGestureRecognizer(rightTap)
+        rightView.isUserInteractionEnabled = true
+    }
+    
+    func clearGestureRecForView(view: UIView){
+        
+        for recognizer in view.gestureRecognizers ?? [] {
+            view.removeGestureRecognizer(recognizer)
+        }
+    }
+    
+    @objc func handleTapOnLeftView(_ sender: UITapGestureRecognizer) {
+        
+        guard let itemLeft = self.leftItem else { return }
+        doubleCellPressed(item: itemLeft)
+    }
+    
+    @objc func handleTapOnRightView(_ sender: UITapGestureRecognizer) {
+        
+        guard let itemRight = self.rightItem else { return }
+        doubleCellPressed(item: itemRight)
     }
 }

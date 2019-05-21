@@ -23,8 +23,7 @@ class BOGuideDetailTableDataSource: NSObject, BOCategoryDetailListProtocol{
         self.catItem.value = catItem
     }
     
-    let topBigImgCellIndex = 0
-    let contentTextDescIndex = 1
+   
     
     func setCatItemTo(item: BOCatItem) {
         self.catItem.value = item
@@ -40,10 +39,7 @@ extension BOGuideDetailTableDataSource{
         
         let imgCell = 1
         let txtDescription = 1
-        
-        //each small item has two rows, hence *2
-        print("returning NumberOfRows: ")
-        print(countItems*2 + imgCell + txtDescription)
+
         return countItems*2 + imgCell + txtDescription
     }
     
@@ -53,64 +49,31 @@ extension BOGuideDetailTableDataSource{
     
     func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         
+        let topBigImgCellIndex = 0
+        let contentTextDescIndex = 1
+        let firstImgRegularCellIndex = 2
+        let firstTextRegularCellIndex = 3
+        
         if indexPath.row == topBigImgCellIndex{
             
-            let topCell = myTableView.dequeueReusableCell(withIdentifier: TopGuideCell.reuseIdentifier()) as! TopGuideCell
-            guard let item = catItem.value else {
-                
-                //print("returning UITableViewCell instead of TopCell")
-                return UITableViewCell()
-            }
-            topCell.setupWith(item: item)
-            topCell.styleForDetail()
-            return topCell
+           return getTopCellForTableView(tableView: myTableView)
         }
         if indexPath.row == contentTextDescIndex{
             
-            let txtCell = myTableView.dequeueReusableCell(withIdentifier: BOCatItemTextDescriptionCell.reuseIdentifier()) as! BOCatItemTextDescriptionCell
-            guard let text = catItem.value?.detailItem?.categoryDescription else {
-                
-                //print("returning tableviewell instead of txtCell for contentTextDescIndex")
-                return UITableViewCell()
-            }
-            txtCell.setText(text: text)
-            return txtCell
+            return getDescriptionCellForTableView(tableview: myTableView)
+        }
+        
+        if indexPath.row == firstImgRegularCellIndex{
+            return getFirstImgCellIn(tableView: myTableView)
+        }
+        
+        if indexPath.row == firstTextRegularCellIndex{
+            return getFirstTxtCellIn(tableView: myTableView)
         }
         
         //If the indexRow is even, then we display an ImageCell
         //otherwise we are displaying a text cell for the ImageCell's text
-        if indexPath.row.isEven(){
-            
-            guard let nextItem = catItem.value?.detailItem?.arrItems[safe: (indexPath.row)/2 - 1 ] else {
-                
-                return UITableViewCell()
-            }
-            let bigImgCell = myTableView.dequeueReusableCell(withIdentifier: GuideItemCell.reuseIdentifier()) as! GuideItemCell
-            bigImgCell.setupWithGuide(guide: nextItem)
-            return bigImgCell
-        }
-        
-        if indexPath.row == 3{
-            
-            guard let nextItem = catItem.value?.detailItem?.arrItems[safe: (indexPath.row)/2 - 1 ] else {
-                
-                print("no item")
-                return UITableViewCell()
-            }
-            let txtCell = myTableView.dequeueReusableCell(withIdentifier: BOCatItemTextDescriptionCell.reuseIdentifier()) as! BOCatItemTextDescriptionCell
-            txtCell.setText(text: nextItem.itemDescription)
-            return txtCell
-        }
-        
-        guard let nextItem = catItem.value?.detailItem?.arrItems[safe: (indexPath.row)/2 - 2 ] else {
-            
-            print("no item")
-            return UITableViewCell()
-        }
-        
-        let txtCell = myTableView.dequeueReusableCell(withIdentifier: BOCatItemTextDescriptionCell.reuseIdentifier()) as! BOCatItemTextDescriptionCell
-        txtCell.setText(text: nextItem.itemDescription)
-        return txtCell
+        return getNextCellFor(myTableView:myTableView, atIndexPath: indexPath)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -122,11 +85,83 @@ extension BOGuideDetailTableDataSource{
     }
 }
 
+extension BOGuideDetailTableDataSource{
+    
+    private func getNextCellFor(myTableView: UITableView, atIndexPath: IndexPath) -> UITableViewCell{
+        
+        if atIndexPath.row.isEven(){
+            
+            guard let nextItem = catItem.value?.detailItem?.arrItems[safe: (atIndexPath.row)/2 - 1 ] else {
+                
+                print("nextcell returning default cell, img")
+                return UITableViewCell()
+            }
+            let bigImgCell = myTableView.dequeueReusableCell(withIdentifier: GuideItemCell.reuseIdentifier()) as! GuideItemCell
+            bigImgCell.setupWithGuide(guide: nextItem)
+            return bigImgCell
+        }
+        
+        guard let nextItem = catItem.value?.detailItem?.arrItems[safe: (atIndexPath.row/2) - 1 ] else {
+            
+            print("nextcell returning default cell, img, text")
+            return UITableViewCell()
+        }
+        
+        let txtCell = myTableView.dequeueReusableCell(withIdentifier: BOCatItemTextDescriptionCell.reuseIdentifier()) as! BOCatItemTextDescriptionCell
+        txtCell.setText(text: nextItem.itemDescription)
+        return txtCell
+    }
+    
+    private func getFirstTxtCellIn(tableView: UITableView) -> UITableViewCell{
+        
+        guard let nextItem = catItem.value?.detailItem?.arrItems[safe: 0] else {
+            
+            print("no text for for item BOGUIDEDETAILTABLEDATASOURCE")
+            return UITableViewCell()
+        }
+        let txtCell = tableView.dequeueReusableCell(withIdentifier: BOCatItemTextDescriptionCell.reuseIdentifier()) as! BOCatItemTextDescriptionCell
+        txtCell.setText(text: nextItem.itemDescription)
+        return txtCell
+    }
+    
+    private func getFirstImgCellIn(tableView: UITableView) -> UITableViewCell{
+        
+        guard let nextItem = catItem.value?.detailItem?.arrItems[safe: 0] else {
+            
+            print("No item for first doubleRow")
+            return UITableViewCell()
+        }
+        let bigImgCell = tableView.dequeueReusableCell(withIdentifier: GuideItemCell.reuseIdentifier()) as! GuideItemCell
+        bigImgCell.setupWithGuide(guide: nextItem)
+        return bigImgCell
+    }
+    
+    private func getTopCellForTableView(tableView: UITableView) -> UITableViewCell{
+        let topCell = tableView.dequeueReusableCell(withIdentifier: TopGuideCell.reuseIdentifier()) as! TopGuideCell
+        guard let item = catItem.value else {
+            return UITableViewCell()
+        }
+        topCell.setupWith(item: item)
+        topCell.styleForDetail()
+        return topCell
+    }
+    
+    private func getDescriptionCellForTableView(tableview: UITableView) -> UITableViewCell{
+        
+        let txtCell = tableview.dequeueReusableCell(withIdentifier: BOCatItemTextDescriptionCell.reuseIdentifier()) as! BOCatItemTextDescriptionCell
+        guard let text = catItem.value?.detailItem?.categoryDescription else {
+            
+            //print("returning tableviewell instead of txtCell for contentTextDescIndex")
+            return UITableViewCell()
+        }
+        txtCell.setText(text: text)
+        return txtCell
+    }
+}
+
 extension BOGuideDetailTableDataSource: UITableViewDelegate{
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
@@ -164,7 +199,7 @@ extension BOGuideDetailTableDataSource{
         
         let constraintedWidth = UIScreen.main.bounds.width - 2*20
         let textDescFont = UIFont.cellItemText
-        let topAndBotMargin:CGFloat = 5
+        let topAndBotMargin:CGFloat = 20
         
         if indexPath.row.isEven(){
             

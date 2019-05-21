@@ -10,15 +10,16 @@ import UIKit
 import ReactiveKit
 import Bond
 
-protocol didPressListAtIndexDelegate: AnyObject {
+protocol didPressListDelegate: AnyObject {
     func didPressAtIndexPath(indexPath: IndexPath)
+    func didPressItem(item: BOCatItem)
 }
 
 class BOGuideTableDataSource: NSObject, BOCategoryListDataSourceProtocol {
     
     var categoryModel = Observable<BOCategoryModel?>(nil)
     
-    weak var tableDelegate: didPressListAtIndexDelegate?
+    weak var tableDelegate: didPressListDelegate?
     
     let headerCellIndexRow = 0
     let BigCellIndexRow = 1
@@ -124,9 +125,22 @@ extension BOGuideTableDataSource{
         
         let arrItems = items(at: indexPath)
         let doubleItemCell = myTableView.dequeueReusableCell(withIdentifier: DoubleItemCell.reuseIdentifier()) as! DoubleItemCell
-        doubleItemCell.setupWithItems(arrItems: arrItems)
+        doubleItemCell.setupWithItems(arrItems: arrItems, onPressDelegate: self)
         
         return doubleItemCell
+    }
+}
+
+extension BOGuideTableDataSource: DoubleCellPressed{
+    
+    func doubleCellPressed(item: BOCatItem) {
+        
+        guard let tableDelegate = self.tableDelegate else {
+            print("tabledelegate Not Set in BOGuideTableDataSource")
+            return
+        }
+        
+        tableDelegate.didPressItem(item: item)
     }
 }
 

@@ -78,12 +78,16 @@ extension BOGuideViewModel: vmTableViewDelegate{
     
     func tableViewPressedAt(_ index: Int) {
         
-        let bigCellIndex = 1
-        
-        if index == bigCellIndex{ changeDataSourceToDetail() }
+        let bigGuideCellIndex = 1
+        if index == bigGuideCellIndex { changeDataSourceToFirstDetail() }
     }
     
-    private func changeDataSourceToDetail(){
+    func changeDataSourceToDetailWith(item: BOCatItem){
+        
+        detailListDataSource.value = BOGuideDetailTableDataSource(catItem: item)
+    }
+    
+    private func changeDataSourceToFirstDetail(){
         
         guard let topCellItem = listDataSource.value?.categoryModel.value?.items[safe: 0] else {
             
@@ -105,6 +109,5 @@ extension BOGuideViewModel{
     func changeDataSourceToDefault(){
         
         detailListDataSource.value = nil
-        
     }
 }
