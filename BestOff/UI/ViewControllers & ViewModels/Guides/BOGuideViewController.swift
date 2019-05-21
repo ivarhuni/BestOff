@@ -153,10 +153,12 @@ extension BOGuideViewController{
 extension BOGuideViewController: didPressListDelegate{
     
     func didPressAtIndexPath(indexPath: IndexPath) {
+        print("didPress")
         viewModel.tableViewPressedAt(indexPath.row)
     }
     
     func didPressItem(item: BOCatItem){
+        print("didPress")
         viewModel.changeDataSourceToDetailWith(item: item)
     }
 }
@@ -326,13 +328,17 @@ extension BOGuideViewController{
         switch swipeGesture.direction {
             
         case .right:
-            
+            disableTableDelegate()
             print("right")
-            
         case .left:
+            disableTableDelegate()
             print("left")
         default:
             break
         }
+    }
+    
+    func disableTableDelegate(){
+        tableView.delegate = nil
     }
 }

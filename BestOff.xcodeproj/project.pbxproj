@@ -17,6 +17,7 @@
 		222D8B98227FC8130039C860 /* BOCatHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D8B96227FC8130039C860 /* BOCatHeaderCell.swift */; };
 		222D8B99227FC8130039C860 /* BOCatHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 222D8B97227FC8130039C860 /* BOCatHeaderCell.xib */; };
 		22326B58229370BB0056DAC9 /* Extension+Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22326B57229370BB0056DAC9 /* Extension+Int.swift */; };
+		22326B5C22938E770056DAC9 /* BOCategoryWinnersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22326B5B22938E770056DAC9 /* BOCategoryWinnersDataSource.swift */; };
 		223EE422227B51830048D42E /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EE421227B51830048D42E /* Images.swift */; };
 		223EE424227BA5BD0048D42E /* BOHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EE423227BA5BD0048D42E /* BOHeaderViewModel.swift */; };
 		223EE427227BC6630048D42E /* TopGuideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EE425227BC6630048D42E /* TopGuideCell.swift */; };
@@ -101,6 +102,7 @@
 		222D8B96227FC8130039C860 /* BOCatHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCatHeaderCell.swift; sourceTree = "<group>"; };
 		222D8B97227FC8130039C860 /* BOCatHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BOCatHeaderCell.xib; sourceTree = "<group>"; };
 		22326B57229370BB0056DAC9 /* Extension+Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Int.swift"; sourceTree = "<group>"; };
+		22326B5B22938E770056DAC9 /* BOCategoryWinnersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCategoryWinnersDataSource.swift; sourceTree = "<group>"; };
 		223EE421227B51830048D42E /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		223EE423227BA5BD0048D42E /* BOHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOHeaderViewModel.swift; sourceTree = "<group>"; };
 		223EE425227BC6630048D42E /* TopGuideCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGuideCell.swift; sourceTree = "<group>"; };
@@ -251,11 +253,44 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		22326B5F22938EA30056DAC9 /* TableDataSources */ = {
+			isa = PBXGroup;
+			children = (
+				22326B6222938ED20056DAC9 /* Category */,
+				22326B6122938EC60056DAC9 /* GuideDetail */,
+				22326B6022938EBD0056DAC9 /* Default */,
+			);
+			path = TableDataSources;
+			sourceTree = "<group>";
+		};
+		22326B6022938EBD0056DAC9 /* Default */ = {
+			isa = PBXGroup;
+			children = (
+				22F897A022662D63001E48BE /* BOGuideTableDataSource.swift */,
+			);
+			path = Default;
+			sourceTree = "<group>";
+		};
+		22326B6122938EC60056DAC9 /* GuideDetail */ = {
+			isa = PBXGroup;
+			children = (
+				2251583E228CB5E3006BC71B /* BOGuideDetailTableDataSource.swift */,
+			);
+			path = GuideDetail;
+			sourceTree = "<group>";
+		};
+		22326B6222938ED20056DAC9 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				22326B5B22938E770056DAC9 /* BOCategoryWinnersDataSource.swift */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 		2251583A228C8BFA006BC71B /* GuideList */ = {
 			isa = PBXGroup;
 			children = (
 				222D8B95227FC7ED0039C860 /* Cells */,
-				22F897A022662D63001E48BE /* BOGuideTableDataSource.swift */,
 			);
 			path = GuideList;
 			sourceTree = "<group>";
@@ -264,7 +299,6 @@
 			isa = PBXGroup;
 			children = (
 				22747CCB228DE50900B35DA7 /* Cells */,
-				2251583E228CB5E3006BC71B /* BOGuideDetailTableDataSource.swift */,
 			);
 			path = GuideDetail;
 			sourceTree = "<group>";
@@ -459,6 +493,7 @@
 		22F8978E2265FBE3001E48BE /* ViewControllers & ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				22326B5F22938EA30056DAC9 /* TableDataSources */,
 				22AA85852277C97F003B15F1 /* Launch Screen */,
 				22F8978F2265FBEE001E48BE /* Guides */,
 			);
@@ -798,6 +833,7 @@
 				22747CCE228DE62500B35DA7 /* BOCatItemTextDescriptionCell.swift in Sources */,
 				22267C2A22656175007E7B40 /* Extension+String.swift in Sources */,
 				22B506DD224DC09A00F66FDB /* NetworkError.swift in Sources */,
+				22326B5C22938E770056DAC9 /* BOCategoryWinnersDataSource.swift in Sources */,
 				22D1D8D4228A54290003D649 /* UIImageView+Extension.swift in Sources */,
 				22F897A8226634B5001E48BE /* CategoryProtocol.swift in Sources */,
 				22B506DA224DAF2200F66FDB /* BOEndpoint.swift in Sources */,

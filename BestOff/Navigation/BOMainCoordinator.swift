@@ -31,7 +31,7 @@ extension BOMainCoordinator{
         
         setupNavBar(navController: self.navController)
         let guideVM = BOGuideViewModel()
-        guideVM.getGuides()
+        guideVM.downloadData()
         let guideVC = BOGuideViewController(viewModel: guideVM)
         navController.viewControllers = [guideVC]
     }

@@ -27,6 +27,13 @@ protocol BOCategoryListDataSourceProtocol: UITableViewDataSource, UITableViewDel
     func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell
 }
 
+protocol BOCategoryWinnerListProtocol: UITableViewDataSource, UITableViewDelegate {
+    
+    func numberOfRows() -> Int
+    func numberOfSections() -> Int
+    func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell
+}
+
 protocol BOCategoryDetailListProtocol: UITableViewDataSource, UITableViewDelegate {
     
     var catItem: Observable<BOCatItem?> { get }
@@ -35,7 +42,6 @@ protocol BOCategoryDetailListProtocol: UITableViewDataSource, UITableViewDelegat
     func numberOfSections() -> Int
     func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell
 }
-
 
 protocol BOTableDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)

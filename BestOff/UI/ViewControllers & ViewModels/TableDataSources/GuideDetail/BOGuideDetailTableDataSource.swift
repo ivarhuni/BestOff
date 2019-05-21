@@ -22,9 +22,7 @@ class BOGuideDetailTableDataSource: NSObject, BOCategoryDetailListProtocol{
         self.init()
         self.catItem.value = catItem
     }
-    
-   
-    
+
     func setCatItemTo(item: BOCatItem) {
         self.catItem.value = item
     }

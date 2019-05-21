@@ -10,8 +10,3 @@ import Foundation
 import ReactiveKit
 import Bond
 
-protocol CategoryItemProtocol{
-    
-    var category: Observable<BOCategoryModel?> { get }
-    func getCategoryItems() -> [BOCatItem]
-}

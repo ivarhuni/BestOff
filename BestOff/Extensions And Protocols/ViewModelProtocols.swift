@@ -17,10 +17,6 @@ protocol ViewModelErrorProtocol {
     func hideDataError()
 }
 
-protocol ViewModelNetworkProtocol {
-    func getCategoryFromJSON(type: Endpoint)
-}
-
 protocol ViewModelDataSourceProtocol{
     var listDataSource: Observable<BOCategoryListDataSourceProtocol?> { get }
     var numberOfSections: Int { get }
