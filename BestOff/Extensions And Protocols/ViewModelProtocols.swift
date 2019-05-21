@@ -17,11 +17,6 @@ protocol ViewModelErrorProtocol {
     func hideDataError()
 }
 
-protocol ViewModelDataSourceProtocol{
-    var listDataSource: Observable<BOCategoryListDataSourceProtocol?> { get }
-    var numberOfSections: Int { get }
-}
-
 protocol viewModelDetailSourceProtocol {
     var detailListDataSource: Observable<BOCatItem> { get }
 }

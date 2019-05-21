@@ -141,12 +141,12 @@ extension BOGuideViewController{
     }
     
     private func registerDelegateDefault(){
-        tableView.delegate = viewModel.listDataSource.value
-        viewModel.listDataSource.value?.tableDelegate = self
+        tableView.delegate = viewModel.guideListDataSource.value
+        viewModel.guideListDataSource.value?.tableDelegate = self
     }
     
     private func registerDelegateDetail(){
-        tableView.delegate = viewModel.detailListDataSource.value
+        tableView.delegate = viewModel.guideDetailDataSource.value
     }
 }
 
@@ -169,7 +169,7 @@ extension BOGuideViewController{
     private func setupBindings(){
         
         //regular list
-        _ = viewModel.listDataSource.value?.categoryModel.observeOn(.main).observeNext{ [weak self] catModelValue in
+        _ = viewModel.guideListDataSource.value?.categoryModel.observeOn(.main).observeNext{ [weak self] catModelValue in
             
             guard let this = self else{ return }
             
@@ -180,7 +180,7 @@ extension BOGuideViewController{
         }
         
         //Detail Item being viewed
-        _ = viewModel.detailListDataSource.observeOn(.main).observeNext{ [weak self] detailListDataSourceValue in
+        _ = viewModel.guideDetailDataSource.observeOn(.main).observeNext{ [weak self] detailListDataSourceValue in
             
             guard let this = self else { return }
             
@@ -224,7 +224,7 @@ extension BOGuideViewController{
     
     private func setTableToDefault(){
         
-        tableView.dataSource = viewModel.listDataSource.value
+        tableView.dataSource = viewModel.guideListDataSource.value
 
         registerDelegateDefault()
         
@@ -234,7 +234,7 @@ extension BOGuideViewController{
     private func scrollToTopDefault(){
         
         let indexPath = IndexPath(row: 0, section: 0)
-        if viewModel.listDataSource.value?.categoryModel.value != nil {
+        if viewModel.guideListDataSource.value?.categoryModel.value != nil {
             self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         }
     }
@@ -245,7 +245,7 @@ extension BOGuideViewController{
     
     func setupForDetail(){
         
-        tableView.dataSource = viewModel.detailListDataSource.value
+        tableView.dataSource = viewModel.guideDetailDataSource.value
         registerDelegateDetail()
         styleVCForDetail()
         animateReloadDataDetail()
@@ -283,7 +283,7 @@ extension BOGuideViewController{
     func scrollToTopDetail(){
         let indexPath = IndexPath(row: 0, section: 0)
         
-        if viewModel.detailListDataSource.value?.catItem.value != nil {
+        if viewModel.guideDetailDataSource.value?.catItem.value != nil {
             self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         }
     }
@@ -329,10 +329,10 @@ extension BOGuideViewController{
             
         case .right:
             disableTableDelegate()
-            print("right")
+            viewModel.setActivePage(page: .right)
         case .left:
             disableTableDelegate()
-            print("left")
+            viewModel.setActivePage(page: .left)
         default:
             break
         }
