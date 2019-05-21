@@ -25,14 +25,17 @@ class BOGuideViewModel: BOViewModel {
     let alphaInvisible: CGFloat = 0
     
     //MARK: Protocol properties
-    var guideListDataSource = Observable<BOCategoryListDataSourceProtocol?>(nil)
-    var guideDetailDataSource = Observable<BOCategoryDetailListProtocol?>(nil)
-    var categoryWinnerListDataSource = Observable<BOCategoryWinnerListProtocol?>(nil)
+    let guideListDataSource = Observable<BOCategoryListDataSourceProtocol?>(nil)
+    let guideDetailDataSource = Observable<BOCategoryDetailListProtocol?>(nil)
+    let categoryWinnerListDataSource = Observable<BOCategoryWinnerListProtocol?>(nil)
     
     let tableDataSourceAnimationDuration:Double = 0.4
     
     //MARK: Menu
     let menuOpen = Observable<Bool>(false)
+    
+    //MARK: SWIPE
+    let activePage = Observable<ActivePage>(.left)
 
     //MARK: Private properties
     private let disposeBag = DisposeBag()
@@ -43,7 +46,7 @@ class BOGuideViewModel: BOViewModel {
     private var rvkShopping = Observable<BOCategoryModel?>(nil)
     private var rvkDining = Observable<BOCategoryModel?>(nil)
     
-    private let activePage = Observable<ActivePage>(.left)
+
 
     //RowHeights used in both types of tables
     private let bigCellRowHeight:CGFloat = 310
@@ -76,23 +79,27 @@ extension BOGuideViewModel{
         _ = self.rvkShopping.observeNext{ [weak self] model in
         
             guard let this = self else { return }
-            guard let dataModel = model else { return }
+            
             
         }
         
         _ = self.rvkDrink.observeNext{ [weak self] model in
             
+            guard let this = self else { return }
+           
         }
         
         _ = self.rvkDining.observeNext{ [weak self] model in
+            
+            guard let this = self else { return }
             
         }
         
         _ = self.rvkActivities.observeNext{ [weak self] model in
             
+            guard let this = self else { return }
             
         }
-        
     }
 }
 

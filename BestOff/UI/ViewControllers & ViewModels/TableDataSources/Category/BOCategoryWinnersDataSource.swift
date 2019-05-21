@@ -14,31 +14,60 @@ import Bond
 //MARK: Properties
 class BOCategoryWinnersDataSource: NSObject{
     
+    private let diningIndex = 0
+    private let drinkingIndex = 1
+    private let shoppingIndex = 2
+    private let activitiesIndex = 3
+    
     private let rowCount = 4
     private let sectionCount = 1
-    private let rowHeight = 350
+    private let rowHeight:CGFloat = 350
     
     private let cellWidthToHeightRatio = 375/350
     
+    private let dining = Observable<BOCategoryModel?>(nil)
+    private let drinking = Observable<BOCategoryModel?>(nil)
+    private let activities = Observable<BOCategoryModel?>(nil)
+    private let shopping = Observable<BOCategoryModel?>(nil)
 }
 
 //MARK: Setters - public
 extension BOCategoryWinnersDataSource{
     
-    func refreshWithDiningModel(catModel: BOCategoryModel){
-        
+    func setDiningModel(catModel: BOCategoryModel){
+        self.dining.value = catModel
     }
     
-    func refreshWithDrinkingModel(catModel: BOCategoryModel){
-        
+    func setDrinkingModel(catModel: BOCategoryModel){
+        self.drinking.value = catModel
     }
     
-    func refreshWithActivitiesModel(catModel: BOCategoryModel){
-        
+    func setActivitiesModel(catModel: BOCategoryModel){
+        self.activities.value = catModel
     }
     
     func setShoppingModel(catModel: BOCategoryModel){
+        self.shopping.value = catModel
+    }
+}
+
+extension BOCategoryWinnersDataSource{
+    
+    func getCellForDining() -> UITableViewCell{
         
+        return UITableViewCell()
+    }
+    
+    func getCellForDrinking() -> UITableViewCell{
+        return UITableViewCell()
+    }
+    
+    func getCellForShopping() -> UITableViewCell{
+        return UITableViewCell()
+    }
+    
+    func getCellForActivities() -> UITableViewCell{
+        return UITableViewCell()
     }
 }
 
@@ -55,8 +84,10 @@ extension BOCategoryWinnersDataSource: BOCategoryWinnerListProtocol{
     
     func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         
+        let cell = myTableView.dequeueReusableCell(withIdentifier: CategoryWinnerCell.reuseIdentifier()) as! CategoryWinnerCell
         
-        return UITableViewCell()
+        cell.setupWithCategory()
+        return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -65,6 +96,10 @@ extension BOCategoryWinnersDataSource: BOCategoryWinnerListProtocol{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return cellForRowAtIndexPathIn(myTableView:tableView, indexPath:indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return rowHeight
     }
 }
 

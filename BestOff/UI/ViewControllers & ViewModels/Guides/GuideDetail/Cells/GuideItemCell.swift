@@ -48,8 +48,7 @@ extension GuideItemCell{
     }
     
     private func setupImgView(){
-        imgView.contentMode = .scaleAspectFill
-        imgView.clipsToBounds = true
+        imgView.setClipsAndScales()
     }
     
     private func style(){

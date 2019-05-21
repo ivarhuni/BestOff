@@ -65,12 +65,10 @@ extension TopGuideCell{
         setColors()
         setFonts()
         setDefaults()
-        self.clipsToBounds = true
-        self.imgViewBig.clipsToBounds = true
-        self.imgViewBig.contentMode = .scaleAspectFill
-        self.imgViewIcon.contentMode = .scaleAspectFill
+        imgViewBig.setClipsAndScales()
+        imgViewIcon.setClipsAndScales()
         
-        self.selectionStyle = .none
+        selectionStyle = .none
     }
     
     private func setDefaults(){
@@ -124,7 +122,7 @@ extension TopGuideCell{
     private func setImageWithImgURL(strURL: String){
         guard let imgView = imgViewBig else { return }
         guard let urlFromString = URL.init(string: strURL) else { return }
-        imgView.contentMode = .scaleAspectFill
+        imgView.setClipsAndScales()
         imgView.sd_setImage(with: urlFromString, placeholderImage: nil, options: [], completed: nil)
     }
 }

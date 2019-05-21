@@ -117,6 +117,13 @@ extension BOGuideViewController{
         
         registerGuideListCells()
         registerGuideDetail()
+        registerCategoryWinnerCells()
+    }
+    
+    private func registerCategoryWinnerCells(){
+        
+        let catWinnerCell = UINib(nibName: CategoryWinnerCell.nibName(), bundle: nil)
+        tableView.register(catWinnerCell, forCellReuseIdentifier: CategoryWinnerCell.reuseIdentifier())
     }
     
     private func registerGuideDetail(){
@@ -148,6 +155,10 @@ extension BOGuideViewController{
     private func registerDelegateDetail(){
         tableView.delegate = viewModel.guideDetailDataSource.value
     }
+    
+    private func registerDelegateCategoryWinner(){
+        tableView.delegate = viewModel.categoryWinnerListDataSource.value
+    }
 }
 
 extension BOGuideViewController: didPressListDelegate{
@@ -173,10 +184,7 @@ extension BOGuideViewController{
             
             guard let this = self else{ return }
             
-            if catModelValue != nil {
-                
-                this.setTableToDefault()
-            }
+            (catModelValue != nil) ? this.setTableToDefault() : print("nothing")
         }
         
         //Detail Item being viewed
@@ -184,13 +192,7 @@ extension BOGuideViewController{
             
             guard let this = self else { return }
             
-            if detailListDataSourceValue != nil{
-                
-                this.setupForDetail()
-                return
-            }
-            
-            this.setTableToDefault()
+            (detailListDataSourceValue != nil) ? this.setupForDetail() : this.setTableToDefault()
         }
         
         //Menu open
@@ -199,6 +201,13 @@ extension BOGuideViewController{
             guard let this = self else{ return }
             
             shouldOpen ? this.openMenu() : this.hideMenu()
+        }
+        
+        //Active Page After Swipe
+        _ = viewModel.activePage.observeOn(.main).observeNext{ [weak self] newActivePage in
+            
+            guard let this = self else { return }
+            (newActivePage == .right) ? this.setupForCategoryWinners() : this.setTableToDefault()
         }
     }
 }
@@ -234,9 +243,7 @@ extension BOGuideViewController{
     private func scrollToTopDefault(){
         
         let indexPath = IndexPath(row: 0, section: 0)
-        if viewModel.guideListDataSource.value?.categoryModel.value != nil {
-            self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
-        }
+        (viewModel.guideListDataSource.value?.categoryModel.value != nil) ? self.tableView.scrollToRow(at: indexPath, at: .top, animated: true) : print("nothing")
     }
 }
 
@@ -247,7 +254,6 @@ extension BOGuideViewController{
         
         tableView.dataSource = viewModel.guideDetailDataSource.value
         registerDelegateDetail()
-        styleVCForDetail()
         animateReloadDataDetail()
         animateHeaderToDetail()
     }
@@ -262,15 +268,6 @@ extension BOGuideViewController{
     
     func animateReloadDataDetail(){
         
-        UIView.transition(with: self.tableView,
-                          duration: self.viewModel.tableDataSourceAnimationDuration,
-                          options: .transitionCrossDissolve,
-                          animations: {
-                            
-                            self.tableView.reloadData()
-                            
-        })
-        
         UIView.transition(with: self.tableView, duration: self.viewModel.tableDataSourceAnimationDuration, options: .transitionCrossDissolve, animations: {
             
             self.tableView.reloadData()
@@ -283,13 +280,38 @@ extension BOGuideViewController{
     func scrollToTopDetail(){
         let indexPath = IndexPath(row: 0, section: 0)
         
-        if viewModel.guideDetailDataSource.value?.catItem.value != nil {
-            self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        (viewModel.guideDetailDataSource.value?.catItem.value != nil) ? self.tableView.scrollToRow(at: indexPath, at: .top, animated: true) : print("")
+    }
+}
+
+//MARK: Setup For CategoryWinner List View
+extension BOGuideViewController{
+    
+    private func setupForCategoryWinners(){
+        
+        //Header same as Guide
+        tableView.dataSource = viewModel.categoryWinnerListDataSource.value
+        registerDelegateCategoryWinner()
+        animateReloadDataWinners()
+    }
+    
+    private func animateReloadDataWinners(){
+        
+        UIView.transition(with: tableView, duration: viewModel.tableDataSourceAnimationDuration, options: .transitionCrossDissolve, animations: { [weak self] in
+            
+            guard let this = self else { return }
+            this.tableView.reloadData()
+        }) { [weak self] (finished) in
+            
+            guard let this = self else { return }
+            this.scrollToTopCatWinner()
         }
     }
     
-    func styleVCForDetail(){
+    func scrollToTopCatWinner(){
         
+        let indexPath = IndexPath(row: 0, section: 0)
+        (viewModel.categoryWinnerListDataSource.value != nil) ?  self.tableView.scrollToRow(at: indexPath, at: .top, animated: true) : print("")
     }
 }
 
@@ -329,10 +351,10 @@ extension BOGuideViewController{
             
         case .right:
             disableTableDelegate()
-            viewModel.setActivePage(page: .right)
+            viewModel.setActivePage(page: .left)
         case .left:
             disableTableDelegate()
-            viewModel.setActivePage(page: .left)
+            viewModel.setActivePage(page: .right)
         default:
             break
         }

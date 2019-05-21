@@ -113,7 +113,7 @@ extension BOAppHeaderView{
         let arrow = Asset.arrowGray.img
         guard let cgArrowImg = arrow.cgImage else { return }
         let rotatedImg = UIImage(cgImage: cgArrowImg, scale: 1.0, orientation: .left)
-        imgViewBackBtn.contentMode = .scaleAspectFill
+        imgViewBackBtn.setClipsAndScales()
         imgViewBackBtn.image = rotatedImg
     }
     

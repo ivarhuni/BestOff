@@ -120,14 +120,11 @@ extension DoubleItemCell{
     
     private func setupImgViews(){
         
-        imgViewAuthorRight.contentMode = .scaleAspectFill
-        imgViewAuthorLeft.contentMode = .scaleAspectFill
+        imgViewAuthorRight.setClipsAndScales()
+        imgViewAuthorLeft.setClipsAndScales()
         
-        imgViewRight.contentMode = .scaleAspectFill
-        imgViewLeft.contentMode = .scaleAspectFill
-        
-        imgViewRight.clipsToBounds = true
-        imgViewLeft.clipsToBounds = true
+        imgViewRight.setClipsAndScales()
+        imgViewLeft.setClipsAndScales()
     }
     
     private func styleBackgroundViews(){

@@ -11,9 +11,18 @@ import UIKit
 
 extension UIImageView{
     
-    static func setSDImageViewImageWithURL(imageView: UIImageView?, strURL: String){
+    static func setSDImageViewImageWithURL(imageView: UIImageView?, strURL: String, _ placeholder: UIImageView? = nil){
         guard let imgView = imageView else { return }
         guard let url = URL(string: strURL) else { return }
         imgView.sd_setImage(with: url, completed: nil)
     }
 }
+
+extension UIImageView{
+    
+    func setClipsAndScales(){
+        contentMode = .scaleAspectFill
+        clipsToBounds = true
+    }
+}
+

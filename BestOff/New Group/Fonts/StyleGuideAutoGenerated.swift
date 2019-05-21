@@ -153,7 +153,7 @@ extension UIFont {
   }
 
   class var rRedBtnText: UIFont {
-    return UIFont(name: "Blanco", size: 14.0)!
+    return UIFont(name: "Blanco-Bold", size: 14.0)!
   }
 
   class var rvGrSmallBlack: UIFont {

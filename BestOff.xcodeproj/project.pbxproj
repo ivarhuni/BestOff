@@ -18,6 +18,9 @@
 		222D8B99227FC8130039C860 /* BOCatHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 222D8B97227FC8130039C860 /* BOCatHeaderCell.xib */; };
 		22326B58229370BB0056DAC9 /* Extension+Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22326B57229370BB0056DAC9 /* Extension+Int.swift */; };
 		22326B5C22938E770056DAC9 /* BOCategoryWinnersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22326B5B22938E770056DAC9 /* BOCategoryWinnersDataSource.swift */; };
+		22326B672293A48F0056DAC9 /* CategoryWinnerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22326B652293A48F0056DAC9 /* CategoryWinnerCell.swift */; };
+		22326B682293A48F0056DAC9 /* CategoryWinnerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22326B662293A48F0056DAC9 /* CategoryWinnerCell.xib */; };
+		22326B6A2293AE7C0056DAC9 /* Extensions+Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22326B692293AE7C0056DAC9 /* Extensions+Array.swift */; };
 		223EE422227B51830048D42E /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EE421227B51830048D42E /* Images.swift */; };
 		223EE424227BA5BD0048D42E /* BOHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EE423227BA5BD0048D42E /* BOHeaderViewModel.swift */; };
 		223EE427227BC6630048D42E /* TopGuideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EE425227BC6630048D42E /* TopGuideCell.swift */; };
@@ -103,6 +106,9 @@
 		222D8B97227FC8130039C860 /* BOCatHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BOCatHeaderCell.xib; sourceTree = "<group>"; };
 		22326B57229370BB0056DAC9 /* Extension+Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Int.swift"; sourceTree = "<group>"; };
 		22326B5B22938E770056DAC9 /* BOCategoryWinnersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCategoryWinnersDataSource.swift; sourceTree = "<group>"; };
+		22326B652293A48F0056DAC9 /* CategoryWinnerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryWinnerCell.swift; sourceTree = "<group>"; };
+		22326B662293A48F0056DAC9 /* CategoryWinnerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryWinnerCell.xib; sourceTree = "<group>"; };
+		22326B692293AE7C0056DAC9 /* Extensions+Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+Array.swift"; sourceTree = "<group>"; };
 		223EE421227B51830048D42E /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		223EE423227BA5BD0048D42E /* BOHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOHeaderViewModel.swift; sourceTree = "<group>"; };
 		223EE425227BC6630048D42E /* TopGuideCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGuideCell.swift; sourceTree = "<group>"; };
@@ -220,6 +226,7 @@
 				22446C9A227F29F50017512F /* GuideCell.swift */,
 				22D1D8D3228A54290003D649 /* UIImageView+Extension.swift */,
 				22326B57229370BB0056DAC9 /* Extension+Int.swift */,
+				22326B692293AE7C0056DAC9 /* Extensions+Array.swift */,
 			);
 			path = "Extensions And Protocols";
 			sourceTree = "<group>";
@@ -285,6 +292,23 @@
 				22326B5B22938E770056DAC9 /* BOCategoryWinnersDataSource.swift */,
 			);
 			path = Category;
+			sourceTree = "<group>";
+		};
+		22326B632293A4200056DAC9 /* CategoryWinners */ = {
+			isa = PBXGroup;
+			children = (
+				22326B642293A4330056DAC9 /* Cells */,
+			);
+			path = CategoryWinners;
+			sourceTree = "<group>";
+		};
+		22326B642293A4330056DAC9 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				22326B652293A48F0056DAC9 /* CategoryWinnerCell.swift */,
+				22326B662293A48F0056DAC9 /* CategoryWinnerCell.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		2251583A228C8BFA006BC71B /* GuideList */ = {
@@ -493,7 +517,11 @@
 		22F8978E2265FBE3001E48BE /* ViewControllers & ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				22F897902265FC09001E48BE /* BOGuideViewController.swift */,
+				22F897912265FC09001E48BE /* BOGuideViewController.xib */,
+				22F897942265FC17001E48BE /* BOGuideViewModel.swift */,
 				22326B5F22938EA30056DAC9 /* TableDataSources */,
+				22326B632293A4200056DAC9 /* CategoryWinners */,
 				22AA85852277C97F003B15F1 /* Launch Screen */,
 				22F8978F2265FBEE001E48BE /* Guides */,
 			);
@@ -503,10 +531,8 @@
 		22F8978F2265FBEE001E48BE /* Guides */ = {
 			isa = PBXGroup;
 			children = (
-				22F897A2226630BD001E48BE /* Tables */,
-				22F897902265FC09001E48BE /* BOGuideViewController.swift */,
-				22F897912265FC09001E48BE /* BOGuideViewController.xib */,
-				22F897942265FC17001E48BE /* BOGuideViewModel.swift */,
+				2251583A228C8BFA006BC71B /* GuideList */,
+				2251583B228C8C06006BC71B /* GuideDetail */,
 			);
 			path = Guides;
 			sourceTree = "<group>";
@@ -517,15 +543,6 @@
 				22EB39BC222E0702001043E2 /* AppDelegate.swift */,
 			);
 			path = App;
-			sourceTree = "<group>";
-		};
-		22F897A2226630BD001E48BE /* Tables */ = {
-			isa = PBXGroup;
-			children = (
-				2251583B228C8C06006BC71B /* GuideDetail */,
-				2251583A228C8BFA006BC71B /* GuideList */,
-			);
-			path = Tables;
 			sourceTree = "<group>";
 		};
 		72FB35C968BA2CE6BDF0A816 /* Pods */ = {
@@ -662,6 +679,7 @@
 				22D5739C22825F8300748CF1 /* BOMenuView.xib in Resources */,
 				22F897932265FC09001E48BE /* BOGuideViewController.xib in Resources */,
 				22D5738B2282553500748CF1 /* Blanco-Bold.otf in Resources */,
+				22326B682293A48F0056DAC9 /* CategoryWinnerCell.xib in Resources */,
 				22EB39C4222E0703001043E2 /* Assets.xcassets in Resources */,
 				22D573872282553500748CF1 /* Blanco-ExtraBold.otf in Resources */,
 				22D573852282553500748CF1 /* Blanco-Italic.otf in Resources */,
@@ -812,6 +830,7 @@
 				22F8979F226625CF001E48BE /* BOTableProtocol.swift in Sources */,
 				22F897882265FA10001E48BE /* BOCoordinator.swift in Sources */,
 				22446C9B227F29F50017512F /* GuideCell.swift in Sources */,
+				22326B6A2293AE7C0056DAC9 /* Extensions+Array.swift in Sources */,
 				22D5739522825C2400748CF1 /* BOMenuViewModel.swift in Sources */,
 				2251583F228CB5E3006BC71B /* BOGuideDetailTableDataSource.swift in Sources */,
 				22F897922265FC09001E48BE /* BOGuideViewController.swift in Sources */,
@@ -823,6 +842,7 @@
 				22D6B8532252A3B4004A33DE /* BODetailItem.swift in Sources */,
 				22326B58229370BB0056DAC9 /* Extension+Int.swift in Sources */,
 				22267C262265615E007E7B40 /* Extension+Collection.swift in Sources */,
+				22326B672293A48F0056DAC9 /* CategoryWinnerCell.swift in Sources */,
 				223EE424227BA5BD0048D42E /* BOHeaderViewModel.swift in Sources */,
 				223EE422227B51830048D42E /* Images.swift in Sources */,
 				22747CD2228E2FCC00B35DA7 /* GuideItemCell.swift in Sources */,
