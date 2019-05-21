@@ -176,7 +176,7 @@ extension BOAppHeaderView{
             
             guard let this = self else { return }
             if isDetailActiveValue{
-                this.showDetail()
+                this.showDetail(withDetailText: "")
                 return
             }
             this.showDefault()
@@ -263,10 +263,10 @@ extension BOAppHeaderView{
         viewSep.isHidden = false
     }
     
-    func showDetail(){
+    func showDetail(withDetailText: String){
         
         showSeperator()
-        setupTextForDetail()
+        setDetailText(strText: withDetailText)
         setCornerRadiusForDetail()
         self.layoutIfNeeded()
         UIView.transition(with: self,
@@ -293,16 +293,16 @@ extension BOAppHeaderView{
             }, completion: nil)
     }
     
+    private func setDetailText(strText: String){
+        lblBackTitle.text = strText
+    }
+    
     private func setCornerRadiusForDetail(){
         self.view.clipsToBounds = true
         clipsToBounds = true
         
         self.view.layer.cornerRadius = 10
         self.view.layer.cornerRadius = 10
-    }
-    
-    private func setupTextForDetail(){
-        lblBackTitle.text = "GUIDES"
     }
     
     private func showDefault(){

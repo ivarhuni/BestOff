@@ -22,6 +22,9 @@
 		22326B682293A48F0056DAC9 /* CategoryWinnerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22326B662293A48F0056DAC9 /* CategoryWinnerCell.xib */; };
 		22326B6A2293AE7C0056DAC9 /* Extensions+Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22326B692293AE7C0056DAC9 /* Extensions+Array.swift */; };
 		22326B6D229402370056DAC9 /* Extensions+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22326B6C229402370056DAC9 /* Extensions+UIView.swift */; };
+		22326B6F229449A20056DAC9 /* BOSpecificCatWinnersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22326B6E229449A20056DAC9 /* BOSpecificCatWinnersDataSource.swift */; };
+		22326B73229462BD0056DAC9 /* BOBigCatImgCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22326B71229462BD0056DAC9 /* BOBigCatImgCell.swift */; };
+		22326B74229462BD0056DAC9 /* BOBigCatImgCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22326B72229462BD0056DAC9 /* BOBigCatImgCell.xib */; };
 		223EE422227B51830048D42E /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EE421227B51830048D42E /* Images.swift */; };
 		223EE424227BA5BD0048D42E /* BOHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EE423227BA5BD0048D42E /* BOHeaderViewModel.swift */; };
 		223EE427227BC6630048D42E /* TopGuideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EE425227BC6630048D42E /* TopGuideCell.swift */; };
@@ -111,6 +114,9 @@
 		22326B662293A48F0056DAC9 /* CategoryWinnerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryWinnerCell.xib; sourceTree = "<group>"; };
 		22326B692293AE7C0056DAC9 /* Extensions+Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+Array.swift"; sourceTree = "<group>"; };
 		22326B6C229402370056DAC9 /* Extensions+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+UIView.swift"; sourceTree = "<group>"; };
+		22326B6E229449A20056DAC9 /* BOSpecificCatWinnersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOSpecificCatWinnersDataSource.swift; sourceTree = "<group>"; };
+		22326B71229462BD0056DAC9 /* BOBigCatImgCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOBigCatImgCell.swift; sourceTree = "<group>"; };
+		22326B72229462BD0056DAC9 /* BOBigCatImgCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BOBigCatImgCell.xib; sourceTree = "<group>"; };
 		223EE421227B51830048D42E /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		223EE423227BA5BD0048D42E /* BOHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOHeaderViewModel.swift; sourceTree = "<group>"; };
 		223EE425227BC6630048D42E /* TopGuideCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGuideCell.swift; sourceTree = "<group>"; };
@@ -282,6 +288,7 @@
 			isa = PBXGroup;
 			children = (
 				22326B5B22938E770056DAC9 /* BOCategoryWinnersDataSource.swift */,
+				22326B6E229449A20056DAC9 /* BOSpecificCatWinnersDataSource.swift */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -289,6 +296,8 @@
 		22326B632293A4200056DAC9 /* CategoryWinners */ = {
 			isa = PBXGroup;
 			children = (
+				22326B71229462BD0056DAC9 /* BOBigCatImgCell.swift */,
+				22326B72229462BD0056DAC9 /* BOBigCatImgCell.xib */,
 				22326B652293A48F0056DAC9 /* CategoryWinnerCell.swift */,
 				22326B662293A48F0056DAC9 /* CategoryWinnerCell.xib */,
 			);
@@ -659,6 +668,7 @@
 				22F897932265FC09001E48BE /* BOGuideViewController.xib in Resources */,
 				22D5738B2282553500748CF1 /* Blanco-Bold.otf in Resources */,
 				22326B682293A48F0056DAC9 /* CategoryWinnerCell.xib in Resources */,
+				22326B74229462BD0056DAC9 /* BOBigCatImgCell.xib in Resources */,
 				22EB39C4222E0703001043E2 /* Assets.xcassets in Resources */,
 				22D573872282553500748CF1 /* Blanco-ExtraBold.otf in Resources */,
 				22D573852282553500748CF1 /* Blanco-Italic.otf in Resources */,
@@ -817,6 +827,7 @@
 				223EE427227BC6630048D42E /* TopGuideCell.swift in Sources */,
 				22267C2322654E8E007E7B40 /* BOCategoryModel.swift in Sources */,
 				221EC5AE228A10E50051EC42 /* DoubleItemCell.swift in Sources */,
+				22326B73229462BD0056DAC9 /* BOBigCatImgCell.swift in Sources */,
 				22F897AC22663AFF001E48BE /* BOViewModel.swift in Sources */,
 				22D6B8532252A3B4004A33DE /* BODetailItem.swift in Sources */,
 				22326B58229370BB0056DAC9 /* Extension+Int.swift in Sources */,
@@ -835,6 +846,7 @@
 				22B506DD224DC09A00F66FDB /* NetworkError.swift in Sources */,
 				22326B5C22938E770056DAC9 /* BOCategoryWinnersDataSource.swift in Sources */,
 				22D1D8D4228A54290003D649 /* UIImageView+Extension.swift in Sources */,
+				22326B6F229449A20056DAC9 /* BOSpecificCatWinnersDataSource.swift in Sources */,
 				22F897A8226634B5001E48BE /* CategoryProtocol.swift in Sources */,
 				22B506DA224DAF2200F66FDB /* BOEndpoint.swift in Sources */,
 				22F897992265FC78001E48BE /* BOAppCoordinator.swift in Sources */,

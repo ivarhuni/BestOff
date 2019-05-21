@@ -17,6 +17,7 @@ struct BOCategoryModel: Codable{
     let title : String
     let userComment : String
     let version : String
+    var type: Endpoint?
     
     enum CodingKeys: String, CodingKey {
         case descriptionField = "description"

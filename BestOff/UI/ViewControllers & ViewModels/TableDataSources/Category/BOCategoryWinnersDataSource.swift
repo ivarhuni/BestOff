@@ -36,27 +36,26 @@ class BOCategoryWinnersDataSource: NSObject{
     
     let shopping = Observable<BOCategoryModel?>(nil)
     private var randomShoppingItem: BOCatItem?
+    
+    weak var takeMeThereVMDelegate: TakeMeThereProtocol?
 }
 
-//MARK: Setters - public
-
-extension BOCategoryWinnersDataSource{
+extension BOCategoryWinnersDataSource: TakeMeThereProtocol{
     
-    func getCellForDiningFor(tableView: UITableView) -> UITableViewCell{
+    func didPressTakeMeThere(type: Endpoint) {
         
-        return UITableViewCell()
-    }
-    
-    func getCellForDrinkingFor(tableView: UITableView) -> UITableViewCell{
-        return UITableViewCell()
-    }
-    
-    func getCellForShoppingFor(tableView: UITableView) -> UITableViewCell{
-        return UITableViewCell()
-    }
-    
-    func getCellForActivitiesFor(tableView: UITableView) -> UITableViewCell{
-        return UITableViewCell()
+        switch type {
+        case .rvkDining:
+            takeMeThereVMDelegate?.didPressTakeMeThere(type: .rvkDining)
+        case .rvkDrink:
+            takeMeThereVMDelegate?.didPressTakeMeThere(type: .rvkDrink)
+        case .rvkShopping:
+            takeMeThereVMDelegate?.didPressTakeMeThere(type: .rvkShopping)
+        case .rvkActivities:
+            takeMeThereVMDelegate?.didPressTakeMeThere(type: .rvkActivities)
+        default:
+            print("default didpresstakemethere")
+        }
     }
 }
 
@@ -77,21 +76,25 @@ extension BOCategoryWinnersDataSource: BOCategoryWinnerListProtocol{
 
         if indexPath.row == diningIndex{
             cell.setupWithCategory(category: dining.value, .rvkDining, randomItem: randomDiningItem)
+            cell.delegateTakeMeThere = self
             return cell
         }
         
         if indexPath.row == drinkingIndex{
             cell.setupWithCategory(category: drinking.value,  .rvkDrink, randomItem: randomDrinkingItem)
+            cell.delegateTakeMeThere = self
             return cell
         }
         
         if indexPath.row == activitiesIndex{
             cell.setupWithCategory(category: activities.value, .rvkActivities, randomItem: randomActivitiesItem)
+            cell.delegateTakeMeThere = self
             return cell
         }
         
         if indexPath.row == shoppingIndex{
             cell.setupWithCategory(category: shopping.value, .rvkShopping, randomItem: randomShoppingItem)
+            cell.delegateTakeMeThere = self
             return cell
         }
         

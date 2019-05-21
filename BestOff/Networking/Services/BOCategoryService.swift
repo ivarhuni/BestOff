@@ -25,8 +25,8 @@ struct BOCategoryService{
                     completionHandler(nil, NetworkError.dataError)
                     return
                 }
-                let categoryData = try JSONDecoder().decode(BOCategoryModel.self, from: jsonAsData)
-
+                var categoryData = try JSONDecoder().decode(BOCategoryModel.self, from: jsonAsData)
+                categoryData.type = category
                 completionHandler(categoryData, nil)
             }
             catch let jsonErr {

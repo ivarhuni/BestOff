@@ -8,6 +8,12 @@
 
 import UIKit
 
+
+
+protocol TakeMeThereProtocol: AnyObject {
+    func didPressTakeMeThere(type: Endpoint)
+}
+
 class CategoryWinnerCell: UITableViewCell {
     
     
@@ -25,6 +31,8 @@ class CategoryWinnerCell: UITableViewCell {
     @IBOutlet weak var lblCategoryTitle: UILabel!
     @IBOutlet weak var viewBgFingersAndLabel: UIView!
     
+    var catType: Endpoint?
+    weak var delegateTakeMeThere: TakeMeThereProtocol?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -48,6 +56,37 @@ extension CategoryWinnerCell{
     
     static func nibName() -> String{
         return "CategoryWinnerCell"
+    }
+}
+
+extension CategoryWinnerCell: TakeMeThereProtocol{
+    
+    func didPressTakeMeThere(type: Endpoint) {
+        
+        guard let delegate = delegateTakeMeThere else {
+            print("delegate not set for Take Me There")
+            return
+        }
+        guard let cellType = self.catType else {
+            print("celltype not set")
+            return
+        }
+        delegate.didPressTakeMeThere(type: cellType)
+    }
+    
+    private func setupTakeMeThereGestureRec(){
+        
+        BOGuideViewController.clearGestureRecForView(view: lblTakeMeThere)
+        let tapGestureRec = UITapGestureRecognizer(target: self, action: #selector(self.handleTapOnTakeMeThere(_:)))
+        lblTakeMeThere.addGestureRecognizer(tapGestureRec)
+        lblTakeMeThere.isUserInteractionEnabled = true
+    }
+    
+    @objc func handleTapOnTakeMeThere(_ sender: UITapGestureRecognizer) {
+        
+        print("tapped take me there")
+        guard let type = self.catType else { return }
+        didPressTakeMeThere(type: type)
     }
 }
 
@@ -115,18 +154,21 @@ extension CategoryWinnerCell{
     func setupWithCategory(category: BOCategoryModel? = nil, txtTitle: String? = nil , _ styleType: Endpoint = .rvkDining, randomItem: BOCatItem?){
         
         setupDefault()
+        self.catType = styleType
         setupForType(type: styleType)
         guard let item = randomItem else { return }
-        setupWithRandomItemFromCategory(randomItem: item)
+        setupWithRandomItemFromCategory(randomItem: item, category: category)
     }
     
-    private func setupWithRandomItemFromCategory(randomItem: BOCatItem){
+    private func setupWithRandomItemFromCategory(randomItem: BOCatItem, category: BOCategoryModel?){
+        
         
         guard let detailItem = randomItem.detailItem else { return }
-        lblCategoryTitle.text = detailItem.categoryTitle
+        lblCategoryTitle.text = detailItem.arrItems.first?.itemName
         
+        setupTakeMeThereGestureRec()
         //Sometimes the BOCategoryDetailItem doesn't have a categoryTitle
-        if detailItem.categoryTitle.count == 0{
+        if detailItem.categoryTitle.count == 0 || detailItem.categoryTitle == "The Reykjavik Grapevine"{
             print("Getting short title from LONG")
             lblCategoryTitle.text = getShortTitleFromLongTitle(longTitle: randomItem.title)
         }
@@ -147,7 +189,7 @@ extension CategoryWinnerCell{
             
         case .rvkDining:
             
-            setLeftLineAndLblLayerTo(color: .colorRed)
+            setLeftLineAndLblLayerTo(color: UIColor.colorForType(type: type))
             
             lblCatName.text = "DINING"
             lblBrowseMore.text = "Browse More Restaurants"
@@ -159,7 +201,7 @@ extension CategoryWinnerCell{
             lblTakeMeThere.layer.borderColor = UIColor.colorRed.cgColor
             
         case .rvkDrink:
-            setLeftLineAndLblLayerTo(color: .peachBtnBorder)
+            setLeftLineAndLblLayerTo(color: UIColor.colorForType(type: type))
             
             lblCatName.text = "DRINKING"
             lblBrowseMore.text = "Browse More Bars"
@@ -168,7 +210,7 @@ extension CategoryWinnerCell{
             showImgViewSponsor()
             
         case .rvkShopping:
-            setLeftLineAndLblLayerTo(color: .yellowBtnBorder)
+            setLeftLineAndLblLayerTo(color: UIColor.colorForType(type: type))
             
             lblCatName.text = "SHOPPING"
             lblBrowseMore.text = "Browse More Shops"
@@ -178,7 +220,7 @@ extension CategoryWinnerCell{
             
         case .rvkActivities:
             
-            setLeftLineAndLblLayerTo(color: .colorBlueBtnBorder)
+            setLeftLineAndLblLayerTo(color: UIColor.colorForType(type: type))
             
             lblCatName.text = "ACTIVITIES"
             lblBrowseMore.text = "Browse More Activities"

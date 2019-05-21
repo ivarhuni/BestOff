@@ -54,8 +54,26 @@ extension UIColor {
     return UIColor(white: 0.0, alpha: 1.0)
   }
     
-    @nonobjc class var colorGrayishBrown: UIColor {
-        return UIColor(white: 75.0 / 255.0, alpha: 1.0)
-    }
+  @nonobjc class var colorGrayishBrown: UIColor {
+    return UIColor(white: 75.0 / 255.0, alpha: 1.0)
+  }
+}
 
+extension UIColor{
+    
+    static func colorForType(type: Endpoint) -> UIColor{
+        
+        switch type {
+        case .rvkShopping:
+            return .colorYellowBtnBorder
+        case .rvkDining:
+            return .colorRed
+        case .rvkDrink:
+            return .colorPeachBtnBorder
+        case .rvkActivities:
+            return .colorBlueBtnBorder
+        default:
+            return .colorRed
+        }
+    }
 }

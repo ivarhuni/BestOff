@@ -28,6 +28,7 @@ class BOGuideViewModel: BOViewModel {
     let guideListDataSource = Observable<BOCategoryListDataSourceProtocol?>(nil)
     let guideDetailDataSource = Observable<BOCategoryDetailListProtocol?>(nil)
     let categoryWinnerListDataSource = Observable<BOCategoryWinnersDataSource?>(nil)
+    let subcategoriesListDataSource = Observable<BOSpecificCatWinnersDataSource?>(nil)
     
     let tableDataSourceAnimationDuration:Double = 0.4
     
@@ -82,6 +83,7 @@ extension BOGuideViewModel{
             guard let model = model else { return }
             
             catWinnerDSource.setDiningModel(catModel: model)
+            catWinnerDSource.takeMeThereVMDelegate = self
         }
         
         _ = self.rvkDrink.observeNext{ [weak self] model in
@@ -90,6 +92,7 @@ extension BOGuideViewModel{
             guard let catWinnerDSource = this.categoryWinnerListDataSource.value else { return }
             guard let model = model else { return }
             catWinnerDSource.setDrinkingModel(catModel: model)
+            catWinnerDSource.takeMeThereVMDelegate = self
         }
         
         _ = self.rvkShopping.observeNext{ [weak self] model in
@@ -98,6 +101,7 @@ extension BOGuideViewModel{
             guard let catWinnerDSource = this.categoryWinnerListDataSource.value else { return }
             guard let model = model else { return }
             catWinnerDSource.setShoppingModel(catModel: model)
+            catWinnerDSource.takeMeThereVMDelegate = self
         }
         
         _ = self.rvkActivities.observeNext{ [weak self] model in
@@ -106,12 +110,17 @@ extension BOGuideViewModel{
             guard let catWinnerDSource = this.categoryWinnerListDataSource.value else { return }
             guard let model = model else { return }
             catWinnerDSource.setActivitiesModel(catModel: model)
+            catWinnerDSource.takeMeThereVMDelegate = self
+        }
+        
+        _ = self.subcategoriesListDataSource.observeNext{ _ in
+            
+            
         }
     }
 }
 
-
-
+//MARK: DataSource Detail
 extension BOGuideViewModel: vmTableViewDelegate{
     
     func tableViewPressedAt(_ index: Int) {
@@ -145,11 +154,58 @@ extension BOGuideViewModel: vmTableViewDelegate{
     }
 }
 
+//MARK: Default
 extension BOGuideViewModel{
     
     func changeDataSourceToDefault(){
         
         guideDetailDataSource.value = nil
+    }
+}
+
+//MARK: DataSource CategoryWinnersList
+extension BOGuideViewModel: TakeMeThereProtocol{
+    
+    func didPressTakeMeThere(type: Endpoint) {
+        
+        switch type{
+            
+        case .rvkDining:
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.rvkDining.value, catTitle: "DINING") else {
+                print("no specific category datasource available DINING")
+                return
+            }
+            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
+            
+        case .rvkDrink:
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.rvkDrink.value, catTitle: "DRINKING") else {
+                print("no specific category datasource available DRINK")
+                return
+            }
+            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
+            
+        case .rvkShopping:
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.rvkShopping.value, catTitle: "SHOPPING") else {
+                print("no specific category datasource available SHOPPING")
+                return
+            }
+            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
+            
+        case .rvkActivities:
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.rvkActivities.value, catTitle: "ACTIVITIES") else {
+                print("no specific category datasource available ACTIVITIES")
+                return
+            }
+            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
+            
+        default:
+            print("default takemethereVCprotocol")
+        }
+    }
+    
+    func changeDataSourceToSpecific(categoryDataSource: BOSpecificCatWinnersDataSource){
+        
+        self.subcategoriesListDataSource.value = categoryDataSource
     }
 }
 

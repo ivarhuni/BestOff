@@ -126,6 +126,10 @@ extension BOGuideViewController{
         
         let catWinnerCell = UINib(nibName: CategoryWinnerCell.nibName(), bundle: nil)
         tableView.register(catWinnerCell, forCellReuseIdentifier: CategoryWinnerCell.reuseIdentifier())
+        
+        let catWinnerCellImg = UINib(nibName: BOBigCatImgCell.nibName(), bundle: nil)
+        tableView.register(catWinnerCellImg, forCellReuseIdentifier: BOBigCatImgCell.reuseIdentifier())
+
     }
     
     private func registerGuideDetail(){
@@ -161,6 +165,11 @@ extension BOGuideViewController{
     
     private func registerDelegateCategoryWinner(){
         tableView.delegate = viewModel.categoryWinnerListDataSource.value
+        viewModel.guideListDataSource.value?.tableDelegate = self
+    }
+    
+    private func registerDelegateSubcategories(){
+        tableView.delegate = viewModel.subcategoriesListDataSource.value
         viewModel.guideListDataSource.value?.tableDelegate = self
     }
 }
@@ -248,6 +257,13 @@ extension BOGuideViewController{
             guard let this = self else { return }
             this.viewModel.shouldRefreshTableWithNewCategoryWinner() ? this.reloadWith(winner: .rvkShopping) : print("notReloadingShopping")
         }
+        
+        //Subcategories
+        _ = viewModel.subcategoriesListDataSource.observeOn(.main).observeNext{ [weak self] dataSourceValue in
+            
+            guard let this = self else { return }
+            this.setupForSubcategories()
+        }
     }
 }
 
@@ -320,7 +336,7 @@ extension BOGuideViewController{
         
         UIView.animate(withDuration: self.viewModel.tableDataSourceAnimationDuration, delay: 0, options: .curveEaseInOut, animations: {
             
-            self.tableViewHeader.showDetail()
+            self.tableViewHeader.showDetail(withDetailText: "GUIDES")
         }, completion: nil)
     }
     
@@ -343,7 +359,26 @@ extension BOGuideViewController{
 }
 
 //MARK: Setup For CategoryWinner List View
-extension BOGuideViewController{
+extension BOGuideViewController: TakeMeThereProtocol{
+    
+    
+    func didPressTakeMeThere(type: Endpoint) {
+        
+        switch type{
+            
+        case .rvkDining:
+            print("dining")
+        case .rvkDrink:
+            print("drink")
+        case .rvkShopping:
+            print("shopping")
+        case .rvkActivities:
+          print("activities")
+            
+        default:
+            print("default takemethereVCprotocol")
+        }
+    }
     
     private func setupForCategoryWinners(){
         
@@ -387,6 +422,31 @@ extension BOGuideViewController{
     }
 }
 
+//MARK: Subcategories
+extension BOGuideViewController{
+    
+    private func setupForSubcategories(){
+        
+        //Header same as Guide
+        tableView.dataSource = viewModel.subcategoriesListDataSource.value
+        registerDelegateSubcategories()
+        disableSwipe()
+        animateReloadDataSubcategories()
+    }
+    
+    private func animateReloadDataSubcategories(){
+        
+        UIView.transition(with: tableView, duration: viewModel.tableDataSourceAnimationDuration, options: .transitionCrossDissolve, animations: { [weak self] in
+            
+            guard let this = self else { return }
+            this.tableViewHeader.viewModel.isDetailActive.value = true
+            if let title = this.viewModel.subcategoriesListDataSource.value?.catTitle{
+                this.tableViewHeader.showDetail(withDetailText: title)
+            }
+            this.tableView.reloadData()
+        }) { (finished) in }
+    }
+}
 
 //MARK: Swipe handling
 extension BOGuideViewController{
@@ -450,4 +510,8 @@ extension BOGuideViewController{
     private func disableTableDelegate(){
         tableView.delegate = nil
     }
+}
+
+extension BOGuideViewController{
+    
 }
