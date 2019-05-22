@@ -158,6 +158,9 @@ extension BOMenuView{
             leadingSelFav.constant = viewModel.leadingConstantOff
             leadingSelectionIce.constant = viewModel.leadingConstantOff
             
+            lblRvk.layer.shadowOpacity = 0.05
+            lblIceland.layer.shadowOpacity = 0
+            lblFavourites.layer.shadowOpacity = 0
             
         case .iceland:
             lblIceland.font = UIFont.favouriteOn
@@ -167,6 +170,10 @@ extension BOMenuView{
             leadingSelFav.constant = viewModel.leadingConstantOff
             leadingSelectionIce.constant = viewModel.leadingConstantOn
             
+            lblRvk.layer.shadowOpacity = 0
+            lblIceland.layer.shadowOpacity = 0.05
+            lblFavourites.layer.shadowOpacity = 0
+            
         case .favourites:
             lblFavourites.font = UIFont.favouriteOn
             lblIceland.font = UIFont.favouriteOff
@@ -174,6 +181,10 @@ extension BOMenuView{
             leadingSelectionRvk.constant = viewModel.leadingConstantOff
             leadingSelFav.constant = viewModel.leadingConstantOn
             leadingSelectionIce.constant = viewModel.leadingConstantOff
+            
+            lblRvk.layer.shadowOpacity = 0
+            lblIceland.layer.shadowOpacity = 0
+            lblFavourites.layer.shadowOpacity = 0.05
         }
     }
     
@@ -262,5 +273,20 @@ extension BOMenuView{
     @objc func handleTapFav(_ sender: UITapGestureRecognizer) {
         
         animateSelectionForScreenType(screenType: .favourites)
+    }
+}
+
+extension BOMenuView{
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        addShadows()
+    }
+    
+    func addShadows(){
+        
+        lblRvk.addDropShadow(color: .black, opacity: 0.05, offset: CGSize(width: 1, height: 1), radius: 2)
+        lblIceland.addDropShadow(color: .black, opacity: 0.05, offset: CGSize(width: 1, height: 1), radius: 2)
+        lblFavourites.addDropShadow(color: .black, opacity: 0.05, offset: CGSize(width: 1, height: 1), radius: 2)
     }
 }

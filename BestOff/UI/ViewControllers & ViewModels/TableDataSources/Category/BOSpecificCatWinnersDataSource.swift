@@ -12,15 +12,19 @@ import Bond
 import ReactiveKit
 
 
+
 class BOSpecificCatWinnersDataSource: NSObject{
     
     let category: BOCategoryModel
     let catTitle: String
+    let arrDataCatItems = Observable<[BOCatItem]>([])
     
     required init?(category: BOCategoryModel?, catTitle: String){
         guard let cat = category else { return nil }
         self.category = cat
         self.catTitle = catTitle
+        
+        arrDataCatItems.value = self.category.items.shuffled()
     }
 }
 
@@ -28,10 +32,9 @@ extension BOSpecificCatWinnersDataSource: UITableViewDataSource{
     
     func getNumberOfRows() -> Int{
         
-        return 1
-//        if category.items.isEmpty { return 0 }
-//        
-//        return (category.items.count / 2) + 1
+        if arrDataCatItems.value.isEmpty { return 0 }
+        
+        return (arrDataCatItems.value.count / 2) + 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -40,23 +43,46 @@ extension BOSpecificCatWinnersDataSource: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.row == 0 { return getFirstImgCellIn(tableView: tableView) }
+        if indexPath.row == 0 { return getFirstImgCellFor(tableView: tableView) }
         
-        return getCellForItemAt(indexPath: indexPath)
+        return getCellForItemAt(indexPath: indexPath, inTableView: tableView)
     }
     
-    func getFirstImgCellIn(tableView: UITableView) -> UITableViewCell{
+    func getFirstImgCellFor(tableView: UITableView) -> UITableViewCell{
         
-        guard let item = self.category.items.first?.detailItem?.arrItems.first else { return UITableViewCell() }
+        guard let item = arrDataCatItems.value.first?.detailItem?.arrItems.first else {
+            
+            print("returning default cell in firstImgCell")
+            return UITableViewCell()
+        }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: BOBigCatImgCell.reuseIdentifier()) as! BOBigCatImgCell
-        cell.setupWithItem(item: item, category: self.category)
+        cell.setupWithItem(item: item, categoryTitle: self.category.title, type: self.category.type)
         return cell
     }
     
-    func getCellForItemAt(indexPath: IndexPath) -> UITableViewCell{
+    func getCellForItemAt(indexPath: IndexPath, inTableView: UITableView) -> UITableViewCell{
         
-        return UITableViewCell()
+        let cell = inTableView.dequeueReusableCell(withIdentifier: DoubleItemImgCell.reuseIdentifier()) as! DoubleItemImgCell
+        cell.setupWithArrCatDetailItems(arrCatDetailItems: getItemsForIndexPath(indexPath: indexPath), screenType: category.type ?? .rvkDining)
+        return cell
+    }
+    
+    func getItemsForIndexPath(indexPath: IndexPath) -> [BOCategoryDetailItem] {
+        
+        if indexPath.row == 0{
+            
+            guard let item = arrDataCatItems.value.first?.detailItem?.arrItems.first else {
+                return []
+            }
+            return [item]
+        }
+        
+        guard let leftItem = arrDataCatItems.value[safe: indexPath.row]?.detailItem?.arrItems[safe: 0] else {
+            return []
+        }
+        guard let rightItem = arrDataCatItems.value[safe: indexPath.row + 1]?.detailItem?.arrItems[safe: 0] else { return [leftItem] }
+        return [leftItem, rightItem]
     }
 }
 
@@ -89,8 +115,9 @@ extension BOSpecificCatWinnersDataSource{
     
     func getHeightForRowAt(indexPath: IndexPath) -> CGFloat{
         
-        let bigImgCellHeight:CGFloat = 346
-        let normalCellHeight:CGFloat = 200
+        let bigImgCellHeight:CGFloat = 207
+        let normalCellHeightRatio:CGFloat = 176/375
+        let normalCellHeight:CGFloat = (UIScreen.main.bounds.size.width * normalCellHeightRatio) + 20
         
         if indexPath.row == 0 { return bigImgCellHeight }
         

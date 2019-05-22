@@ -19,8 +19,10 @@ class TopGuideCell: UITableViewCell{
     @IBOutlet weak var imgViewIcon: UIImageView!
     @IBOutlet weak var viewBgIcon: UIView!
     @IBOutlet weak var sep: UIView!
+    @IBOutlet weak var viewBlackBackground: UIView!
     
-
+    @IBOutlet weak var imgViewDropShadow: UIImageView!
+    
     //MARK: Inititialization
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -54,6 +56,7 @@ extension TopGuideCell{
         super.layoutSubviews()
         viewBgIcon.layer.cornerRadius = viewBgIcon.frame.size.height/2.0
         viewBgIcon.clipsToBounds = true
+        viewBlackBackground.addDropShadow(color: .black, opacity: 0.1, offset: CGSize(width: 2, height: 2), radius: 3)
     }
 }
 

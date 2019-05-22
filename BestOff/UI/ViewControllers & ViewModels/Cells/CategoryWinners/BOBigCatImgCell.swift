@@ -45,13 +45,18 @@ extension BOBigCatImgCell{
 
 extension BOBigCatImgCell{
     
-    func setupWithItem(item: BOCategoryDetailItem, category: BOCategoryModel){
+    func setupWithItem(item: BOCategoryDetailItem, categoryTitle: String, type: Endpoint? = .rvkDining){
         
+        setupDefault()
         lblCatWinner.text = item.itemName
-        lblCatTitle.text = category.title
+//        lblCatTitle.text = categoryTitle
+        
         if let url = item.imageURL{
             UIImageView.setSDImageViewImageWithURL(imageView: bigImgView, strURL: url, nil, contentMode: .scaleAspectFill)
         }
+        
+        guard let viewType = type else { return }
+        setupVerticalViewWith(type: viewType)
     }
     
     private func setupDefault(){
@@ -59,6 +64,10 @@ extension BOBigCatImgCell{
         setupBgView()
         setupImgViews()
         setupLabels()
+    }
+    
+    private func setupVerticalViewWith(type: Endpoint){
+        viewVerticalColor.backgroundColor = UIColor.colorForType(type: type)
     }
     
     private func setupLabels(){

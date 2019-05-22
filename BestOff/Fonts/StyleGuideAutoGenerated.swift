@@ -53,7 +53,7 @@ extension UIFont {
   }
 
   class var categoryHeadline: UIFont {
-    return UIFont(name: "Blanco", size: 18.0)!
+    return UIFont(name: "Blanco", size: 19.0)!
   }
 
   class var favCatTitle: UIFont {
@@ -101,7 +101,7 @@ extension UIFont {
   }
 
   class var gvImageHeadline: UIFont {
-    return UIFont(name: "Blanco-ExtraBold", size: 14.0)!
+    return UIFont(name: "Blanco-ExtraBold", size: 17.0)!
   }
 
   class var authorName: UIFont {
@@ -113,7 +113,7 @@ extension UIFont {
   }
 
   class var browseMoreCatItems: UIFont {
-    return UIFont(name: "Blanco", size: 14.0)!
+    return UIFont(name: "Blanco", size: 16.0)!
   }
 
   class var catDtlItemAddressTitle: UIFont {
@@ -137,7 +137,7 @@ extension UIFont {
     }
 
   class var gvImageText: UIFont {
-    return UIFont(name: "Blanco", size: 14.0)!
+    return UIFont(name: "Blanco", size: 17.0)!
   }
 
   class var guideItem: UIFont {
@@ -157,7 +157,7 @@ extension UIFont {
   }
 
   class var rRedBtnText: UIFont {
-    return UIFont(name: "Blanco-Bold", size: 14.0)!
+    return UIFont(name: "Blanco-Bold", size: 15.0)!
   }
 
   class var rvGrSmallBlack: UIFont {

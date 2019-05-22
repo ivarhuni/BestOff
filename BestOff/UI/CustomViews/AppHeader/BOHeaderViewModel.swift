@@ -19,7 +19,7 @@ struct BOHeaderViewModel{
     
     let btnAlphaValue: CGFloat = 0.7
     let isHamburgerActive = Observable<Bool>(true)
-    let btnAnimationDuration:Double = 0.4
+    let btnAnimationDuration:Double = 0.2
     var headerText = "BEST OF REYKJAVIK"
     
     let originalBtnWidthHeight:CGFloat = 25.0

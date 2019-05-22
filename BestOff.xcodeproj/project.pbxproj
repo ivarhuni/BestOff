@@ -25,6 +25,8 @@
 		22326B6F229449A20056DAC9 /* BOSpecificCatWinnersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22326B6E229449A20056DAC9 /* BOSpecificCatWinnersDataSource.swift */; };
 		22326B73229462BD0056DAC9 /* BOBigCatImgCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22326B71229462BD0056DAC9 /* BOBigCatImgCell.swift */; };
 		22326B74229462BD0056DAC9 /* BOBigCatImgCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22326B72229462BD0056DAC9 /* BOBigCatImgCell.xib */; };
+		22326B772294A8C00056DAC9 /* DoubleItemImgCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22326B752294A8C00056DAC9 /* DoubleItemImgCell.swift */; };
+		22326B782294A8C00056DAC9 /* DoubleItemImgCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22326B762294A8C00056DAC9 /* DoubleItemImgCell.xib */; };
 		223EE422227B51830048D42E /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EE421227B51830048D42E /* Images.swift */; };
 		223EE424227BA5BD0048D42E /* BOHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EE423227BA5BD0048D42E /* BOHeaderViewModel.swift */; };
 		223EE427227BC6630048D42E /* TopGuideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EE425227BC6630048D42E /* TopGuideCell.swift */; };
@@ -117,6 +119,8 @@
 		22326B6E229449A20056DAC9 /* BOSpecificCatWinnersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOSpecificCatWinnersDataSource.swift; sourceTree = "<group>"; };
 		22326B71229462BD0056DAC9 /* BOBigCatImgCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOBigCatImgCell.swift; sourceTree = "<group>"; };
 		22326B72229462BD0056DAC9 /* BOBigCatImgCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BOBigCatImgCell.xib; sourceTree = "<group>"; };
+		22326B752294A8C00056DAC9 /* DoubleItemImgCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleItemImgCell.swift; sourceTree = "<group>"; };
+		22326B762294A8C00056DAC9 /* DoubleItemImgCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DoubleItemImgCell.xib; sourceTree = "<group>"; };
 		223EE421227B51830048D42E /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		223EE423227BA5BD0048D42E /* BOHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOHeaderViewModel.swift; sourceTree = "<group>"; };
 		223EE425227BC6630048D42E /* TopGuideCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopGuideCell.swift; sourceTree = "<group>"; };
@@ -216,6 +220,8 @@
 			children = (
 				221EC5AC228A10E50051EC42 /* DoubleItemCell.swift */,
 				221EC5AD228A10E50051EC42 /* DoubleItemCell.xib */,
+				22326B752294A8C00056DAC9 /* DoubleItemImgCell.swift */,
+				22326B762294A8C00056DAC9 /* DoubleItemImgCell.xib */,
 			);
 			path = DoubleItemCell;
 			sourceTree = "<group>";
@@ -669,6 +675,7 @@
 				22D5738B2282553500748CF1 /* Blanco-Bold.otf in Resources */,
 				22326B682293A48F0056DAC9 /* CategoryWinnerCell.xib in Resources */,
 				22326B74229462BD0056DAC9 /* BOBigCatImgCell.xib in Resources */,
+				22326B782294A8C00056DAC9 /* DoubleItemImgCell.xib in Resources */,
 				22EB39C4222E0703001043E2 /* Assets.xcassets in Resources */,
 				22D573872282553500748CF1 /* Blanco-ExtraBold.otf in Resources */,
 				22D573852282553500748CF1 /* Blanco-Italic.otf in Resources */,
@@ -837,6 +844,7 @@
 				22326B6D229402370056DAC9 /* Extensions+UIView.swift in Sources */,
 				223EE422227B51830048D42E /* Images.swift in Sources */,
 				22747CD2228E2FCC00B35DA7 /* GuideItemCell.swift in Sources */,
+				22326B772294A8C00056DAC9 /* DoubleItemImgCell.swift in Sources */,
 				222D8B98227FC8130039C860 /* BOCatHeaderCell.swift in Sources */,
 				226E0AD82256B34A006AB3E2 /* BOAuthor.swift in Sources */,
 				22F897862265F87C001E48BE /* BOCatItem.swift in Sources */,

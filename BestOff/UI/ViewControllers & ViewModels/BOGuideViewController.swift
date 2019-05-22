@@ -73,6 +73,7 @@ extension BOGuideViewController: BOAppHeaderViewDelegate{
     }
     
     func didPressBack() {
+        
         self.viewModel.changeDataSourceToDefault()
     }
     
@@ -129,7 +130,9 @@ extension BOGuideViewController{
         
         let catWinnerCellImg = UINib(nibName: BOBigCatImgCell.nibName(), bundle: nil)
         tableView.register(catWinnerCellImg, forCellReuseIdentifier: BOBigCatImgCell.reuseIdentifier())
-
+        
+        let doubleItemImgCell = UINib(nibName: DoubleItemImgCell.nibName(), bundle: nil)
+        tableView.register(doubleItemImgCell, forCellReuseIdentifier: DoubleItemImgCell.reuseIdentifier())
     }
     
     private func registerGuideDetail(){
@@ -211,7 +214,12 @@ extension BOGuideViewController{
             guard let this = self else { return }
            
             if detailListDataSourceValue == nil{
-                this.setTableToDefault()
+                if this.viewModel.shouldRefreshTableWithNewCategoryWinner(){
+                    this.setupForCategoryWinners()
+                }
+                else{
+                    this.setTableToDefault()
+                }
             }
             else{
                 this.setupForDetail()
@@ -514,4 +522,9 @@ extension BOGuideViewController{
 
 extension BOGuideViewController{
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }
+
+

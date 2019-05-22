@@ -29,7 +29,7 @@ class BOAppHeaderView: UIView {
     @IBOutlet weak var btnHeight: NSLayoutConstraint!
     
     @IBOutlet weak var viewBackBtn: UIView!
-    @IBOutlet weak var lblBackTitle: UILabel!
+    @IBOutlet private weak var lblBackTitle: UILabel!
     @IBOutlet weak var imgViewBackBtn: UIImageView!
     
     @IBOutlet weak var viewSep: UIView!
@@ -122,6 +122,15 @@ extension BOAppHeaderView{
         setupColors()
         setupFonts()
         showDefault()
+        addShadow()
+    }
+    
+    func addShadow(){
+        
+        imgLeftIcon.addDropShadow(color: .black, opacity: 0.05, offset: CGSize(width: 1, height: 1), radius: 2)
+        self.addDropShadow(color: .black, opacity: 0.05, offset: CGSize(width: 1, height: 1), radius: 2)
+        lblTitle.addDropShadow(color: .black, opacity: 0.05, offset: CGSize(width: 1, height: 1), radius: 2)
+        lblBackTitle.addDropShadow(color: .black, opacity: 0.05, offset: CGSize(width: 1, height: 1), radius: 2)
     }
     
     func setupColors(){
@@ -294,6 +303,7 @@ extension BOAppHeaderView{
     }
     
     private func setDetailText(strText: String){
+        if strText.count == 0 { return }
         lblBackTitle.text = strText
     }
     
@@ -349,5 +359,6 @@ extension BOAppHeaderView{
     override func layoutSubviews() {
         super.layoutSubviews()
         self.view.layoutIfNeeded()
+        addShadow()
     }
 }

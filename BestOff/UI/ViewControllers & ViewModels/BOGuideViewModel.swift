@@ -157,9 +157,23 @@ extension BOGuideViewModel: vmTableViewDelegate{
 //MARK: Default
 extension BOGuideViewModel{
     
+    
+}
+
+extension BOGuideViewModel{
+    
+    func didPressBackInAppHeader(){
+        
+        (self.activePage.value == .left) ? changeDataSourceToDefault() : reloadWinners()
+    }
+    
     func changeDataSourceToDefault(){
         
         guideDetailDataSource.value = nil
+    }
+    
+    func reloadWinners(){
+        self.activePage.value = .right
     }
 }
 

@@ -84,6 +84,12 @@ extension DoubleItemCell{
     override func layoutSubviews() {
         super.layoutSubviews()
         setCornerRadiusForAuthorImgView()
+        setDropShadow()
+    }
+    
+    func setDropShadow(){
+        viewBgLeft.addDropShadow(color: .black, opacity: 0.05, offset: .zero, radius: 3)
+        viewBgRight.addDropShadow(color: .black, opacity: 0.05, offset: .zero, radius: 3)
     }
     
     func setCornerRadiusForAuthorImgView(){
@@ -129,7 +135,7 @@ extension DoubleItemCell{
     
     private func styleBackgroundViews(){
         
-        let bgAlpha:CGFloat = 0.05
+        let bgAlpha:CGFloat = 0.2
         viewBgLeft.backgroundColor = .black
         viewBgRight.backgroundColor = .black
         

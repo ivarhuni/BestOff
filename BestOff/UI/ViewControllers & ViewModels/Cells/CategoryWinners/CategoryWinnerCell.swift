@@ -183,6 +183,14 @@ extension CategoryWinnerCell{
         imgView.sd_setImage(with: url) { (image, error, _, _) in }
     }
     
+    private func addShadows(){
+        
+        viewBgFingersAndLabel.addDropShadow(color: .black, opacity: 0.1, offset: CGSize(width: 2, height: 2), radius: 2)
+        
+        lblTakeMeThere.addDropShadow(color: .black, opacity: 0.01, offset: .zero, radius: 2)
+        lblCatName.addDropShadow(color: .black, opacity: 0.01, offset: .zero, radius: 2)
+    }
+    
     private func setupForType(type: Endpoint){
         
         switch type{
@@ -271,6 +279,7 @@ extension CategoryWinnerCell{
         super.layoutSubviews()
         
         setupTakeMeThere()
+        addShadows()
     }
 }
 
