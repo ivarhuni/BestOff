@@ -13,7 +13,7 @@ import ReactiveKit
 protocol BOAppHeaderViewDelegate: AnyObject {
     
     func didPressRightButton(shouldShowMenu: Bool)
-    func didPressBack()
+    func didPressBackFromGuideDetail()
 }
 
 
@@ -161,7 +161,7 @@ extension BOAppHeaderView{
             print("delegate for headerview not set while pressing back")
             return
         }
-        delegate.didPressBack()
+        delegate.didPressBackFromGuideDetail()
     }
 }
 

@@ -52,7 +52,7 @@ extension BOGuideViewController{
         setupBackground()
         setupTable()
         setupSwipeGestureRec()
-        setupBindings()
+        setupUIBindings()
     }
 }
 
@@ -69,12 +69,13 @@ extension BOGuideViewController: BOAppHeaderViewDelegate{
     }
     
     func didPressRightButton(shouldShowMenu: Bool) {
-        self.viewModel.menuOpen.value = shouldShowMenu
+        viewModel.menuOpen.value = shouldShowMenu
     }
     
-    func didPressBack() {
+    func didPressBackFromGuideDetail() {
         
-        self.viewModel.changeDataSourceToDefault()
+        self.tableViewHeader.viewModel.isDetailActive.value = false
+        self.changeToGuides()
     }
     
     func openMenu() {
@@ -96,7 +97,7 @@ extension BOGuideViewController: BOAppHeaderViewDelegate{
 //MARK: Styling
 extension BOGuideViewController{
     
-    func setupBackground(){
+    private func setupBackground(){
         view.backgroundColor = UIColor.colorRed
     }
 }
@@ -107,13 +108,17 @@ extension BOGuideViewController{
     private func setupTable(){
         
         registerCells()
-        registerDelegateDefault()
+        registerDelegateGuides()
         styleTableDefault()
     }
     
     private func styleTableDefault(){
         
         tableView.separatorStyle = .none
+    }
+    
+    private func disableTableDelegate(){
+        tableView.delegate = nil
     }
     
     private func registerCells(){
@@ -156,27 +161,116 @@ extension BOGuideViewController{
         tableView.register(doubleItemCell, forCellReuseIdentifier: DoubleItemCell.reuseIdentifier())
     }
     
-    private func registerDelegateDefault(){
-        tableView.delegate = viewModel.guideListDataSource.value
-        viewModel.guideListDataSource.value?.tableDelegate = self
+    private func registerDelegateGuides(){
+        
+        viewModel.setDidPressListDelegateForGuideList(delegater: self)
     }
     
-    private func registerDelegateDetail(){
-        tableView.delegate = viewModel.guideDetailDataSource.value
-        viewModel.guideListDataSource.value?.tableDelegate = nil
-    }
-    
-    private func registerDelegateCategoryWinner(){
-        tableView.delegate = viewModel.categoryWinnerListDataSource.value
-        viewModel.guideListDataSource.value?.tableDelegate = self
+    private func registerDelegateRvk(){
+
+        viewModel.setDidPressListDelegateForGuideList(delegater: self)
     }
     
     private func registerDelegateSubcategories(){
-        tableView.delegate = viewModel.subcategoriesListDataSource.value
-        viewModel.guideListDataSource.value?.tableDelegate = self
+        
+        viewModel.setDidPressListDelegateForGuideList(delegater: self)
     }
 }
 
+//MARK: UI Bindings
+extension BOGuideViewController{
+    
+    private func setupUIBindings(){
+        
+        //Menu open
+        _ = viewModel.menuOpen.observeOn(.main).observeNext{ [weak self] shouldOpen in
+            
+            guard let this = self else{ return }
+            
+            shouldOpen ? this.openMenu() : this.hideMenu()
+        }
+        
+        //Changes in TableView DataSource
+        _ = viewModel.activeTableDataSource.observeOn(.main).observeNext{ [weak self] activeDataSourceValue in
+            
+            guard let this = self else { return }
+            this.tableView.dataSource = activeDataSourceValue
+            this.animateTableReloadData()
+        }
+        
+        _ = viewModel.activeTableDelegate.observeOn(.main).observeNext{ [weak self] activeTableDelegateValue in
+            
+            guard let this = self else { return }
+            this.tableView.delegate = activeTableDelegateValue
+        }
+        
+        //ContentTypeSwitching
+        _ = viewModel.screenContentType.observeOn(.main).observeNext{ [weak self] contentTypeValue in
+            
+            guard let this = self else { return }
+            
+            switch contentTypeValue{
+                
+            case .guides:
+                print("setupForGuides")
+                this.setupForGuides()
+                
+            case .guideDetail:
+                print("setupForGuideDetail")
+                this.setupForGuideDetail()
+                
+            case .reykjavik:
+                print("setupForRvk")
+                this.setupForRvk()
+                
+            case .iceland:
+                print("setupForIceland")
+                this.setupForIceland()
+                
+            case .reykjavikSubCategories:
+                print("setup for subcat")
+                this.setupForSubcategories()
+                
+            case .favourites:
+                print("setup for favs")
+                this.setupForFavourites()
+            }
+        }
+    }
+}
+
+extension BOGuideViewController{
+    
+    private func animateTableReloadData(){
+        
+        UIView.transition(with: self.tableView,
+                          duration: self.viewModel.tableDataSourceAnimationDuration,
+                          options: .transitionCrossDissolve,
+                          animations: { [weak self] in
+                            
+                            guard let this = self else { return }
+                            this.tableView.reloadData()
+                            
+        }) { [weak self] _ in
+            guard let this = self else { return }
+            
+            this.viewModel.shouldSwipeBeEnabled() ? this.enableSwipe() : this.disableSwipe()
+            this.tableView.scroll(to: .top, animated: true)
+        }
+    }
+    
+    private func animateHeaderToGuideDetail(){
+        
+        UIView.animate(withDuration: self.viewModel.tableDataSourceAnimationDuration, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
+            
+            guard let this = self else { return }
+            
+            this.tableViewHeader.showDetail(withDetailText: "GUIDES")
+            }, completion: nil)
+    }
+}
+
+//Guide delegate
 extension BOGuideViewController: didPressListDelegate{
     
     func didPressAtIndexPath(indexPath: IndexPath) {
@@ -190,185 +284,62 @@ extension BOGuideViewController: didPressListDelegate{
     }
 }
 
-//MARK: UI Bindings
+//MARK: Setup Content Type Guides
 extension BOGuideViewController{
     
-    private func setupBindings(){
+    private func changeToGuides(){
+        viewModel.screenContentType.value = .guides
+    }
+    
+    private func setupForGuides(){
+        disableTableDelegate()
+        viewModel.setTableDelegateFor(contentType: .guides)
+        viewModel.setTableDataSourceFor(contentType: .guides)
+        registerDelegateGuides()
+    }
+    
+    private func scrollToTopGuides(){
         
-        //regular list
-        _ = viewModel.guideListDataSource.value?.categoryModel.observeOn(.main).observeNext{ [weak self] catModelValue in
-            
-            guard let this = self else{ return }
-            
-            if catModelValue != nil{
-                this.setTableToDefault()
-            }
-            else{
-                print("nothing in guidelistdatasourcevalue binding")
-            }
-        }
-        
-        //Detail Item being viewed
-        _ = viewModel.guideDetailDataSource.observeOn(.main).observeNext{ [weak self] detailListDataSourceValue in
-            
-            guard let this = self else { return }
-           
-            if detailListDataSourceValue == nil{
-                if this.viewModel.shouldRefreshTableWithNewCategoryWinner(){
-                    this.setupForCategoryWinners()
-                }
-                else{
-                    this.setTableToDefault()
-                }
-            }
-            else{
-                this.setupForDetail()
-            }
-        }
-        
-        //Menu open
-        _ = viewModel.menuOpen.observeOn(.main).observeNext{ [weak self] shouldOpen in
-            
-            guard let this = self else{ return }
-            
-            shouldOpen ? this.openMenu() : this.hideMenu()
-        }
-        
-        //Active Page After Swipe
-        _ = viewModel.activePage.observeOn(.main).observeNext{ [weak self] newActivePage in
-            
-            guard let this = self else { return }
-            (newActivePage == .right) ? this.setupForCategoryWinners() : this.setTableToDefault()
-        }
-        
-        //CategoryWinners
-        _ = viewModel.categoryWinnerListDataSource.value?.dining.observeOn(.main).observeNext{ [weak self] _ in
-            
-            guard let this = self else { return }
-            this.viewModel.shouldRefreshTableWithNewCategoryWinner() ? this.reloadWith(winner: .rvkDining) : print("notReloadingDining")
-        }
-        
-        _ = viewModel.categoryWinnerListDataSource.value?.drinking.observeOn(.main).observeNext{ [weak self] _ in
-            
-            guard let this = self else { return }
-            this.viewModel.shouldRefreshTableWithNewCategoryWinner() ? this.reloadWith(winner: .rvkDrink) : print("notReloadingDrinking")
-        }
-        
-        _ = viewModel.categoryWinnerListDataSource.value?.activities.observeOn(.main).observeNext{ [weak self] _ in
-            
-            guard let this = self else { return }
-            this.viewModel.shouldRefreshTableWithNewCategoryWinner() ? this.reloadWith(winner: .rvkActivities) : print("notReloadingActivities")
-        }
-        
-        _ = viewModel.categoryWinnerListDataSource.value?.shopping.observeOn(.main).observeNext{ [weak self] _ in
-            
-            guard let this = self else { return }
-            this.viewModel.shouldRefreshTableWithNewCategoryWinner() ? this.reloadWith(winner: .rvkShopping) : print("notReloadingShopping")
-        }
-        
-        //Subcategories
-        _ = viewModel.subcategoriesListDataSource.observeOn(.main).observeNext{ [weak self] dataSourceValue in
-            
-            guard let this = self else { return }
-            this.setupForSubcategories()
+        if viewModel.getGuideListDataSourceNumberOfRows() > 0{
+            self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
         }
     }
 }
 
-//MARK: Default Setup
+//MARK: Setup Content Type Guide Detail
 extension BOGuideViewController{
     
-    private func animateToDefault(){
-        
-                UIView.transition(with: self.tableView,
-                                  duration: self.viewModel.tableDataSourceAnimationDuration,
-                                  options: .transitionCrossDissolve,
-                                  animations: { [weak self] in
-                                    guard let this = self else { return }
-        
-                                    this.tableViewHeader.viewModel.isDetailActive.value = false
-                                    this.tableView.reloadData()
-                }) { [weak self] (finished) in
-                    guard let this = self else { return }
-                    this.scrollToTopDefault()
-                }
+    private func changeToGuideDetail(){
+        viewModel.screenContentType.value = .guideDetail
     }
     
-    private func setTableToDefault(){
+    private func setupForGuideDetail(){
         
-        tableView.dataSource = viewModel.guideListDataSource.value
-        registerDelegateDefault()
-        animateToDefault()
-        enableSwipe()
-    }
-    
-    private func scrollToTopDefault(){
-        
-        let indexPath = IndexPath(row: 0, section: 0)
-        (viewModel.guideListDataSource.value?.categoryModel.value != nil) ? self.tableView.scrollToRow(at: indexPath, at: .top, animated: true) : print("nothing")
-    }
-}
-
-//MARK: Detail Screen setup
-extension BOGuideViewController{
-    
-    private func setupForDetail(){
-        
-        tableView.dataSource = viewModel.guideDetailDataSource.value
-        
-        registerDelegateDetail()
-        animateReloadDataDetail()
-        animateHeaderToDetail()
+        disableTableDelegate()
+        animateHeaderToGuideDetail()
+        viewModel.setTableDelegateFor(contentType: .guideDetail)
+        viewModel.setTableDataSourceFor(contentType: .guideDetail)
         disableSwipe()
     }
     
-    private func disableSwipe(){
-        if let leftSwipe = self.swipeLeft{
-            leftSwipe.isEnabled = false
-        }
-        if let rightSwipe = self.swipeRight{
-            rightSwipe.isEnabled = false
-        }
-    }
     
-    private func enableSwipe(){
-        if let leftSwipe = self.swipeLeft{
-            leftSwipe.isEnabled = true
-        }
-        if let rightSwipe = self.swipeRight{
-            rightSwipe.isEnabled = true
-        }
-    }
-    
-    private func animateHeaderToDetail(){
-        
-        UIView.animate(withDuration: self.viewModel.tableDataSourceAnimationDuration, delay: 0, options: .curveEaseInOut, animations: {
-            
-            self.tableViewHeader.showDetail(withDetailText: "GUIDES")
-        }, completion: nil)
-    }
-    
-    private func animateReloadDataDetail(){
-        
-        UIView.transition(with: self.tableView, duration: self.viewModel.tableDataSourceAnimationDuration, options: .transitionCrossDissolve, animations: {
-            
-            self.tableView.reloadData()
-        }) { (finished) in
-            
-            self.scrollToTopDetail()
-        }
-    }
-    
-    private func scrollToTopDetail(){
-        let indexPath = IndexPath(row: 0, section: 0)
-        
-        (viewModel.guideDetailDataSource.value?.catItem.value != nil) ? self.tableView.scrollToRow(at: indexPath, at: .top, animated: true) : print("")
-    }
 }
 
-//MARK: Setup For CategoryWinner List View
+//MARK: Setup Content Type Reykjavik
 extension BOGuideViewController: TakeMeThereProtocol{
     
+    private func changeToRvkCategories() {
+        viewModel.screenContentType.value = .reykjavik
+    }
+    
+    private func setupForRvk(){
+        
+        disableTableDelegate()
+        registerDelegateRvk()
+        viewModel.setTableDelegateFor(contentType: .reykjavik)
+        viewModel.setTableDataSourceFor(contentType: .reykjavik)
+        enableSwipe()
+    }
     
     func didPressTakeMeThere(type: Endpoint) {
         
@@ -381,52 +352,11 @@ extension BOGuideViewController: TakeMeThereProtocol{
         case .rvkShopping:
             print("shopping")
         case .rvkActivities:
-          print("activities")
+            print("activities")
             
         default:
             print("default takemethereVCprotocol")
         }
-    }
-    
-    private func setupForCategoryWinners(){
-        
-        //Header same as Guide
-        tableView.dataSource = viewModel.categoryWinnerListDataSource.value
-        registerDelegateCategoryWinner()
-        animateReloadDataWinners()
-        enableSwipe()
-    }
-    
-    private func animateReloadDataWinners(){
-        
-        UIView.transition(with: tableView, duration: viewModel.tableDataSourceAnimationDuration, options: .transitionCrossDissolve, animations: { [weak self] in
-            
-            guard let this = self else { return }
-            this.tableViewHeader.viewModel.isDetailActive.value = false
-            this.tableView.reloadData()
-        }) { (finished) in }
-    }
-    
-    private func reloadWith(winner: Endpoint){
-        
-        switch winner {
-        case .rvkDining:
-            tableView.reloadRows(at: [IndexPath(item: 0, section: 0)], with: .left)
-        case .rvkDrink:
-            tableView.reloadRows(at: [IndexPath(item: 1, section: 0)], with: .left)
-        case .rvkShopping:
-            tableView.reloadRows(at: [IndexPath(item: 2, section: 0)], with: .left)
-        case .rvkActivities:
-            tableView.reloadRows(at: [IndexPath(item: 3, section: 0)], with: .left)
-        default:
-            print("")
-        }
-    }
-    
-    private func scrollToTopCatWinner(){
-        
-        let indexPath = IndexPath(row: 0, section: 0)
-        (viewModel.categoryWinnerListDataSource.value != nil) ?  self.tableView.scrollToRow(at: indexPath, at: .top, animated: true) : print("")
     }
 }
 
@@ -434,12 +364,18 @@ extension BOGuideViewController: TakeMeThereProtocol{
 extension BOGuideViewController{
     
     private func setupForSubcategories(){
-        
-        //Header same as Guide
-        tableView.dataSource = viewModel.subcategoriesListDataSource.value
+
+        disableTableDelegate()
         registerDelegateSubcategories()
+        viewModel.setTableDelegateFor(contentType: .reykjavikSubCategories)
+        viewModel.setTableDataSourceFor(contentType: .reykjavikSubCategories)
         disableSwipe()
-        animateReloadDataSubcategories()
+        setHeaderToSubcategory()
+    }
+    
+    private func setHeaderToSubcategory(){
+        self.tableViewHeader.viewModel.isDetailActive.value = true
+        tableViewHeader.showDetail(withDetailText: viewModel.getHeaderDetailTxtFromSubCategory())
     }
     
     private func animateReloadDataSubcategories(){
@@ -448,10 +384,12 @@ extension BOGuideViewController{
             
             guard let this = self else { return }
             this.tableViewHeader.viewModel.isDetailActive.value = true
-            if let title = this.viewModel.subcategoriesListDataSource.value?.catTitle{
-                this.tableViewHeader.showDetail(withDetailText: title)
-            }
-            this.tableView.reloadData()
+            //TODO: FIX
+//            if let title = this.viewModel.subcategoriesListDataSource.value?.catTitle{
+//                this.tableViewHeader.showDetail(withDetailText: title)
+//            }
+//            this.tableView.reloadData()
+            
         }) { (finished) in }
     }
 }
@@ -467,7 +405,6 @@ extension BOGuideViewController{
     }
     
     private func setupLeftSwipe(){
-        
         
         swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         guard let swLeft = swipeLeft else { return }
@@ -505,20 +442,34 @@ extension BOGuideViewController{
         switch swipeGesture.direction {
             
         case .right:
-            disableTableDelegate()
-            viewModel.setActivePage(page: .left)
+            self.changeToGuides()
         case .left:
-            disableTableDelegate()
-            viewModel.setActivePage(page: .right)
+            self.setupForRvk()
         default:
             break
         }
     }
     
-    private func disableTableDelegate(){
-        tableView.delegate = nil
+    private func disableSwipe(){
+        if let leftSwipe = self.swipeLeft{
+            leftSwipe.isEnabled = false
+        }
+        if let rightSwipe = self.swipeRight{
+            rightSwipe.isEnabled = false
+        }
+    }
+    
+    private func enableSwipe(){
+        if let leftSwipe = self.swipeLeft{
+            leftSwipe.isEnabled = true
+        }
+        if let rightSwipe = self.swipeRight{
+            rightSwipe.isEnabled = true
+        }
     }
 }
+
+
 
 extension BOGuideViewController{
     
@@ -528,3 +479,16 @@ extension BOGuideViewController{
 }
 
 
+
+
+extension BOGuideViewController{
+    
+    //TODO: Implement
+    func setupForIceland(){
+        
+    }
+    
+    func setupForFavourites(){
+        
+    }
+}

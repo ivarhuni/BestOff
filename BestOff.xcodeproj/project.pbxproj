@@ -17,7 +17,7 @@
 		222D8B98227FC8130039C860 /* BOCatHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D8B96227FC8130039C860 /* BOCatHeaderCell.swift */; };
 		222D8B99227FC8130039C860 /* BOCatHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 222D8B97227FC8130039C860 /* BOCatHeaderCell.xib */; };
 		22326B58229370BB0056DAC9 /* Extension+Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22326B57229370BB0056DAC9 /* Extension+Int.swift */; };
-		22326B5C22938E770056DAC9 /* BOCategoryWinnersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22326B5B22938E770056DAC9 /* BOCategoryWinnersDataSource.swift */; };
+		22326B5C22938E770056DAC9 /* RvkCategoriesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22326B5B22938E770056DAC9 /* RvkCategoriesDataSource.swift */; };
 		22326B672293A48F0056DAC9 /* CategoryWinnerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22326B652293A48F0056DAC9 /* CategoryWinnerCell.swift */; };
 		22326B682293A48F0056DAC9 /* CategoryWinnerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22326B662293A48F0056DAC9 /* CategoryWinnerCell.xib */; };
 		22326B6A2293AE7C0056DAC9 /* Extensions+Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22326B692293AE7C0056DAC9 /* Extensions+Array.swift */; };
@@ -65,6 +65,7 @@
 		22EB39C4222E0703001043E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22EB39C3222E0703001043E2 /* Assets.xcassets */; };
 		22EB39D2222E0703001043E2 /* BestOffTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB39D1222E0703001043E2 /* BestOffTests.swift */; };
 		22EB39DD222E0703001043E2 /* BestOffUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EB39DC222E0703001043E2 /* BestOffUITests.swift */; };
+		22F7A68622974F6700BAE115 /* Extension+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F7A68522974F6700BAE115 /* Extension+UITableView.swift */; };
 		22F897862265F87C001E48BE /* BOCatItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F897852265F87C001E48BE /* BOCatItem.swift */; };
 		22F897882265FA10001E48BE /* BOCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F897872265FA10001E48BE /* BOCoordinator.swift */; };
 		22F897922265FC09001E48BE /* BOGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F897902265FC09001E48BE /* BOGuideViewController.swift */; };
@@ -111,7 +112,7 @@
 		222D8B96227FC8130039C860 /* BOCatHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCatHeaderCell.swift; sourceTree = "<group>"; };
 		222D8B97227FC8130039C860 /* BOCatHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BOCatHeaderCell.xib; sourceTree = "<group>"; };
 		22326B57229370BB0056DAC9 /* Extension+Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Int.swift"; sourceTree = "<group>"; };
-		22326B5B22938E770056DAC9 /* BOCategoryWinnersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCategoryWinnersDataSource.swift; sourceTree = "<group>"; };
+		22326B5B22938E770056DAC9 /* RvkCategoriesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RvkCategoriesDataSource.swift; sourceTree = "<group>"; };
 		22326B652293A48F0056DAC9 /* CategoryWinnerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryWinnerCell.swift; sourceTree = "<group>"; };
 		22326B662293A48F0056DAC9 /* CategoryWinnerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryWinnerCell.xib; sourceTree = "<group>"; };
 		22326B692293AE7C0056DAC9 /* Extensions+Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+Array.swift"; sourceTree = "<group>"; };
@@ -165,6 +166,7 @@
 		22EB39D8222E0703001043E2 /* BestOffUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BestOffUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		22EB39DC222E0703001043E2 /* BestOffUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestOffUITests.swift; sourceTree = "<group>"; };
 		22EB39DE222E0703001043E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		22F7A68522974F6700BAE115 /* Extension+UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UITableView.swift"; sourceTree = "<group>"; };
 		22F897852265F87C001E48BE /* BOCatItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCatItem.swift; sourceTree = "<group>"; };
 		22F897872265FA10001E48BE /* BOCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCoordinator.swift; sourceTree = "<group>"; };
 		22F897902265FC09001E48BE /* BOGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOGuideViewController.swift; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 				22326B57229370BB0056DAC9 /* Extension+Int.swift */,
 				22326B692293AE7C0056DAC9 /* Extensions+Array.swift */,
 				22326B6C229402370056DAC9 /* Extensions+UIView.swift */,
+				22F7A68522974F6700BAE115 /* Extension+UITableView.swift */,
 			);
 			path = "Extensions And Protocols";
 			sourceTree = "<group>";
@@ -269,17 +272,17 @@
 			children = (
 				22326B6222938ED20056DAC9 /* Category */,
 				22326B6122938EC60056DAC9 /* GuideDetail */,
-				22326B6022938EBD0056DAC9 /* Default */,
+				22326B6022938EBD0056DAC9 /* Guide */,
 			);
 			path = TableDataSources;
 			sourceTree = "<group>";
 		};
-		22326B6022938EBD0056DAC9 /* Default */ = {
+		22326B6022938EBD0056DAC9 /* Guide */ = {
 			isa = PBXGroup;
 			children = (
 				22F897A022662D63001E48BE /* BOGuideTableDataSource.swift */,
 			);
-			path = Default;
+			path = Guide;
 			sourceTree = "<group>";
 		};
 		22326B6122938EC60056DAC9 /* GuideDetail */ = {
@@ -293,7 +296,7 @@
 		22326B6222938ED20056DAC9 /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				22326B5B22938E770056DAC9 /* BOCategoryWinnersDataSource.swift */,
+				22326B5B22938E770056DAC9 /* RvkCategoriesDataSource.swift */,
 				22326B6E229449A20056DAC9 /* BOSpecificCatWinnersDataSource.swift */,
 			);
 			path = Category;
@@ -519,16 +522,8 @@
 				22F897942265FC17001E48BE /* BOGuideViewModel.swift */,
 				22326B5F22938EA30056DAC9 /* TableDataSources */,
 				22AA85852277C97F003B15F1 /* Launch Screen */,
-				22F8978F2265FBEE001E48BE /* Guides */,
 			);
 			path = "ViewControllers & ViewModels";
-			sourceTree = "<group>";
-		};
-		22F8978F2265FBEE001E48BE /* Guides */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Guides;
 			sourceTree = "<group>";
 		};
 		22F8979A2266139B001E48BE /* App */ = {
@@ -831,6 +826,7 @@
 				2251583F228CB5E3006BC71B /* BOGuideDetailTableDataSource.swift in Sources */,
 				22F897922265FC09001E48BE /* BOGuideViewController.swift in Sources */,
 				22EB39BD222E0702001043E2 /* AppDelegate.swift in Sources */,
+				22F7A68622974F6700BAE115 /* Extension+UITableView.swift in Sources */,
 				223EE427227BC6630048D42E /* TopGuideCell.swift in Sources */,
 				22267C2322654E8E007E7B40 /* BOCategoryModel.swift in Sources */,
 				221EC5AE228A10E50051EC42 /* DoubleItemCell.swift in Sources */,
@@ -852,7 +848,7 @@
 				22747CCE228DE62500B35DA7 /* BOCatItemTextDescriptionCell.swift in Sources */,
 				22267C2A22656175007E7B40 /* Extension+String.swift in Sources */,
 				22B506DD224DC09A00F66FDB /* NetworkError.swift in Sources */,
-				22326B5C22938E770056DAC9 /* BOCategoryWinnersDataSource.swift in Sources */,
+				22326B5C22938E770056DAC9 /* RvkCategoriesDataSource.swift in Sources */,
 				22D1D8D4228A54290003D649 /* UIImageView+Extension.swift in Sources */,
 				22326B6F229449A20056DAC9 /* BOSpecificCatWinnersDataSource.swift in Sources */,
 				22F897A8226634B5001E48BE /* CategoryProtocol.swift in Sources */,

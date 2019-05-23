@@ -12,7 +12,7 @@ import ReactiveKit
 import Bond
 
 //MARK: Properties
-class BOCategoryWinnersDataSource: NSObject{
+class RvkCategoriesDataSource: NSObject{
     
     private let diningIndex = 0
     private let drinkingIndex = 1
@@ -40,7 +40,7 @@ class BOCategoryWinnersDataSource: NSObject{
     weak var takeMeThereVMDelegate: TakeMeThereProtocol?
 }
 
-extension BOCategoryWinnersDataSource: TakeMeThereProtocol{
+extension RvkCategoriesDataSource: TakeMeThereProtocol{
     
     func didPressTakeMeThere(type: Endpoint) {
         
@@ -60,7 +60,7 @@ extension BOCategoryWinnersDataSource: TakeMeThereProtocol{
 }
 
 //MARK: TableProtocol
-extension BOCategoryWinnersDataSource: BOCategoryWinnerListProtocol{
+extension RvkCategoriesDataSource: BOCategoryWinnerListProtocol{
     
     func numberOfRows() -> Int {
         return rowCount
@@ -114,7 +114,7 @@ extension BOCategoryWinnersDataSource: BOCategoryWinnerListProtocol{
     }
 }
 
-extension BOCategoryWinnersDataSource{
+extension RvkCategoriesDataSource{
     
     func setDiningModel(catModel: BOCategoryModel){
         self.dining.value = catModel

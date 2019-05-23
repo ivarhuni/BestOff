@@ -214,7 +214,7 @@ extension CategoryWinnerCell{
             lblCatName.text = "DRINKING"
             lblBrowseMore.text = "Browse More Bars"
             
-            showSwipeAndPageCtrl()
+            hideSwipeLblAndPageCtrl()
             showImgViewSponsor()
             
         case .rvkShopping:
@@ -223,7 +223,7 @@ extension CategoryWinnerCell{
             lblCatName.text = "SHOPPING"
             lblBrowseMore.text = "Browse More Shops"
             
-            showSwipeAndPageCtrl()
+            hideSwipeLblAndPageCtrl()
             hideImgViewSponsor()
             
         case .rvkActivities:

@@ -19,7 +19,7 @@ class BOGuideTableDataSource: NSObject, BOCategoryListDataSourceProtocol {
     
     var categoryModel = Observable<BOCategoryModel?>(nil)
     
-    weak var tableDelegate: didPressListDelegate?
+    weak var didPressListTableDelegate: didPressListDelegate?
     
     let headerCellIndexRow = 0
     let BigCellIndexRow = 1
@@ -135,7 +135,7 @@ extension BOGuideTableDataSource: DoubleCellPressed{
     
     func doubleCellPressed(item: BOCatItem) {
         
-        guard let tableDelegate = self.tableDelegate else {
+        guard let tableDelegate = self.didPressListTableDelegate else {
             print("tabledelegate Not Set in BOGuideTableDataSource")
             return
         }
@@ -162,7 +162,7 @@ extension BOGuideTableDataSource: UITableViewDataSource{
 extension BOGuideTableDataSource: UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let delegate = tableDelegate else {
+        guard let delegate = didPressListTableDelegate else {
             print("tableview delegate not set in BOGuideTableDataSource")
             return
         }

@@ -14,11 +14,14 @@ import UIKit
 enum ActivePage{
     case left
     case right
+    case swipeScreenNotActive
 }
 
 enum ContentType{
     case guides
+    case guideDetail
     case reykjavik
+    case reykjavikSubCategories
     case iceland
     case favourites
 }
@@ -34,11 +37,14 @@ class BOGuideViewModel: BOViewModel {
     //MARK: ScreenContentType
     let screenContentType = Observable<ContentType>(.guides)
     
-    //MARK: Protocol properties
-    let guideListDataSource = Observable<BOCategoryListDataSourceProtocol?>(nil)
-    let guideDetailDataSource = Observable<BOCategoryDetailListProtocol?>(nil)
-    let categoryWinnerListDataSource = Observable<BOCategoryWinnersDataSource?>(nil)
-    let subcategoriesListDataSource = Observable<BOSpecificCatWinnersDataSource?>(nil)
+    //MARK: Datasources
+    let activeTableDataSource = Observable<UITableViewDataSource?>(nil)
+    let activeTableDelegate = Observable<UITableViewDelegate?>(nil)
+    
+    private let guideListDataSource = Observable<BOCategoryListDataSourceProtocol?>(BOGuideTableDataSource())
+    private let guideDetailDataSource = Observable<BOCategoryDetailListProtocol?>(BOGuideDetailTableDataSource())
+    private let rvkCategoriesDataSource = Observable<RvkCategoriesDataSource?>(RvkCategoriesDataSource())
+    private let subcategoriesListDataSource = Observable<BOSpecificCatWinnersDataSource?>(nil)
     
     let tableDataSourceAnimationDuration:Double = 0.4
     
@@ -64,10 +70,110 @@ class BOGuideViewModel: BOViewModel {
     required init(with contentType: ContentType){
         
         super.init()
-        self.guideListDataSource.value = BOGuideTableDataSource()
-        self.categoryWinnerListDataSource.value = BOCategoryWinnersDataSource()
         self.screenContentType.value = contentType
         createBonding()
+    }
+}
+
+//Datasource help
+extension BOGuideViewModel{
+    
+    func setDidPressListDelegateForGuideList(delegater: didPressListDelegate){
+        
+        self.guideListDataSource.value?.didPressListTableDelegate = delegater
+    }
+    
+    func getGuideListDataSourceNumberOfRows() -> Int{
+        guard let myGuideListDataSource = self.guideListDataSource.value else { return 0 }
+        return myGuideListDataSource.numberOfRows()
+    }
+    
+    func getGuideDetailListDataSourceNumberOfRows() -> Int{
+        guard let myGuideListDataSource = self.guideDetailDataSource.value else { return 0 }
+        return myGuideListDataSource.numberOfRows()
+    }
+}
+
+extension BOGuideViewModel{
+    
+    func setTableDelegateFor(contentType: ContentType){
+        
+        switch contentType{
+            
+        case .guides:
+            guard let guideDelegate = self.guideListDataSource.value else {
+                print("guideListDataSource not set while settings Delegate")
+                return
+            }
+            self.activeTableDelegate.value = guideDelegate
+            
+        case .guideDetail:
+            guard let guideDetailDelegate = self.guideDetailDataSource.value else {
+                print("guideDetailDataSource not set while settings Delegate")
+                return
+            }
+            self.activeTableDelegate.value = guideDetailDelegate
+            
+        case .reykjavik:
+            guard let rvkDelegate = self.rvkCategoriesDataSource.value else {
+                print("RvkListDataSource not set while settings Delegate")
+                return
+            }
+            self.activeTableDelegate.value = rvkDelegate
+            
+        case .reykjavikSubCategories:
+            guard let subCategory = self.subcategoriesListDataSource.value else {
+                print("subCategoryListDataSource not set while settings Delegate")
+                return
+            }
+            self.activeTableDelegate.value = subCategory
+            
+            
+        case .iceland:
+            print("")
+        case .favourites:
+            print("")
+        }
+    }
+    
+    func setTableDataSourceFor(contentType: ContentType){
+        
+        switch contentType{
+            
+        case .guides:
+            guard let guideDataSource = self.guideListDataSource.value else {
+                print("guideListDataSource not set while settings Delegate")
+                return
+            }
+            self.activeTableDataSource.value = guideDataSource
+            
+        case .guideDetail:
+            guard let guideDetailDataSource = self.guideDetailDataSource.value else {
+                print("guideListDataSource not set while settings Delegate")
+                return
+            }
+            self.activeTableDataSource.value = guideDetailDataSource
+            
+        case .reykjavik:
+            guard let rvkDataSource = self.rvkCategoriesDataSource.value else {
+                print("guideListDataSource not set while settings Delegate")
+                return
+            }
+            self.activeTableDataSource.value = rvkDataSource
+            
+        case .reykjavikSubCategories:
+            guard let subCategory = self.subcategoriesListDataSource.value else {
+                print("guideListDataSource not set while settings Delegate")
+                return
+            }
+            self.activeTableDataSource.value = subCategory
+            
+            
+        case .iceland:
+            print("")
+        case .favourites:
+            print("")
+        }
     }
 }
 
@@ -76,21 +182,26 @@ extension BOGuideViewModel{
     
     private func createBonding(){
 
+        
         _ = self.guides.observeNext{ [weak self] model in
             
             guard let this = self else { return }
-            guard let dataModel = model else{ return }
-            guard let guideListdataSource = this.guideListDataSource.value else { return }
+            guard let dataModel = model else{ print("guides model nil from server"); return }
+            guard let guideListdataSource = this.guideListDataSource.value else { print("guideListDataSource not initialized"); return }
             
             guideListdataSource.setDataModel(model: dataModel)
-        }.dispose(in: disposeBag)
-        
-        
+            
+            if this.shouldChangeDataSourceToGuideList(){
+                
+                this.activeTableDataSource.value = this.guideListDataSource.value
+            }
+            
+            }.dispose(in: disposeBag)
         
         _ = self.rvkDining.observeNext{ [weak self] model in
             
             guard let this = self else { return }
-            guard let catWinnerDSource = this.categoryWinnerListDataSource.value else { return }
+            guard let catWinnerDSource = this.rvkCategoriesDataSource.value else { return }
             guard let model = model else { return }
             
             catWinnerDSource.setDiningModel(catModel: model)
@@ -100,7 +211,7 @@ extension BOGuideViewModel{
         _ = self.rvkDrink.observeNext{ [weak self] model in
             
             guard let this = self else { return }
-            guard let catWinnerDSource = this.categoryWinnerListDataSource.value else { return }
+            guard let catWinnerDSource = this.rvkCategoriesDataSource.value else { return }
             guard let model = model else { return }
             catWinnerDSource.setDrinkingModel(catModel: model)
             catWinnerDSource.takeMeThereVMDelegate = self
@@ -109,7 +220,7 @@ extension BOGuideViewModel{
         _ = self.rvkShopping.observeNext{ [weak self] model in
         
             guard let this = self else { return }
-            guard let catWinnerDSource = this.categoryWinnerListDataSource.value else { return }
+            guard let catWinnerDSource = this.rvkCategoriesDataSource.value else { return }
             guard let model = model else { return }
             catWinnerDSource.setShoppingModel(catModel: model)
             catWinnerDSource.takeMeThereVMDelegate = self
@@ -118,15 +229,10 @@ extension BOGuideViewModel{
         _ = self.rvkActivities.observeNext{ [weak self] model in
             
             guard let this = self else { return }
-            guard let catWinnerDSource = this.categoryWinnerListDataSource.value else { return }
+            guard let catWinnerDSource = this.rvkCategoriesDataSource.value else { return }
             guard let model = model else { return }
             catWinnerDSource.setActivitiesModel(catModel: model)
             catWinnerDSource.takeMeThereVMDelegate = self
-        }
-        
-        _ = self.subcategoriesListDataSource.observeNext{ _ in
-            
-            
         }
     }
 }
@@ -146,6 +252,7 @@ extension BOGuideViewModel: vmTableViewDelegate{
     func changeDataSourceToDetailWith(item: BOCatItem){
         
         guideDetailDataSource.value = BOGuideDetailTableDataSource(catItem: item)
+        screenContentType.value = .guideDetail
     }
     
     private func changeDataSourceToFirstDetail(){
@@ -157,19 +264,10 @@ extension BOGuideViewModel: vmTableViewDelegate{
         }
         
         guideDetailDataSource.value = BOGuideDetailTableDataSource(catItem: topCellItem)
-    }
-    
-    private func isDetailDataSourceActive() -> Bool{
-        if guideDetailDataSource.value == nil { return false }
-        return true
+        screenContentType.value = .guideDetail
     }
 }
 
-//MARK: Default
-extension BOGuideViewModel{
-    
-    
-}
 
 extension BOGuideViewModel{
     
@@ -188,7 +286,7 @@ extension BOGuideViewModel{
     }
 }
 
-//MARK: DataSource CategoryWinnersList
+//MARK: Cell button clicked - Take Me There
 extension BOGuideViewModel: TakeMeThereProtocol{
     
     func didPressTakeMeThere(type: Endpoint) {
@@ -230,9 +328,43 @@ extension BOGuideViewModel: TakeMeThereProtocol{
     
     func changeDataSourceToSpecific(categoryDataSource: BOSpecificCatWinnersDataSource){
         
-        self.subcategoriesListDataSource.value = categoryDataSource
+        subcategoriesListDataSource.value = categoryDataSource
+        screenContentType.value = .reykjavikSubCategories
     }
 }
+
+//Active Page incase swipe is enabled
+extension BOGuideViewModel{
+    
+    func setActivePage(page: ActivePage){
+        self.activePage.value = page
+    }
+    
+    func shouldChangeDataSourceToGuideList() -> Bool{
+        
+        if activeTableDataSource.value == nil { return true }
+        if activeTableDataSource.value is BOGuideTableDataSource { return true}
+        return false
+    }
+    
+    func shouldSwipeBeEnabled() -> Bool{
+        
+        if (activeTableDataSource.value is BOGuideTableDataSource) || (activeTableDataSource.value is RvkCategoriesDataSource){
+            return true
+        }
+        
+        return false
+    }
+    
+    func shouldRefreshTableWithNewCategoryWinner() -> Bool{
+        return activePage.value == .right
+    }
+    
+    func shouldRespondToTableIndexPress() -> Bool{
+        return activePage.value == .left
+    }
+}
+
 
 //TODO: Candiate for Refactor
 //MARK: Networking
@@ -356,15 +488,9 @@ extension BOGuideViewModel{
 
 extension BOGuideViewModel{
     
-    func setActivePage(page: ActivePage){
-        self.activePage.value = page
-    }
-    
-    func shouldRefreshTableWithNewCategoryWinner() -> Bool{
-        return activePage.value == .right
-    }
-    
-    func shouldRespondToTableIndexPress() -> Bool{
-        return activePage.value == .left
+    func getHeaderDetailTxtFromSubCategory() -> String{
+        
+        guard let category = self.subcategoriesListDataSource.value else { return "" }
+        return category.catTitle
     }
 }
