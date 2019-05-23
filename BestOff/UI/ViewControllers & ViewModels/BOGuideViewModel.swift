@@ -16,6 +16,13 @@ enum ActivePage{
     case right
 }
 
+enum ContentType{
+    case guides
+    case reykjavik
+    case iceland
+    case favourites
+}
+
 class BOGuideViewModel: BOViewModel {
     
     //MARK: Public
@@ -23,6 +30,9 @@ class BOGuideViewModel: BOViewModel {
     let menuAnimationDuration: Double = 0.5
     let alphaVisible: CGFloat = 1.0
     let alphaInvisible: CGFloat = 0
+    
+    //MARK: ScreenContentType
+    let screenContentType = Observable<ContentType>(.guides)
     
     //MARK: Protocol properties
     let guideListDataSource = Observable<BOCategoryListDataSourceProtocol?>(nil)
@@ -51,11 +61,12 @@ class BOGuideViewModel: BOViewModel {
     private let bigCellRowHeight:CGFloat = 310
     
     //MARK: Init
-    override init(){
+    required init(with contentType: ContentType){
         
         super.init()
         self.guideListDataSource.value = BOGuideTableDataSource()
         self.categoryWinnerListDataSource.value = BOCategoryWinnersDataSource()
+        self.screenContentType.value = contentType
         createBonding()
     }
 }
