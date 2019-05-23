@@ -269,23 +269,6 @@ extension BOGuideViewModel: vmTableViewDelegate{
 }
 
 
-extension BOGuideViewModel{
-    
-    func didPressBackInAppHeader(){
-        
-        (self.activePage.value == .left) ? changeDataSourceToDefault() : reloadWinners()
-    }
-    
-    func changeDataSourceToDefault(){
-        
-        guideDetailDataSource.value = nil
-    }
-    
-    func reloadWinners(){
-        self.activePage.value = .right
-    }
-}
-
 //MARK: Cell button clicked - Take Me There
 extension BOGuideViewModel: TakeMeThereProtocol{
     
@@ -336,10 +319,6 @@ extension BOGuideViewModel: TakeMeThereProtocol{
 //Active Page incase swipe is enabled
 extension BOGuideViewModel{
     
-    func setActivePage(page: ActivePage){
-        self.activePage.value = page
-    }
-    
     func shouldChangeDataSourceToGuideList() -> Bool{
         
         if activeTableDataSource.value == nil { return true }
@@ -356,12 +335,8 @@ extension BOGuideViewModel{
         return false
     }
     
-    func shouldRefreshTableWithNewCategoryWinner() -> Bool{
-        return activePage.value == .right
-    }
-    
     func shouldRespondToTableIndexPress() -> Bool{
-        return activePage.value == .left
+        return (activeTableDataSource.value is BOGuideTableDataSource)
     }
 }
 
