@@ -145,6 +145,13 @@ extension BOGuideViewController{
         registerGuideListCells()
         registerGuideDetail()
         registerCategoryWinnerCells()
+        registerFavouriteCell()
+    }
+    
+    private func registerFavouriteCell(){
+        
+        let favCell = UINib(nibName: BOFavouriteCell.nibName(), bundle: nil)
+        tableView.register(favCell, forCellReuseIdentifier: BOFavouriteCell.reuseIdentifier())
     }
     
     private func registerCategoryWinnerCells(){
@@ -231,27 +238,21 @@ extension BOGuideViewController{
             switch contentTypeValue{
                 
             case .guides:
-                print("setupForGuides")
                 this.setupForGuides()
                 
             case .guideDetail:
-                print("setupForGuideDetail")
                 this.setupForGuideDetail()
                 
             case .reykjavik:
-                print("setupForRvk")
                 this.setupForRvk()
                 
             case .iceland:
-                print("setupForIceland")
                 this.setupForIceland()
                 
             case .reykjavikSubCategories:
-                print("setup for subcat")
                 this.setupForSubcategories()
                 
             case .favourites:
-                print("setup for favs")
                 this.setupForFavourites()
             }
         }
@@ -386,12 +387,18 @@ extension BOGuideViewController{
         viewModel.screenContentType.value = .favourites
     }
     
-    private func setupForFavs(){
+    private func setupForFavourites(){
         
         disableTableDelegate()
         viewModel.setTableDelegateFor(contentType: .favourites)
         viewModel.setTableDataSourceFor(contentType: .favourites)
         disableSwipe()
+    }
+    
+    private func setHeaderToFavs(){
+        
+        tableViewHeader.viewModel.isDetailActive.value = true
+        tableViewHeader.showDetail(withDetailText: "FAVOURITES")
     }
 }
 
@@ -409,7 +416,7 @@ extension BOGuideViewController{
     }
     
     private func setHeaderToSubcategory(){
-        self.tableViewHeader.viewModel.isDetailActive.value = true
+        tableViewHeader.viewModel.isDetailActive.value = true
         tableViewHeader.showDetail(withDetailText: viewModel.getHeaderDetailTxtFromSubCategory())
     }
     
@@ -504,6 +511,12 @@ extension BOGuideViewController{
     }
 }
 
+extension BOGuideViewModel: DeleteFavouriteItem{
+   
+    func deleteClicked() {
+        
+    }
+}
 
 
 extension BOGuideViewController{
@@ -520,10 +533,6 @@ extension BOGuideViewController{
     
     //TODO: Implement
     func setupForIceland(){
-        
-    }
-    
-    func setupForFavourites(){
         
     }
 }

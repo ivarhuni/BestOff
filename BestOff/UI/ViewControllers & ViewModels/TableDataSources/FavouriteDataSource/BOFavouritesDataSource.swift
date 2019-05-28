@@ -15,6 +15,7 @@ import ReactiveKit
 class BOFavouritesDataSource: NSObject{
     
     private let rowHeight:CGFloat = 60
+    let sectionCount = 4
     
     let arrFavDining = Observable<[BOCategoryDetailItem]>([])
     let arrFavDrinking = Observable<[BOCategoryDetailItem]>([])
@@ -26,17 +27,15 @@ class BOFavouritesDataSource: NSObject{
     let shoppingSectionIndex = 2
     let activitySectionIndex = 3
     
+    weak var deleteDelegate: DeleteFavouriteItem?
+    
     
     let isDeleteActive = Observable<Bool>(false)
     
     
-    init(with diningItems: [BOCategoryDetailItem], drinkingItems: [BOCategoryDetailItem], activityItems: [BOCategoryDetailItem], shoppingItems: [BOCategoryDetailItem]){
+    override init(){
         
-        arrFavDining.value = diningItems
-        arrFavDrinking.value = drinkingItems
-        arrFavShopping.value = shoppingItems
-        arrFavActivities.value = activityItems
-        
+        super.init()
         //MOCK
         let burgerURL = "https://www.iheartnaptime.net/wp-content/uploads/2018/05/hamburger-recipe-1200x960.jpg"
         let firstDetailItem = BOCategoryDetailItem.init(itemName: "First", itemAddress: "First Address", itemDescription: "SomeReallyLong Desc", imageURL: burgerURL)
@@ -89,7 +88,8 @@ extension BOFavouritesDataSource: UITableViewDataSource{
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        
+        return sectionCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -106,5 +106,47 @@ extension BOFavouritesDataSource: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return rowHeight
+    }
+}
+
+protocol DeleteFavouriteItem: class {
+    
+    func deleteClicked()
+}
+
+extension BOFavouritesDataSource{
+    
+    func deleteItemAt(indexPath: IndexPath){
+        
+        if indexPath.section == diningSectionIndex{
+            arrFavDining.value.remove(at: indexPath.row)
+        }
+        
+        if indexPath.section == drinkingSectionIndex{
+            arrFavDrinking.value.remove(at: indexPath.row)
+        }
+        
+        if indexPath.section == activitySectionIndex{
+            arrFavActivities.value.remove(at: indexPath.row)
+        }
+        
+        if indexPath.section == shoppingSectionIndex{
+            arrFavShopping.value.remove(at: indexPath.row)
+        }
+        
+        deleteClicked()
+    }
+}
+
+extension BOFavouritesDataSource: DeleteFavouriteItem{
+    
+    func deleteClicked() {
+        
+        guard let delegate = deleteDelegate else {
+            
+            print("delete delegate not set for favourites data source")
+            return
+        }
+        delegate.deleteClicked()
     }
 }

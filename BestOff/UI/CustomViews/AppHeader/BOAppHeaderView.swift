@@ -19,6 +19,9 @@ protocol BOAppHeaderViewDelegate: AnyObject {
 
 class BOAppHeaderView: UIView {
     
+    private let defaultImgWidth:CGFloat = 8
+    private let hiddenImgWidth:CGFloat = 0
+    
     //MARK: Properties
     @IBOutlet weak var imgLeftIcon: UIImageView!
     @IBOutlet var view: UIView!
@@ -33,6 +36,7 @@ class BOAppHeaderView: UIView {
     @IBOutlet weak var imgViewBackBtn: UIImageView!
     
     @IBOutlet weak var viewSep: UIView!
+    @IBOutlet weak var cImgViewWidth: NSLayoutConstraint!
     
     //MARK: Properties
     let viewModel = BOHeaderViewModel()
@@ -264,27 +268,29 @@ extension BOAppHeaderView{
                             this.layoutIfNeeded()
             }, completion: nil)
     }
-}
-
-extension BOAppHeaderView{
     
-    func showSeperator(){
-        viewSep.isHidden = false
+    private func layoutViews(){
+        
+        self.layoutIfNeeded()
+        self.view.layoutIfNeeded()
     }
     
-    func showDetail(withDetailText: String){
+    private func setViewNeedsLayout(){
         
-        showSeperator()
-        setDetailText(strText: withDetailText)
-        setCornerRadiusForDetail()
-        self.layoutIfNeeded()
+        self.setNeedsLayout()
+        self.view.setNeedsLayout()
+    }
+    
+    private func animateDetail(){
+        
+        layoutViews()
         UIView.transition(with: self,
                           duration: self.viewModel.btnAnimationDuration,
                           options: .transitionCrossDissolve,
                           animations: { [weak self] in
                             
                             guard let this = self else { return }
-                           
+                            
                             this.imgLeftIcon.isHidden = true
                             this.lblTitle.isHidden = true
                             
@@ -294,31 +300,22 @@ extension BOAppHeaderView{
                             
                             this.view.backgroundColor = .white
                             this.backgroundColor = .white
+                            this.cImgViewWidth.constant = this.defaultImgWidth
                             
                             this.roundCorners(corners: [.topLeft, .topRight], radius: 10)
                             
                             this.view.layoutIfNeeded()
                             this.layoutIfNeeded()
             }, completion: nil)
-    }
-    
-    private func setDetailText(strText: String){
-        if strText.count == 0 { return }
-        lblBackTitle.text = strText
-    }
-    
-    private func setCornerRadiusForDetail(){
-        self.view.clipsToBounds = true
-        clipsToBounds = true
         
-        self.view.layer.cornerRadius = 10
-        self.view.layer.cornerRadius = 10
+        setViewNeedsLayout()
+        layoutViews()
     }
     
-    private func showDefault(){
+    private func animateDefault(){
         
-        viewSep.isHidden = true
-        layoutIfNeeded()
+        
+        setViewNeedsLayout()
         UIView.transition(with: self,
                           duration: self.viewModel.btnAnimationDuration,
                           options: .transitionCrossDissolve,
@@ -334,10 +331,56 @@ extension BOAppHeaderView{
                             this.view.backgroundColor = .colorRed
                             this.backgroundColor = .colorRed
                             
+                            this.cImgViewWidth.constant = this.defaultImgWidth
+                            
                             this.view.layoutIfNeeded()
                             this.layoutIfNeeded()
             }, completion: nil)
         
+    }
+}
+
+extension BOAppHeaderView{
+    
+    func showSeperator(){
+        viewSep.isHidden = false
+    }
+    
+    func showDetail(withDetailText: String){
+        
+        showSeperator()
+        setDetailText(strText: withDetailText)
+        setCornerRadiusForDetail()
+        animateDetail()
+    }
+    
+    private func setDetailText(strText: String){
+        if strText.count == 0 { return }
+        lblBackTitle.text = strText
+    }
+    
+    private func setCornerRadiusForDetail(){
+        self.view.clipsToBounds = true
+        clipsToBounds = true
+        
+        self.view.layer.cornerRadius = Constants.appHeaderCornerRadius
+        self.view.layer.cornerRadius = Constants.appHeaderCornerRadius
+    }
+    
+    private func setupImgViewDefault(){
+        
+        cImgViewWidth.constant = defaultImgWidth
+    }
+    
+    private func setupImgViewHidden(){
+        cImgViewWidth.constant = hiddenImgWidth
+    }
+    
+    private func showDefault(){
+        
+        viewSep.isHidden = true
+        
+        animateDefault()
         animateToHamburger()
         animateToNormalText()
     }
@@ -358,7 +401,7 @@ extension BOAppHeaderView{
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.view.layoutIfNeeded()
+        //self.view.layoutIfNeeded()
         addShadow()
     }
 }

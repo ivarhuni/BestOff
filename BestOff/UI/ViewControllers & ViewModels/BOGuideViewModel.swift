@@ -131,8 +131,12 @@ extension BOGuideViewModel{
             
         case .iceland:
             print("")
+            
         case .favourites:
-            print("")
+            
+            let favDataSource = BOFavouritesDataSource()
+            activeTableDataSource.value = favDataSource
+            activeTableDelegate.value = favDataSource
         }
     }
     

@@ -22,3 +22,16 @@ class BOFavouriteCell: UITableViewCell {
     }
     
 }
+
+
+extension BOFavouriteCell{
+    
+    static func reuseIdentifier() -> String{
+        
+        return "BOFavouriteCell"
+    }
+    
+    static func nibName() -> String{
+        return "BOFavouriteCell"
+    }
+}
