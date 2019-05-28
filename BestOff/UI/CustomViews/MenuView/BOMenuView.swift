@@ -153,6 +153,25 @@ extension BOMenuView{
     }
 }
 
+//MARK: tap handlers
+extension BOMenuView{
+    
+    @objc private func handleTapRvk(_ sender: UITapGestureRecognizer) {
+        
+        animateSelectionForScreenType(screenType: .reykjavik)
+    }
+    
+    @objc private func handleTapIce(_ sender: UITapGestureRecognizer) {
+        
+        animateSelectionForScreenType(screenType: .iceland)
+    }
+    
+    @objc private func handleTapFav(_ sender: UITapGestureRecognizer) {
+        
+        animateSelectionForScreenType(screenType: .favourites)
+    }
+}
+
 //MARK: Action methods
 extension BOMenuView{
     
@@ -161,40 +180,13 @@ extension BOMenuView{
         switch screenType {
             
         case .reykjavik:
-            lblRvk.font = UIFont.favouriteOn
-            lblFavourites.font = UIFont.favouriteOff
-            lblIceland.font = UIFont.favouriteOff
-            leadingSelectionRvk.constant = viewModel.leadingConstantOn
-            leadingSelFav.constant = viewModel.leadingConstantOff
-            leadingSelectionIce.constant = viewModel.leadingConstantOff
-            
-            lblRvk.layer.shadowOpacity = Constants.lowShadowOpacity
-            lblIceland.layer.shadowOpacity = 0
-            lblFavourites.layer.shadowOpacity = 0
+            styleLabelsForReykjavik()
             
         case .iceland:
-            lblIceland.font = UIFont.favouriteOn
-            lblRvk.font = UIFont.favouriteOff
-            lblFavourites.font = UIFont.favouriteOff
-            leadingSelectionRvk.constant = viewModel.leadingConstantOff
-            leadingSelFav.constant = viewModel.leadingConstantOff
-            leadingSelectionIce.constant = viewModel.leadingConstantOn
-            
-            lblRvk.layer.shadowOpacity = 0
-            lblIceland.layer.shadowOpacity = Constants.lowShadowOpacity
-            lblFavourites.layer.shadowOpacity = 0
+            styleLabelsForIceland()
             
         case .favourites:
-            lblFavourites.font = UIFont.favouriteOn
-            lblIceland.font = UIFont.favouriteOff
-            lblRvk.font = UIFont.favouriteOff
-            leadingSelectionRvk.constant = viewModel.leadingConstantOff
-            leadingSelFav.constant = viewModel.leadingConstantOn
-            leadingSelectionIce.constant = viewModel.leadingConstantOff
-            
-            lblRvk.layer.shadowOpacity = 0
-            lblIceland.layer.shadowOpacity = 0
-            lblFavourites.layer.shadowOpacity = Constants.lowShadowOpacity
+            self.styleLabelsFav()
         }
     }
     
@@ -204,87 +196,133 @@ extension BOMenuView{
         switch screenType {
         case .reykjavik:
             
-            UIView.animate(withDuration: viewModel.animationDuration, animations: {
+            UIView.animate(withDuration: viewModel.animationDuration, animations: { [weak self] in
                 
-                self.leadingSelectionRvk.constant = self.viewModel.leadingConstantOn
-                self.leadingSelFav.constant = self.viewModel.leadingConstantOff
-                self.leadingSelectionIce.constant = self.viewModel.leadingConstantOff
+                guard let this = self else { return }
                 
-                self.leadingImgRvk.constant = self.viewModel.leadingImgConstantOn
-                self.leadingImgIce.constant = self.viewModel.leadingImgConstantOff
-                self.leadingImgFav.constant = self.viewModel.leadingImgConstantOff
+                this.configureConstantsReykjavik()
+                this.styleViewFor(screenType: screenType)
+                this.view.layoutIfNeeded()
                 
-                self.leadingLblRvk.constant = self.viewModel.leadingLblConstantOn
-                self.leadingLblIce.constant = self.viewModel.leadingLblConstantOff
-                self.leadingLblFav.constant = self.viewModel.leadingLblConstantOff
-                
-                self.styleViewFor(screenType: screenType)
-                
-                self.view.layoutIfNeeded()
             }) { _ in }
             
         case .iceland:
             
-            UIView.animate(withDuration: viewModel.animationDuration, animations: {
+            UIView.animate(withDuration: viewModel.animationDuration, animations: { [weak self] in
                 
-                self.leadingSelectionRvk.constant = self.viewModel.leadingConstantOff
-                self.leadingSelFav.constant = self.viewModel.leadingConstantOff
-                self.leadingSelectionIce.constant = self.viewModel.leadingConstantOn
+                guard let this = self else { return }
                 
-                self.leadingImgRvk.constant = self.viewModel.leadingImgConstantOff
-                self.leadingImgIce.constant = self.viewModel.leadingImgConstantOn
-                self.leadingImgFav.constant = self.viewModel.leadingImgConstantOff
+                this.configureConstantsIceland()
+                this.styleViewFor(screenType: screenType)
+                this.view.layoutIfNeeded()
                 
-                self.leadingLblRvk.constant = self.viewModel.leadingLblConstantOff
-                self.leadingLblIce.constant = self.viewModel.leadingLblConstantOn
-                self.leadingLblFav.constant = self.viewModel.leadingLblConstantOff
-                
-                self.styleViewFor(screenType: screenType)
-                
-                self.view.layoutIfNeeded()
             }) { _ in }
             
         case .favourites:
             
-            UIView.animate(withDuration: viewModel.animationDuration, animations: {
+            UIView.animate(withDuration: viewModel.animationDuration, animations: { [weak self] in
                 
-                self.leadingSelectionRvk.constant = self.viewModel.leadingConstantOff
-                self.leadingSelFav.constant = self.viewModel.leadingConstantOn
-                self.leadingSelectionIce.constant = self.viewModel.leadingConstantOff
+                guard let this = self else { return }
                 
-                self.leadingImgRvk.constant = self.viewModel.leadingImgConstantOff
-                self.leadingImgIce.constant = self.viewModel.leadingImgConstantOff
-                self.leadingImgFav.constant = self.viewModel.leadingImgConstantOn
+                this.configureConstantsFav()
+                this.styleViewFor(screenType: screenType)
+                this.view.layoutIfNeeded()
                 
-                self.leadingLblRvk.constant = self.viewModel.leadingLblConstantOff
-                self.leadingLblIce.constant = self.viewModel.leadingLblConstantOff
-                self.leadingLblFav.constant = self.viewModel.leadingLblConstantOn
-                
-                self.styleViewFor(screenType: screenType)
-                
-                self.view.layoutIfNeeded()
             }) { _ in }
         }
     }
+
+    private func styleLabelsFav(){
+        
+        lblFavourites.font = UIFont.favouriteOn
+        lblIceland.font = UIFont.favouriteOff
+        lblRvk.font = UIFont.favouriteOff
+        leadingSelectionRvk.constant = viewModel.leadingConstantOff
+        leadingSelFav.constant = viewModel.leadingConstantOn
+        leadingSelectionIce.constant = viewModel.leadingConstantOff
+        
+        lblRvk.layer.shadowOpacity = 0
+        lblIceland.layer.shadowOpacity = 0
+        lblFavourites.layer.shadowOpacity = Constants.lowShadowOpacity
+    }
+    
+    private func styleLabelsForIceland(){
+        
+        lblIceland.font = UIFont.favouriteOn
+        lblRvk.font = UIFont.favouriteOff
+        lblFavourites.font = UIFont.favouriteOff
+        leadingSelectionRvk.constant = viewModel.leadingConstantOff
+        leadingSelFav.constant = viewModel.leadingConstantOff
+        leadingSelectionIce.constant = viewModel.leadingConstantOn
+        
+        lblRvk.layer.shadowOpacity = 0
+        lblIceland.layer.shadowOpacity = Constants.lowShadowOpacity
+        lblFavourites.layer.shadowOpacity = 0
+    }
+    
+    private func styleLabelsForReykjavik(){
+        
+        lblRvk.font = UIFont.favouriteOn
+        lblFavourites.font = UIFont.favouriteOff
+        lblIceland.font = UIFont.favouriteOff
+        leadingSelectionRvk.constant = viewModel.leadingConstantOn
+        leadingSelFav.constant = viewModel.leadingConstantOff
+        leadingSelectionIce.constant = viewModel.leadingConstantOff
+        
+        lblRvk.layer.shadowOpacity = Constants.lowShadowOpacity
+        lblIceland.layer.shadowOpacity = 0
+        lblFavourites.layer.shadowOpacity = 0
+    }
+    
+    
+    
+    private func configureConstantsFav(){
+        
+        self.leadingSelectionRvk.constant = self.viewModel.leadingConstantOff
+        self.leadingSelFav.constant = self.viewModel.leadingConstantOn
+        self.leadingSelectionIce.constant = self.viewModel.leadingConstantOff
+        
+        self.leadingImgRvk.constant = self.viewModel.leadingImgConstantOff
+        self.leadingImgIce.constant = self.viewModel.leadingImgConstantOff
+        self.leadingImgFav.constant = self.viewModel.leadingImgConstantOn
+        
+        self.leadingLblRvk.constant = self.viewModel.leadingLblConstantOff
+        self.leadingLblIce.constant = self.viewModel.leadingLblConstantOff
+        self.leadingLblFav.constant = self.viewModel.leadingLblConstantOn
+    }
+    
+    private func configureConstantsIceland(){
+        
+        self.leadingSelectionRvk.constant = self.viewModel.leadingConstantOff
+        self.leadingSelFav.constant = self.viewModel.leadingConstantOff
+        self.leadingSelectionIce.constant = self.viewModel.leadingConstantOn
+        
+        self.leadingImgRvk.constant = self.viewModel.leadingImgConstantOff
+        self.leadingImgIce.constant = self.viewModel.leadingImgConstantOn
+        self.leadingImgFav.constant = self.viewModel.leadingImgConstantOff
+        
+        self.leadingLblRvk.constant = self.viewModel.leadingLblConstantOff
+        self.leadingLblIce.constant = self.viewModel.leadingLblConstantOn
+        self.leadingLblFav.constant = self.viewModel.leadingLblConstantOff
+    }
+    
+    private func configureConstantsReykjavik(){
+        
+        self.leadingSelectionRvk.constant = self.viewModel.leadingConstantOn
+        self.leadingSelFav.constant = self.viewModel.leadingConstantOff
+        self.leadingSelectionIce.constant = self.viewModel.leadingConstantOff
+        
+        self.leadingImgRvk.constant = self.viewModel.leadingImgConstantOn
+        self.leadingImgIce.constant = self.viewModel.leadingImgConstantOff
+        self.leadingImgFav.constant = self.viewModel.leadingImgConstantOff
+        
+        self.leadingLblRvk.constant = self.viewModel.leadingLblConstantOn
+        self.leadingLblIce.constant = self.viewModel.leadingLblConstantOff
+        self.leadingLblFav.constant = self.viewModel.leadingLblConstantOff
+    }
 }
 
-extension BOMenuView{
-    
-    @objc func handleTapRvk(_ sender: UITapGestureRecognizer) {
-        
-        animateSelectionForScreenType(screenType: .reykjavik)
-    }
-    
-    @objc func handleTapIce(_ sender: UITapGestureRecognizer) {
-        
-        animateSelectionForScreenType(screenType: .iceland)
-    }
-    
-    @objc func handleTapFav(_ sender: UITapGestureRecognizer) {
-        
-        animateSelectionForScreenType(screenType: .favourites)
-    }
-}
+
 
 extension BOMenuView{
     
