@@ -56,6 +56,25 @@ extension BOGuideViewController{
     }
 }
 
+extension BOGuideViewController: MenuViewClick{
+    
+    func rvkClicked() {
+        
+        
+    }
+    
+    func iceClicked() {
+        
+        
+    }
+    
+    func favClicked() {
+        
+        
+    }
+    
+}
+
 //MARK: Header Methods
 extension BOGuideViewController: BOAppHeaderViewDelegate{
     
@@ -357,6 +376,22 @@ extension BOGuideViewController: TakeMeThereProtocol{
         default:
             print("default takemethereVCprotocol")
         }
+    }
+}
+
+//MARK: Favourites
+extension BOGuideViewController{
+    
+    private func changeToFavourites(){
+        viewModel.screenContentType.value = .favourites
+    }
+    
+    private func setupForFavs(){
+        
+        disableTableDelegate()
+        viewModel.setTableDelegateFor(contentType: .favourites)
+        viewModel.setTableDataSourceFor(contentType: .favourites)
+        disableSwipe()
     }
 }
 

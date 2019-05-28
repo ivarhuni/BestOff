@@ -9,6 +9,13 @@
 import Foundation
 import UIKit
 
+protocol MenuViewClick: class{
+    
+    func rvkClicked()
+    func iceClicked()
+    func favClicked()
+}
+
 class BOMenuView: UIView{
     
     @IBOutlet var view: UIView!
@@ -38,7 +45,7 @@ class BOMenuView: UIView{
     @IBOutlet weak var leadingLblIce: NSLayoutConstraint!
     @IBOutlet weak var leadingLblFav: NSLayoutConstraint!
     
-    
+    weak var menuViewClickDelegate: MenuViewClick?
     
     
     private var viewModel: BOMenuViewModel
@@ -73,7 +80,6 @@ extension BOMenuView{
         addSubview(view)
         view.frame = self.bounds
         view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        
     }
     
     func setupView(){
@@ -109,7 +115,6 @@ extension BOMenuView{
         lblIceland.textColor = .white
         lblFavourites.textColor = .white
     }
-    
 }
 
 //MARK: Gesture Recognizers
@@ -129,6 +134,58 @@ extension BOMenuView{
         viewFavourites.addGestureRecognizer(favTap)
         viewFavourites.isUserInteractionEnabled = true
         
+    }
+}
+
+//MARK: tap handlers
+extension BOMenuView{
+    
+    @objc private func handleTapRvk(_ sender: UITapGestureRecognizer) {
+        
+        animateSelectionForScreenType(screenType: .reykjavik)
+    }
+    
+    @objc private func handleTapIce(_ sender: UITapGestureRecognizer) {
+        
+        animateSelectionForScreenType(screenType: .iceland)
+    }
+    
+    @objc private func handleTapFav(_ sender: UITapGestureRecognizer) {
+        
+        animateSelectionForScreenType(screenType: .favourites)
+    }
+}
+
+//MARK: MenuViewDelegate
+extension BOMenuView: MenuViewClick{
+    
+    func rvkClicked() {
+        
+        guard let delegate = menuViewClickDelegate else {
+            
+            print("delegate not set for menuviewclick delegate")
+            return
+        }
+        delegate.rvkClicked()
+    }
+    
+    func iceClicked() {
+        
+        guard let delegate = menuViewClickDelegate else {
+            
+            print("delegate not set for menuviewclick delegate")
+            return
+        }
+        delegate.iceClicked()
+    }
+    
+    func favClicked() {
+        guard let delegate = menuViewClickDelegate else {
+            
+            print("delegate not set for menuviewclick delegate")
+            return
+        }
+        delegate.favClicked()
     }
 }
 
@@ -152,26 +209,6 @@ extension BOMenuView{
         }
     }
 }
-
-//MARK: tap handlers
-extension BOMenuView{
-    
-    @objc private func handleTapRvk(_ sender: UITapGestureRecognizer) {
-        
-        animateSelectionForScreenType(screenType: .reykjavik)
-    }
-    
-    @objc private func handleTapIce(_ sender: UITapGestureRecognizer) {
-        
-        animateSelectionForScreenType(screenType: .iceland)
-    }
-    
-    @objc private func handleTapFav(_ sender: UITapGestureRecognizer) {
-        
-        animateSelectionForScreenType(screenType: .favourites)
-    }
-}
-
 //MARK: Action methods
 extension BOMenuView{
     
@@ -193,6 +230,7 @@ extension BOMenuView{
     private func animateSelectionForScreenType(screenType: ScreenType){
         
         self.view.layoutIfNeeded()
+        
         switch screenType {
         case .reykjavik:
             
@@ -204,7 +242,10 @@ extension BOMenuView{
                 this.styleViewFor(screenType: screenType)
                 this.view.layoutIfNeeded()
                 
-            }) { _ in }
+            }) {[weak self] finished in
+                guard let this = self else { return }
+                this.rvkClicked()
+            }
             
         case .iceland:
             
@@ -216,7 +257,11 @@ extension BOMenuView{
                 this.styleViewFor(screenType: screenType)
                 this.view.layoutIfNeeded()
                 
-            }) { _ in }
+            }) { [weak self] finished in
+                
+                guard let this = self else { return }
+                this.iceClicked()
+            }
             
         case .favourites:
             
@@ -228,7 +273,11 @@ extension BOMenuView{
                 this.styleViewFor(screenType: screenType)
                 this.view.layoutIfNeeded()
                 
-            }) { _ in }
+            }) { [weak self] finished in
+                
+                guard let this = self else { return }
+                this.favClicked()
+            }
         }
     }
 

@@ -171,6 +171,7 @@ extension BOGuideViewModel{
             
         case .iceland:
             print("")
+            
         case .favourites:
             print("")
         }
