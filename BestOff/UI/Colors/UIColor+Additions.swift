@@ -77,3 +77,10 @@ extension UIColor{
         }
     }
 }
+
+struct Constants{
+    
+    static let veryLowShadowOpacity: Float = 0.01
+    static let lowShadowOpacity:Float = 0.05
+    static let highShadowOpacity:Float = 0.1
+}

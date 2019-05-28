@@ -39,8 +39,11 @@ class BOMenuView: UIView{
     @IBOutlet weak var leadingLblFav: NSLayoutConstraint!
     
     
+    
+    
     private var viewModel: BOMenuViewModel
     
+    //MARK: Init, viewcycle
     override init(frame: CGRect) {
         
         viewModel = BOMenuViewModel(withSelectedScreen: .reykjavik)
@@ -61,6 +64,7 @@ class BOMenuView: UIView{
     }
 }
 
+//MARK: XIB Setup
 extension BOMenuView{
     
     private func initView(){
@@ -69,7 +73,7 @@ extension BOMenuView{
         addSubview(view)
         view.frame = self.bounds
         view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-
+        
     }
     
     func setupView(){
@@ -78,22 +82,6 @@ extension BOMenuView{
         setBindings()
         setupChildViews()
         setupGestureRec()
-    }
-    
-    func setupGestureRec(){
-        
-        let rvkTap = UITapGestureRecognizer(target: self, action: #selector(self.handleTapRvk(_:)))
-        viewReykjavik.addGestureRecognizer(rvkTap)
-        viewReykjavik.isUserInteractionEnabled = true
-        
-        let iceTap = UITapGestureRecognizer(target: self, action: #selector(self.handleTapIce(_:)))
-        viewIceland.addGestureRecognizer(iceTap)
-        viewIceland.isUserInteractionEnabled = true
-        
-        let favTap = UITapGestureRecognizer(target: self, action: #selector(self.handleTapFav(_:)))
-        viewFavourites.addGestureRecognizer(favTap)
-        viewFavourites.isUserInteractionEnabled = true
-        
     }
     
     func setupChildViews(){
@@ -121,6 +109,27 @@ extension BOMenuView{
         lblIceland.textColor = .white
         lblFavourites.textColor = .white
     }
+    
+}
+
+//MARK: Gesture Recognizers
+extension BOMenuView{
+    
+    func setupGestureRec(){
+        
+        let rvkTap = UITapGestureRecognizer(target: self, action: #selector(self.handleTapRvk(_:)))
+        viewReykjavik.addGestureRecognizer(rvkTap)
+        viewReykjavik.isUserInteractionEnabled = true
+        
+        let iceTap = UITapGestureRecognizer(target: self, action: #selector(self.handleTapIce(_:)))
+        viewIceland.addGestureRecognizer(iceTap)
+        viewIceland.isUserInteractionEnabled = true
+        
+        let favTap = UITapGestureRecognizer(target: self, action: #selector(self.handleTapFav(_:)))
+        viewFavourites.addGestureRecognizer(favTap)
+        viewFavourites.isUserInteractionEnabled = true
+        
+    }
 }
 
 //MARK: Public methods
@@ -131,6 +140,7 @@ extension BOMenuView{
     }
 }
 
+//MARK: UI Bindings
 extension BOMenuView{
     
     private func setBindings(){
@@ -158,7 +168,7 @@ extension BOMenuView{
             leadingSelFav.constant = viewModel.leadingConstantOff
             leadingSelectionIce.constant = viewModel.leadingConstantOff
             
-            lblRvk.layer.shadowOpacity = 0.05
+            lblRvk.layer.shadowOpacity = Constants.lowShadowOpacity
             lblIceland.layer.shadowOpacity = 0
             lblFavourites.layer.shadowOpacity = 0
             
@@ -171,7 +181,7 @@ extension BOMenuView{
             leadingSelectionIce.constant = viewModel.leadingConstantOn
             
             lblRvk.layer.shadowOpacity = 0
-            lblIceland.layer.shadowOpacity = 0.05
+            lblIceland.layer.shadowOpacity = Constants.lowShadowOpacity
             lblFavourites.layer.shadowOpacity = 0
             
         case .favourites:
@@ -184,7 +194,7 @@ extension BOMenuView{
             
             lblRvk.layer.shadowOpacity = 0
             lblIceland.layer.shadowOpacity = 0
-            lblFavourites.layer.shadowOpacity = 0.05
+            lblFavourites.layer.shadowOpacity = Constants.lowShadowOpacity
         }
     }
     
@@ -285,8 +295,8 @@ extension BOMenuView{
     
     func addShadows(){
         
-        lblRvk.addDropShadow(color: .black, opacity: 0.05, offset: CGSize(width: 1, height: 1), radius: 2)
-        lblIceland.addDropShadow(color: .black, opacity: 0.05, offset: CGSize(width: 1, height: 1), radius: 2)
-        lblFavourites.addDropShadow(color: .black, opacity: 0.05, offset: CGSize(width: 1, height: 1), radius: 2)
+        lblRvk.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: CGSize(width: 1, height: 1), radius: 2)
+        lblIceland.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: CGSize(width: 1, height: 1), radius: 2)
+        lblFavourites.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: CGSize(width: 1, height: 1), radius: 2)
     }
 }

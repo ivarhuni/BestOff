@@ -56,7 +56,7 @@ extension TopGuideCell{
         super.layoutSubviews()
         viewBgIcon.layer.cornerRadius = viewBgIcon.frame.size.height/2.0
         viewBgIcon.clipsToBounds = true
-        viewBlackBackground.addDropShadow(color: .black, opacity: 0.1, offset: CGSize(width: 2, height: 2), radius: 3)
+        viewBlackBackground.addDropShadow(color: .black, opacity: Constants.highShadowOpacity, offset: CGSize(width: 2, height: 2), radius: 3)
     }
 }
 

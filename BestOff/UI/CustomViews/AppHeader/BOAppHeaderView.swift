@@ -127,10 +127,10 @@ extension BOAppHeaderView{
     
     func addShadow(){
         
-        imgLeftIcon.addDropShadow(color: .black, opacity: 0.05, offset: CGSize(width: 1, height: 1), radius: 2)
-        self.addDropShadow(color: .black, opacity: 0.05, offset: CGSize(width: 1, height: 1), radius: 2)
-        lblTitle.addDropShadow(color: .black, opacity: 0.05, offset: CGSize(width: 1, height: 1), radius: 2)
-        lblBackTitle.addDropShadow(color: .black, opacity: 0.05, offset: CGSize(width: 1, height: 1), radius: 2)
+        imgLeftIcon.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: CGSize(width: 1, height: 1), radius: 2)
+        self.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: CGSize(width: 1, height: 1), radius: 2)
+        lblTitle.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: CGSize(width: 1, height: 1), radius: 2)
+        lblBackTitle.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: CGSize(width: 1, height: 1), radius: 2)
     }
     
     func setupColors(){

@@ -185,9 +185,9 @@ extension CategoryWinnerCell{
     
     private func addShadows(){
         
-        viewBgFingersAndLabel.addDropShadow(color: .black, opacity: 0.1, offset: CGSize(width: 2, height: 2), radius: 2)
+        viewBgFingersAndLabel.addDropShadow(color: .black, opacity: Constants.highShadowOpacity, offset: CGSize(width: 2, height: 2), radius: 2)
         
-        lblTakeMeThere.addDropShadow(color: .black, opacity: 0.01, offset: .zero, radius: 2)
+        lblTakeMeThere.addDropShadow(color: .black, opacity: Constants.veryLowShadowOpacity, offset: .zero, radius: 2)
         lblCatName.addDropShadow(color: .black, opacity: 0.01, offset: .zero, radius: 2)
     }
     

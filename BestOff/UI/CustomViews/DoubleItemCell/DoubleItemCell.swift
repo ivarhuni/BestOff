@@ -88,8 +88,8 @@ extension DoubleItemCell{
     }
     
     func setDropShadow(){
-        viewBgLeft.addDropShadow(color: .black, opacity: 0.05, offset: .zero, radius: 3)
-        viewBgRight.addDropShadow(color: .black, opacity: 0.05, offset: .zero, radius: 3)
+        viewBgLeft.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: .zero, radius: 3)
+        viewBgRight.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: .zero, radius: 3)
     }
     
     func setCornerRadiusForAuthorImgView(){

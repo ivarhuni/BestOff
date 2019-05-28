@@ -120,7 +120,7 @@ extension DoubleItemImgCell{
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        viewLeft.addDropShadow(color: .black, opacity: 0.1, offset: .zero, radius: 2)
-        rightView.addDropShadow(color: .black, opacity: 0.1, offset: .zero, radius: 2)
+        viewLeft.addDropShadow(color: .black, opacity: Constants.highShadowOpacity, offset: .zero, radius: 2)
+        rightView.addDropShadow(color: .black, opacity: Constants.highShadowOpacity, offset: .zero, radius: 2)
     }
 }
