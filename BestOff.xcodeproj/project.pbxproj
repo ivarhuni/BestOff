@@ -49,8 +49,8 @@
 		22B506DA224DAF2200F66FDB /* BOEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B506D9224DAF2200F66FDB /* BOEndpoint.swift */; };
 		22B506DD224DC09A00F66FDB /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B506DC224DC09A00F66FDB /* NetworkError.swift */; };
 		22C82DE5229CCF6D009B3668 /* BOFavouritesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C82DE4229CCF6D009B3668 /* BOFavouritesDataSource.swift */; };
-		22C82DE9229CD358009B3668 /* BOFavouriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C82DE7229CD358009B3668 /* BOFavouriteCell.swift */; };
-		22C82DEA229CD358009B3668 /* BOFavouriteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22C82DE8229CD358009B3668 /* BOFavouriteCell.xib */; };
+		22C82DEE229CE246009B3668 /* BOFavHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C82DEC229CE246009B3668 /* BOFavHeaderCell.swift */; };
+		22C82DEF229CE246009B3668 /* BOFavHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22C82DED229CE246009B3668 /* BOFavHeaderCell.xib */; };
 		22D1D8D4228A54290003D649 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D1D8D3228A54290003D649 /* UIImageView+Extension.swift */; };
 		22D573852282553500748CF1 /* Blanco-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 22D5737D2282553400748CF1 /* Blanco-Italic.otf */; };
 		22D573862282553500748CF1 /* Blanco-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 22D5737E2282553400748CF1 /* Blanco-MediumItalic.otf */; };
@@ -147,8 +147,8 @@
 		22B506D9224DAF2200F66FDB /* BOEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOEndpoint.swift; sourceTree = "<group>"; };
 		22B506DC224DC09A00F66FDB /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		22C82DE4229CCF6D009B3668 /* BOFavouritesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOFavouritesDataSource.swift; sourceTree = "<group>"; };
-		22C82DE7229CD358009B3668 /* BOFavouriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOFavouriteCell.swift; sourceTree = "<group>"; };
-		22C82DE8229CD358009B3668 /* BOFavouriteCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BOFavouriteCell.xib; sourceTree = "<group>"; };
+		22C82DEC229CE246009B3668 /* BOFavHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOFavHeaderCell.swift; sourceTree = "<group>"; };
+		22C82DED229CE246009B3668 /* BOFavHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BOFavHeaderCell.xib; sourceTree = "<group>"; };
 		22D1D8D3228A54290003D649 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		22D5737D2282553400748CF1 /* Blanco-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Blanco-Italic.otf"; sourceTree = "<group>"; };
 		22D5737E2282553400748CF1 /* Blanco-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Blanco-MediumItalic.otf"; sourceTree = "<group>"; };
@@ -323,7 +323,8 @@
 		22326B6B2293EB690056DAC9 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				22C82DE6229CD341009B3668 /* Favourites */,
+				22C82DF0229CE24B009B3668 /* BOFavHeaderCell */,
+				221EC5B0228A11210051EC42 /* DoubleItemCell */,
 				2251583B228C8C06006BC71B /* GuideDetail */,
 				2251583A228C8BFA006BC71B /* GuideList */,
 				22326B632293A4200056DAC9 /* CategoryWinners */,
@@ -374,7 +375,6 @@
 		22AA85882277D4E3003B15F1 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
-				221EC5B0228A11210051EC42 /* DoubleItemCell */,
 				22D5739822825E9E00748CF1 /* MenuView */,
 				222D8B8F227FC41A0039C860 /* AppHeader */,
 			);
@@ -425,13 +425,13 @@
 			path = FavouriteDataSource;
 			sourceTree = "<group>";
 		};
-		22C82DE6229CD341009B3668 /* Favourites */ = {
+		22C82DF0229CE24B009B3668 /* BOFavHeaderCell */ = {
 			isa = PBXGroup;
 			children = (
-				22C82DE7229CD358009B3668 /* BOFavouriteCell.swift */,
-				22C82DE8229CD358009B3668 /* BOFavouriteCell.xib */,
+				22C82DEC229CE246009B3668 /* BOFavHeaderCell.swift */,
+				22C82DED229CE246009B3668 /* BOFavHeaderCell.xib */,
 			);
-			path = Favourites;
+			path = BOFavHeaderCell;
 			sourceTree = "<group>";
 		};
 		22CEF338224E1BC500A6688A /* Categories */ = {
@@ -690,6 +690,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22C82DEF229CE246009B3668 /* BOFavHeaderCell.xib in Resources */,
 				22D5739C22825F8300748CF1 /* BOMenuView.xib in Resources */,
 				22F897932265FC09001E48BE /* BOGuideViewController.xib in Resources */,
 				22D5738B2282553500748CF1 /* Blanco-Bold.otf in Resources */,
@@ -700,7 +701,6 @@
 				22D573872282553500748CF1 /* Blanco-ExtraBold.otf in Resources */,
 				22D573852282553500748CF1 /* Blanco-Italic.otf in Resources */,
 				22D573892282553500748CF1 /* Blanco-ExtraBoldItalic.otf in Resources */,
-				22C82DEA229CD358009B3668 /* BOFavouriteCell.xib in Resources */,
 				22D573862282553500748CF1 /* Blanco-MediumItalic.otf in Resources */,
 				22AA85872277C99A003B15F1 /* LaunchScreen.storyboard in Resources */,
 				222D8B99227FC8130039C860 /* BOCatHeaderCell.xib in Resources */,
@@ -853,7 +853,6 @@
 				2251583F228CB5E3006BC71B /* BOGuideDetailTableDataSource.swift in Sources */,
 				22F897922265FC09001E48BE /* BOGuideViewController.swift in Sources */,
 				22EB39BD222E0702001043E2 /* AppDelegate.swift in Sources */,
-				22C82DE9229CD358009B3668 /* BOFavouriteCell.swift in Sources */,
 				22F7A68622974F6700BAE115 /* Extension+UITableView.swift in Sources */,
 				223EE427227BC6630048D42E /* TopGuideCell.swift in Sources */,
 				22267C2322654E8E007E7B40 /* BOCategoryModel.swift in Sources */,
@@ -875,6 +874,7 @@
 				22AA858B2277D50B003B15F1 /* BOAppHeaderView.swift in Sources */,
 				22747CCE228DE62500B35DA7 /* BOCatItemTextDescriptionCell.swift in Sources */,
 				22267C2A22656175007E7B40 /* Extension+String.swift in Sources */,
+				22C82DEE229CE246009B3668 /* BOFavHeaderCell.swift in Sources */,
 				22B506DD224DC09A00F66FDB /* NetworkError.swift in Sources */,
 				22326B5C22938E770056DAC9 /* RvkCategoriesDataSource.swift in Sources */,
 				22D1D8D4228A54290003D649 /* UIImageView+Extension.swift in Sources */,

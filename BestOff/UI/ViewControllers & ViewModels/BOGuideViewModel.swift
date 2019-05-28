@@ -62,6 +62,8 @@ class BOGuideViewModel: BOViewModel {
     private var rvkActivities = Observable<BOCategoryModel?>(nil)
     private var rvkShopping = Observable<BOCategoryModel?>(nil)
     private var rvkDining = Observable<BOCategoryModel?>(nil)
+    
+    private var arrContentHistory: [ContentType] = []
 
     //RowHeights used in both types of tables
     private let bigCellRowHeight:CGFloat = 310
@@ -71,7 +73,25 @@ class BOGuideViewModel: BOViewModel {
         
         super.init()
         self.screenContentType.value = contentType
+        arrContentHistory.append(screenContentType.value)
         createBonding()
+    }
+}
+
+extension BOGuideViewModel{
+    
+    func getLastContentType() -> ContentType?{
+        
+        guard let lastType = arrContentHistory[safe: 1] else { return nil }
+        return lastType
+    }
+    
+    func addContentTypeToHistory(typeToAdd: ContentType){
+        arrContentHistory.append(typeToAdd)
+    }
+    
+    private func popContentType(){
+        arrContentHistory.removeFirst()
     }
 }
 

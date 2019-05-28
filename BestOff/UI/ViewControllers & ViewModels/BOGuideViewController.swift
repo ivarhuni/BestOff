@@ -21,7 +21,7 @@ class BOGuideViewController: UIViewController {
     //MARK: Properties
     private let  viewModel: BOGuideViewModel
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var tableViewHeader: BOAppHeaderView!
+    @IBOutlet weak var viewControllerHeadder: BOAppHeaderView!
     @IBOutlet weak var viewMenu: BOMenuView!
     private var swipeLeft: UISwipeGestureRecognizer?
     private var swipeRight: UISwipeGestureRecognizer?
@@ -60,19 +60,22 @@ extension BOGuideViewController: MenuViewClick{
     
     func rvkClicked() {
         
-        
+        viewControllerHeadder.viewModel.isHamburgerActive.value = true
+        viewControllerHeadder.setTitleText(text: "BEST OF REYKJAVÍK")
+        changeToGuides()
     }
     
     func iceClicked() {
         
-        
+        viewControllerHeadder.viewModel.isHamburgerActive.value = true
+        viewControllerHeadder.setTitleText(text: "BEST OF ICELAND")
+        //...ICELAND
     }
     
     func favClicked() {
         
-        
+        changeToFavourites()
     }
-    
 }
 
 //MARK: Header Methods
@@ -81,20 +84,26 @@ extension BOGuideViewController: BOAppHeaderViewDelegate{
     func setupMenu(){
         viewMenu.setupWithType(screenType: .reykjavik)
         viewMenu.alpha = 0
+        viewMenu.menuViewClickDelegate = self
     }
     
     func setupHeaderDelegate(){
-        tableViewHeader.delegate = self
+        viewControllerHeadder.delegate = self
     }
     
     func didPressRightButton(shouldShowMenu: Bool) {
         viewModel.menuOpen.value = shouldShowMenu
     }
     
-    func didPressBackFromGuideDetail() {
+    func didPressBackFromAppHeader() {
         
-        self.tableViewHeader.viewModel.isDetailActive.value = false
-        self.changeToGuides()
+        viewControllerHeadder.viewModel.isDetailActive.value = false
+        guard let lastScreenType = self.viewModel.getLastContentType() else {
+            
+            changeToGuides()
+            return
+        }
+        viewModel.screenContentType.value = lastScreenType
     }
     
     func openMenu() {
@@ -150,8 +159,8 @@ extension BOGuideViewController{
     
     private func registerFavouriteCell(){
         
-        let favCell = UINib(nibName: BOFavouriteCell.nibName(), bundle: nil)
-        tableView.register(favCell, forCellReuseIdentifier: BOFavouriteCell.reuseIdentifier())
+        let favHeaderCell = UINib(nibName: BOFavHeaderCell.nibName(), bundle: nil)
+        tableView.register(favHeaderCell, forCellReuseIdentifier: BOFavHeaderCell.reuseIdentifier())
     }
     
     private func registerCategoryWinnerCells(){
@@ -235,6 +244,8 @@ extension BOGuideViewController{
             
             guard let this = self else { return }
             
+            this.viewModel.addContentTypeToHistory(typeToAdd: contentTypeValue)
+            
             switch contentTypeValue{
                 
             case .guides:
@@ -276,6 +287,8 @@ extension BOGuideViewController{
             
             this.viewModel.shouldSwipeBeEnabled() ? this.enableSwipe() : this.disableSwipe()
             this.tableView.scroll(to: .top, animated: true)
+            
+            
         }
     }
     
@@ -285,7 +298,7 @@ extension BOGuideViewController{
             
             guard let this = self else { return }
             
-            this.tableViewHeader.showDetail(withDetailText: "GUIDES")
+            this.viewControllerHeadder.showDetail(withDetailText: "GUIDES")
             }, completion: nil)
     }
 }
@@ -315,6 +328,7 @@ extension BOGuideViewController{
         disableTableDelegate()
         viewModel.setTableDelegateFor(contentType: .guides)
         viewModel.setTableDataSourceFor(contentType: .guides)
+        hideMenu()
         registerDelegateGuides()
     }
     
@@ -339,6 +353,7 @@ extension BOGuideViewController{
         animateHeaderToGuideDetail()
         viewModel.setTableDelegateFor(contentType: .guideDetail)
         viewModel.setTableDataSourceFor(contentType: .guideDetail)
+        hideMenu()
         disableSwipe()
     }
     
@@ -358,6 +373,7 @@ extension BOGuideViewController: TakeMeThereProtocol{
         registerDelegateRvk()
         viewModel.setTableDelegateFor(contentType: .reykjavik)
         viewModel.setTableDataSourceFor(contentType: .reykjavik)
+        hideMenu()
         enableSwipe()
     }
     
@@ -392,13 +408,15 @@ extension BOGuideViewController{
         disableTableDelegate()
         viewModel.setTableDelegateFor(contentType: .favourites)
         viewModel.setTableDataSourceFor(contentType: .favourites)
+        setHeaderToFavs()
+        hideMenu()
         disableSwipe()
     }
     
     private func setHeaderToFavs(){
         
-        tableViewHeader.viewModel.isDetailActive.value = true
-        tableViewHeader.showDetail(withDetailText: "FAVOURITES")
+        viewControllerHeadder.viewModel.isDetailActive.value = true
+        viewControllerHeadder.showDetail(withDetailText: "FAVOURITES")
     }
 }
 
@@ -411,13 +429,14 @@ extension BOGuideViewController{
         registerDelegateSubcategories()
         viewModel.setTableDelegateFor(contentType: .reykjavikSubCategories)
         viewModel.setTableDataSourceFor(contentType: .reykjavikSubCategories)
+        hideMenu()
         disableSwipe()
         setHeaderToSubcategory()
     }
     
     private func setHeaderToSubcategory(){
-        tableViewHeader.viewModel.isDetailActive.value = true
-        tableViewHeader.showDetail(withDetailText: viewModel.getHeaderDetailTxtFromSubCategory())
+        viewControllerHeadder.viewModel.isDetailActive.value = true
+        viewControllerHeadder.showDetail(withDetailText: viewModel.getHeaderDetailTxtFromSubCategory())
     }
     
     private func animateReloadDataSubcategories(){
@@ -425,7 +444,7 @@ extension BOGuideViewController{
         UIView.transition(with: tableView, duration: viewModel.tableDataSourceAnimationDuration, options: .transitionCrossDissolve, animations: { [weak self] in
             
             guard let this = self else { return }
-            this.tableViewHeader.viewModel.isDetailActive.value = true
+            this.viewControllerHeadder.viewModel.isDetailActive.value = true
             //TODO: FIX
 //            if let title = this.viewModel.subcategoriesListDataSource.value?.catTitle{
 //                this.tableViewHeader.showDetail(withDetailText: title)

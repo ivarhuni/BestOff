@@ -13,7 +13,7 @@ import ReactiveKit
 protocol BOAppHeaderViewDelegate: AnyObject {
     
     func didPressRightButton(shouldShowMenu: Bool)
-    func didPressBackFromGuideDetail()
+    func didPressBackFromAppHeader()
 }
 
 
@@ -132,7 +132,7 @@ extension BOAppHeaderView{
     func addShadow(){
         
         imgLeftIcon.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: CGSize(width: 1, height: 1), radius: 2)
-        self.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: CGSize(width: 1, height: 1), radius: 2)
+        addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: CGSize(width: 1, height: 1), radius: 2)
         lblTitle.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: CGSize(width: 1, height: 1), radius: 2)
         lblBackTitle.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: CGSize(width: 1, height: 1), radius: 2)
     }
@@ -152,7 +152,11 @@ extension BOAppHeaderView{
     private func setupFonts(){
         
         lblTitle.font = UIFont.guideHeadline
-        lblBackTitle.font = UIFont.itemTitle
+        lblBackTitle.font = UIFont.backLblTitle
+        
+        lblBackTitle.minimumScaleFactor = 0.1
+        lblBackTitle.numberOfLines = 1
+        lblBackTitle.lineBreakMode = .byClipping
     }
 }
 
@@ -165,7 +169,7 @@ extension BOAppHeaderView{
             print("delegate for headerview not set while pressing back")
             return
         }
-        delegate.didPressBackFromGuideDetail()
+        delegate.didPressBackFromAppHeader()
     }
 }
 
@@ -384,6 +388,10 @@ extension BOAppHeaderView{
         animateToHamburger()
         animateToNormalText()
     }
+    
+    func setTitleText(text: String){
+        lblTitle.text = text
+    }
 }
 
 
@@ -402,6 +410,7 @@ extension BOAppHeaderView{
     override func layoutSubviews() {
         super.layoutSubviews()
         //self.view.layoutIfNeeded()
+        
         addShadow()
     }
 }

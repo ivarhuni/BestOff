@@ -45,6 +45,8 @@ class BOMenuView: UIView{
     @IBOutlet weak var leadingLblIce: NSLayoutConstraint!
     @IBOutlet weak var leadingLblFav: NSLayoutConstraint!
     
+    
+    
     weak var menuViewClickDelegate: MenuViewClick?
     
     
@@ -133,7 +135,6 @@ extension BOMenuView{
         let favTap = UITapGestureRecognizer(target: self, action: #selector(self.handleTapFav(_:)))
         viewFavourites.addGestureRecognizer(favTap)
         viewFavourites.isUserInteractionEnabled = true
-        
     }
 }
 
@@ -142,17 +143,17 @@ extension BOMenuView{
     
     @objc private func handleTapRvk(_ sender: UITapGestureRecognizer) {
         
-        animateSelectionForScreenType(screenType: .reykjavik)
+        viewModel.select(screenType: .reykjavik)
     }
     
     @objc private func handleTapIce(_ sender: UITapGestureRecognizer) {
         
-        animateSelectionForScreenType(screenType: .iceland)
+        viewModel.select(screenType: .iceland)
     }
     
     @objc private func handleTapFav(_ sender: UITapGestureRecognizer) {
         
-        animateSelectionForScreenType(screenType: .favourites)
+        viewModel.select(screenType: .favourites)
     }
 }
 
@@ -223,7 +224,7 @@ extension BOMenuView{
             styleLabelsForIceland()
             
         case .favourites:
-            self.styleLabelsFav()
+            styleLabelsFav()
         }
     }
     
@@ -381,7 +382,7 @@ extension BOMenuView{
     }
     
     func addShadows(){
-        
+  
         lblRvk.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: CGSize(width: 1, height: 1), radius: 2)
         lblIceland.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: CGSize(width: 1, height: 1), radius: 2)
         lblFavourites.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: CGSize(width: 1, height: 1), radius: 2)

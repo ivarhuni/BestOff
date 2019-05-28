@@ -35,6 +35,10 @@ extension UIFont {
   class var itemTitle: UIFont {
     return UIFont(name: "Blanco-ExtraBold", size: 22.0)!
   }
+    
+    class var backLblTitle: UIFont {
+        return UIFont(name: "Blanco-ExtraBold", size: 20.0)!
+    }
 
   class var catDtlItemSeperator: UIFont {
     return UIFont(name: "Blanco-ExtraBold", size: 20.0)!
