@@ -15,7 +15,6 @@ import ReactiveKit
 class BOFavouritesDataSource: NSObject{
     
     private let rowHeight:CGFloat = 176
-    private let editRowHeight:CGFloat = 50
     
     private let sectionCount = 1
     
@@ -33,7 +32,7 @@ class BOFavouritesDataSource: NSObject{
     private let activitySectionIndex = 3
     
     weak var deleteDelegate: DeleteFavouriteItem?
-    
+    weak var editClickedDelegate: EditCellClicked?
     
     let isDeleteActive = Observable<Bool>(false)
     
@@ -74,43 +73,39 @@ class BOFavouritesDataSource: NSObject{
 
 extension BOFavouritesDataSource: UITableViewDataSource{
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
-    {
-        // This is where you would change section header content
-        return tableView.dequeueReusableCell(withIdentifier: BOFavHeaderCell.reuseIdentifier())
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
-    {
-        return editRowHeight
-    }
-    
     func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+        
+        if indexPath.row == 0 {
+            
+            let dummyCell = UITableViewCell()
+            dummyCell.selectionStyle = .none
+            return dummyCell
+        }
         
         let cell = myTableView.dequeueReusableCell(withIdentifier: DoubleItemImgCell.reuseIdentifier()) as! DoubleItemImgCell
         
         let arrItems = getItemsForIndexPath(indexPath: indexPath)
         cell.setupWithArrCatDetailItems(arrCatDetailItems: arrItems, screenType: .rvkDining)
-        
         return cell
     }
     
     func getItemsForIndexPath(indexPath: IndexPath) -> [BOCategoryDetailItem] {
 
-        guard let leftItem = arrFavourites.value[safe: indexPath.row] else {
+        guard let leftItem = arrFavourites.value[safe: indexPath.row - 1] else {
             return []
         }
         
-        guard let rightItem = arrFavourites.value[safe: indexPath.row + 1] else { return [leftItem] }
+        guard let rightItem = arrFavourites.value[safe: indexPath.row] else { return [leftItem] }
         return [leftItem, rightItem]
     }
     
     func getRowCount() -> Int{
         
+        let dummyWhiteSpaceCellCount = 1
         var count = Double(arrFavourites.value.count) / 2.0
         count.round(.up)
         
-        return Int(count)
+        return Int(count) + dummyWhiteSpaceCellCount
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -135,10 +130,31 @@ extension BOFavouritesDataSource: UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
+        //Dummy whitespace cell
+        if indexPath.row == 0 { return Constants.dummyFavWhiteSpaceCellHeight }
+        
         let normalCellHeightRatio:CGFloat = 176/375
         let normalCellHeight:CGFloat = (UIScreen.main.bounds.size.width * normalCellHeightRatio) + 20
         
         return normalCellHeight
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
+    {
+        // This is where you would change section header content
+        let headerCell = tableView.dequeueReusableCell(withIdentifier: BOFavHeaderCell.reuseIdentifier()) as! BOFavHeaderCell
+        headerCell.setupWith(editEnabled: isDeleteActive.value, delegate: self)
+        headerCell.isUserInteractionEnabled = true
+        return headerCell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
+    {
+        return Constants.editRowHeight
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "title"
     }
 }
 
@@ -167,5 +183,17 @@ extension BOFavouritesDataSource: DeleteFavouriteItem{
             return
         }
         delegate.deleteClicked()
+    }
+}
+
+extension BOFavouritesDataSource: EditCellClicked{
+    
+    func editClicked() {
+        
+        guard let editClickedDelegate = editClickedDelegate else {
+            print("Edit Clicked Delegate not set in BOFavDataSource")
+            return
+        }
+        editClickedDelegate.editClicked()
     }
 }

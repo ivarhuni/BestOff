@@ -45,6 +45,7 @@ class BOGuideViewModel: BOViewModel {
     private let guideDetailDataSource = Observable<BOCategoryDetailListProtocol?>(BOGuideDetailTableDataSource())
     private let rvkCategoriesDataSource = Observable<RvkCategoriesDataSource?>(RvkCategoriesDataSource())
     private let subcategoriesListDataSource = Observable<BOSpecificCatWinnersDataSource?>(nil)
+    private let favDataSource = Observable<BOFavouritesDataSource>(BOFavouritesDataSource())
     
     let tableDataSourceAnimationDuration:Double = 0.4
     
@@ -154,9 +155,8 @@ extension BOGuideViewModel{
             
         case .favourites:
             
-            let favDataSource = BOFavouritesDataSource()
-            activeTableDataSource.value = favDataSource
-            activeTableDelegate.value = favDataSource
+            activeTableDataSource.value = favDataSource.value
+            activeTableDelegate.value = favDataSource.value
         }
     }
     
@@ -492,5 +492,44 @@ extension BOGuideViewModel{
         
         guard let category = self.subcategoriesListDataSource.value else { return "" }
         return category.catTitle
+    }
+}
+
+extension BOGuideViewModel{
+    
+    func getTextForScreenType() -> String{
+        
+        switch screenContentType.value {
+        
+        case .favourites:
+            return "FAVOURITES"
+            
+        case .guides:
+            return "BEST OF REYKJAVÍK"
+            
+        case .guideDetail:
+            return ""
+            
+        case .reykjavik:
+            return "BEST OF REYKJAVÍK"
+            
+        case .reykjavikSubCategories:
+            return "BEST OF REYKJAVÍK"
+            
+        case .iceland:
+            return "BEST OF ICELAND"
+            
+        }
+    }
+}
+
+extension BOGuideViewModel{
+    
+    func setEditDelegateForFavourites(delegate: BOGuideViewController){
+        favDataSource.value.editClickedDelegate = delegate
+    }
+    
+    func toggleEditActive(){
+        favDataSource.value.isDeleteActive.value = !favDataSource.value.isDeleteActive.value
     }
 }

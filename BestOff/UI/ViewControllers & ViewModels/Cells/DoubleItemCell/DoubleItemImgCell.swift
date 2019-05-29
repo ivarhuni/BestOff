@@ -19,7 +19,14 @@ class DoubleItemImgCell: UITableViewCell {
     @IBOutlet weak var imgViewRight: UIImageView!
     @IBOutlet weak var viewColorRight: UIView!
     @IBOutlet weak var lblRight: UILabel!
+    @IBOutlet weak var viewDeleteBackground: UIView!
     
+    @IBOutlet weak var imgRemoveLeft: UIImageView!
+    @IBOutlet weak var lblRemoveLeft: UILabel!
+    @IBOutlet weak var lblRemoveRight: UILabel!
+    @IBOutlet weak var imgRemoveRight: UIImageView!
+    @IBOutlet weak var viewRemoveRight: UIView!
+    @IBOutlet weak var viewRemoveLeft: UIView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -47,7 +54,7 @@ extension DoubleItemImgCell{
 extension DoubleItemImgCell{
     
     
-    func setupWithArrCatDetailItems(arrCatDetailItems: [BOCategoryDetailItem], screenType: Endpoint){
+    func setupWithArrCatDetailItems(arrCatDetailItems: [BOCategoryDetailItem], screenType: Endpoint, isEditActive: Bool = false){
         
         setupDefault()
         setVerticalColorFor(type: screenType)
@@ -56,6 +63,10 @@ extension DoubleItemImgCell{
         
         guard let secondCategory = arrCatDetailItems[safe: 1] else { return }
         setupWithRightItem(categoryDetailItem: secondCategory)
+        
+        if isEditActive{
+            
+        }
     }
     
     private func setVerticalColorFor(type: Endpoint){
@@ -97,6 +108,9 @@ extension DoubleItemImgCell{
     private func setupImgViews(){
         imgViewLeft.setClipsAndScales()
         imgViewRight.setClipsAndScales()
+        
+        imgRemoveLeft.setClipsAndScales()
+        imgRemoveRight.setClipsAndScales()
     }
     
     private func style(){
@@ -107,11 +121,23 @@ extension DoubleItemImgCell{
     private func setColors(){
         lblRight.textColor = .black
         lblLeft.textColor = .black
+        
+        lblRemoveRight.textColor = .colorGreyBrowse
+        lblRemoveLeft.textColor = .colorGreyBrowse
+        
+        lblRight.addDropShadow(color: .black, opacity: Constants.veryLowShadowOpacity, offset: .zero, radius: 1)
+        lblLeft.addDropShadow(color: .black, opacity: Constants.veryLowShadowOpacity, offset: .zero, radius: 1)
+        
+        viewDeleteBackground.alpha = 0
     }
     
     private func setFonts(){
         lblLeft.font = UIFont.catItemType
         lblRight.font = UIFont.catItemType
+        
+        
+        lblRemoveLeft.font = UIFont.favBtnRemove
+        lblRemoveRight.font = UIFont.favBtnRemove
     }
 }
 

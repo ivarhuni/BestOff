@@ -29,7 +29,7 @@ extension UIFont {
   }
     
   class var guideHeadlineFav: UIFont {
-    return UIFont(name: "Blanco-ExtraBold", size: 20.0)!
+    return UIFont(name: "Blanco-ExtraBold", size: 21.0)!
   }
 
   class var itemTitle: UIFont {
@@ -93,7 +93,7 @@ extension UIFont {
   }
 
   class var catItemType: UIFont {
-    return UIFont(name: "Blanco", size: 16.0)!
+    return UIFont(name: "Blanco-Bold", size: 16.0)!
   }
 
   class var favBtnSaveChanges: UIFont {

@@ -19,7 +19,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F5y-h1-2eK">
-                        <rect key="frame" x="250" y="33" width="70" height="30"/>
+                        <rect key="frame" x="245" y="33" width="55" height="30"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tbN-2Y-XD4">
                                 <rect key="frame" x="0.0" y="4.5" width="35" height="21"/>
@@ -31,7 +31,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AZT-YS-OOW">
-                                <rect key="frame" x="55" y="7.5" width="15" height="15"/>
+                                <rect key="frame" x="40" y="7.5" width="15" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="15" id="9Qw-K0-Que"/>
                                     <constraint firstAttribute="height" constant="15" id="Yag-2s-60v"/>
@@ -45,12 +45,12 @@
                             <constraint firstAttribute="trailing" secondItem="AZT-YS-OOW" secondAttribute="trailing" id="Ft2-oQ-CzY"/>
                             <constraint firstItem="tbN-2Y-XD4" firstAttribute="leading" secondItem="F5y-h1-2eK" secondAttribute="leading" id="acn-fF-qUM"/>
                             <constraint firstItem="tbN-2Y-XD4" firstAttribute="centerY" secondItem="F5y-h1-2eK" secondAttribute="centerY" id="qaP-MS-Ltb"/>
-                            <constraint firstAttribute="width" constant="70" id="ssy-XS-ji3"/>
+                            <constraint firstAttribute="width" constant="55" id="ssy-XS-ji3"/>
                         </constraints>
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="F5y-h1-2eK" secondAttribute="trailing" id="FpD-zm-XcZ"/>
+                    <constraint firstAttribute="trailing" secondItem="F5y-h1-2eK" secondAttribute="trailing" constant="20" id="FpD-zm-XcZ"/>
                     <constraint firstItem="F5y-h1-2eK" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="HJW-NJ-w6c"/>
                 </constraints>
             </tableViewCellContentView>

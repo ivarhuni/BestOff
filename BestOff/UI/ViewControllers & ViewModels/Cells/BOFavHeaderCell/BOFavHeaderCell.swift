@@ -46,15 +46,20 @@ extension BOFavHeaderCell{
 
 extension BOFavHeaderCell{
     
-    func setupWith(editEnabled: Bool){
+    func setupWith(editEnabled: Bool, delegate: EditCellClicked){
         
         lblEdit.font = UIFont.favEditTxt
+        viewContainer.isUserInteractionEnabled = true
+        self.delegate = delegate
+        setupGesture()
+        
         if editEnabled{
-            lblEdit.textColor = .colorRed; return
+            lblEdit.textColor = .colorRed
+            imgViewEdit.image = Asset.deleteActive.img
+            return
         }
         lblEdit.textColor = .colorGreyText
-        
-        setupGesture()
+        imgViewEdit.image = Asset.delete.img
     }
     
     func setupGesture(){
@@ -74,7 +79,7 @@ extension BOFavHeaderCell: EditCellClicked{
     
     func editClicked() {
         
-        guard let editDelegate = delegate else { print("editDelegate not set"); return }
+        guard let editDelegate = delegate else { print("editDelegate not set in BOFavHeaderCell"); return }
         editDelegate.editClicked()
     }
 }

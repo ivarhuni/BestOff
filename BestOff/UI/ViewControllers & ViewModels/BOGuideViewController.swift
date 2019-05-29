@@ -97,6 +97,7 @@ extension BOGuideViewController: BOAppHeaderViewDelegate{
     
     func didPressBackFromAppHeader() {
         
+        viewControllerHeadder.viewModel.isHamburgerActive.value = true
         viewControllerHeadder.viewModel.isDetailActive.value = false
         guard let lastScreenType = self.viewModel.getLastContentType() else {
             
@@ -104,6 +105,8 @@ extension BOGuideViewController: BOAppHeaderViewDelegate{
             return
         }
         viewModel.screenContentType.value = lastScreenType
+        viewMenu.setupWithType(screenType: getMenuTypeFromContentScreenType())
+        
     }
     
     func openMenu() {
@@ -118,7 +121,16 @@ extension BOGuideViewController: BOAppHeaderViewDelegate{
         UIView.animate(withDuration: viewModel.menuAnimationDuration) { [weak self] in
             guard let this = self else { return }
             this.viewMenu.alpha = this.viewModel.alphaInvisible
+            this.viewControllerHeadder.setTitleText(text: this.viewModel.getTextForScreenType())
         }
+    }
+    
+    func getMenuTypeFromContentScreenType() -> ScreenType{
+        
+        if viewModel.screenContentType.value == .favourites { return ScreenType.favourites }
+        if viewModel.screenContentType.value == .iceland { return ScreenType.iceland }
+        
+        return ScreenType.reykjavik
     }
 }
 
@@ -138,11 +150,13 @@ extension BOGuideViewController{
         registerCells()
         registerDelegateGuides()
         styleTableDefault()
+        setupEditDelegateForFavourites()
     }
     
     private func styleTableDefault(){
         
         tableView.separatorStyle = .none
+        tableView.sectionHeaderHeight = Constants.editRowHeight
     }
     
     private func disableTableDelegate(){
@@ -210,6 +224,11 @@ extension BOGuideViewController{
         
         viewModel.setDidPressListDelegateForGuideList(delegater: self)
     }
+    
+    private func setupEditDelegateForFavourites(){
+        
+        viewModel.setEditDelegateForFavourites(delegate: self)
+    }
 }
 
 //MARK: UI Bindings
@@ -266,6 +285,25 @@ extension BOGuideViewController{
             case .favourites:
                 this.setupForFavourites()
             }
+        }
+    }
+}
+
+extension BOGuideViewController: EditCellClicked{
+    
+    func editClicked() {
+        
+        reloadFavourites()
+    }
+    
+    func reloadFavourites(){
+        
+        viewModel.toggleEditActive()
+        
+        UIView.performWithoutAnimation {
+            self.tableView.reloadData()
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
         }
     }
 }
@@ -530,13 +568,6 @@ extension BOGuideViewController{
     }
 }
 
-extension BOGuideViewModel: DeleteFavouriteItem{
-   
-    func deleteClicked() {
-        
-    }
-}
-
 
 extension BOGuideViewController{
     
@@ -544,8 +575,6 @@ extension BOGuideViewController{
         return .lightContent
     }
 }
-
-
 
 
 extension BOGuideViewController{
