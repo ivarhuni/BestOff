@@ -529,6 +529,10 @@ extension BOGuideViewModel{
         favDataSource.value.editClickedDelegate = delegate
     }
     
+    func setFavouriteDelegateForFavourites(delegate: BOGuideViewController){
+        favDataSource.value.deleteDelegate = delegate
+    }
+    
     func toggleEditActive(){
         favDataSource.value.isDeleteActive.value = !favDataSource.value.isDeleteActive.value
     }

@@ -151,6 +151,7 @@ extension BOGuideViewController{
         registerDelegateGuides()
         styleTableDefault()
         setupEditDelegateForFavourites()
+        setupDeleteDelegateForFavourites()
     }
     
     private func styleTableDefault(){
@@ -169,6 +170,7 @@ extension BOGuideViewController{
         registerGuideDetail()
         registerCategoryWinnerCells()
         registerFavouriteCell()
+        
     }
     
     private func registerFavouriteCell(){
@@ -228,6 +230,10 @@ extension BOGuideViewController{
     private func setupEditDelegateForFavourites(){
         
         viewModel.setEditDelegateForFavourites(delegate: self)
+    }
+    
+    private func setupDeleteDelegateForFavourites(){
+        viewModel.setFavouriteDelegateForFavourites(delegate: self)
     }
 }
 
@@ -582,5 +588,17 @@ extension BOGuideViewController{
     //TODO: Implement
     func setupForIceland(){
         
+    }
+}
+
+extension BOGuideViewController: DeleteFavouriteItem{
+    
+    func deleteClicked(deleteItemName: String) {
+        reloadTableForFavDeleteAction()
+    }
+    
+    private func reloadTableForFavDeleteAction(){
+        
+        tableView.reloadData()
     }
 }

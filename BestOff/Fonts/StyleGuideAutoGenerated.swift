@@ -181,7 +181,7 @@ extension UIFont {
   }
 
   class var favBtnRemove: UIFont {
-    return UIFont(name: "Blanco", size: 12.0)!
+    return UIFont(name: "Blanco-Bold", size: 12.0)!
   }
 
 }

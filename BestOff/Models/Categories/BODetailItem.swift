@@ -48,7 +48,7 @@ struct BOCategoryDetail{
     var arrItems: [BOCategoryDetailItem] = []
 }
 
-struct BOCategoryDetailItem{
+struct BOCategoryDetailItem: Codable{
     let itemName: String
     let itemAddress: String
     let itemDescription: String

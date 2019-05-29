@@ -24,7 +24,7 @@ class BOFavouritesDataSource: NSObject{
     let arrFavActivities = Observable<[BOCategoryDetailItem]>([])
     let arrFavShopping = Observable<[BOCategoryDetailItem]>([])
     
-    let arrFavourites = Observable<[BOCategoryDetailItem]>([])
+    let arrFavourites = Observable<[BOCategoryDetailItem]>(FavouriteManager.mockFavs())
     
     private let diningSectionIndex = 0
     private let drinkingSectionIndex = 1
@@ -35,40 +35,6 @@ class BOFavouritesDataSource: NSObject{
     weak var editClickedDelegate: EditCellClicked?
     
     let isDeleteActive = Observable<Bool>(false)
-    
-    
-    override init(){
-        
-        super.init()
-        //MOCK
-        let burgerURL = "https://www.iheartnaptime.net/wp-content/uploads/2018/05/hamburger-recipe-1200x960.jpg"
-        let firstDetailItem = BOCategoryDetailItem.init(itemName: "First", itemAddress: "First Address", itemDescription: "SomeReallyLong Desc", imageURL: burgerURL)
-        let secondDetailItem = BOCategoryDetailItem.init(itemName: "Second Item", itemAddress: "First Address", itemDescription: "SomeReallyLong Desc", imageURL: burgerURL)
-        let thirdItem = BOCategoryDetailItem.init(itemName: "Third Item Long Name", itemAddress: "First Address", itemDescription: "SomeReallyLong Desc", imageURL: burgerURL)
-        let forthItem = BOCategoryDetailItem.init(itemName: "4 Item Long Name :) Because why not", itemAddress: "First Address", itemDescription: "SomeReallyLong Desc", imageURL: burgerURL)
-        
-        arrFavDining.value.append(firstDetailItem)
-        arrFavDining.value.append(secondDetailItem)
-        arrFavDining.value.append(thirdItem)
-        arrFavDining.value.append(forthItem)
-        
-        arrFavDrinking.value.append(firstDetailItem)
-        arrFavDrinking.value.append(secondDetailItem)
-        arrFavDrinking.value.append(thirdItem)
-        arrFavDrinking.value.append(forthItem)
-        
-        arrFavShopping.value.append(firstDetailItem)
-        arrFavShopping.value.append(secondDetailItem)
-        arrFavShopping.value.append(thirdItem)
-        arrFavShopping.value.append(forthItem)
-        
-        arrFavActivities.value.append(firstDetailItem)
-        arrFavActivities.value.append(secondDetailItem)
-        arrFavActivities.value.append(thirdItem)
-        arrFavActivities.value.append(forthItem)
-        
-        arrFavourites.value.append(contentsOf: arrFavDining.value)
-    }
 }
 
 extension BOFavouritesDataSource: UITableViewDataSource{
@@ -85,12 +51,29 @@ extension BOFavouritesDataSource: UITableViewDataSource{
         let cell = myTableView.dequeueReusableCell(withIdentifier: DoubleItemImgCell.reuseIdentifier()) as! DoubleItemImgCell
         
         let arrItems = getItemsForIndexPath(indexPath: indexPath)
-        cell.setupWithArrCatDetailItems(arrCatDetailItems: arrItems, screenType: .rvkDining)
+        cell.setupWithArrCatDetailItems(arrCatDetailItems: arrItems, screenType: .rvkDining, isEditActive: self.isDeleteActive.value)
+        
+        if isDeleteActive.value{
+            cell.deleteDelegate = self
+        }else{
+            cell.deleteDelegate = nil
+        }
+        
         return cell
     }
     
     func getItemsForIndexPath(indexPath: IndexPath) -> [BOCategoryDetailItem] {
 
+        if indexPath.row.isEven(){
+            
+            guard let leftItem = arrFavourites.value[safe: indexPath.row] else {
+                return []
+            }
+            
+            guard let rightItem = arrFavourites.value[safe: indexPath.row + 1] else { return [leftItem] }
+            return [leftItem, rightItem]
+        }
+        
         guard let leftItem = arrFavourites.value[safe: indexPath.row - 1] else {
             return []
         }
@@ -113,7 +96,6 @@ extension BOFavouritesDataSource: UITableViewDataSource{
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        
         return sectionCount
     }
     
@@ -143,6 +125,13 @@ extension BOFavouritesDataSource: UITableViewDelegate{
     {
         // This is where you would change section header content
         let headerCell = tableView.dequeueReusableCell(withIdentifier: BOFavHeaderCell.reuseIdentifier()) as! BOFavHeaderCell
+        
+        if arrFavourites.value.count == 0 {
+            
+            headerCell.setupWithNoItems()
+            return headerCell
+        }
+        
         headerCell.setupWith(editEnabled: isDeleteActive.value, delegate: self)
         headerCell.isUserInteractionEnabled = true
         return headerCell
@@ -158,31 +147,39 @@ extension BOFavouritesDataSource: UITableViewDelegate{
     }
 }
 
+enum DeleteItem{
+    
+    case left
+    case right
+}
+
 protocol DeleteFavouriteItem: class {
     
-    func deleteClicked()
+    func deleteClicked(deleteItemName: String)
 }
 
 extension BOFavouritesDataSource{
     
-    func deleteItemAt(indexPath: IndexPath){
+    func deleteItemWith(name: String){
         
-        arrFavourites.value.remove(at: indexPath.row)
-        
-        deleteClicked()
+        FavouriteManager.removeItemWith(name: name)
+        arrFavourites.value = FavouriteManager.getFavouriteItems()
     }
 }
 
 extension BOFavouritesDataSource: DeleteFavouriteItem{
     
-    func deleteClicked() {
+    func deleteClicked(deleteItemName: String) {
         
         guard let delegate = deleteDelegate else {
             
             print("delete delegate not set for favourites data source")
             return
         }
-        delegate.deleteClicked()
+        
+        deleteItemWith(name: deleteItemName)
+        //VC doesn't need to delete the item from the datasource, only update table
+        delegate.deleteClicked(deleteItemName: "")
     }
 }
 

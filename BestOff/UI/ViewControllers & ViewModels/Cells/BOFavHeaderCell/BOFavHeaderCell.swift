@@ -16,7 +16,10 @@ protocol EditCellClicked: class {
 class BOFavHeaderCell: UITableViewCell {
 
     @IBOutlet weak var viewContainer: UIView!
+    @IBOutlet weak var lblNoItems: UILabel!
     
+    @IBOutlet weak var imgViewHeart: UIImageView!
+    @IBOutlet weak var toFavItems: UILabel!
     @IBOutlet weak var lblEdit: UILabel!
     @IBOutlet weak var imgViewEdit: UIImageView!
     weak var delegate: EditCellClicked?
@@ -46,7 +49,32 @@ extension BOFavHeaderCell{
 
 extension BOFavHeaderCell{
     
+    func setupWithNoItems(){
+        
+        viewContainer.isHidden = true
+        lblEdit.isHidden = true
+        imgViewEdit.isHidden = true
+        
+        lblNoItems.isHidden = false
+        toFavItems.isHidden = false
+        imgViewHeart.isHidden = false
+        
+        lblNoItems.font = UIFont.cellItemName
+        lblNoItems.textColor = .colorGreyText
+        
+        toFavItems.font = UIFont.cellItemName
+        toFavItems.textColor = .colorGreyText
+    }
+    
     func setupWith(editEnabled: Bool, delegate: EditCellClicked){
+        
+        viewContainer.isHidden = false
+        lblEdit.isHidden = false
+        imgViewEdit.isHidden = false
+        
+        lblNoItems.isHidden = true
+        toFavItems.isHidden = true
+        imgViewHeart.isHidden = true
         
         lblEdit.font = UIFont.favEditTxt
         viewContainer.isUserInteractionEnabled = true
