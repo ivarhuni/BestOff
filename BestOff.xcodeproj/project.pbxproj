@@ -1045,9 +1045,9 @@
 			baseConfigurationReference = 833CCF5BE5C2950B6C95E771 /* Pods-BestOff.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = R83X8L83BC;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hilmar Birgir Olafsson (R83X8L83BC)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = BestOff/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1067,8 +1067,8 @@
 			baseConfigurationReference = 4AAE9F091A4026DD5612C114 /* Pods-BestOff.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hilmar Birgir Olafsson (R83X8L83BC)";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = R83X8L83BC;
 				INFOPLIST_FILE = BestOff/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1078,7 +1078,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.grapevine.bestoff;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "Best Off";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
