@@ -47,14 +47,14 @@ class BOGuideViewModel: BOViewModel {
     private let subcategoriesListDataSource = Observable<BOSpecificCatWinnersDataSource?>(nil)
     private let favDataSource = Observable<BOFavouritesDataSource>(BOFavouritesDataSource())
     
-    let tableDataSourceAnimationDuration:Double = 0.4
+    let tableDataSourceAnimationDuration:Double = 0.3
     
     //MARK: Menu
     let menuOpen = Observable<Bool>(false)
     
     //MARK: SWIPE
     let activePage = Observable<ActivePage>(.left)
-
+    
     //MARK: Private properties
     private let disposeBag = DisposeBag()
     
@@ -65,7 +65,7 @@ class BOGuideViewModel: BOViewModel {
     private var rvkDining = Observable<BOCategoryModel?>(nil)
     
     private var arrContentHistory: [ContentType] = []
-
+    
     //RowHeights used in both types of tables
     private let bigCellRowHeight:CGFloat = 310
     
@@ -83,7 +83,7 @@ extension BOGuideViewModel{
     
     func getLastContentType() -> ContentType?{
         
-        guard let lastType = arrContentHistory[safe: 1] else { return nil }
+        guard let lastType = arrContentHistory.last else { return nil }
         return lastType
     }
     
@@ -206,7 +206,7 @@ extension BOGuideViewModel{
 extension BOGuideViewModel{
     
     private func createBonding(){
-
+        
         
         _ = self.guides.observeNext{ [weak self] model in
             
@@ -243,7 +243,7 @@ extension BOGuideViewModel{
         }
         
         _ = self.rvkShopping.observeNext{ [weak self] model in
-        
+            
             guard let this = self else { return }
             guard let catWinnerDSource = this.rvkCategoriesDataSource.value else { return }
             guard let model = model else { return }
@@ -288,8 +288,9 @@ extension BOGuideViewModel: vmTableViewDelegate{
             return
         }
         
-        guideDetailDataSource.value = BOGuideDetailTableDataSource(catItem: topCellItem)
         screenContentType.value = .guideDetail
+        guideDetailDataSource.value = BOGuideDetailTableDataSource(catItem: topCellItem)
+        
     }
 }
 
@@ -336,8 +337,8 @@ extension BOGuideViewModel: TakeMeThereProtocol{
     
     func changeDataSourceToSpecific(categoryDataSource: BOSpecificCatWinnersDataSource){
         
-        subcategoriesListDataSource.value = categoryDataSource
         screenContentType.value = .reykjavikSubCategories
+        subcategoriesListDataSource.value = categoryDataSource
     }
 }
 
@@ -366,8 +367,11 @@ extension BOGuideViewModel{
 }
 
 
-//TODO: Candiate for Refactor
+//TODO: Refactor?
 //MARK: Networking
+
+
+
 extension BOGuideViewModel{
     
     func downloadData(){
@@ -391,12 +395,15 @@ extension BOGuideViewModel{
                 return
             }
             
-            guard let categoryModel = model else {
+            guard var categoryModel = model else {
                 this.guides.value = nil
                 this.showDataError()
                 return
             }
+            
+            categoryModel.setType(type: .guides)
             this.guides.value = categoryModel
+            
         }
     }
     
@@ -416,11 +423,12 @@ extension BOGuideViewModel{
                 return
             }
             
-            guard let categoryModel = model else {
+            guard var categoryModel = model else {
                 this.rvkDrink.value = nil
                 this.showDataError()
                 return
             }
+            categoryModel.setType(type: .rvkDrink)
             this.rvkDrink.value = categoryModel
         }
         
@@ -436,11 +444,12 @@ extension BOGuideViewModel{
                 return
             }
             
-            guard let categoryModel = model else {
+            guard var categoryModel = model else {
                 this.rvkActivities.value = nil
                 this.showDataError()
                 return
             }
+            categoryModel.setType(type: .rvkActivities)
             this.rvkActivities.value = categoryModel
         }
         
@@ -456,11 +465,12 @@ extension BOGuideViewModel{
                 return
             }
             
-            guard let categoryModel = model else {
+            guard var categoryModel = model else {
                 this.rvkDining.value = nil
                 this.showDataError()
                 return
             }
+            categoryModel.setType(type: .rvkDining)
             this.rvkDining.value = categoryModel
         }
         
@@ -476,11 +486,12 @@ extension BOGuideViewModel{
                 return
             }
             
-            guard let categoryModel = model else {
+            guard var categoryModel = model else {
                 this.rvkShopping.value = nil
                 this.showDataError()
                 return
             }
+            categoryModel.setType(type: .rvkShopping)
             this.rvkShopping.value = categoryModel
         }
     }
@@ -500,7 +511,7 @@ extension BOGuideViewModel{
     func getTextForScreenType() -> String{
         
         switch screenContentType.value {
-        
+            
         case .favourites:
             return "FAVOURITES"
             
@@ -535,5 +546,61 @@ extension BOGuideViewModel{
     
     func toggleEditActive(){
         favDataSource.value.isDeleteActive.value = !favDataSource.value.isDeleteActive.value
+    }
+}
+
+extension BOGuideViewModel{
+    
+    static func getTableViewAnimationFor(screenContentType: ContentType) -> UITableView.RowAnimation{
+        
+        switch screenContentType {
+        case .guides:
+            print("left guides")
+            return .right
+        case .guideDetail:
+            print("fade guidedetail")
+            return .fade
+        case .reykjavik:
+            print("reykjavik right")
+            return .left
+        case .reykjavikSubCategories:
+            print("automatic rvksubcategories")
+            return .automatic
+        case .iceland:
+            print("automatic iceland")
+            return .automatic
+        case .favourites:
+            print("favourites automatic")
+            return .automatic
+        }
+    }
+}
+
+extension BOGuideViewModel{
+    
+    static func getRoundedCornerFor(screenContentType: ContentType) -> UIRectCorner?{
+        
+        switch screenContentType {
+        case .guides:
+            return .topLeft
+        case .reykjavik:
+            return .topRight
+            
+        default:
+            return nil
+        }
+    }
+}
+
+extension BOGuideViewModel{
+    
+    func shouldChangeToRvkCategoriesFor(tableView: UITableView) -> Bool{
+        
+        if tableView.dataSource is BOGuideDetailTableDataSource{
+            print("not changing datasource!!")
+            return false
+        }
+        
+        return true
     }
 }

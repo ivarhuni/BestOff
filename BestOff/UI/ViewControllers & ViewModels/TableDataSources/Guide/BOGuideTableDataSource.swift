@@ -166,6 +166,9 @@ extension BOGuideTableDataSource: UITableViewDelegate{
             print("tableview delegate not set in BOGuideTableDataSource")
             return
         }
+        
+        print("index pressed")
+        
         delegate.didPressAtIndexPath(indexPath: indexPath)
     }
     

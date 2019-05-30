@@ -65,6 +65,12 @@ extension BOGuideViewController: MenuViewClick{
         changeToGuides()
     }
     
+    func rvkSubCatLoad(){
+        viewControllerHeadder.viewModel.isHamburgerActive.value = true
+        viewControllerHeadder.setTitleText(text: "BEST OF REYKJAVÍK")
+        changeToRvkCategories()
+    }
+    
     func iceClicked() {
         
         viewControllerHeadder.viewModel.isHamburgerActive.value = true
@@ -125,12 +131,12 @@ extension BOGuideViewController: BOAppHeaderViewDelegate{
         }
     }
     
-    func getMenuTypeFromContentScreenType() -> ScreenType{
+    func getMenuTypeFromContentScreenType() -> ContentType{
         
-        if viewModel.screenContentType.value == .favourites { return ScreenType.favourites }
-        if viewModel.screenContentType.value == .iceland { return ScreenType.iceland }
+        if viewModel.screenContentType.value == .favourites { return ContentType.favourites }
+        if viewModel.screenContentType.value == .iceland { return ContentType.iceland }
         
-        return ScreenType.reykjavik
+        return .reykjavik
     }
 }
 
@@ -253,6 +259,8 @@ extension BOGuideViewController{
         //Changes in TableView DataSource
         _ = viewModel.activeTableDataSource.observeOn(.main).observeNext{ [weak self] activeDataSourceValue in
             
+            print("active data source value changed to: ")
+            print(activeDataSourceValue ?? "nothing")
             guard let this = self else { return }
             this.tableView.dataSource = activeDataSourceValue
             this.animateTableReloadData()
@@ -260,6 +268,8 @@ extension BOGuideViewController{
         
         _ = viewModel.activeTableDelegate.observeOn(.main).observeNext{ [weak self] activeTableDelegateValue in
             
+            print("activetabledelegate value changed to: ")
+            print(activeTableDelegateValue ?? "nothing")
             guard let this = self else { return }
             this.tableView.delegate = activeTableDelegateValue
         }
@@ -270,6 +280,15 @@ extension BOGuideViewController{
             guard let this = self else { return }
             
             this.viewModel.addContentTypeToHistory(typeToAdd: contentTypeValue)
+            
+            print("new content type: ")
+            print(contentTypeValue)
+            
+            
+            
+            if this.viewModel.screenContentType.value != contentTypeValue{
+                print("")
+            }
             
             switch contentTypeValue{
                 
@@ -318,21 +337,21 @@ extension BOGuideViewController{
     
     private func animateTableReloadData(){
         
+        self.view.setNeedsLayout()
         UIView.transition(with: self.tableView,
                           duration: self.viewModel.tableDataSourceAnimationDuration,
-                          options: .transitionCrossDissolve,
+                          options: .curveLinear,
                           animations: { [weak self] in
                             
                             guard let this = self else { return }
-                            this.tableView.reloadData()
+                            
+                            this.tableView.reloadSections(IndexSet(integer: 0), with: BOGuideViewModel.getTableViewAnimationFor(screenContentType: this.viewModel.screenContentType.value))
                             
         }) { [weak self] _ in
             guard let this = self else { return }
             
             this.viewModel.shouldSwipeBeEnabled() ? this.enableSwipe() : this.disableSwipe()
             this.tableView.scroll(to: .top, animated: true)
-            
-            
         }
     }
     
@@ -343,7 +362,9 @@ extension BOGuideViewController{
             guard let this = self else { return }
             
             this.viewControllerHeadder.showDetail(withDetailText: "GUIDES")
-            }, completion: nil)
+        }) { finished in
+            
+        }
     }
 }
 
@@ -352,6 +373,8 @@ extension BOGuideViewController: didPressListDelegate{
     
     func didPressAtIndexPath(indexPath: IndexPath) {
         
+        print("DidPress, contentType: ")
+        print(viewModel.screenContentType.value)
         viewModel.tableViewPressedAt(indexPath.row)
     }
     
@@ -395,6 +418,9 @@ extension BOGuideViewController{
         
         disableTableDelegate()
         animateHeaderToGuideDetail()
+        
+        
+        
         viewModel.setTableDelegateFor(contentType: .guideDetail)
         viewModel.setTableDataSourceFor(contentType: .guideDetail)
         hideMenu()
@@ -408,7 +434,14 @@ extension BOGuideViewController{
 extension BOGuideViewController: TakeMeThereProtocol{
     
     private func changeToRvkCategories() {
-        viewModel.screenContentType.value = .reykjavik
+        
+        print("-------active data source value IS: ")
+        print(viewModel.activeTableDataSource.value ?? "-------nothing")
+        
+        if tableView.delegate != nil{
+            viewModel.screenContentType.value = .reykjavik
+        }
+        
     }
     
     private func setupForRvk(){
@@ -469,6 +502,23 @@ extension BOGuideViewController{
     
     private func setupForSubcategories(){
 
+        print("******* SUBCAT ******")
+        print("active data source value IS to: ")
+        print(viewModel.activeTableDataSource)
+        
+        
+        if viewModel.screenContentType.value == .guideDetail {
+            print("guideDetail, not loading sub categories")
+//            viewModel.screenContentType.value = .guideDetail
+            return
+        }
+        
+        if viewModel.activeTableDataSource.value is BOGuideDetailTableDataSource{
+            print("guideDetail, not loading sub cats")
+//            viewModel.screenContentType.value = .guideDetail
+            return
+        }
+        
         disableTableDelegate()
         registerDelegateSubcategories()
         viewModel.setTableDelegateFor(contentType: .reykjavikSubCategories)
@@ -489,11 +539,6 @@ extension BOGuideViewController{
             
             guard let this = self else { return }
             this.viewControllerHeadder.viewModel.isDetailActive.value = true
-            //TODO: FIX
-//            if let title = this.viewModel.subcategoriesListDataSource.value?.catTitle{
-//                this.tableViewHeader.showDetail(withDetailText: title)
-//            }
-//            this.tableView.reloadData()
             
         }) { (finished) in }
     }
@@ -524,6 +569,7 @@ extension BOGuideViewController{
         
         swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         guard let swRight = swipeRight else { return }
+        //swipeRight?.canBePrevented(by: <#T##UIGestureRecognizer#>)
         
         swRight.direction = .right
         swRight.cancelsTouchesInView = false
@@ -542,18 +588,28 @@ extension BOGuideViewController{
     
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         
+        
+        
         guard let swipeGesture = gesture as? UISwipeGestureRecognizer else { return }
         
         switch swipeGesture.direction {
             
         case .right:
-            self.changeToGuides()
+            changeToGuides()
+            
         case .left:
-            self.setupForRvk()
+            
+            
+            if viewModel.shouldChangeToRvkCategoriesFor(tableView: self.tableView){
+                print("changeToRvkCategories()")
+                changeToRvkCategories()
+            }
         default:
             break
         }
     }
+    
+    
     
     private func disableSwipe(){
         if let leftSwipe = self.swipeLeft{
@@ -571,6 +627,8 @@ extension BOGuideViewController{
         if let rightSwipe = self.swipeRight{
             rightSwipe.isEnabled = true
         }
+        
+        self.viewControllerHeadder.viewModel.isHamburgerActive.value = true
     }
 }
 
@@ -600,5 +658,30 @@ extension BOGuideViewController: DeleteFavouriteItem{
     private func reloadTableForFavDeleteAction(){
         
         tableView.reloadData()
+    }
+}
+
+extension BOGuideViewController{
+    
+    override func viewDidLayoutSubviews() {
+        
+        super.viewDidLayoutSubviews()
+        
+        guard let cornerToRound = BOGuideViewModel.getRoundedCornerFor(screenContentType: viewModel.screenContentType.value) else {
+            
+            BOGuideViewController.roundCorners(view: tableView, .allCorners, radius: 0)
+            return
+        }
+        BOGuideViewController.roundCorners(view: tableView, .allCorners, radius: 0)
+        BOGuideViewController.roundCorners(view: tableView, cornerToRound, radius: 10)
+    }
+    
+    static func roundCorners(view: UIView, _ corners: UIRectCorner, radius: CGFloat) {
+        
+        if #available(iOS 11.0, *) {
+            view.clipsToBounds = true
+            view.layer.cornerRadius = radius
+            view.layer.maskedCorners = CACornerMask(rawValue: corners.rawValue)
+        }
     }
 }

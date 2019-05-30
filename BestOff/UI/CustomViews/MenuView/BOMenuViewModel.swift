@@ -18,7 +18,7 @@ enum ScreenType{
 
 struct BOMenuViewModel{
     
-    let selectedScreenType = Observable<ScreenType>(.reykjavik)
+    let selectedScreenType = Observable<ContentType>(.reykjavik)
     
     let leadingConstantOff: CGFloat = -5.0
     let leadingConstantOn: CGFloat = 0.0
@@ -29,11 +29,11 @@ struct BOMenuViewModel{
     
     let animationDuration = 0.25
     
-    init(withSelectedScreen type: ScreenType){
+    init(withSelectedScreen type: ContentType){
         selectedScreenType.value = type
     }
     
-    func select(screenType: ScreenType){
+    func select(screenType: ContentType){
         selectedScreenType.value = screenType
     }
     

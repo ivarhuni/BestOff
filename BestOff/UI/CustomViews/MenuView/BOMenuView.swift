@@ -193,7 +193,7 @@ extension BOMenuView: MenuViewClick{
 //MARK: Public methods
 extension BOMenuView{
     
-    public func setupWithType(screenType: ScreenType){
+    public func setupWithType(screenType: ContentType){
         viewModel.selectedScreenType.value = screenType
     }
 }
@@ -206,7 +206,7 @@ extension BOMenuView{
         _ = viewModel.selectedScreenType.observeOn(.main).observeNext{ [weak self] selectedType in
             guard let this = self else { return }
             
-            this.animateSelectionForScreenType(screenType: selectedType)
+            this.animateSelectionForScreenType(contentType: selectedType)
         }
     }
 }
@@ -228,26 +228,11 @@ extension BOMenuView{
         }
     }
     
-    private func animateSelectionForScreenType(screenType: ScreenType){
+    private func animateSelectionForScreenType(contentType: ContentType){
         
         self.view.layoutIfNeeded()
         
-        switch screenType {
-        case .reykjavik:
-            
-            UIView.animate(withDuration: viewModel.animationDuration, animations: { [weak self] in
-                
-                guard let this = self else { return }
-                
-                this.configureConstantsReykjavik()
-                this.styleViewFor(screenType: screenType)
-                this.view.layoutIfNeeded()
-                
-            }) {[weak self] finished in
-                guard let this = self else { return }
-                this.rvkClicked()
-            }
-            
+        switch contentType {
         case .iceland:
             
             UIView.animate(withDuration: viewModel.animationDuration, animations: { [weak self] in
@@ -255,7 +240,7 @@ extension BOMenuView{
                 guard let this = self else { return }
                 
                 this.configureConstantsIceland()
-                this.styleViewFor(screenType: screenType)
+                this.styleViewFor(screenType: .iceland)
                 this.view.layoutIfNeeded()
                 
             }) { [weak self] finished in
@@ -271,7 +256,7 @@ extension BOMenuView{
                 guard let this = self else { return }
                 
                 this.configureConstantsFav()
-                this.styleViewFor(screenType: screenType)
+                this.styleViewFor(screenType: .favourites)
                 this.view.layoutIfNeeded()
                 
             }) { [weak self] finished in
@@ -279,6 +264,34 @@ extension BOMenuView{
                 guard let this = self else { return }
                 this.favClicked()
             }
+        case .guides:
+            UIView.animate(withDuration: viewModel.animationDuration, animations: { [weak self] in
+                
+                guard let this = self else { return }
+                
+                this.configureConstantsReykjavik()
+                this.styleViewFor(screenType: .reykjavik)
+                this.view.layoutIfNeeded()
+                
+            }) {[weak self] finished in
+                guard let this = self else { return }
+                this.rvkClicked()
+            }
+        default:
+            
+            UIView.animate(withDuration: viewModel.animationDuration, animations: { [weak self] in
+                
+                guard let this = self else { return }
+                
+                this.configureConstantsReykjavik()
+                this.styleViewFor(screenType: .reykjavik)
+                this.view.layoutIfNeeded()
+                
+            }) {[weak self] finished in
+                guard let this = self else { return }
+                this.rvkClicked()
+            }
+            
         }
     }
 
