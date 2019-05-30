@@ -144,6 +144,8 @@ extension BOMenuView{
     @objc private func handleTapRvk(_ sender: UITapGestureRecognizer) {
         
         viewModel.select(screenType: .reykjavik)
+        
+        
     }
     
     @objc private func handleTapIce(_ sender: UITapGestureRecognizer) {

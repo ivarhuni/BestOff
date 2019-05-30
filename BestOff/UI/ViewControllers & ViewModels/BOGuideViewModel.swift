@@ -49,6 +49,8 @@ class BOGuideViewModel: BOViewModel {
     
     let tableDataSourceAnimationDuration:Double = 0.3
     
+    var hasLoadedSomethingOtherThanGuide: Bool = false
+    
     //MARK: Menu
     let menuOpen = Observable<Bool>(false)
     
@@ -551,12 +553,16 @@ extension BOGuideViewModel{
 
 extension BOGuideViewModel{
     
-    static func getTableViewAnimationFor(screenContentType: ContentType) -> UITableView.RowAnimation{
+    func getTableViewAnimationFor(screenContentType: ContentType) -> UITableView.RowAnimation{
         
         switch screenContentType {
         case .guides:
-            print("left guides")
-            return .right
+            
+            if hasLoadedSomethingOtherThanGuide{
+                return .right
+            }
+            return .fade
+            
         case .guideDetail:
             print("fade guidedetail")
             return .fade

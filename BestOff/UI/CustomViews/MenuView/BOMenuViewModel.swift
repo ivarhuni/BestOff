@@ -34,6 +34,9 @@ struct BOMenuViewModel{
     }
     
     func select(screenType: ContentType){
+        
+        if screenType == self.selectedScreenType.value { return }
+        
         selectedScreenType.value = screenType
     }
     

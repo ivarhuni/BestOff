@@ -110,6 +110,10 @@ extension BOGuideViewController: BOAppHeaderViewDelegate{
             changeToGuides()
             return
         }
+        if lastScreenType == .favourites{
+            changeToGuides()
+            return
+        }
         viewModel.screenContentType.value = lastScreenType
         viewMenu.setupWithType(screenType: getMenuTypeFromContentScreenType())
         
@@ -153,6 +157,7 @@ extension BOGuideViewController{
     
     private func setupTable(){
         
+        tableView.alpha = 0
         registerCells()
         registerDelegateGuides()
         styleTableDefault()
@@ -279,16 +284,13 @@ extension BOGuideViewController{
             
             guard let this = self else { return }
             
+            if contentTypeValue != .guides {
+                this.viewModel.hasLoadedSomethingOtherThanGuide = true
+            }
+            
+            
             this.viewModel.addContentTypeToHistory(typeToAdd: contentTypeValue)
             
-            print("new content type: ")
-            print(contentTypeValue)
-            
-            
-            
-            if this.viewModel.screenContentType.value != contentTypeValue{
-                print("")
-            }
             
             switch contentTypeValue{
                 
@@ -345,13 +347,20 @@ extension BOGuideViewController{
                             
                             guard let this = self else { return }
                             
-                            this.tableView.reloadSections(IndexSet(integer: 0), with: BOGuideViewModel.getTableViewAnimationFor(screenContentType: this.viewModel.screenContentType.value))
+                            
+                            this.tableView.reloadSections(IndexSet(integer: 0), with: this.viewModel.getTableViewAnimationFor(screenContentType: this.viewModel.screenContentType.value))
                             
         }) { [weak self] _ in
             guard let this = self else { return }
             
             this.viewModel.shouldSwipeBeEnabled() ? this.enableSwipe() : this.disableSwipe()
             this.tableView.scroll(to: .top, animated: true)
+            
+            UIView.animate(withDuration: 2, animations: {
+                if this.tableView.alpha != 1{
+                    this.tableView.alpha = 1
+                }
+            })
         }
     }
     
@@ -588,28 +597,22 @@ extension BOGuideViewController{
     
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         
-        
-        
         guard let swipeGesture = gesture as? UISwipeGestureRecognizer else { return }
-        
         switch swipeGesture.direction {
             
         case .right:
             changeToGuides()
             
         case .left:
-            
-            
             if viewModel.shouldChangeToRvkCategoriesFor(tableView: self.tableView){
                 print("changeToRvkCategories()")
                 changeToRvkCategories()
             }
+            
         default:
             break
         }
     }
-    
-    
     
     private func disableSwipe(){
         if let leftSwipe = self.swipeLeft{
