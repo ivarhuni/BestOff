@@ -13,6 +13,7 @@ struct BOCategoryService{
     func getCategory(_ category:  Endpoint, completionHandler: @escaping (_ result: BOCategoryModel?, _ error: Error?) -> Void){
         
         guard let categoryURL = category.getURLforType() else{
+            print("failed URL")
             completionHandler(nil, NetworkError.URLError)
             return
         }

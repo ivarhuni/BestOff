@@ -39,18 +39,6 @@ struct BOCategoryModel: Codable{
         userComment = try values.decode(String.self, forKey: .userComment)
         version = try values.decode(String.self, forKey: .version)
     }
-    
-//    init(descField: String, feedURL: String, homepageURL: String, arrItems: [BOCatItem], catTitle: String, catUserComment: String, catVersion: String, catType: Endpoint){
-//
-//        self.descriptionField = descField
-//        self.feedUrl = feedURL
-//        self.homePageUrl = homepageURL
-//        self.items = arrItems
-//        self.title = catTitle
-//        self.userComment = catUserComment
-//        self.version = catVersion
-//        self.type = catType
-//    }
 }
 
 extension BOCategoryModel{

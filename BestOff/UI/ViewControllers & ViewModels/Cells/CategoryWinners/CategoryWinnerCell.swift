@@ -151,13 +151,28 @@ extension CategoryWinnerCell{
 
 extension CategoryWinnerCell{
     
-    func setupWithCategory(category: BOCategoryModel? = nil, txtTitle: String? = nil , _ styleType: Endpoint = .rvkDining, randomItem: BOCatItem?){
+    func setupWithCategory(category: BOCategoryModel? = nil,
+                           _ styleType: Endpoint = .rvkDining,
+                           randomItem: BOCatItem?,
+                           delegate: TakeMeThereProtocol? = nil){
         
         setupDefault()
         self.catType = styleType
         setupForType(type: styleType)
-        guard let item = randomItem else { return }
+        guard let item = randomItem else {
+            
+                guard let tryNewRandomItem = category?.items.randomItem() else { return }
+                setupWithRandomItemFromCategory(randomItem: tryNewRandomItem, category: category)
+            if let cellDelegate = delegate{
+                delegateTakeMeThere = cellDelegate
+            }
+            return
+        }
+        
         setupWithRandomItemFromCategory(randomItem: item, category: category)
+        if let cellDelegate = delegate{
+            delegateTakeMeThere = cellDelegate
+        }
     }
     
     private func setupWithRandomItemFromCategory(randomItem: BOCatItem, category: BOCategoryModel?){
@@ -193,54 +208,60 @@ extension CategoryWinnerCell{
     
     private func setupForType(type: Endpoint){
         
+        setLeftLineAndLblLayerTo(color: UIColor.colorForType(type: type))
+        
+        hideSwipeLblAndPageCtrl()
+        hideImgViewSponsor()
+        
         switch type{
             
         case .rvkDining:
-            
-            setLeftLineAndLblLayerTo(color: UIColor.colorForType(type: type))
-            
             lblCatName.text = "DINING"
             lblBrowseMore.text = "Browse More Restaurants"
             
             showSwipeAndPageCtrl()
-            hideImgViewSponsor()
             
             lblTakeMeThere.textColor = .colorRed
             lblTakeMeThere.layer.borderColor = UIColor.colorRed.cgColor
             
         case .rvkDrink:
-            setLeftLineAndLblLayerTo(color: UIColor.colorForType(type: type))
-            
             lblCatName.text = "DRINKING"
             lblBrowseMore.text = "Browse More Bars"
             
-            hideSwipeLblAndPageCtrl()
             showImgViewSponsor()
             
         case .rvkShopping:
-            setLeftLineAndLblLayerTo(color: UIColor.colorForType(type: type))
-            
             lblCatName.text = "SHOPPING"
             lblBrowseMore.text = "Browse More Shops"
             
-            hideSwipeLblAndPageCtrl()
-            hideImgViewSponsor()
-            
         case .rvkActivities:
-            
-            setLeftLineAndLblLayerTo(color: UIColor.colorForType(type: type))
-            
             lblCatName.text = "ACTIVITIES"
             lblBrowseMore.text = "Browse More Activities"
-            
-            hideSwipeLblAndPageCtrl()
-            hideImgViewSponsor()
 
-        default:
-            hideSwipeLblAndPageCtrl()
-            hideImgViewSponsor()
-            setLeftLineAndLblLayerTo(color: .colorRed)
-            lblCatName.text = ""
+        case .guides:
+            print("not applicable")
+            
+        case .east:
+            lblCatName.text = "EAST"
+            lblBrowseMore.text = "Browse more items"
+        case .north:
+            lblCatName.text = "NORTH"
+            lblBrowseMore.text = "Browse more items"
+
+        case .westfjords:
+            lblCatName.text = "WESTFJORDS"
+            lblBrowseMore.text = "Browse more items"
+            
+        case .south:
+            lblCatName.text = "SOUTH"
+            lblBrowseMore.text = "Browse more items"
+            
+        case .west:
+            lblCatName.text = "West"
+            lblBrowseMore.text = "Browse more items"
+        case .reykjanes:
+            lblCatName.text = "Reykjanes"
+            lblBrowseMore.text = "Browse more items"
         }
         
         lblSwipe.text = "Swipe Left"

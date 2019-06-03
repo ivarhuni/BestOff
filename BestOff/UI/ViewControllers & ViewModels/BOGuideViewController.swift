@@ -43,6 +43,25 @@ class BOGuideViewController: UIViewController {
     }
 }
 
+extension BOGuideViewController{
+    
+    override func viewDidLayoutSubviews() {
+        
+        super.viewDidLayoutSubviews()
+        
+        BOGuideViewController.roundCorners(view: tableView, .allCorners, radius: 0)
+        if !BOGuideViewModel.getRoundedCornerFor(screenContentType: viewModel.screenContentType.value).isEmpty{
+            
+            _ = BOGuideViewModel.getRoundedCornerFor(screenContentType: viewModel.screenContentType.value).compactMap{ rectCorner in
+                
+                BOGuideViewController.roundCorners(view: tableView, rectCorner, radius: 10)
+            }
+            return
+        }
+    }
+}
+
+
 //MARK: Setup
 extension BOGuideViewController{
     
@@ -65,7 +84,7 @@ extension BOGuideViewController: MenuViewClick{
         changeToGuides()
     }
     
-    func rvkSubCatLoad(){
+    func subCatClicked(){
         viewControllerHeadder.viewModel.isHamburgerActive.value = true
         viewControllerHeadder.setTitleText(text: "BEST OF REYKJAVÍK")
         changeToRvkCategories()
@@ -75,7 +94,7 @@ extension BOGuideViewController: MenuViewClick{
         
         viewControllerHeadder.viewModel.isHamburgerActive.value = true
         viewControllerHeadder.setTitleText(text: "BEST OF ICELAND")
-        //...ICELAND
+        changeToIceland()
     }
     
     func favClicked() {
@@ -107,16 +126,26 @@ extension BOGuideViewController: BOAppHeaderViewDelegate{
         viewControllerHeadder.viewModel.isDetailActive.value = false
         guard let lastScreenType = self.viewModel.getLastContentType() else {
             
+            viewMenu.setupWithType(screenType: .guides)
             changeToGuides()
             return
         }
         if lastScreenType == .favourites{
+            
+            viewMenu.setupWithType(screenType: .guides)
             changeToGuides()
             return
         }
-        viewModel.screenContentType.value = lastScreenType
-        viewMenu.setupWithType(screenType: getMenuTypeFromContentScreenType())
         
+        guard let nextToLastScreenType = self.viewModel.getNextToLastContentType() else {
+            
+            viewMenu.setupWithType(screenType: .guides)
+            changeToGuides()
+            return
+        }
+        
+        viewModel.screenContentType.value = nextToLastScreenType
+        viewMenu.setupWithType(screenType: nextToLastScreenType)
     }
     
     func openMenu() {
@@ -137,8 +166,8 @@ extension BOGuideViewController: BOAppHeaderViewDelegate{
     
     func getMenuTypeFromContentScreenType() -> ContentType{
         
-        if viewModel.screenContentType.value == .favourites { return ContentType.favourites }
-        if viewModel.screenContentType.value == .iceland { return ContentType.iceland }
+        if viewModel.screenContentType.value == .favourites { return .favourites }
+        if viewModel.screenContentType.value == .iceland { return .iceland }
         
         return .reykjavik
     }
@@ -148,7 +177,7 @@ extension BOGuideViewController: BOAppHeaderViewDelegate{
 extension BOGuideViewController{
     
     private func setupBackground(){
-        view.backgroundColor = UIColor.colorRed
+        view.backgroundColor = .colorRed
     }
 }
 
@@ -181,7 +210,6 @@ extension BOGuideViewController{
         registerGuideDetail()
         registerCategoryWinnerCells()
         registerFavouriteCell()
-        
     }
     
     private func registerFavouriteCell(){
@@ -222,20 +250,28 @@ extension BOGuideViewController{
         let doubleItemCell = UINib(nibName: DoubleItemCell.nibName(), bundle: nil)
         tableView.register(doubleItemCell, forCellReuseIdentifier: DoubleItemCell.reuseIdentifier())
     }
+}
+
+//MARK: Delegates
+extension BOGuideViewController{
     
     private func registerDelegateGuides(){
         
-        viewModel.setDidPressListDelegateForGuideList(delegater: self)
+        registerDidPressList()
     }
     
     private func registerDelegateRvk(){
-
-        viewModel.setDidPressListDelegateForGuideList(delegater: self)
+        
+        registerDidPressList()
+    }
+    
+    private func registerDidPressList(){
+        viewModel.setDidPressListDelegate(delegater: self)
     }
     
     private func registerDelegateSubcategories(){
         
-        viewModel.setDidPressListDelegateForGuideList(delegater: self)
+        viewModel.setDidPressListDelegate(delegater: self)
     }
     
     private func setupEditDelegateForFavourites(){
@@ -247,6 +283,7 @@ extension BOGuideViewController{
         viewModel.setFavouriteDelegateForFavourites(delegate: self)
     }
 }
+
 
 //MARK: UI Bindings
 extension BOGuideViewController{
@@ -264,17 +301,15 @@ extension BOGuideViewController{
         //Changes in TableView DataSource
         _ = viewModel.activeTableDataSource.observeOn(.main).observeNext{ [weak self] activeDataSourceValue in
             
-            print("active data source value changed to: ")
-            print(activeDataSourceValue ?? "nothing")
             guard let this = self else { return }
-            this.tableView.dataSource = activeDataSourceValue
-            this.animateTableReloadData()
+            if activeDataSourceValue != nil{
+                this.tableView.dataSource = activeDataSourceValue
+                this.animateTableReloadData()
+            }
         }
         
         _ = viewModel.activeTableDelegate.observeOn(.main).observeNext{ [weak self] activeTableDelegateValue in
             
-            print("activetabledelegate value changed to: ")
-            print(activeTableDelegateValue ?? "nothing")
             guard let this = self else { return }
             this.tableView.delegate = activeTableDelegateValue
         }
@@ -288,9 +323,7 @@ extension BOGuideViewController{
                 this.viewModel.hasLoadedSomethingOtherThanGuide = true
             }
             
-            
             this.viewModel.addContentTypeToHistory(typeToAdd: contentTypeValue)
-            
             
             switch contentTypeValue{
                 
@@ -306,7 +339,7 @@ extension BOGuideViewController{
             case .iceland:
                 this.setupForIceland()
                 
-            case .reykjavikSubCategories:
+            case .subCategories:
                 this.setupForSubcategories()
                 
             case .favourites:
@@ -356,7 +389,7 @@ extension BOGuideViewController{
             this.viewModel.shouldSwipeBeEnabled() ? this.enableSwipe() : this.disableSwipe()
             this.tableView.scroll(to: .top, animated: true)
             
-            UIView.animate(withDuration: 2, animations: {
+            UIView.animate(withDuration: 1.5, animations: {
                 if this.tableView.alpha != 1{
                     this.tableView.alpha = 1
                 }
@@ -402,10 +435,10 @@ extension BOGuideViewController{
     
     private func setupForGuides(){
         disableTableDelegate()
+        registerDelegateGuides()
         viewModel.setTableDelegateFor(contentType: .guides)
         viewModel.setTableDataSourceFor(contentType: .guides)
         hideMenu()
-        registerDelegateGuides()
     }
     
     private func scrollToTopGuides(){
@@ -427,30 +460,21 @@ extension BOGuideViewController{
         
         disableTableDelegate()
         animateHeaderToGuideDetail()
-        
-        
-        
         viewModel.setTableDelegateFor(contentType: .guideDetail)
         viewModel.setTableDataSourceFor(contentType: .guideDetail)
         hideMenu()
         disableSwipe()
     }
-    
-    
 }
 
 //MARK: Setup Content Type Reykjavik
-extension BOGuideViewController: TakeMeThereProtocol{
+extension BOGuideViewController{
     
     private func changeToRvkCategories() {
-        
-        print("-------active data source value IS: ")
-        print(viewModel.activeTableDataSource.value ?? "-------nothing")
         
         if tableView.delegate != nil{
             viewModel.screenContentType.value = .reykjavik
         }
-        
     }
     
     private func setupForRvk(){
@@ -462,25 +486,26 @@ extension BOGuideViewController: TakeMeThereProtocol{
         hideMenu()
         enableSwipe()
     }
+}
+
+//MARK: Iceland
+extension BOGuideViewController{
     
-    func didPressTakeMeThere(type: Endpoint) {
+    
+    func changeToIceland(){
+        viewModel.screenContentType.value = .iceland
+    }
+    
+    func setupForIceland(){
         
-        switch type{
-            
-        case .rvkDining:
-            print("dining")
-        case .rvkDrink:
-            print("drink")
-        case .rvkShopping:
-            print("shopping")
-        case .rvkActivities:
-            print("activities")
-            
-        default:
-            print("default takemethereVCprotocol")
-        }
+        disableTableDelegate()
+        viewModel.setTableDelegateFor(contentType: .iceland)
+        viewModel.setTableDataSourceFor(contentType: .iceland)
+        hideMenu()
+        disableSwipe()
     }
 }
+
 
 //MARK: Favourites
 extension BOGuideViewController{
@@ -510,28 +535,21 @@ extension BOGuideViewController{
 extension BOGuideViewController{
     
     private func setupForSubcategories(){
-
-        print("******* SUBCAT ******")
-        print("active data source value IS to: ")
-        print(viewModel.activeTableDataSource)
-        
         
         if viewModel.screenContentType.value == .guideDetail {
             print("guideDetail, not loading sub categories")
-//            viewModel.screenContentType.value = .guideDetail
             return
         }
         
         if viewModel.activeTableDataSource.value is BOGuideDetailTableDataSource{
             print("guideDetail, not loading sub cats")
-//            viewModel.screenContentType.value = .guideDetail
             return
         }
         
         disableTableDelegate()
         registerDelegateSubcategories()
-        viewModel.setTableDelegateFor(contentType: .reykjavikSubCategories)
-        viewModel.setTableDataSourceFor(contentType: .reykjavikSubCategories)
+        viewModel.setTableDelegateFor(contentType: .subCategories)
+        viewModel.setTableDataSourceFor(contentType: .subCategories)
         hideMenu()
         disableSwipe()
         setHeaderToSubcategory()
@@ -643,15 +661,6 @@ extension BOGuideViewController{
     }
 }
 
-
-extension BOGuideViewController{
-    
-    //TODO: Implement
-    func setupForIceland(){
-        
-    }
-}
-
 extension BOGuideViewController: DeleteFavouriteItem{
     
     func deleteClicked(deleteItemName: String) {
@@ -665,19 +674,6 @@ extension BOGuideViewController: DeleteFavouriteItem{
 }
 
 extension BOGuideViewController{
-    
-    override func viewDidLayoutSubviews() {
-        
-        super.viewDidLayoutSubviews()
-        
-        guard let cornerToRound = BOGuideViewModel.getRoundedCornerFor(screenContentType: viewModel.screenContentType.value) else {
-            
-            BOGuideViewController.roundCorners(view: tableView, .allCorners, radius: 0)
-            return
-        }
-        BOGuideViewController.roundCorners(view: tableView, .allCorners, radius: 0)
-        BOGuideViewController.roundCorners(view: tableView, cornerToRound, radius: 10)
-    }
     
     static func roundCorners(view: UIView, _ corners: UIRectCorner, radius: CGFloat) {
         

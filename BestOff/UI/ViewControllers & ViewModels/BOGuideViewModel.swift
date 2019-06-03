@@ -11,17 +11,11 @@ import ReactiveKit
 import Bond
 import UIKit
 
-enum ActivePage{
-    case left
-    case right
-    case swipeScreenNotActive
-}
-
 enum ContentType{
     case guides
     case guideDetail
     case reykjavik
-    case reykjavikSubCategories
+    case subCategories
     case iceland
     case favourites
 }
@@ -43,8 +37,12 @@ class BOGuideViewModel: BOViewModel {
     
     private let guideListDataSource = Observable<BOCategoryListDataSourceProtocol?>(BOGuideTableDataSource())
     private let guideDetailDataSource = Observable<BOCategoryDetailListProtocol?>(BOGuideDetailTableDataSource())
-    private let rvkCategoriesDataSource = Observable<RvkCategoriesDataSource?>(RvkCategoriesDataSource())
+    
+    private let rvkCategoriesDataSource = Observable<RvkAndIcelandDataSource?>(RvkAndIcelandDataSource(with: .rvk))
+    private let icelandCategoriesDataSource = Observable<RvkAndIcelandDataSource?>(RvkAndIcelandDataSource(with: .iceland))
+    
     private let subcategoriesListDataSource = Observable<BOSpecificCatWinnersDataSource?>(nil)
+    
     private let favDataSource = Observable<BOFavouritesDataSource>(BOFavouritesDataSource())
     
     let tableDataSourceAnimationDuration:Double = 0.3
@@ -54,9 +52,6 @@ class BOGuideViewModel: BOViewModel {
     //MARK: Menu
     let menuOpen = Observable<Bool>(false)
     
-    //MARK: SWIPE
-    let activePage = Observable<ActivePage>(.left)
-    
     //MARK: Private properties
     private let disposeBag = DisposeBag()
     
@@ -65,6 +60,13 @@ class BOGuideViewModel: BOViewModel {
     private var rvkActivities = Observable<BOCategoryModel?>(nil)
     private var rvkShopping = Observable<BOCategoryModel?>(nil)
     private var rvkDining = Observable<BOCategoryModel?>(nil)
+    
+    private var iceNorth = Observable<BOCategoryModel?>(nil)
+    private var iceEast = Observable<BOCategoryModel?>(nil)
+    private var iceWest = Observable<BOCategoryModel?>(nil)
+    private var iceSouth = Observable<BOCategoryModel?>(nil)
+    private var iceWestFjords = Observable<BOCategoryModel?>(nil)
+    private var iceReykjaNes = Observable<BOCategoryModel?>(nil)
     
     private var arrContentHistory: [ContentType] = []
     
@@ -82,6 +84,16 @@ class BOGuideViewModel: BOViewModel {
 }
 
 extension BOGuideViewModel{
+    
+    func getNextToLastContentType() -> ContentType?{
+        
+        let count = arrContentHistory.count
+        if count < 2 { return nil }
+        let nextToLastIndex = count - 2
+        
+        guard let nextToLastContentType = arrContentHistory[safe: nextToLastIndex] else { return nil }
+        return nextToLastContentType
+    }
     
     func getLastContentType() -> ContentType?{
         
@@ -101,7 +113,7 @@ extension BOGuideViewModel{
 //Datasource help
 extension BOGuideViewModel{
     
-    func setDidPressListDelegateForGuideList(delegater: didPressListDelegate){
+    func setDidPressListDelegate(delegater: didPressListDelegate){
         
         self.guideListDataSource.value?.didPressListTableDelegate = delegater
     }
@@ -144,7 +156,7 @@ extension BOGuideViewModel{
             }
             self.activeTableDelegate.value = rvkDelegate
             
-        case .reykjavikSubCategories:
+        case .subCategories:
             guard let subCategory = self.subcategoriesListDataSource.value else {
                 print("subCategoryListDataSource not set while settings Delegate")
                 return
@@ -153,7 +165,11 @@ extension BOGuideViewModel{
             
             
         case .iceland:
-            print("")
+            guard let iceDelegate = self.icelandCategoriesDataSource.value else {
+                print("iceCateDatasource is not set with settings delegate")
+                return
+            }
+            self.activeTableDelegate.value = iceDelegate
             
         case .favourites:
             
@@ -187,7 +203,7 @@ extension BOGuideViewModel{
             }
             self.activeTableDataSource.value = rvkDataSource
             
-        case .reykjavikSubCategories:
+        case .subCategories:
             guard let subCategory = self.subcategoriesListDataSource.value else {
                 print("guideListDataSource not set while settings Delegate")
                 return
@@ -196,10 +212,15 @@ extension BOGuideViewModel{
             
             
         case .iceland:
+            guard let iceDataSource = self.icelandCategoriesDataSource.value else {
+                print("iceDataSource not set while in settings delegate")
+                return
+            }
             print("")
+            self.activeTableDataSource.value = iceDataSource
             
         case .favourites:
-            print("")
+            print("no applicable")
         }
     }
 }
@@ -208,7 +229,6 @@ extension BOGuideViewModel{
 extension BOGuideViewModel{
     
     private func createBonding(){
-        
         
         _ = self.guides.observeNext{ [weak self] model in
             
@@ -222,43 +242,96 @@ extension BOGuideViewModel{
                 
                 this.activeTableDataSource.value = this.guideListDataSource.value
             }
-            
-            }.dispose(in: disposeBag)
+        }
         
-        _ = self.rvkDining.observeNext{ [weak self] model in
+        _ = self.rvkDining.skip(first: 1).observeNext{ [weak self] model in
             
             guard let this = self else { return }
             guard let catWinnerDSource = this.rvkCategoriesDataSource.value else { return }
             guard let model = model else { return }
             
-            catWinnerDSource.setDiningModel(catModel: model)
+            catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .rvkDining)
             catWinnerDSource.takeMeThereVMDelegate = self
         }
         
-        _ = self.rvkDrink.observeNext{ [weak self] model in
+        _ = self.rvkDrink.skip(first: 1).observeNext{ [weak self] model in
             
             guard let this = self else { return }
             guard let catWinnerDSource = this.rvkCategoriesDataSource.value else { return }
             guard let model = model else { return }
-            catWinnerDSource.setDrinkingModel(catModel: model)
+            catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .rvkDrink)
             catWinnerDSource.takeMeThereVMDelegate = self
         }
         
-        _ = self.rvkShopping.observeNext{ [weak self] model in
+        _ = self.rvkShopping.skip(first: 1).observeNext{ [weak self] model in
             
             guard let this = self else { return }
             guard let catWinnerDSource = this.rvkCategoriesDataSource.value else { return }
             guard let model = model else { return }
-            catWinnerDSource.setShoppingModel(catModel: model)
+            catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .rvkShopping)
             catWinnerDSource.takeMeThereVMDelegate = self
         }
         
-        _ = self.rvkActivities.observeNext{ [weak self] model in
+        _ = self.rvkActivities.skip(first: 1).observeNext{ [weak self] model in
             
             guard let this = self else { return }
             guard let catWinnerDSource = this.rvkCategoriesDataSource.value else { return }
             guard let model = model else { return }
-            catWinnerDSource.setActivitiesModel(catModel: model)
+            catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .rvkActivities)
+            catWinnerDSource.takeMeThereVMDelegate = self
+        }
+        
+        _ = self.iceWest.skip(first: 1).observeNext{ [weak self] model in
+            
+            guard let this = self else { return }
+            guard let catWinnerDSource = this.icelandCategoriesDataSource.value else { return }
+            guard let model = model else { return }
+            catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .west)
+            catWinnerDSource.takeMeThereVMDelegate = self
+        }
+        
+        _ = self.iceNorth.skip(first: 1).observeNext{ [weak self] model in
+            
+            guard let this = self else { return }
+            guard let catWinnerDSource = this.icelandCategoriesDataSource.value else { return }
+            guard let model = model else { return }
+            catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .north)
+            catWinnerDSource.takeMeThereVMDelegate = self
+        }
+        
+        _ = self.iceEast.skip(first: 1).observeNext{ [weak self] model in
+            
+            guard let this = self else { return }
+            guard let catWinnerDSource = this.icelandCategoriesDataSource.value else { return }
+            guard let model = model else { return }
+            catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .east)
+            catWinnerDSource.takeMeThereVMDelegate = self
+        }
+        
+        _ = self.iceSouth.skip(first: 1).observeNext{ [weak self] model in
+            
+            guard let this = self else { return }
+            guard let catWinnerDSource = this.icelandCategoriesDataSource.value else { return }
+            guard let model = model else { return }
+            catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .south)
+            catWinnerDSource.takeMeThereVMDelegate = self
+        }
+        
+        _ = self.iceWestFjords.skip(first: 1).observeNext{ [weak self] model in
+            
+            guard let this = self else { return }
+            guard let catWinnerDSource = this.icelandCategoriesDataSource.value else { return }
+            guard let model = model else { return }
+            catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .westfjords)
+            catWinnerDSource.takeMeThereVMDelegate = self
+        }
+        
+        _ = self.iceReykjaNes.skip(first: 1).observeNext{ [weak self] model in
+            
+            guard let this = self else { return }
+            guard let catWinnerDSource = this.icelandCategoriesDataSource.value else { return }
+            guard let model = model else { return }
+            catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .reykjanes)
             catWinnerDSource.takeMeThereVMDelegate = self
         }
     }
@@ -272,7 +345,7 @@ extension BOGuideViewModel: vmTableViewDelegate{
         let bigGuideCellIndex = 1
         
         if shouldRespondToTableIndexPress(){
-            if index == bigGuideCellIndex { changeDataSourceToFirstDetail() }
+            (index == bigGuideCellIndex) ? changeDataSourceToFirstDetail() : print("nothing")
         }
     }
     
@@ -292,7 +365,6 @@ extension BOGuideViewModel: vmTableViewDelegate{
         
         screenContentType.value = .guideDetail
         guideDetailDataSource.value = BOGuideDetailTableDataSource(catItem: topCellItem)
-        
     }
 }
 
@@ -332,14 +404,56 @@ extension BOGuideViewModel: TakeMeThereProtocol{
             }
             changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
             
-        default:
-            print("default takemethereVCprotocol")
+        case .guides:
+            print ("not applicable")
+            
+        case .north:
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceNorth.value, catTitle: "NORTH") else {
+                print("no specific category datasource available NORTH")
+                return
+            }
+            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
+            
+        case .east:
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceEast.value, catTitle: "EAST") else {
+                print("no specific category datasource available EAST")
+                return
+            }
+            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
+            
+        case .westfjords:
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceWestFjords.value, catTitle: "WESTFJORDS") else {
+                print("no specific category datasource available WESTFJORDS")
+                return
+            }
+            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
+            
+        case .south:
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceSouth.value, catTitle: "SOUTH") else {
+                print("no specific category datasource available SOUTH")
+                return
+            }
+            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
+            
+        case .west:
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceWest.value, catTitle: "WEST") else {
+                print("no specific category datasource available WEST")
+                return
+            }
+            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
+            
+        case .reykjanes:
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceReykjaNes.value, catTitle: "REYKJANES") else {
+                print("no specific category datasource available REYKJANES")
+                return
+            }
+            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
         }
     }
     
-    func changeDataSourceToSpecific(categoryDataSource: BOSpecificCatWinnersDataSource){
+    private func changeDataSourceToSpecific(categoryDataSource: BOSpecificCatWinnersDataSource){
         
-        screenContentType.value = .reykjavikSubCategories
+        screenContentType.value = .subCategories
         subcategoriesListDataSource.value = categoryDataSource
     }
 }
@@ -350,13 +464,13 @@ extension BOGuideViewModel{
     func shouldChangeDataSourceToGuideList() -> Bool{
         
         if activeTableDataSource.value == nil { return true }
-        if activeTableDataSource.value is BOGuideTableDataSource { return true}
+        if activeTableDataSource.value is BOGuideTableDataSource { return true }
         return false
     }
     
     func shouldSwipeBeEnabled() -> Bool{
         
-        if (activeTableDataSource.value is BOGuideTableDataSource) || (activeTableDataSource.value is RvkCategoriesDataSource){
+        if (screenContentType.value == .guides) || (screenContentType.value == .reykjavik){
             return true
         }
         
@@ -365,137 +479,6 @@ extension BOGuideViewModel{
     
     func shouldRespondToTableIndexPress() -> Bool{
         return (activeTableDataSource.value is BOGuideTableDataSource)
-    }
-}
-
-
-//TODO: Refactor?
-//MARK: Networking
-
-
-
-extension BOGuideViewModel{
-    
-    func downloadData(){
-        
-        getGuides()
-        getCategoryWinners()
-    }
-    
-    private func getGuides(){
-        
-        let categoryNetworkService = BOCategoryService()
-        categoryNetworkService.getCategory(.guides) { [weak self] (model, error) in
-            
-            //Error handling
-            guard let this = self else{
-                return
-            }
-            if let nError = error{
-                print(nError)
-                this.showDataError()
-                return
-            }
-            
-            guard var categoryModel = model else {
-                this.guides.value = nil
-                this.showDataError()
-                return
-            }
-            
-            categoryModel.setType(type: .guides)
-            this.guides.value = categoryModel
-            
-        }
-    }
-    
-    private func getCategoryWinners(){
-        
-        let categoryNetworkService = BOCategoryService()
-        
-        categoryNetworkService.getCategory(.rvkDrink) { [weak self] (model, error) in
-            
-            //Error handling
-            guard let this = self else{
-                return
-            }
-            if let nError = error{
-                print(nError)
-                this.showDataError()
-                return
-            }
-            
-            guard var categoryModel = model else {
-                this.rvkDrink.value = nil
-                this.showDataError()
-                return
-            }
-            categoryModel.setType(type: .rvkDrink)
-            this.rvkDrink.value = categoryModel
-        }
-        
-        categoryNetworkService.getCategory(.rvkActivities) { [weak self] (model, error) in
-            
-            //Error handling
-            guard let this = self else{
-                return
-            }
-            if let nError = error{
-                print(nError)
-                this.showDataError()
-                return
-            }
-            
-            guard var categoryModel = model else {
-                this.rvkActivities.value = nil
-                this.showDataError()
-                return
-            }
-            categoryModel.setType(type: .rvkActivities)
-            this.rvkActivities.value = categoryModel
-        }
-        
-        categoryNetworkService.getCategory(.rvkDining) { [weak self] (model, error) in
-            
-            //Error handling
-            guard let this = self else{
-                return
-            }
-            if let nError = error{
-                print(nError)
-                this.showDataError()
-                return
-            }
-            
-            guard var categoryModel = model else {
-                this.rvkDining.value = nil
-                this.showDataError()
-                return
-            }
-            categoryModel.setType(type: .rvkDining)
-            this.rvkDining.value = categoryModel
-        }
-        
-        categoryNetworkService.getCategory(.rvkShopping) { [weak self] (model, error) in
-            
-            //Error handling
-            guard let this = self else{
-                return
-            }
-            if let nError = error{
-                print(nError)
-                this.showDataError()
-                return
-            }
-            
-            guard var categoryModel = model else {
-                this.rvkShopping.value = nil
-                this.showDataError()
-                return
-            }
-            categoryModel.setType(type: .rvkShopping)
-            this.rvkShopping.value = categoryModel
-        }
     }
 }
 
@@ -526,7 +509,7 @@ extension BOGuideViewModel{
         case .reykjavik:
             return "BEST OF REYKJAVÍK"
             
-        case .reykjavikSubCategories:
+        case .subCategories:
             return "BEST OF REYKJAVÍK"
             
         case .iceland:
@@ -558,23 +541,50 @@ extension BOGuideViewModel{
         switch screenContentType {
         case .guides:
             
+            guard let lastContentType = getLastContentType() else {
+                
+                return .right
+            }
+            
+            guard let nextToLastContentType = getNextToLastContentType() else {
+                return .fade
+            }
+            
+            if lastContentType == .guides {
+                
+                if nextToLastContentType == .reykjavik { return .right }
+                
+                return .fade
+            }
+            if lastContentType == .guideDetail {
+                
+                return .fade
+            }
+            
             if hasLoadedSomethingOtherThanGuide{
                 return .right
             }
-            return .fade
+            
+            return .right
             
         case .guideDetail:
             print("fade guidedetail")
             return .fade
         case .reykjavik:
-            print("reykjavik right")
+            
+            guard let lastContentType = getLastContentType() else { return .left}
+            if lastContentType == .guides { return .left }
+            
+            guard let nextToLastScreen = getNextToLastContentType() else { return .left }
+            if nextToLastScreen == .subCategories { return .fade }
             return .left
-        case .reykjavikSubCategories:
+            
+        case .subCategories:
             print("automatic rvksubcategories")
             return .automatic
         case .iceland:
             print("automatic iceland")
-            return .automatic
+            return .fade
         case .favourites:
             print("favourites automatic")
             return .automatic
@@ -584,16 +594,15 @@ extension BOGuideViewModel{
 
 extension BOGuideViewModel{
     
-    static func getRoundedCornerFor(screenContentType: ContentType) -> UIRectCorner?{
+    static func getRoundedCornerFor(screenContentType: ContentType) -> [UIRectCorner]{
         
         switch screenContentType {
         case .guides:
-            return .topLeft
+            return [.topLeft]
         case .reykjavik:
-            return .topRight
-            
+            return [.topRight]
         default:
-            return nil
+            return []
         }
     }
 }
@@ -606,7 +615,118 @@ extension BOGuideViewModel{
             print("not changing datasource!!")
             return false
         }
-        
         return true
+    }
+    
+    func shouldChangeToIceCategoriesFor(tableView: UITableView) -> Bool{
+        
+        if tableView.dataSource is BOGuideDetailTableDataSource{
+            print("not changing datasource!!")
+            return false
+        }
+        return true
+    }
+}
+
+
+
+//MARK: Networking, could use a refactor
+extension BOGuideViewModel{
+    
+    func downloadData(){
+        
+        getGuides()
+        getCategoryWinnersRvk()
+        getCategoryWinnersIce()
+    }
+    
+    private func getGuides(){
+        getCategoryWinnersFor(endpointType: .guides)
+    }
+    
+    private func getCategoryWinnersRvk(){
+        
+        getCategoryWinnersFor(endpointType: .rvkDrink)
+        getCategoryWinnersFor(endpointType: .rvkDining)
+        getCategoryWinnersFor(endpointType: .rvkActivities)
+        getCategoryWinnersFor(endpointType: .rvkShopping)
+    }
+    
+    private func getCategoryWinnersIce(){
+        
+        getCategoryWinnersFor(endpointType: .north)
+        getCategoryWinnersFor(endpointType: .south)
+        getCategoryWinnersFor(endpointType: .east)
+        getCategoryWinnersFor(endpointType: .west)
+        getCategoryWinnersFor(endpointType: .westfjords)
+    }
+    
+    private func getCategoryWinnersFor(endpointType: Endpoint){
+        
+        let categoryNetworkService = BOCategoryService()
+        
+        categoryNetworkService.getCategory(endpointType) { [weak self] (model, error) in
+            
+            //Error handling
+            guard let this = self else{
+                return
+            }
+            if let nError = error{
+                print(nError)
+                this.showDataError()
+                return
+            }
+            
+            guard var categoryModel = model else {
+                this.setDataModelFromCallback(from: endpointType, model: nil)
+                this.showDataError()
+                return
+            }
+            categoryModel.setType(type: endpointType)
+            this.setDataModelFromCallback(from: endpointType, model: categoryModel)
+        }
+    }
+}
+
+extension BOGuideViewModel{
+    
+    private func setDataModelFromCallback(from endpoint: Endpoint, model: BOCategoryModel?){
+        
+        guard model != nil else { return }
+        
+        switch endpoint{
+        case .rvkDrink:
+            self.rvkDrink.value = model
+            
+        case .rvkActivities:
+            self.rvkActivities.value = model
+            
+        case .rvkShopping:
+            self.rvkShopping.value = model
+            
+        case .rvkDining:
+            self.rvkDining.value = model
+            
+        case .guides:
+            self.guides.value = model
+            
+        case .north:
+            self.iceNorth.value = model
+            
+        case .east:
+            self.iceEast.value = model
+            
+        case .westfjords:
+            self.iceWestFjords.value = model
+            
+        case .south:
+            self.iceSouth.value = model
+            
+        case .west:
+            self.iceWest.value = model
+            
+        case .reykjanes:
+            self.iceReykjaNes.value = model
+        }
     }
 }

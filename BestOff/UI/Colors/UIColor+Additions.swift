@@ -64,14 +64,18 @@ extension UIColor{
     static func colorForType(type: Endpoint) -> UIColor{
         
         switch type {
-        case .rvkShopping:
+        case .rvkShopping, .south:
             return .colorYellowBtnBorder
-        case .rvkDining:
+        case .rvkDining, .north:
             return .colorRed
-        case .rvkDrink:
+        case .rvkDrink, .east:
             return .colorPeachBtnBorder
-        case .rvkActivities:
+        case .rvkActivities, .west:
             return .colorBlueBtnBorder
+        case  .reykjanes:
+            return .gray
+        case .westfjords:
+            return .blue
         default:
             return .colorRed
         }

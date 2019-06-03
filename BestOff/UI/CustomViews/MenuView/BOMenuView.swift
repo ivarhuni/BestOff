@@ -14,6 +14,7 @@ protocol MenuViewClick: class{
     func rvkClicked()
     func iceClicked()
     func favClicked()
+    func subCatClicked()
 }
 
 class BOMenuView: UIView{
@@ -45,24 +46,21 @@ class BOMenuView: UIView{
     @IBOutlet weak var leadingLblIce: NSLayoutConstraint!
     @IBOutlet weak var leadingLblFav: NSLayoutConstraint!
     
-    
-    
     weak var menuViewClickDelegate: MenuViewClick?
-    
     
     private var viewModel: BOMenuViewModel
     
     //MARK: Init, viewcycle
     override init(frame: CGRect) {
         
-        viewModel = BOMenuViewModel(withSelectedScreen: .reykjavik)
+        viewModel = BOMenuViewModel(withSelectedScreen: .guides)
         super.init(frame: frame)
         commonInit()
     }
     
     required init?(coder aDecoder: NSCoder) {
         
-        viewModel = BOMenuViewModel(withSelectedScreen: .reykjavik)
+        viewModel = BOMenuViewModel(withSelectedScreen: .guides)
         super.init(coder: aDecoder)
         commonInit()
     }
@@ -144,8 +142,6 @@ extension BOMenuView{
     @objc private func handleTapRvk(_ sender: UITapGestureRecognizer) {
         
         viewModel.select(screenType: .reykjavik)
-        
-        
     }
     
     @objc private func handleTapIce(_ sender: UITapGestureRecognizer) {
@@ -170,6 +166,15 @@ extension BOMenuView: MenuViewClick{
             return
         }
         delegate.rvkClicked()
+    }
+    
+    func subCatClicked(){
+        guard let delegate = menuViewClickDelegate else {
+            
+            print("delegate not set for menuviewclick delegate")
+            return
+        }
+        delegate.subCatClicked()
     }
     
     func iceClicked() {
@@ -279,6 +284,20 @@ extension BOMenuView{
                 guard let this = self else { return }
                 this.rvkClicked()
             }
+        case .reykjavik:
+            UIView.animate(withDuration: viewModel.animationDuration, animations: { [weak self] in
+                
+                guard let this = self else { return }
+                
+                this.configureConstantsReykjavik()
+                this.styleViewFor(screenType: .reykjavik)
+                this.view.layoutIfNeeded()
+                
+            }) {[weak self] finished in
+                guard let this = self else { return }
+                this.subCatClicked()
+            }
+            
         default:
             
             UIView.animate(withDuration: viewModel.animationDuration, animations: { [weak self] in
