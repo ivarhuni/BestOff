@@ -403,7 +403,7 @@ extension BOGuideViewController{
             
             guard let this = self else { return }
             
-            this.viewControllerHeadder.showDetail(withDetailText: "GUIDES")
+            this.viewControllerHeadder.showDetail(withDetailText: "Guides")
         }) { finished in
             
         }

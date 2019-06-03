@@ -13,7 +13,7 @@ struct BOCategoryModel: Codable{
     let descriptionField : String
     let feedUrl : String
     let homePageUrl : String
-    let items : [BOCatItem]
+    var items : [BOCatItem]
     let title : String
     let userComment : String
     let version : String
@@ -46,4 +46,6 @@ extension BOCategoryModel{
     mutating func setType(type: Endpoint){
         self.type = type
     }
+    
+    
 }

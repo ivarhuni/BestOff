@@ -150,6 +150,9 @@ extension DoubleItemImgCell{
         
         lblRight.minimumScaleFactor = 0.1
         lblRight.lineBreakMode = .byClipping
+        
+        lblRight.adjustsFontSizeToFitWidth = true
+        lblLeft.adjustsFontSizeToFitWidth = true
     }
     
     private func disableSelection(){

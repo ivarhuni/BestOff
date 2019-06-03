@@ -9,6 +9,7 @@
 import Foundation
 
 enum Endpoint {
+    
     case rvkDrink
     case rvkActivities
     case rvkShopping
@@ -22,7 +23,6 @@ enum Endpoint {
     case south
     case west
     case reykjanes
-    
 }
 
 extension  Endpoint{

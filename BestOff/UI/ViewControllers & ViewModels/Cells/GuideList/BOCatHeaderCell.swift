@@ -39,7 +39,7 @@ extension BOCatHeaderCell{
     
     func setup(){
         lblCategoryTitle.textColor = .colorBlack
-        lblCategoryTitle.text = "GUIDES"
+        lblCategoryTitle.text = "Guides"
         lblCategoryTitle.font = UIFont.categoryType
         
         lblSwipe.textColor = .colorGreyDot

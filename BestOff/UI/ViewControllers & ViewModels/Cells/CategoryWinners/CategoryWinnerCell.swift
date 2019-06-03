@@ -216,7 +216,7 @@ extension CategoryWinnerCell{
         switch type{
             
         case .rvkDining:
-            lblCatName.text = "DINING"
+            lblCatName.text = "Dining"
             lblBrowseMore.text = "Browse More Restaurants"
             
             showSwipeAndPageCtrl()
@@ -225,35 +225,35 @@ extension CategoryWinnerCell{
             lblTakeMeThere.layer.borderColor = UIColor.colorRed.cgColor
             
         case .rvkDrink:
-            lblCatName.text = "DRINKING"
+            lblCatName.text = "Drinking"
             lblBrowseMore.text = "Browse More Bars"
             
             showImgViewSponsor()
             
         case .rvkShopping:
-            lblCatName.text = "SHOPPING"
+            lblCatName.text = "Shopping"
             lblBrowseMore.text = "Browse More Shops"
             
         case .rvkActivities:
-            lblCatName.text = "ACTIVITIES"
+            lblCatName.text = "Activities"
             lblBrowseMore.text = "Browse More Activities"
 
         case .guides:
             print("not applicable")
             
         case .east:
-            lblCatName.text = "EAST"
+            lblCatName.text = "East"
             lblBrowseMore.text = "Browse more items"
         case .north:
-            lblCatName.text = "NORTH"
+            lblCatName.text = "North"
             lblBrowseMore.text = "Browse more items"
 
         case .westfjords:
-            lblCatName.text = "WESTFJORDS"
+            lblCatName.text = "Westfjords"
             lblBrowseMore.text = "Browse more items"
             
         case .south:
-            lblCatName.text = "SOUTH"
+            lblCatName.text = "South"
             lblBrowseMore.text = "Browse more items"
             
         case .west:

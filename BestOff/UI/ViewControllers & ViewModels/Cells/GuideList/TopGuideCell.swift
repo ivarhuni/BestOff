@@ -79,7 +79,8 @@ extension TopGuideCell{
         lblGrapevine.text = "Reykjavík Grapevine"
         lblDate.text = ""
         imgViewIcon.image = Asset.grapevineIcon.img
-        lblTitle.minimumScaleFactor = 0.25
+        lblTitle.adjustsFontSizeToFitWidth = true
+        lblTitle.minimumScaleFactor = 0.1
         lblTitle.numberOfLines = 0
         lblTitle.lineBreakMode = .byClipping
     }

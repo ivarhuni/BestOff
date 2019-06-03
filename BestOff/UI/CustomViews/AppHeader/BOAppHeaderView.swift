@@ -152,6 +152,7 @@ extension BOAppHeaderView{
         lblTitle.font = UIFont.guideHeadline
         lblBackTitle.font = UIFont.backLblTitle
         
+        lblBackTitle.adjustsFontSizeToFitWidth = true
         lblBackTitle.minimumScaleFactor = 0.1
         lblBackTitle.numberOfLines = 1
         lblBackTitle.lineBreakMode = .byClipping

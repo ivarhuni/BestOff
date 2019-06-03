@@ -659,6 +659,7 @@ extension BOGuideViewModel{
         getCategoryWinnersFor(endpointType: .east)
         getCategoryWinnersFor(endpointType: .west)
         getCategoryWinnersFor(endpointType: .westfjords)
+        getCategoryWinnersFor(endpointType: .reykjanes)
     }
     
     private func getCategoryWinnersFor(endpointType: Endpoint){
@@ -683,6 +684,7 @@ extension BOGuideViewModel{
                 return
             }
             categoryModel.setType(type: endpointType)
+            
             this.setDataModelFromCallback(from: endpointType, model: categoryModel)
         }
     }

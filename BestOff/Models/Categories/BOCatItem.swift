@@ -20,6 +20,7 @@ struct BOCatItem : Codable {
     let author: BOAuthor
     var detailItem: BOCategoryDetail?
     var strTimeStamp: String?
+    var superCatName: String?
     
     enum CodingKeys: String, CodingKey {
         case contentText = "content_text"
@@ -42,6 +43,7 @@ struct BOCatItem : Codable {
         author = try values.decode(BOAuthor.self, forKey: .author)
         detailItem = nil
         strTimeStamp = nil
+        superCatName = ""
         
         setDetailItem()
         tryToSetTimeStamp()

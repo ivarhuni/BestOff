@@ -39,6 +39,7 @@ extension BOCatItemTextDescriptionCell{
     private func style(){
         
         lblDescription.minimumScaleFactor = 0.25
+        lblDescription.adjustsFontSizeToFitWidth = true
         lblDescription.numberOfLines = 0
         lblDescription.lineBreakMode = .byClipping
         lblDescription.font = UIFont.cellItemText
