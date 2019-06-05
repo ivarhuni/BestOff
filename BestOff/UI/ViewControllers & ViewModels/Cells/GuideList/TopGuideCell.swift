@@ -80,7 +80,7 @@ extension TopGuideCell{
         lblDate.text = ""
         imgViewIcon.image = Asset.grapevineIcon.img
         lblTitle.adjustsFontSizeToFitWidth = true
-        lblTitle.minimumScaleFactor = 0.1
+        lblTitle.minimumScaleFactor = 0.5
         lblTitle.numberOfLines = 0
         lblTitle.lineBreakMode = .byClipping
     }

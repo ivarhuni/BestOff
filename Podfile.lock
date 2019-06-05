@@ -1,8 +1,11 @@
 PODS:
-  - Bond (7.2.1):
+  - Bond (7.3.3):
     - Differ (~> 1.3)
     - ReactiveKit (~> 3.9)
   - Differ (1.3.0)
+  - NVActivityIndicatorView (4.6.1):
+    - NVActivityIndicatorView/Presenter (= 4.6.1)
+  - NVActivityIndicatorView/Presenter (4.6.1)
   - ReactiveKit (3.9.7)
   - SDWebImage (4.4.6):
     - SDWebImage/Core (= 4.4.6)
@@ -10,6 +13,7 @@ PODS:
 
 DEPENDENCIES:
   - Bond
+  - NVActivityIndicatorView
   - ReactiveKit
   - SDWebImage
 
@@ -17,15 +21,17 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Bond
     - Differ
+    - NVActivityIndicatorView
     - ReactiveKit
     - SDWebImage
 
 SPEC CHECKSUMS:
-  Bond: 663dd8da3eccadb4d7d57243499d387f9976580d
+  Bond: 48ffda2418dde1da39bad39495c32a55f3ad23b9
   Differ: 9fcee7602542d7c6484ce05a0faec1c11258ed63
+  NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
   ReactiveKit: 5f4c440715d671901c382ae6b42ed3337ce4699b
   SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
 
-PODFILE CHECKSUM: 3b5f7237f7597cd83e43ffc8d2d15f0be387e802
+PODFILE CHECKSUM: f5646d440df36a6580184bd1cbb790e07ec23b1d
 
 COCOAPODS: 1.6.1

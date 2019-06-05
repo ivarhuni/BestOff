@@ -9,6 +9,7 @@
 import UIKit
 import ReactiveKit
 import Bond
+import NVActivityIndicatorView
 
 protocol MenuController{
     
@@ -23,6 +24,19 @@ class BOGuideViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var viewControllerHeadder: BOAppHeaderView!
     @IBOutlet weak var viewMenu: BOMenuView!
+    @IBOutlet weak var viewLoadingScreen: UIView!
+    @IBOutlet weak var imgViewGrapevine: UIImageView!
+    @IBOutlet weak var viewActivity: NVActivityIndicatorView!
+    @IBOutlet weak var viewAnimationBox: UIView!
+    
+    @IBOutlet weak var constantAnimBoxHeight: NSLayoutConstraint!
+    @IBOutlet weak var constantAnimBoxWidth: NSLayoutConstraint!
+    @IBOutlet weak var constantViewActivity: NSLayoutConstraint!
+    @IBOutlet weak var constantViewActivityWidth: NSLayoutConstraint!
+    @IBOutlet weak var constantImgViewGHeight: NSLayoutConstraint!
+    @IBOutlet weak var constantImgViewGWidth: NSLayoutConstraint!
+    
+    
     private var swipeLeft: UISwipeGestureRecognizer?
     private var swipeRight: UISwipeGestureRecognizer?
     
@@ -66,12 +80,65 @@ extension BOGuideViewController{
 extension BOGuideViewController{
     
     private func setupVC(){
+        setupLoadingScreen()
         setupMenu()
         setupHeaderDelegate()
         setupBackground()
         setupTable()
         setupSwipeGestureRec()
         setupUIBindings()
+    }
+}
+
+extension BOGuideViewController{
+    
+    func setupLoadingScreen(){
+        
+        viewLoadingScreen.backgroundColor = .colorRed
+        imgViewGrapevine.image = Asset.grapevineIcon.img
+        viewActivity.backgroundColor = .clear
+        viewActivity.type = .ballScaleRippleMultiple
+        viewActivity.startAnimating()
+        viewActivity.alpha = viewModel.viewActivityAlpha
+        viewLoadingScreen.alpha = 1
+        viewAnimationBox.backgroundColor = .colorRed
+    }
+    
+    private func hideLoadingScreen(){
+        
+        print("hiding loading screen")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + self.viewModel.animationDelay) {
+            
+            self.view.setNeedsLayout()
+            
+            UIView.animate(withDuration: self.viewModel.loaderDissapearDuration) { [weak self] in
+                
+                guard let this = self else { return }
+                this.constantAnimBoxWidth.constant = 0
+                this.constantAnimBoxHeight.constant = 0
+                this.constantViewActivity.constant = 0
+                this.constantViewActivityWidth.constant = 0
+                
+                this.constantImgViewGWidth.constant = 27
+                this.constantImgViewGHeight.constant = 30
+                
+                this.imgViewGrapevine.frame.origin.x = this.viewControllerHeadder.imgLeftIcon.frame.origin.x
+                this.imgViewGrapevine.frame.origin.y = this.viewControllerHeadder.imgLeftIcon.frame.origin.y + this.viewControllerHeadder.frame.origin.y
+                
+                this.view.layoutIfNeeded()
+            }
+            
+            
+            UIView.animate(withDuration: self.viewModel.containerDissapearDuration) { [weak self] in
+                
+                guard let this = self else { return }
+                
+                this.viewLoadingScreen.alpha = 0
+                
+                this.view.layoutIfNeeded()
+            }
+        }
     }
 }
 
@@ -186,7 +253,7 @@ extension BOGuideViewController{
     
     private func setupTable(){
         
-        tableView.alpha = 0
+        //tableView.alpha = 0
         registerCells()
         registerDelegateGuides()
         styleTableDefault()
@@ -302,10 +369,22 @@ extension BOGuideViewController{
         _ = viewModel.activeTableDataSource.observeOn(.main).observeNext{ [weak self] activeDataSourceValue in
             
             guard let this = self else { return }
+            
             if activeDataSourceValue != nil{
                 this.tableView.dataSource = activeDataSourceValue
                 this.animateTableReloadData()
+                
+                if this.viewModel.shouldBeAnimating.value{
+                    this.viewModel.shouldBeAnimating.value = false
+                }
             }
+        }
+        
+        _ = viewModel.shouldBeAnimating.observeOn(.main).observeNext{ [weak self] shouldAnimate in
+            
+            guard let this = self else { return }
+            
+            if !shouldAnimate { this.hideLoadingScreen() }
         }
         
         _ = viewModel.activeTableDelegate.observeOn(.main).observeNext{ [weak self] activeTableDelegateValue in
@@ -389,10 +468,11 @@ extension BOGuideViewController{
             this.viewModel.shouldSwipeBeEnabled() ? this.enableSwipe() : this.disableSwipe()
             this.tableView.scroll(to: .top, animated: true)
             
-            UIView.animate(withDuration: 1.5, animations: {
-                if this.tableView.alpha != 1{
-                    this.tableView.alpha = 1
-                }
+            
+            
+            UIView.animate(withDuration: 1.5, animations: { [weak self] in
+                
+                
             })
         }
     }
@@ -527,7 +607,7 @@ extension BOGuideViewController{
     private func setHeaderToFavs(){
         
         viewControllerHeadder.viewModel.isDetailActive.value = true
-        viewControllerHeadder.showDetail(withDetailText: "FAVOURITES")
+        viewControllerHeadder.showDetail(withDetailText: "Favourites")
     }
 }
 

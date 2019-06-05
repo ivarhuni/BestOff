@@ -145,10 +145,10 @@ extension DoubleItemImgCell{
     
     private func setupLabels(){
         
-        lblLeft.minimumScaleFactor = 0.1
+        lblLeft.minimumScaleFactor = 0.7
         lblLeft.lineBreakMode = .byClipping
         
-        lblRight.minimumScaleFactor = 0.1
+        lblRight.minimumScaleFactor = 0.7
         lblRight.lineBreakMode = .byClipping
         
         lblRight.adjustsFontSizeToFitWidth = true

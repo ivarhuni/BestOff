@@ -28,8 +28,21 @@ class BOGuideViewModel: BOViewModel {
     let alphaVisible: CGFloat = 1.0
     let alphaInvisible: CGFloat = 0
     
-    //MARK: ScreenContentType
+    let loaderAnimationSpeed = 0.9
+    let loaderAlpha = 0.5
+    let loaderDissapearDuration = 1.0
+    let containerDissapearDuration = 1.5
+    let animationDelay:Double = 2.0
+    let viewActivityAlpha:CGFloat = 0.5
+    
+    let tableDataSourceAnimationDuration:Double = 0.3
+    
+    var hasLoadedSomethingOtherThanGuide: Bool = false
+    
+    //Observables
     let screenContentType = Observable<ContentType>(.guides)
+    
+    let shouldBeAnimating = Observable<Bool>(true)
     
     //MARK: Datasources
     let activeTableDataSource = Observable<UITableViewDataSource?>(nil)
@@ -45,9 +58,7 @@ class BOGuideViewModel: BOViewModel {
     
     private let favDataSource = Observable<BOFavouritesDataSource>(BOFavouritesDataSource())
     
-    let tableDataSourceAnimationDuration:Double = 0.3
-    
-    var hasLoadedSomethingOtherThanGuide: Bool = false
+
     
     //MARK: Menu
     let menuOpen = Observable<Bool>(false)
@@ -377,28 +388,28 @@ extension BOGuideViewModel: TakeMeThereProtocol{
         switch type{
             
         case .rvkDining:
-            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.rvkDining.value, catTitle: "DINING") else {
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.rvkDining.value, catTitle: "Dining") else {
                 print("no specific category datasource available DINING")
                 return
             }
             changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
             
         case .rvkDrink:
-            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.rvkDrink.value, catTitle: "DRINKING") else {
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.rvkDrink.value, catTitle: "Drinking") else {
                 print("no specific category datasource available DRINK")
                 return
             }
             changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
             
         case .rvkShopping:
-            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.rvkShopping.value, catTitle: "SHOPPING") else {
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.rvkShopping.value, catTitle: "Shopping") else {
                 print("no specific category datasource available SHOPPING")
                 return
             }
             changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
             
         case .rvkActivities:
-            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.rvkActivities.value, catTitle: "ACTIVITIES") else {
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.rvkActivities.value, catTitle: "Activities") else {
                 print("no specific category datasource available ACTIVITIES")
                 return
             }
@@ -408,42 +419,42 @@ extension BOGuideViewModel: TakeMeThereProtocol{
             print ("not applicable")
             
         case .north:
-            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceNorth.value, catTitle: "NORTH") else {
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceNorth.value, catTitle: "North") else {
                 print("no specific category datasource available NORTH")
                 return
             }
             changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
             
         case .east:
-            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceEast.value, catTitle: "EAST") else {
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceEast.value, catTitle: "East") else {
                 print("no specific category datasource available EAST")
                 return
             }
             changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
             
         case .westfjords:
-            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceWestFjords.value, catTitle: "WESTFJORDS") else {
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceWestFjords.value, catTitle: "Westfjords") else {
                 print("no specific category datasource available WESTFJORDS")
                 return
             }
             changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
             
         case .south:
-            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceSouth.value, catTitle: "SOUTH") else {
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceSouth.value, catTitle: "South") else {
                 print("no specific category datasource available SOUTH")
                 return
             }
             changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
             
         case .west:
-            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceWest.value, catTitle: "WEST") else {
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceWest.value, catTitle: "West") else {
                 print("no specific category datasource available WEST")
                 return
             }
             changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
             
         case .reykjanes:
-            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceReykjaNes.value, catTitle: "REYKJANES") else {
+            guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceReykjaNes.value, catTitle: "Reykjanes") else {
                 print("no specific category datasource available REYKJANES")
                 return
             }
@@ -498,7 +509,7 @@ extension BOGuideViewModel{
         switch screenContentType.value {
             
         case .favourites:
-            return "FAVOURITES"
+            return "Favourites"
             
         case .guides:
             return "BEST OF REYKJAVÍK"
@@ -565,7 +576,7 @@ extension BOGuideViewModel{
                 return .right
             }
             
-            return .right
+            return .fade
             
         case .guideDetail:
             print("fade guidedetail")

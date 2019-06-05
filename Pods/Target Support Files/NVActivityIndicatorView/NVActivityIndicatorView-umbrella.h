@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double garland_viewVersionNumber;
-FOUNDATION_EXPORT const unsigned char garland_viewVersionString[];
+FOUNDATION_EXPORT double NVActivityIndicatorViewVersionNumber;
+FOUNDATION_EXPORT const unsigned char NVActivityIndicatorViewVersionString[];
 

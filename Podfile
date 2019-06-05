@@ -8,6 +8,7 @@ target 'BestOff' do
   pod 'ReactiveKit'
   pod 'Bond'
   pod 'SDWebImage'
+  pod 'NVActivityIndicatorView'
 
   target 'BestOffTests' do
     inherit! :search_paths

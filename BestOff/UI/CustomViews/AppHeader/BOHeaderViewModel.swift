@@ -18,6 +18,11 @@ import ReactiveKit
 struct BOHeaderViewModel{
     
     let btnAlphaValue: CGFloat = 0.7
+    
+    
+    let animatioShowHideDuration = 3.0
+    let lblHideDuration = 0.2
+    
     let isHamburgerActive = Observable<Bool>(true)
     let btnAnimationDuration:Double = 0.2
     var headerText = "BEST OF REYKJAVIK"

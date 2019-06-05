@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BOGuideViewController" customModule="BestOff" customModuleProvider="target">
             <connections>
+                <outlet property="constantAnimBoxHeight" destination="jde-yf-PiA" id="6iD-vY-F6d"/>
+                <outlet property="constantAnimBoxWidth" destination="xfw-N9-wQz" id="bho-WR-HVa"/>
+                <outlet property="constantImgViewGHeight" destination="Avf-0w-sXI" id="HP3-43-rk9"/>
+                <outlet property="constantImgViewGWidth" destination="s4T-Lm-ypc" id="Odu-SL-IpE"/>
+                <outlet property="constantViewActivity" destination="CPc-BV-CTk" id="tWN-gU-XaY"/>
+                <outlet property="constantViewActivityWidth" destination="jdV-AX-Vt2" id="cJE-fx-anA"/>
+                <outlet property="imgViewGrapevine" destination="Ui1-uH-JzM" id="xoP-RL-8fE"/>
                 <outlet property="tableView" destination="k8a-cX-C0R" id="7q5-3C-E2Q"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="viewActivity" destination="mDA-bs-gLe" id="zRI-kS-new"/>
+                <outlet property="viewAnimationBox" destination="tNh-UR-Ekb" id="eOA-om-Zw8"/>
                 <outlet property="viewControllerHeadder" destination="mdM-CR-r9D" id="Sm8-E5-MG6"/>
+                <outlet property="viewLoadingScreen" destination="UNy-Lv-a5X" id="TUY-zv-Pv6"/>
                 <outlet property="viewMenu" destination="D4N-cA-N2p" id="6jC-4t-DZe"/>
             </connections>
         </placeholder>
@@ -37,14 +47,57 @@
                     <rect key="frame" x="0.0" y="110" width="375" height="557"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UNy-Lv-a5X">
+                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tNh-UR-Ekb">
+                            <rect key="frame" x="115.5" y="251.5" width="144" height="144"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mDA-bs-gLe" customClass="NVActivityIndicatorView" customModule="NVActivityIndicatorView">
+                                    <rect key="frame" x="0.0" y="0.0" width="144" height="144"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="144" id="CPc-BV-CTk"/>
+                                        <constraint firstAttribute="width" constant="144" id="jdV-AX-Vt2"/>
+                                    </constraints>
+                                </view>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Grapevine-icon" translatesAutoresizingMaskIntoConstraints="NO" id="Ui1-uH-JzM">
+                                    <rect key="frame" x="27.5" y="22" width="89" height="100"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="100" id="Avf-0w-sXI"/>
+                                        <constraint firstAttribute="width" constant="89" id="s4T-Lm-ypc"/>
+                                    </constraints>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="mDA-bs-gLe" firstAttribute="centerY" secondItem="tNh-UR-Ekb" secondAttribute="centerY" id="3JC-wy-9Cy"/>
+                                <constraint firstItem="Ui1-uH-JzM" firstAttribute="centerY" secondItem="tNh-UR-Ekb" secondAttribute="centerY" id="PtQ-K3-xhf"/>
+                                <constraint firstItem="mDA-bs-gLe" firstAttribute="centerX" secondItem="tNh-UR-Ekb" secondAttribute="centerX" id="dSE-Mp-x6D"/>
+                                <constraint firstAttribute="height" constant="144" id="jde-yf-PiA"/>
+                                <constraint firstAttribute="width" constant="144" id="xfw-N9-wQz"/>
+                                <constraint firstItem="Ui1-uH-JzM" firstAttribute="centerX" secondItem="tNh-UR-Ekb" secondAttribute="centerX" id="z4C-PZ-Nfz"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="tNh-UR-Ekb" firstAttribute="centerY" secondItem="UNy-Lv-a5X" secondAttribute="centerY" id="3KV-ZV-Fif"/>
+                        <constraint firstItem="tNh-UR-Ekb" firstAttribute="centerX" secondItem="UNy-Lv-a5X" secondAttribute="centerX" id="MHF-pl-gr7"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="mdM-CR-r9D" secondAttribute="trailing" id="2Sk-HN-awJ"/>
+                <constraint firstItem="UNy-Lv-a5X" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="40Q-Km-RWc"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="D4N-cA-N2p" secondAttribute="trailing" id="4ee-Fa-6dH"/>
                 <constraint firstItem="k8a-cX-C0R" firstAttribute="top" secondItem="mdM-CR-r9D" secondAttribute="bottom" id="JXK-7k-N9Y"/>
                 <constraint firstItem="k8a-cX-C0R" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="L3K-yO-Yne"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="UNy-Lv-a5X" secondAttribute="trailing" id="NR6-RH-XZ4"/>
                 <constraint firstAttribute="bottomMargin" secondItem="k8a-cX-C0R" secondAttribute="bottom" id="OOF-xH-9rF"/>
+                <constraint firstItem="UNy-Lv-a5X" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="OqS-YE-yyB"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="UNy-Lv-a5X" secondAttribute="bottom" id="PqY-cW-qft"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="D4N-cA-N2p" secondAttribute="bottom" id="SXH-Qg-Khm"/>
                 <constraint firstItem="D4N-cA-N2p" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Ube-qL-yxo"/>
                 <constraint firstItem="mdM-CR-r9D" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="WyC-tG-Sq7"/>
@@ -56,4 +109,7 @@
             <point key="canvasLocation" x="120.8" y="146.17691154422789"/>
         </view>
     </objects>
+    <resources>
+        <image name="Grapevine-icon" width="89" height="100"/>
+    </resources>
 </document>

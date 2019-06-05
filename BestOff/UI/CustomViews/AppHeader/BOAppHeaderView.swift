@@ -9,6 +9,7 @@
 import UIKit
 import Bond
 import ReactiveKit
+import NVActivityIndicatorView
 
 protocol BOAppHeaderViewDelegate: AnyObject {
     
@@ -34,6 +35,11 @@ class BOAppHeaderView: UIView {
     @IBOutlet weak var viewBackBtn: UIView!
     @IBOutlet private weak var lblBackTitle: UILabel!
     @IBOutlet weak var imgViewBackBtn: UIImageView!
+    
+    @IBOutlet weak var viewLoader: NVActivityIndicatorView!
+    @IBOutlet weak var viewLoaderWidth: NSLayoutConstraint!
+    @IBOutlet weak var viewLoaderHeight: NSLayoutConstraint!
+    
     
     @IBOutlet weak var viewSep: UIView!
     @IBOutlet weak var cImgViewWidth: NSLayoutConstraint!
@@ -90,9 +96,66 @@ extension BOAppHeaderView{
     
     func setupViewDefault(){
         
+        setupLoader()
         setIcons()
         setText()
         setGestureRec()
+    }
+    
+    private func setupLoader(){
+        
+        viewLoader.backgroundColor = .clear
+        viewLoader.startAnimating()
+        viewLoader.alpha = 0
+        viewLoader.type = .lineScalePulseOutRapid
+    }
+    
+    private func hideNonLoaderViews(){
+        
+        lblTitle.alpha = 0
+        lblBackTitle.alpha = 0
+        imgLeftIcon.alpha = 0
+        btnHamburger.alpha = 0
+    }
+    
+    private func showNonLoaderViews(){
+    
+        lblTitle.alpha = 1
+        lblBackTitle.alpha = 1
+        imgLeftIcon.alpha = 1
+        btnHamburger.alpha = 1
+    }
+    
+    private func showLoader(){
+        
+//        let lblHideDuration = 0.2
+//        //let loaderDuration = 3
+//
+//        viewLoader.startAnimating()
+//
+//        UIView.animate(withDuration: lblHideDuration, animations: { [weak self] in
+//            guard let this = self else { return }
+//            this.hideNonLoaderViews()
+//        }) { [weak self] (finished) in
+//
+//            guard let this = self else { return }
+//
+//            this.viewLoader.stopAnimating()
+//        }
+//
+//
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
+//
+//            UIView.animate(withDuration: lblHideDuration, animations: { [weak self] in
+//                guard let this = self else { return }
+//                this.showNonLoaderViews()
+//            }) { [weak self] (finished) in
+//
+//                guard let this = self else { return }
+//
+//                this.viewLoader.stopAnimating()
+//            }
+//        }
     }
     
     private func setGestureRec(){
@@ -129,6 +192,10 @@ extension BOAppHeaderView{
         addShadow()
     }
     
+    private func hideImgIcon(){
+        imgLeftIcon.alpha = 0
+    }
+    
     func addShadow(){
         
         imgLeftIcon.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: CGSize(width: 1, height: 1), radius: 2)
@@ -153,7 +220,7 @@ extension BOAppHeaderView{
         lblBackTitle.font = UIFont.backLblTitle
         
         lblBackTitle.adjustsFontSizeToFitWidth = true
-        lblBackTitle.minimumScaleFactor = 0.1
+        lblBackTitle.minimumScaleFactor = 0.5
         lblBackTitle.numberOfLines = 1
         lblBackTitle.lineBreakMode = .byClipping
     }
@@ -207,6 +274,9 @@ extension BOAppHeaderView{
         
         self.layoutIfNeeded()
         self.setNeedsLayout()
+        
+        
+        
         UIView.transition(with: self.btnHamburger,
                           duration: self.viewModel.btnAnimationDuration,
                           options: .transitionCrossDissolve,
@@ -218,7 +288,7 @@ extension BOAppHeaderView{
                             this.btnHeight.constant = this.viewModel.originalBtnWidthHeight
                             this.view.layoutIfNeeded()
                             this.layoutIfNeeded()
-            }, completion: nil)
+            }, completion: {  finished in })
     }
     
     private func animateToXIcon(){
@@ -241,7 +311,7 @@ extension BOAppHeaderView{
     
     private func animateToFavouriteTxt(){
         
-        self.layoutIfNeeded()
+        self.showLoader()
         self.setNeedsLayout()
         UIView.transition(with: self.lblTitle,
                           duration: self.viewModel.btnAnimationDuration,
@@ -258,6 +328,7 @@ extension BOAppHeaderView{
     
     private func animateToNormalText(){
         
+        self.showLoader()
         self.layoutIfNeeded()
         self.setNeedsLayout()
         UIView.transition(with: self.lblTitle,
@@ -287,6 +358,7 @@ extension BOAppHeaderView{
     
     private func animateDetail(){
         
+        showLoader()
         layoutViews()
         UIView.transition(with: self,
                           duration: self.viewModel.btnAnimationDuration,
@@ -318,7 +390,7 @@ extension BOAppHeaderView{
     
     private func animateDefault(){
         
-        
+        showLoader()
         setViewNeedsLayout()
         UIView.transition(with: self,
                           duration: self.viewModel.btnAnimationDuration,
