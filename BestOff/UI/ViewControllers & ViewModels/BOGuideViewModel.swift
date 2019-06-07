@@ -31,7 +31,7 @@ class BOGuideViewModel: BOViewModel {
     
     let loaderAnimationSpeed = 0.9
     let loaderAlpha = 0.5
-    let loaderDissapearDuration = 0.1
+    let loaderDissapearDuration = 1.0
     let containerDissapearDuration = 1.5
     let animationDelay:Double = 2.0
     let viewActivityAlpha:CGFloat = 0.8
@@ -50,8 +50,10 @@ class BOGuideViewModel: BOViewModel {
     let activeTableDelegate = Observable<UITableViewDelegate?>(nil)
     
     private let guideListDataSource = Observable<BOCategoryListDataSourceProtocol?>(BOGuideTableDataSource())
+    
     private let guideDetailDataSource = Observable<BOCategoryDetailListProtocol?>(BOGuideDetailTableDataSource())
     private let catDetailDataSource = Observable<BOCategoryDetailListProtocol?>(BOGuideDetailTableDataSource())
+    weak var showCatDetailDelegate: ShowCategoryDetail?
     
     private let rvkCategoriesDataSource = Observable<RvkAndIcelandDataSource?>(RvkAndIcelandDataSource(with: .rvk))
     private let icelandCategoriesDataSource = Observable<RvkAndIcelandDataSource?>(RvkAndIcelandDataSource(with: .iceland))
@@ -74,7 +76,7 @@ class BOGuideViewModel: BOViewModel {
     private var rvkShopping = Observable<BOCategoryModel?>(nil)
     private var rvkDining = Observable<BOCategoryModel?>(nil)
     
-    private var detailCategory = Observable<BOCategoryDetail?>(nil)
+    var detailCategory = Observable<BOCategoryDetail?>(nil)
     
     private var iceNorth = Observable<BOCategoryModel?>(nil)
     private var iceEast = Observable<BOCategoryModel?>(nil)
@@ -98,6 +100,21 @@ class BOGuideViewModel: BOViewModel {
     }
 }
 
+extension BOGuideViewModel: ShowCategoryDetail{
+    
+    func didPressCategoryDetail(catDetail: BOCategoryDetail, type: Endpoint?) {
+        
+        guard let delegate = showCatDetailDelegate else {
+            print("delegate not set for showcatdetaildelegate in viewmodel")
+            return
+        }
+        detailCategory.value = catDetail
+        delegate.didPressCategoryDetail(catDetail: catDetail, type: type)
+    }
+
+}
+
+//MARK: History
 extension BOGuideViewModel{
     
     func getNextToLastContentType() -> ContentType?{
@@ -133,6 +150,10 @@ extension BOGuideViewModel{
         self.guideListDataSource.value?.didPressListTableDelegate = delegater
     }
     
+    func setCategoryDetailClickDelegate(delegate: ShowCategoryDetail){
+        showCatDetailDelegate = delegate
+    }
+    
     func getGuideListDataSourceNumberOfRows() -> Int{
         guard let myGuideListDataSource = self.guideListDataSource.value else { return 0 }
         return myGuideListDataSource.numberOfRows()
@@ -151,7 +172,13 @@ extension BOGuideViewModel{
         switch contentType{
             
         case .categoryDetail:
-            self.detailCategory.value = BOGuideDetailTableDataSource.init(catItem: nil, type: .bestof)
+            guard let categoryDetailDelegate = self.catDetailDataSource.value else {
+                
+                print("catDetailDataSource not set while setting delegate in VM")
+                return
+            }
+            self.activeTableDelegate.value = categoryDetailDelegate
+            
             
         case .guides:
             guard let guideDelegate = self.guideListDataSource.value else {
@@ -199,6 +226,13 @@ extension BOGuideViewModel{
     func setTableDataSourceFor(contentType: ContentType){
         
         switch contentType{
+            
+        case .categoryDetail:
+            guard let catDetailDataSource = self.catDetailDataSource.value else {
+                print("catDetailDatasource not set in VM")
+                return
+            }
+            self.activeTableDataSource.value = catDetailDataSource
             
         case .guides:
             guard let guideDataSource = self.guideListDataSource.value else {
@@ -248,6 +282,15 @@ extension BOGuideViewModel{
     
     private func createBonding(){
         
+        _ = self.detailCategory.observeNext{ [weak self] model in
+            
+            guard let this = self else { return }
+            guard let dataModel = model else{ print("guides model nil from server"); return }
+            guard let catDetailListDatasource = this.catDetailDataSource.value else { print("catDetailListDatasouce not initialized"); return }
+            
+            catDetailListDatasource.setCatDetail(catDetail: dataModel)
+        }
+        
         _ = self.guides.observeNext{ [weak self] model in
             
             guard let this = self else { return }
@@ -270,6 +313,7 @@ extension BOGuideViewModel{
             
             catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .rvkDining)
             catWinnerDSource.takeMeThereVMDelegate = self
+            catWinnerDSource.catDetailDelegate = self
         }
         
         _ = self.rvkDrink.skip(first: 1).observeNext{ [weak self] model in
@@ -279,6 +323,7 @@ extension BOGuideViewModel{
             guard let model = model else { return }
             catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .rvkDrink)
             catWinnerDSource.takeMeThereVMDelegate = self
+            catWinnerDSource.catDetailDelegate = self
         }
         
         _ = self.rvkShopping.skip(first: 1).observeNext{ [weak self] model in
@@ -288,6 +333,7 @@ extension BOGuideViewModel{
             guard let model = model else { return }
             catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .rvkShopping)
             catWinnerDSource.takeMeThereVMDelegate = self
+            catWinnerDSource.catDetailDelegate = self
         }
         
         _ = self.rvkActivities.skip(first: 1).observeNext{ [weak self] model in
@@ -297,6 +343,7 @@ extension BOGuideViewModel{
             guard let model = model else { return }
             catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .rvkActivities)
             catWinnerDSource.takeMeThereVMDelegate = self
+            catWinnerDSource.catDetailDelegate = self
         }
         
         _ = self.iceWest.skip(first: 1).observeNext{ [weak self] model in
@@ -306,6 +353,7 @@ extension BOGuideViewModel{
             guard let model = model else { return }
             catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .west)
             catWinnerDSource.takeMeThereVMDelegate = self
+            catWinnerDSource.catDetailDelegate = self
         }
         
         _ = self.iceNorth.skip(first: 1).observeNext{ [weak self] model in
@@ -315,6 +363,7 @@ extension BOGuideViewModel{
             guard let model = model else { return }
             catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .north)
             catWinnerDSource.takeMeThereVMDelegate = self
+            catWinnerDSource.catDetailDelegate = self
         }
         
         _ = self.iceEast.skip(first: 1).observeNext{ [weak self] model in
@@ -324,6 +373,7 @@ extension BOGuideViewModel{
             guard let model = model else { return }
             catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .east)
             catWinnerDSource.takeMeThereVMDelegate = self
+            catWinnerDSource.catDetailDelegate = self
         }
         
         _ = self.iceSouth.skip(first: 1).observeNext{ [weak self] model in
@@ -333,6 +383,7 @@ extension BOGuideViewModel{
             guard let model = model else { return }
             catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .south)
             catWinnerDSource.takeMeThereVMDelegate = self
+            catWinnerDSource.catDetailDelegate = self
         }
         
         _ = self.iceWestFjords.skip(first: 1).observeNext{ [weak self] model in
@@ -342,6 +393,7 @@ extension BOGuideViewModel{
             guard let model = model else { return }
             catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .westfjords)
             catWinnerDSource.takeMeThereVMDelegate = self
+            catWinnerDSource.catDetailDelegate = self
         }
         
         _ = self.iceReykjaNes.skip(first: 1).observeNext{ [weak self] model in
@@ -351,6 +403,7 @@ extension BOGuideViewModel{
             guard let model = model else { return }
             catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .reykjanes)
             catWinnerDSource.takeMeThereVMDelegate = self
+            catWinnerDSource.catDetailDelegate = self
         }
     }
 }
@@ -515,6 +568,10 @@ extension BOGuideViewModel{
         
         switch screenContentType.value {
             
+        case .categoryDetail:
+            print("not applicable")
+            return ""
+            
         case .favourites:
             return "Favourites"
             
@@ -557,6 +614,7 @@ extension BOGuideViewModel{
     func getTableViewAnimationFor(screenContentType: ContentType) -> UITableView.RowAnimation{
         
         switch screenContentType {
+            
         case .guides:
             
             guard let lastContentType = getLastContentType() else {
@@ -585,7 +643,7 @@ extension BOGuideViewModel{
             
             return .fade
             
-        case .guideDetail:
+        case .guideDetail, .categoryDetail:
             print("fade guidedetail")
             return .fade
         case .reykjavik:

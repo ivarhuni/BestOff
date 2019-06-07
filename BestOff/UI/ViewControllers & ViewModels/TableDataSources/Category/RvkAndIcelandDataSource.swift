@@ -24,7 +24,7 @@ class RvkAndIcelandDataSource: NSObject{
     private let drinkingIndex = 1
     private let shoppingIndex = 2
     private let activitiesIndex = 3
-    
+
     private let locationType: LocationDataSource
     
     private let northIndex = 0
@@ -72,6 +72,7 @@ class RvkAndIcelandDataSource: NSObject{
     
     
     weak var takeMeThereVMDelegate: TakeMeThereProtocol?
+    weak var catDetailDelegate: ShowCategoryDetail?
     
     init(with locationDataSource: LocationDataSource){
         
@@ -117,6 +118,18 @@ extension RvkAndIcelandDataSource: TakeMeThereProtocol{
     }
 }
 
+extension RvkAndIcelandDataSource: ShowCategoryDetail{
+    
+    func didPressCategoryDetail(catDetail: BOCategoryDetail, type: Endpoint?) {
+        
+        guard let delegate = catDetailDelegate else {
+            print("delegate not set in ShowCategoryDetail RvkAndIcelandDataSource")
+            return
+        }
+        delegate.didPressCategoryDetail(catDetail: catDetail, type: type)
+    }
+}
+
 //MARK: TableProtocol
 extension RvkAndIcelandDataSource: BOCategoryWinnerListProtocol{
     
@@ -131,7 +144,7 @@ extension RvkAndIcelandDataSource: BOCategoryWinnerListProtocol{
     func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         
         let cell = myTableView.dequeueReusableCell(withIdentifier: CategoryWinnerCell.reuseIdentifier()) as! CategoryWinnerCell
-
+        cell.delegateShowCategoryDetail = self
         
         switch locationType {
         case .rvk:

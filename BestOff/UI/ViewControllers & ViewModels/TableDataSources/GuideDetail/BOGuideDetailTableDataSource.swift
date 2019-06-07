@@ -18,10 +18,9 @@ enum DetailScreenType{
 
 class BOGuideDetailTableDataSource: NSObject, BOCategoryDetailListProtocol{
     
-    
     var catItem = Observable<BOCatItem?>(nil)
     var screenType: DetailScreenType? = .guide
-    var detailItem: BOCategoryDetail?
+    private var catDetail: BOCategoryDetail?
     
     let constraintedWidth = (UIScreen.main.bounds.width - 2*20)
     let textDescFont = UIFont.cellItemText
@@ -48,7 +47,17 @@ class BOGuideDetailTableDataSource: NSObject, BOCategoryDetailListProtocol{
         self.init()
         self.catItem.value = catItem
         self.screenType = type
-        self.detailItem = detailItem
+        
+        if detailItem != nil{
+            self.catDetail = detailItem
+            self.screenType = .bestof
+        }
+        
+    }
+    
+    func setCatDetail(catDetail: BOCategoryDetail){
+        self.catDetail = catDetail
+        self.screenType = .bestof
     }
 
     func setCatItemTo(item: BOCatItem) {
@@ -60,21 +69,18 @@ extension BOGuideDetailTableDataSource{
     
     func numberOfRows() -> Int {
         
-        if self.screenType == .guide{
-            
-            
-        }
-        
-        guard let item = self.catItem.value else { return 0 }
-        guard let countItems = item.detailItem?.arrItems.count else { return 0 }
-        
         let imgCell = 1
         let txtDescription = 1
         
-        if screenType == .guide{
+        if self.screenType == .guide{
+            
+            guard let item = self.catItem.value else { return 0 }
+            guard let countItems = item.detailItem?.arrItems.count else { return 0 }
+            
             return countItems*2 + imgCell + txtDescription
         }
-
+        
+        guard let countItems = self.catDetail?.arrItems.count else { return 0 }
         let oneItemIsTwoCells = 2
         let redRunnerUpBanner = 1
         //Winner Only
@@ -124,11 +130,13 @@ extension BOGuideDetailTableDataSource{
         if indexPath.row == redRunnerIndex || indexPath.row == redRunnerSecondIndex{
             
             //TODO: Runner Cell
+            let cell = UITableViewCell()
+            cell.backgroundColor = .purple
             return UITableViewCell()
         }
         
         if indexPath.row == winnerImgIndex{
-            guard let detailItemWinner = catItem.value?.detailItem?.arrItems[safe: arrIndexWinner] else {
+            guard let detailItemWinner = catDetail?.arrItems[safe: arrIndexWinner] else {
                 print("detailitemwinnerImg not available in categorydetail")
                 return UITableViewCell()
             }
@@ -137,7 +145,7 @@ extension BOGuideDetailTableDataSource{
             return topCell
         }
         if indexPath.row == winnerTextIndex{
-            guard let detailItemWinner = catItem.value?.detailItem?.arrItems[safe: arrIndexWinner] else {
+            guard let detailItemWinner = catDetail?.arrItems[safe: arrIndexWinner] else {
                 print("detailitemwinnerTxt not available in categorydetail")
                 return UITableViewCell()
             }
@@ -146,7 +154,7 @@ extension BOGuideDetailTableDataSource{
             return txtCell
         }
         if indexPath.row == runnerImgIndex{
-            guard let detailItemRunnerUp = catItem.value?.detailItem?.arrItems[safe: arrIndexRunner] else {
+            guard let detailItemRunnerUp = catDetail?.arrItems[safe: arrIndexRunner] else {
                 print("detailItemRunnerUp not available in categorydetail")
                 return UITableViewCell()
             }
@@ -155,7 +163,7 @@ extension BOGuideDetailTableDataSource{
             return topCell
         }
         if indexPath.row == runnerTextIndex{
-            guard let detailItemRunnerUp = catItem.value?.detailItem?.arrItems[safe: arrIndexRunner] else {
+            guard let detailItemRunnerUp = catDetail?.arrItems[safe: arrIndexRunner] else {
                 print("detailItemRunnerUp not available in categorydetail")
                 return UITableViewCell()
             }
@@ -165,7 +173,7 @@ extension BOGuideDetailTableDataSource{
         }
         
         if indexPath.row == nextRunnerImgIndex{
-            guard let detailItemRunnerUpSecond = catItem.value?.detailItem?.arrItems[safe: arrIndexRunnerSecond] else {
+            guard let detailItemRunnerUpSecond = catDetail?.arrItems[safe: arrIndexRunnerSecond] else {
                 print("detailItemRunnerUp not available in categorydetail")
                 return UITableViewCell()
             }
@@ -174,7 +182,7 @@ extension BOGuideDetailTableDataSource{
             return topCell
         }
         if indexPath.row == nextRunnerTextIndex{
-            guard let detailItemRunnerUpSecond = catItem.value?.detailItem?.arrItems[safe: arrIndexRunnerSecond] else {
+            guard let detailItemRunnerUpSecond = catDetail?.arrItems[safe: arrIndexRunnerSecond] else {
                 print("detailItemRunnerUp not available in categorydetail")
                 return UITableViewCell()
             }

@@ -330,6 +330,11 @@ extension BOGuideViewController{
     private func registerDelegateRvk(){
         
         registerDidPressList()
+        viewModel.setCategoryDetailClickDelegate(delegate: self)
+    }
+    
+    private func registerDelegateIce(){
+        viewModel.setCategoryDetailClickDelegate(delegate: self)
     }
     
     private func registerDidPressList(){
@@ -406,6 +411,9 @@ extension BOGuideViewController{
             
             switch contentTypeValue{
                 
+            case .categoryDetail:
+                this.setupForCatDetail()
+                
             case .guides:
                 this.setupForGuides()
                 
@@ -470,7 +478,7 @@ extension BOGuideViewController{
             
             
             
-            UIView.animate(withDuration: 1.5, animations: { [weak self] in
+            UIView.animate(withDuration: 1.5, animations: {
                 
                 
             })
@@ -484,6 +492,18 @@ extension BOGuideViewController{
             guard let this = self else { return }
             
             this.viewControllerHeadder.showDetail(withDetailText: "Guides")
+        }) { finished in
+            
+        }
+    }
+    
+    private func animateHeaderTo(txtHeader: String){
+        
+        UIView.animate(withDuration: self.viewModel.tableDataSourceAnimationDuration, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
+            
+            guard let this = self else { return }
+            
+            this.viewControllerHeadder.showDetail(withDetailText: txtHeader)
         }) { finished in
             
         }
@@ -529,6 +549,31 @@ extension BOGuideViewController{
     }
 }
 
+//MARK: Setup Content Type Category Detail
+extension BOGuideViewController: ShowCategoryDetail{
+    
+    func didPressCategoryDetail(catDetail: BOCategoryDetail, type: Endpoint?) {
+        
+        changeTo(catDetail: catDetail, withType: type)
+    }
+    
+    func changeTo(catDetail: BOCategoryDetail, withType: Endpoint?){
+        viewModel.screenContentType.value = .categoryDetail
+    }
+    
+    func setupForCatDetail(){
+        
+        disableTableDelegate()
+        if let catTitle = viewModel.detailCategory.value?.categoryTitle {
+             animateHeaderTo(txtHeader: catTitle)
+        }
+        viewModel.setTableDelegateFor(contentType: .categoryDetail)
+        viewModel.setTableDataSourceFor(contentType: .categoryDetail)
+        hideMenu()
+        disableSwipe()
+    }
+}
+
 //MARK: Setup Content Type Guide Detail
 extension BOGuideViewController{
     
@@ -563,6 +608,7 @@ extension BOGuideViewController{
         registerDelegateRvk()
         viewModel.setTableDelegateFor(contentType: .reykjavik)
         viewModel.setTableDataSourceFor(contentType: .reykjavik)
+        viewModel.setCategoryDetailClickDelegate(delegate: self)
         hideMenu()
         enableSwipe()
     }
@@ -579,6 +625,7 @@ extension BOGuideViewController{
     func setupForIceland(){
         
         disableTableDelegate()
+        registerDelegateIce()
         viewModel.setTableDelegateFor(contentType: .iceland)
         viewModel.setTableDataSourceFor(contentType: .iceland)
         hideMenu()

@@ -46,6 +46,7 @@ struct BOCategoryDetail{
     let categoryDescription: String
     let categoryTitle: String
     var arrItems: [BOCategoryDetailItem] = []
+    var type: Endpoint? = nil
 }
 
 struct BOCategoryDetailItem: Codable{
@@ -134,7 +135,7 @@ struct DetailItemFactory{
             return nil
         }
         
-        return BOCategoryDetail(categoryDescription: catDescription, categoryTitle: catName, arrItems: createDetailItemsForGuide(arrTextContent: arrText, strHTML: strHTML))
+        return BOCategoryDetail(categoryDescription: catDescription, categoryTitle: catName, arrItems: createDetailItemsForGuide(arrTextContent: arrText, strHTML: strHTML), type: nil)
     }
     
     static func createCategoryDetailForRvk(categoryItemContentText: String, strHTML: String) -> BOCategoryDetail?{
@@ -150,7 +151,7 @@ struct DetailItemFactory{
             return nil
         }
         
-        return BOCategoryDetail(categoryDescription: catDescription, categoryTitle: catName, arrItems: createDetailItemsForRvkWith(arrTextContent: arrText, strHTML: strHTML))
+        return BOCategoryDetail(categoryDescription: catDescription, categoryTitle: catName, arrItems: createDetailItemsForRvkWith(arrTextContent: arrText, strHTML: strHTML), type: nil)
     }
     
     

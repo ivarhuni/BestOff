@@ -39,6 +39,7 @@ protocol BOCategoryDetailListProtocol: UITableViewDataSource, UITableViewDelegat
     
     var catItem: Observable<BOCatItem?> { get }
     func setCatItemTo(item: BOCatItem)
+    func setCatDetail(catDetail: BOCategoryDetail)
     func numberOfRows() -> Int
     func numberOfSections() -> Int
     func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell

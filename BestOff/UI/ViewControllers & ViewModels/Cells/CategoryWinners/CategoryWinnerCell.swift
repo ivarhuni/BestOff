@@ -16,7 +16,7 @@ protocol TakeMeThereProtocol: AnyObject {
 
 protocol ShowCategoryDetail: AnyObject{
     
-    func didPressCategoryDetail(catDetail: BOCategoryDetail)
+    func didPressCategoryDetail(catDetail: BOCategoryDetail, type: Endpoint?)
 }
 
 class CategoryWinnerCell: UITableViewCell {
@@ -69,13 +69,13 @@ extension CategoryWinnerCell{
 
 extension CategoryWinnerCell: ShowCategoryDetail{
     
-    func didPressCategoryDetail(catDetail: BOCategoryDetail) {
+    func didPressCategoryDetail(catDetail: BOCategoryDetail, type: Endpoint?) {
         print("did press category detail")
         guard let delegate = self.delegateShowCategoryDetail else {
             print("noshowcategorydetail delegate not set")
             return
         }
-        delegate.didPressCategoryDetail(catDetail: catDetail)
+        delegate.didPressCategoryDetail(catDetail: catDetail, type: catType)
     }
 }
 
@@ -117,7 +117,7 @@ extension CategoryWinnerCell: TakeMeThereProtocol{
             print("no detail item in handleTapOnRandomItem")
             return
         }
-        didPressCategoryDetail(catDetail: detailItem)
+        didPressCategoryDetail(catDetail: detailItem, type: catType)
     }
     
     @objc func handleTapOnTakeMeThere(_ sender: UITapGestureRecognizer) {
@@ -192,7 +192,8 @@ extension CategoryWinnerCell{
     func setupWithCategory(category: BOCategoryModel? = nil,
                            _ styleType: Endpoint = .rvkDining,
                            randomItem: BOCatItem?,
-                           delegate: TakeMeThereProtocol? = nil){
+                           delegate: TakeMeThereProtocol? = nil,
+                           catDetailDelegate: ShowCategoryDetail? = nil){
         
         setupDefault()
         self.catType = styleType
@@ -211,7 +212,9 @@ extension CategoryWinnerCell{
         if let cellDelegate = delegate{
             delegateTakeMeThere = cellDelegate
         }
-        
+        if let catDetailDelegate = catDetailDelegate{
+            delegateShowCategoryDetail = catDetailDelegate
+        }
         
     }
     
