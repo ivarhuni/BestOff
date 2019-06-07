@@ -152,8 +152,14 @@ extension DoubleItemCell{
     
     private func setupLabelScalingForLabel(label: UILabel){
         
-        label.numberOfLines = 2
-        label.lineBreakMode = .byTruncatingTail
+        
+        label.minimumScaleFactor = 0.85
+        label.lineBreakMode = .byClipping
+        
+        label.adjustsFontSizeToFitWidth = true
+        
+        label.numberOfLines = 1
+        label.lineBreakMode = .byClipping
     }
     
     private func setupFonts(){

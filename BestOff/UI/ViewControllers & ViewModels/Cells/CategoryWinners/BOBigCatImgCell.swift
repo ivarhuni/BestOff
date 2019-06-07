@@ -45,11 +45,11 @@ extension BOBigCatImgCell{
 
 extension BOBigCatImgCell{
     
-    func setupWithItem(item: BOCategoryDetailItem, categoryTitle: String, type: Endpoint? = .rvkDining){
+    func setupWithItem(item: BOCategoryDetailItem, type: Endpoint? = .rvkDining){
         
         setupDefault()
         lblCatWinner.text = item.itemName
-//        lblCatTitle.text = categoryTitle
+        lblCatTitle.text = item.categoryWinnerOrRunnerTitle
         
         if let url = item.imageURL{
             UIImageView.setSDImageViewImageWithURL(imageView: bigImgView, strURL: url, nil, contentMode: .scaleAspectFill)
@@ -80,7 +80,7 @@ extension BOBigCatImgCell{
     private func setupBgView(){
         
         viewBgForImgView.backgroundColor = .black
-        viewBgForImgView.alpha = 0.3
+        viewBgForImgView.alpha = 0.2
     }
     
     private func setupImgViews(){

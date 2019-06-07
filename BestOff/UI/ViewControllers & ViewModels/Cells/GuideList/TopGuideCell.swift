@@ -9,6 +9,13 @@
 import UIKit
 import SDWebImage
 
+
+protocol FavouritePressed {
+    
+    func pressedFavouriteWithItem(catDetail: BOCategoryModel)
+}
+
+
 class TopGuideCell: UITableViewCell{
     
     //MARK: Properties
@@ -21,7 +28,18 @@ class TopGuideCell: UITableViewCell{
     @IBOutlet weak var sep: UIView!
     @IBOutlet weak var viewBlackBackground: UIView!
     
+    @IBOutlet weak var viewCatAddress: UIView!
+    @IBOutlet weak var viewCategory: UIView!
+    @IBOutlet weak var btnFavourite: UIButton!
+    
     @IBOutlet weak var imgViewDropShadow: UIImageView!
+    
+    @IBOutlet weak var lblName: UILabel!
+    @IBOutlet weak var lblAddress: UILabel!
+    
+    @IBOutlet weak var imgViewBestOff: UIImageView!
+    
+    @IBOutlet weak var imgViewAddressPin: UIImageView!
     
     //MARK: Inititialization
     override func awakeFromNib() {
@@ -34,6 +52,17 @@ class TopGuideCell: UITableViewCell{
 
         // Configure the view for the selected state
     }
+    
+    @IBAction func btnFavPressed(_ sender: Any) {
+        
+        print("fav pressed")
+    }
+    
+    @IBAction func btnDirections(_ sender: Any) {
+        
+        print("pressed directions")
+    }
+    
 }
 
 //MARK: Reuse identifier
@@ -71,7 +100,28 @@ extension TopGuideCell{
         imgViewBig.setClipsAndScales()
         imgViewIcon.setClipsAndScales()
         
+        showForGuide()
         selectionStyle = .none
+    }
+    
+    private func showForGuide(){
+    
+        viewBgIcon.alpha = 1
+        lblTitle.alpha = 1
+        lblGrapevine.alpha = 1
+        
+        viewCatAddress.alpha = 0
+        viewCategory.alpha = 0
+    }
+    
+    private func showForCategory(){
+        
+        viewBgIcon.alpha = 0
+        lblTitle.alpha = 0
+        lblGrapevine.alpha = 0
+        viewCategory.alpha = 1
+        viewCatAddress.alpha = 1
+        
     }
     
     private func setDefaults(){
@@ -83,6 +133,10 @@ extension TopGuideCell{
         lblTitle.minimumScaleFactor = 0.5
         lblTitle.numberOfLines = 0
         lblTitle.lineBreakMode = .byClipping
+        
+        lblName.font = UIFont.catDtlItemTitle
+        lblAddress.font = UIFont.catDtlItemAddressTitle
+        btnFavourite.titleLabel?.font = UIFont.redDirectionText
     }
     
     private func setColors(){
@@ -92,6 +146,9 @@ extension TopGuideCell{
         lblGrapevine.textColor = .white
         lblDate.textColor = .white
         sep.backgroundColor = .colorGreySep
+        lblName.textColor = .black
+        lblAddress.textColor = .colorGrayishBrown
+        btnFavourite.setTitleColor(.colorRed, for: .normal)
     }
     
     private func setFonts(){
@@ -105,12 +162,12 @@ extension TopGuideCell{
 //MARK: Guide List Setup
 extension TopGuideCell{
     
-    func setupWith(item: BOCatItem) {
+    func setupForGuide(item: BOCatItem) {
         
         setupDefault()
         
         setTextsFrom(item: item)
-        setImageWithImgURL(strURL: item.image)
+        setImageWithImgURL(url: item.image)
     }
     
     public func styleForDetail(){
@@ -121,12 +178,67 @@ extension TopGuideCell{
         lblTitle.text = item.title
         guard let strDate = item.strTimeStamp else { return }
         lblDate.text = strDate
+        
+        lblName.text = ""
+        lblAddress.text = ""
     }
     
-    private func setImageWithImgURL(strURL: String){
+    private func setImageWithImgURL(url: String?){
+        guard let strURL = url else { return }
         guard let imgView = imgViewBig else { return }
         guard let urlFromString = URL.init(string: strURL) else { return }
         imgView.setClipsAndScales()
         imgView.sd_setImage(with: urlFromString, placeholderImage: nil, options: [], completed: nil)
     }
+}
+
+extension TopGuideCell{
+    
+    func setupForCategory(item: BOCatItem, isFavourited: Bool){
+        
+        setupDefault()
+        showForCategory()
+        setImageWithImgURL(url: item.image)
+        
+        setTextsFrom(item: item)
+        
+        imgViewBestOff.image = imgViewBestOff.image?.withRenderingMode(.alwaysTemplate)
+        imgViewBestOff.tintColor = .black
+        
+        if isFavourited{
+            btnFavourite.setBackgroundImage(Asset.heartFilled.img, for: .normal)
+            return
+        }
+        btnFavourite.setBackgroundImage(Asset.heart.img, for: .normal)
+    }
+    
+    private func setTextsFrom(detailItem: BOCategoryDetailItem){
+        lblName.text = detailItem.itemName
+        lblAddress.text = detailItem.itemAddress
+        
+        
+        lblTitle.text = ""
+        lblDate.text = ""
+    }
+    
+    func setupForCategoryDetailItem(detailItem: BOCategoryDetailItem, isFavourited: Bool){
+        
+        setupDefault()
+        showForCategory()
+        
+        setImageWithImgURL(url: detailItem.imageURL)
+        
+        setTextsFrom(detailItem: detailItem)
+        
+        imgViewBestOff.image = imgViewBestOff.image?.withRenderingMode(.alwaysTemplate)
+        imgViewBestOff.tintColor = .black
+        
+        if isFavourited{
+            btnFavourite.setBackgroundImage(Asset.heartFilled.img, for: .normal)
+            return
+        }
+        btnFavourite.setBackgroundImage(Asset.heart.img, for: .normal)
+    }
+    
+    
 }

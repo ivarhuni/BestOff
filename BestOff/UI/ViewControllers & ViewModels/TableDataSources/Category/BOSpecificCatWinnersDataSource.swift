@@ -57,7 +57,7 @@ extension BOSpecificCatWinnersDataSource: UITableViewDataSource{
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: BOBigCatImgCell.reuseIdentifier()) as! BOBigCatImgCell
-        cell.setupWithItem(item: item, categoryTitle: self.category.title, type: self.category.type)
+        cell.setupWithItem(item: item, type: self.category.type)
         return cell
     }
     

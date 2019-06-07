@@ -14,6 +14,11 @@ protocol TakeMeThereProtocol: AnyObject {
     func didPressTakeMeThere(type: Endpoint)
 }
 
+protocol ShowCategoryDetail: AnyObject{
+    
+    func didPressCategoryDetail(catDetail: BOCategoryDetail)
+}
+
 class CategoryWinnerCell: UITableViewCell {
     
     
@@ -32,7 +37,10 @@ class CategoryWinnerCell: UITableViewCell {
     @IBOutlet weak var viewBgFingersAndLabel: UIView!
     
     var catType: Endpoint?
+    var randomItem: BOCategoryDetail?
+    
     weak var delegateTakeMeThere: TakeMeThereProtocol?
+    weak var delegateShowCategoryDetail: ShowCategoryDetail?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -59,6 +67,18 @@ extension CategoryWinnerCell{
     }
 }
 
+extension CategoryWinnerCell: ShowCategoryDetail{
+    
+    func didPressCategoryDetail(catDetail: BOCategoryDetail) {
+        print("did press category detail")
+        guard let delegate = self.delegateShowCategoryDetail else {
+            print("noshowcategorydetail delegate not set")
+            return
+        }
+        delegate.didPressCategoryDetail(catDetail: catDetail)
+    }
+}
+
 extension CategoryWinnerCell: TakeMeThereProtocol{
     
     func didPressTakeMeThere(type: Endpoint) {
@@ -80,6 +100,24 @@ extension CategoryWinnerCell: TakeMeThereProtocol{
         let tapGestureRec = UITapGestureRecognizer(target: self, action: #selector(self.handleTapOnTakeMeThere(_:)))
         lblTakeMeThere.addGestureRecognizer(tapGestureRec)
         lblTakeMeThere.isUserInteractionEnabled = true
+    }
+    
+    private func setupOpenRandomItem(){
+        
+        BOGuideViewController.clearGestureRecForView(view: viewBgFingersAndLabel)
+        let tapGestureRec = UITapGestureRecognizer(target: self, action: #selector(self.handleTapOnRandomItem(_:)))
+        viewBgFingersAndLabel.addGestureRecognizer(tapGestureRec)
+        viewBgFingersAndLabel.isUserInteractionEnabled = true
+    }
+    
+    @objc func handleTapOnRandomItem(_ sender: UITapGestureRecognizer) {
+        
+        print("tapped take me there")
+        guard let detailItem = self.randomItem else {
+            print("no detail item in handleTapOnRandomItem")
+            return
+        }
+        didPressCategoryDetail(catDetail: detailItem)
     }
     
     @objc func handleTapOnTakeMeThere(_ sender: UITapGestureRecognizer) {
@@ -173,15 +211,22 @@ extension CategoryWinnerCell{
         if let cellDelegate = delegate{
             delegateTakeMeThere = cellDelegate
         }
+        
+        
     }
     
     private func setupWithRandomItemFromCategory(randomItem: BOCatItem, category: BOCategoryModel?){
         
-        
-        guard let detailItem = randomItem.detailItem else { return }
-        lblCategoryTitle.text = detailItem.arrItems.first?.itemName
+        guard let detailItem = randomItem.detailItem else {
+            print("no random item from cat")
+            return
+        }
+        self.randomItem = detailItem
+        lblCategoryTitle.text = detailItem.arrItems.first?.categoryWinnerOrRunnerTitle
         
         setupTakeMeThereGestureRec()
+        setupOpenRandomItem()
+        
         //Sometimes the BOCategoryDetailItem doesn't have a categoryTitle
         if detailItem.categoryTitle.count == 0 || detailItem.categoryTitle == "The Reykjavik Grapevine"{
             print("Getting short title from LONG")

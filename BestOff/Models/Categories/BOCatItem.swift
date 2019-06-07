@@ -45,21 +45,47 @@ struct BOCatItem : Codable {
         strTimeStamp = nil
         superCatName = ""
         
-        setDetailItem()
         tryToSetTimeStamp()
     }
 }
 
 extension BOCatItem{
     
-    mutating func setDetailItem(){
+    mutating func setDetailItemFor(type: Endpoint){
         
-        guard let categoryDetail = DetailItemFactory.createCategoryDetailFromText(categoryItemContentText: contentText, strHTML: contentHtml) else {
+        switch type {
+        case .rvkDrink, .rvkActivities, .rvkShopping, .rvkDining:
             
-            print("Creating CategoryDetail failed in :" + self.title)
+            
+            guard let categoryDetail = DetailItemFactory.createCategoryDetailForRvk(categoryItemContentText: contentText, strHTML: contentHtml) else {
+                
+                print("Creating CategoryDetail failed in :" + self.title)
+                return
+            }
+            detailItem = categoryDetail
             return
+        case .guides:
+            
+            guard let guideDetail = DetailItemFactory.createCategoryDetailFromText(categoryItemContentText: contentText, strHTML: contentHtml) else {
+                
+                print("Creating CategoryDetail failed in :" + self.title)
+                return
+            }
+            detailItem = guideDetail
+            return
+        case .north:
+            print("")
+        case .east:
+            print("")
+        case .westfjords:
+            print("")
+        case .south:
+            print("")
+        case .west:
+            print("")
+        case .reykjanes:
+            print("")
         }
-        detailItem = categoryDetail
     }
 }
 

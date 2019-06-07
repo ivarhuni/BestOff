@@ -45,7 +45,14 @@ extension BOCategoryModel{
 
     mutating func setType(type: Endpoint){
         self.type = type
+
+        var arrItemsWithType: [BOCatItem] = []
+        for item in self.items{
+            
+            var itemCopy = item
+            itemCopy.setDetailItemFor(type: type)
+            arrItemsWithType.append(itemCopy)
+        }
+        self.items = arrItemsWithType
     }
-    
-    
 }

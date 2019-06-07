@@ -57,13 +57,16 @@ struct BOCategoryDetailItem: Codable{
     let isFirstRunner: Bool
     let isSecondRunner: Bool
     
+    let categoryWinnerOrRunnerTitle: String
+    
     init(itemName: String,
          itemAddress: String,
          itemDescription: String,
          imageURL: String,
          isWinner: Bool = false,
          isFirstRunner: Bool = false,
-         isSecondRunner: Bool = false) {
+         isSecondRunner: Bool = false,
+         categoryWinnerOrRunnerTitle: String = "") {
         
         self.itemName = itemName
         self.itemAddress = itemAddress
@@ -72,6 +75,9 @@ struct BOCategoryDetailItem: Codable{
         self.isWinner = isWinner
         self.isFirstRunner = isFirstRunner
         self.isSecondRunner = isSecondRunner
+        
+        self.categoryWinnerOrRunnerTitle = categoryWinnerOrRunnerTitle
+        
     }
 }
 
@@ -83,44 +89,184 @@ struct DetailItemFactory{
     //when the categoryJSON.contentText is split up with
     //.componentsSeparatedBy "\n"
     
-    private enum arrIndexItems: Int{
+    private enum arrIndexItemsGuide: Int{
         case catDescription = 0
         case categoryName = 3
     }
     
-    private enum arrIndexForDetailItems: Int{
+    private enum arrIndexForDetailItemsGuide: Int{
         
         case firstItemName = 0
         case firstItemAddress = 1
         case firstItemDescription = 2
     }
     
+    private enum arrIndexForDetailItems: Int{
+        
+        case categoryTitle = 0
+        case itemWinnerName = 1
+        case itemWinnerAddress = 2
+        case itemWinnerDescription = 3
+        
+        case runnerUpCategoryTitle = 4
+        case runnerUpName = 5
+        case runnerUpAddress = 6
+        case runnerUpDescription = 7
+        
+        case secondRunnerUpCategoryTitle = 8
+        case sceondRunnerUpName = 9
+        case secondRunnerUpAddress = 10
+        case secondRunnerUpDescription = 11
+    }
+    
+    
+    
     static func createCategoryDetailFromText(categoryItemContentText: String, strHTML: String) -> BOCategoryDetail?{
         
         let arrText = categoryItemContentText.components(separatedBy: "\n")
         
-        guard let catDescription = arrText[safe: arrIndexItems.catDescription.rawValue] else{
+        guard let catDescription = arrText[safe: arrIndexItemsGuide.catDescription.rawValue] else{
             print("--!-- MODEL ERROR: CategoryItemDescription unavailable --!-- ")
             return nil
         }
-        guard let catName = arrText[safe: arrIndexItems.categoryName.rawValue] else{
+        guard let catName = arrText[safe: arrIndexItemsGuide.categoryName.rawValue] else{
             print("--!-- MODEL ERROR: CategoryItemName unavailable --!-- ")
             return nil
         }
         
-        return BOCategoryDetail(categoryDescription: catDescription, categoryTitle: catName, arrItems: createDetailItemsFromTextArrays(arrTextContent: arrText, strHTML: strHTML))
+        return BOCategoryDetail(categoryDescription: catDescription, categoryTitle: catName, arrItems: createDetailItemsForGuide(arrTextContent: arrText, strHTML: strHTML))
+    }
+    
+    static func createCategoryDetailForRvk(categoryItemContentText: String, strHTML: String) -> BOCategoryDetail?{
+        
+        let arrText = categoryItemContentText.components(separatedBy: "\n")
+        
+        guard let catDescription = arrText[safe: arrIndexItemsGuide.catDescription.rawValue] else{
+            print("--!-- MODEL ERROR: CategoryItemDescription unavailable --!-- ")
+            return nil
+        }
+        guard let catName = arrText[safe: arrIndexItemsGuide.categoryName.rawValue] else{
+            print("--!-- MODEL ERROR: CategoryItemName unavailable --!-- ")
+            return nil
+        }
+        
+        return BOCategoryDetail(categoryDescription: catDescription, categoryTitle: catName, arrItems: createDetailItemsForRvkWith(arrTextContent: arrText, strHTML: strHTML))
+    }
+    
+    
+    private static func createDetailItemsForRvkWith(arrTextContent: [String], strHTML: String) -> [BOCategoryDetailItem]{
+        
+        var arrTxt = filterNonItemsFromRvk(array: arrTextContent)
+        
+        guard let catWinnerTitle = arrTxt[safe: arrIndexForDetailItems.categoryTitle.rawValue] else{
+            print("--!-- MODEL ERROR: categoryDetailItem doesn't have winner --!-- ")
+            return []
+        }
+        
+        guard let itemWinnerName = arrTxt[safe: arrIndexForDetailItems.itemWinnerName.rawValue] else{
+            print("--!-- MODEL ERROR: categoryDetailItem doesn't have winner --!-- ")
+            return []
+        }
+        guard let itemWinnerAddress = arrTxt[safe: arrIndexForDetailItems.itemWinnerAddress.rawValue] else{
+            print("--!-- MODEL ERROR: categoryDetailItem doesn't have winner address --!-- ")
+            return []
+        }
+        guard let itemWinnerDescription = arrTxt[safe: arrIndexForDetailItems.itemWinnerDescription.rawValue] else{
+            print("--!-- MODEL ERROR: categoryDetailItem doesn't have winner description --!-- ")
+            return []
+        }
+        
+        let arrImageURLs = getImageURLsFromHTMLString(strHTML)
+        var winnerURL = ""
+        var runnerUpURL = ""
+        var secondRunnerUpURL = ""
+        
+        if let winnerUrl = arrImageURLs[safe: arrIndexImgURL.winnerImgURL.rawValue]{
+            winnerURL = winnerUrl
+        }
+        if let runnerUpUrl = arrImageURLs[safe: arrIndexImgURL.firstRunnerUpImgURL.rawValue]{
+            runnerUpURL = runnerUpUrl
+        }
+        if let secondRunnerUpUrl = arrImageURLs[safe: arrIndexImgURL.secondRunnerUpImgURL.rawValue]{
+            secondRunnerUpURL = secondRunnerUpUrl
+        }
+        
+        let winner = BOCategoryDetailItem(itemName: itemWinnerName,
+                                          itemAddress: itemWinnerAddress,
+                                          itemDescription: itemWinnerDescription,
+                                          imageURL: winnerURL,
+                                          isWinner: true,
+                                          categoryWinnerOrRunnerTitle: catWinnerTitle)
+        
+        var detailItems: [BOCategoryDetailItem] = [winner]
+        
+        guard let runnerUpCategoryTitle = arrTxt[safe: arrIndexForDetailItems.runnerUpCategoryTitle.rawValue] else{
+            print("--!-- MODEL ERROR: First Runner Up Parsing Error Name--!--")
+            return detailItems
+        }
+        
+        guard let firstRunnerUpName = arrTxt[safe: arrIndexForDetailItems.runnerUpName.rawValue] else{
+            print("--!-- MODEL ERROR: First Runner Up Parsing Error Name--!--")
+            return detailItems
+        }
+        guard let firstRunnerUpAddress = arrTxt[safe: arrIndexForDetailItems.runnerUpAddress.rawValue] else{
+            print("--!-- MODEL ERROR: First Runner Up Parsing Error Address --!-- ")
+            return detailItems
+        }
+        guard let firstRunnerUpDesc = arrTxt[safe: arrIndexForDetailItems.runnerUpDescription.rawValue] else{
+            print("--!-- MODEL ERROR: First Runner Up Parsing Error Description--!-- ")
+            return detailItems
+        }
+        
+        let runnerUp = BOCategoryDetailItem(itemName: firstRunnerUpName,
+                                            itemAddress: firstRunnerUpAddress,
+                                            itemDescription: firstRunnerUpDesc,
+                                            imageURL: runnerUpURL,
+                                            isFirstRunner: true,
+                                            categoryWinnerOrRunnerTitle: runnerUpCategoryTitle)
+        
+        detailItems.append(runnerUp)
+        
+        guard let secondRunnerUpCategoryTitle = arrTxt[safe: arrIndexForDetailItems.secondRunnerUpCategoryTitle.rawValue] else{
+            print("--!-- MODEL ERROR: First Runner Up Parsing Error Name--!--")
+            return detailItems
+        }
+        
+        guard let secondRunnerUpName = arrTxt[safe: arrIndexForDetailItems.sceondRunnerUpName.rawValue] else{
+            print("--!-- MODEL ERROR: Second Runner Up Parsing Error Name --!-- ")
+            return detailItems
+        }
+        guard let secondRunnerUpAddress = arrTxt[safe: arrIndexForDetailItems.secondRunnerUpAddress.rawValue] else{
+            print("--!-- MODEL ERROR: Second Runner Up Parsing Address --!-- ")
+            return detailItems
+        }
+        guard let secondRunnerUpDesc = arrTxt[safe: arrIndexForDetailItems.secondRunnerUpDescription.rawValue] else{
+            print("--!-- MODEL ERROR: Second Runner Up Parsing Description  --!-- ")
+            return detailItems
+        }
+        
+        let secondRunnerUp = BOCategoryDetailItem(itemName: secondRunnerUpName,
+                                                  itemAddress: secondRunnerUpAddress,
+                                                  itemDescription: secondRunnerUpDesc,
+                                                  imageURL: secondRunnerUpURL,
+                                                  isSecondRunner: true,
+                                                  categoryWinnerOrRunnerTitle: secondRunnerUpCategoryTitle)
+        
+        detailItems.append(secondRunnerUp)
+        
+        return detailItems
     }
     
     //DetailItems are the items contained within ContentItem.Text
-    private static func createDetailItemsFromTextArrays(arrTextContent: [String], strHTML: String) -> [BOCategoryDetailItem]{
+    private static func createDetailItemsForGuide(arrTextContent: [String], strHTML: String) -> [BOCategoryDetailItem]{
         
-        let arrText = filterNonItemsOutOfTextArray(arrayToFilter: arrTextContent)
+        let arrText = filterNonItemsFromGuides(array: arrTextContent)
         
         let indexGapForNewItem = 3
         
-        var nextItemNameIndex = arrIndexForDetailItems.firstItemName.rawValue
-        var nextItemAddressIndex = arrIndexForDetailItems.firstItemAddress.rawValue
-        var nextItemDescriptionIndex = arrIndexForDetailItems.firstItemDescription.rawValue
+        var nextItemNameIndex = arrIndexForDetailItemsGuide.firstItemName.rawValue
+        var nextItemAddressIndex = arrIndexForDetailItemsGuide.firstItemAddress.rawValue
+        var nextItemDescriptionIndex = arrIndexForDetailItemsGuide.firstItemDescription.rawValue
         
         let numberOfItemsToMakeADetailItem = 3.0
         
@@ -160,98 +306,98 @@ struct DetailItemFactory{
         }
         
         return detailItems
-//
-//
-//
-//        guard let itemWinnerName = arrTextContent[safe: arrIndexItems.itemWinnerName.rawValue] else{
-//            print("--!-- MODEL ERROR: categoryDetailItem doesn't have winner --!-- ")
-//            return []
-//        }
-//        guard let itemWinnerAddress = arrTextContent[safe: arrIndexItems.itemWinnerAddress.rawValue] else{
-//            print("--!-- MODEL ERROR: categoryDetailItem doesn't have winner address --!-- ")
-//            return []
-//        }
-//        guard let itemWinnerDescription = arrTextContent[safe: arrIndexItems.itemWinnerDescription.rawValue] else{
-//            print("--!-- MODEL ERROR: categoryDetailItem doesn't have winner description --!-- ")
-//            return []
-//        }
-//
-//        let arrImageURLs = getImageURLsFromHTMLString(strHTML)
-//        var winnerURL = ""
-//        var runnerUpURL = ""
-//        var secondRunnerUpURL = ""
-//
-//        if let winnerUrl = arrImageURLs[safe: arrIndexImgURL.winnerImgURL.rawValue]{
-//            winnerURL = winnerUrl
-//        }
-//        if let runnerUpUrl = arrImageURLs[safe: arrIndexImgURL.firstRunnerUpImgURL.rawValue]{
-//            runnerUpURL = runnerUpUrl
-//        }
-//        if let secondRunnerUpUrl = arrImageURLs[safe: arrIndexImgURL.secondRunnerUpImgURL.rawValue]{
-//            secondRunnerUpURL = secondRunnerUpUrl
-//        }
-//
-//        let winner = BOCategoryDetailItem(itemName: itemWinnerName,
-//                                          itemAddress: itemWinnerAddress,
-//                                          itemDescription: itemWinnerDescription,
-//                                          imageURL: winnerURL,
-//                                          isWinner: true)
-//        var detailItems: [BOCategoryDetailItem] = [winner]
-//
-//        guard let firstRunnerUpName = arrTextContent[safe: arrIndexItems.firstRunnerUpName.rawValue] else{
-//            print("--!-- MODEL ERROR: First Runner Up Parsing Error Name--!--")
-//            return detailItems
-//        }
-//        guard let firstRunnerUpAddress = arrTextContent[safe: arrIndexItems.firstRunnerUpAddress.rawValue] else{
-//            print("--!-- MODEL ERROR: First Runner Up Parsing Error Address --!-- ")
-//            return detailItems
-//        }
-//        guard let firstRunnerUpDesc = arrTextContent[safe: arrIndexItems.firstRunnerUpDescription.rawValue] else{
-//            print("--!-- MODEL ERROR: First Runner Up Parsing Error Description--!-- ")
-//            return detailItems
-//        }
-//
-//        let runnerUp = BOCategoryDetailItem(itemName: firstRunnerUpName,
-//                                                         itemAddress: firstRunnerUpAddress,
-//                                                         itemDescription: firstRunnerUpDesc,
-//                                                         imageURL: runnerUpURL,
-//                                                         isFirstRunner: true)
-//
-//        detailItems.append(runnerUp)
-//
-//        guard let secondRunnerUpName = arrTextContent[safe: arrIndexItems.secondRunnerUpName.rawValue] else{
-//            print("--!-- MODEL ERROR: Second Runner Up Parsing Error Name --!-- ")
-//            return detailItems
-//        }
-//        guard let secondRunnerUpAddress = arrTextContent[safe: arrIndexItems.secondRunnerUpAddress.rawValue] else{
-//            print("--!-- MODEL ERROR: Second Runner Up Parsing Address --!-- ")
-//            return detailItems
-//        }
-//        guard let secondRunnerUpDesc = arrTextContent[safe: arrIndexItems.secondRunnerUpDescription.rawValue] else{
-//            print("--!-- MODEL ERROR: Second Runner Up Parsing Description  --!-- ")
-//            return detailItems
-//        }
-//
-//        let secondRunnerUp = BOCategoryDetailItem(itemName: secondRunnerUpName,
-//                                                               itemAddress: secondRunnerUpAddress,
-//                                                               itemDescription: secondRunnerUpDesc,
-//                                                               imageURL: secondRunnerUpURL,
-//                                                               isSecondRunner: true)
-//
-//        detailItems.append(secondRunnerUp)
-//
-//        //Guides have more than winner + 2 x runner ups detail items
-//        getAdditionalItemsFrom(arrTexts: arrTextContent, currentDetailItemsCount: detailItems.count, strHTML: strHTML)
-//
-//        return detailItems
+        //
+        //
+        //
+        //        guard let itemWinnerName = arrTextContent[safe: arrIndexItems.itemWinnerName.rawValue] else{
+        //            print("--!-- MODEL ERROR: categoryDetailItem doesn't have winner --!-- ")
+        //            return []
+        //        }
+        //        guard let itemWinnerAddress = arrTextContent[safe: arrIndexItems.itemWinnerAddress.rawValue] else{
+        //            print("--!-- MODEL ERROR: categoryDetailItem doesn't have winner address --!-- ")
+        //            return []
+        //        }
+        //        guard let itemWinnerDescription = arrTextContent[safe: arrIndexItems.itemWinnerDescription.rawValue] else{
+        //            print("--!-- MODEL ERROR: categoryDetailItem doesn't have winner description --!-- ")
+        //            return []
+        //        }
+        //
+        //        let arrImageURLs = getImageURLsFromHTMLString(strHTML)
+        //        var winnerURL = ""
+        //        var runnerUpURL = ""
+        //        var secondRunnerUpURL = ""
+        //
+        //        if let winnerUrl = arrImageURLs[safe: arrIndexImgURL.winnerImgURL.rawValue]{
+        //            winnerURL = winnerUrl
+        //        }
+        //        if let runnerUpUrl = arrImageURLs[safe: arrIndexImgURL.firstRunnerUpImgURL.rawValue]{
+        //            runnerUpURL = runnerUpUrl
+        //        }
+        //        if let secondRunnerUpUrl = arrImageURLs[safe: arrIndexImgURL.secondRunnerUpImgURL.rawValue]{
+        //            secondRunnerUpURL = secondRunnerUpUrl
+        //        }
+        //
+        //        let winner = BOCategoryDetailItem(itemName: itemWinnerName,
+        //                                          itemAddress: itemWinnerAddress,
+        //                                          itemDescription: itemWinnerDescription,
+        //                                          imageURL: winnerURL,
+        //                                          isWinner: true)
+        //        var detailItems: [BOCategoryDetailItem] = [winner]
+        //
+        //        guard let firstRunnerUpName = arrTextContent[safe: arrIndexItems.firstRunnerUpName.rawValue] else{
+        //            print("--!-- MODEL ERROR: First Runner Up Parsing Error Name--!--")
+        //            return detailItems
+        //        }
+        //        guard let firstRunnerUpAddress = arrTextContent[safe: arrIndexItems.firstRunnerUpAddress.rawValue] else{
+        //            print("--!-- MODEL ERROR: First Runner Up Parsing Error Address --!-- ")
+        //            return detailItems
+        //        }
+        //        guard let firstRunnerUpDesc = arrTextContent[safe: arrIndexItems.firstRunnerUpDescription.rawValue] else{
+        //            print("--!-- MODEL ERROR: First Runner Up Parsing Error Description--!-- ")
+        //            return detailItems
+        //        }
+        //
+        //        let runnerUp = BOCategoryDetailItem(itemName: firstRunnerUpName,
+        //                                                         itemAddress: firstRunnerUpAddress,
+        //                                                         itemDescription: firstRunnerUpDesc,
+        //                                                         imageURL: runnerUpURL,
+        //                                                         isFirstRunner: true)
+        //
+        //        detailItems.append(runnerUp)
+        //
+        //        guard let secondRunnerUpName = arrTextContent[safe: arrIndexItems.secondRunnerUpName.rawValue] else{
+        //            print("--!-- MODEL ERROR: Second Runner Up Parsing Error Name --!-- ")
+        //            return detailItems
+        //        }
+        //        guard let secondRunnerUpAddress = arrTextContent[safe: arrIndexItems.secondRunnerUpAddress.rawValue] else{
+        //            print("--!-- MODEL ERROR: Second Runner Up Parsing Address --!-- ")
+        //            return detailItems
+        //        }
+        //        guard let secondRunnerUpDesc = arrTextContent[safe: arrIndexItems.secondRunnerUpDescription.rawValue] else{
+        //            print("--!-- MODEL ERROR: Second Runner Up Parsing Description  --!-- ")
+        //            return detailItems
+        //        }
+        //
+        //        let secondRunnerUp = BOCategoryDetailItem(itemName: secondRunnerUpName,
+        //                                                               itemAddress: secondRunnerUpAddress,
+        //                                                               itemDescription: secondRunnerUpDesc,
+        //                                                               imageURL: secondRunnerUpURL,
+        //                                                               isSecondRunner: true)
+        //
+        //        detailItems.append(secondRunnerUp)
+        //
+        //        //Guides have more than winner + 2 x runner ups detail items
+        //        getAdditionalItemsFrom(arrTexts: arrTextContent, currentDetailItemsCount: detailItems.count, strHTML: strHTML)
+        //
+        //        return detailItems
     }
 }
 
 extension DetailItemFactory{
     
-    static func filterNonItemsOutOfTextArray(arrayToFilter: [String]) -> [String]{
+    static func commonFiltering(array: [String]) -> [String]{
         
-        var arrText = arrayToFilter
+        var arrText = array
         
         //Read More Guides to iceland here... not part of detailitem
         arrText.removeLast()
@@ -263,7 +409,14 @@ extension DetailItemFactory{
         arrText = arrText.filter{
             $0 != ""
         }
+        return arrText
+    }
+    
+    static func filterNonItemsFromGuides(array: [String]) -> [String]{
         
+        var arrText = array
+        
+        arrText = commonFiltering(array: arrText)
         
         arrText = arrText.filter{
             
@@ -282,8 +435,13 @@ extension DetailItemFactory{
         
         guard let _ = arrText[safe: 3] else { return arrText }
         guard let _ = arrText[safe: 4] else { return arrText }
-            
+        
         return arrText
+    }
+    
+    static func filterNonItemsFromRvk(array: [String]) -> [String]{
+        
+        return commonFiltering(array: array)
     }
 }
 

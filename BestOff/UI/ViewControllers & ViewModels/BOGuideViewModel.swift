@@ -18,6 +18,7 @@ enum ContentType{
     case subCategories
     case iceland
     case favourites
+    case categoryDetail
 }
 
 class BOGuideViewModel: BOViewModel {
@@ -30,10 +31,10 @@ class BOGuideViewModel: BOViewModel {
     
     let loaderAnimationSpeed = 0.9
     let loaderAlpha = 0.5
-    let loaderDissapearDuration = 1.0
+    let loaderDissapearDuration = 0.1
     let containerDissapearDuration = 1.5
     let animationDelay:Double = 2.0
-    let viewActivityAlpha:CGFloat = 0.5
+    let viewActivityAlpha:CGFloat = 0.8
     
     let tableDataSourceAnimationDuration:Double = 0.3
     
@@ -50,6 +51,7 @@ class BOGuideViewModel: BOViewModel {
     
     private let guideListDataSource = Observable<BOCategoryListDataSourceProtocol?>(BOGuideTableDataSource())
     private let guideDetailDataSource = Observable<BOCategoryDetailListProtocol?>(BOGuideDetailTableDataSource())
+    private let catDetailDataSource = Observable<BOCategoryDetailListProtocol?>(BOGuideDetailTableDataSource())
     
     private let rvkCategoriesDataSource = Observable<RvkAndIcelandDataSource?>(RvkAndIcelandDataSource(with: .rvk))
     private let icelandCategoriesDataSource = Observable<RvkAndIcelandDataSource?>(RvkAndIcelandDataSource(with: .iceland))
@@ -71,6 +73,8 @@ class BOGuideViewModel: BOViewModel {
     private var rvkActivities = Observable<BOCategoryModel?>(nil)
     private var rvkShopping = Observable<BOCategoryModel?>(nil)
     private var rvkDining = Observable<BOCategoryModel?>(nil)
+    
+    private var detailCategory = Observable<BOCategoryDetail?>(nil)
     
     private var iceNorth = Observable<BOCategoryModel?>(nil)
     private var iceEast = Observable<BOCategoryModel?>(nil)
@@ -145,6 +149,9 @@ extension BOGuideViewModel{
     func setTableDelegateFor(contentType: ContentType){
         
         switch contentType{
+            
+        case .categoryDetail:
+            self.detailCategory.value = BOGuideDetailTableDataSource.init(catItem: nil, type: .bestof)
             
         case .guides:
             guard let guideDelegate = self.guideListDataSource.value else {
@@ -652,7 +659,7 @@ extension BOGuideViewModel{
     }
     
     private func getGuides(){
-        getCategoryWinnersFor(endpointType: .guides)
+       getCategoryWinnersFor(endpointType: .guides)
     }
     
     private func getCategoryWinnersRvk(){
@@ -665,12 +672,12 @@ extension BOGuideViewModel{
     
     private func getCategoryWinnersIce(){
         
-        getCategoryWinnersFor(endpointType: .north)
-        getCategoryWinnersFor(endpointType: .south)
-        getCategoryWinnersFor(endpointType: .east)
-        getCategoryWinnersFor(endpointType: .west)
-        getCategoryWinnersFor(endpointType: .westfjords)
-        getCategoryWinnersFor(endpointType: .reykjanes)
+//        getCategoryWinnersFor(endpointType: .north)
+//        getCategoryWinnersFor(endpointType: .south)
+//        getCategoryWinnersFor(endpointType: .east)
+//        getCategoryWinnersFor(endpointType: .west)
+//        getCategoryWinnersFor(endpointType: .westfjords)
+//        getCategoryWinnersFor(endpointType: .reykjanes)
     }
     
     private func getCategoryWinnersFor(endpointType: Endpoint){
@@ -709,6 +716,7 @@ extension BOGuideViewModel{
         
         switch endpoint{
         case .rvkDrink:
+            
             self.rvkDrink.value = model
             
         case .rvkActivities:
