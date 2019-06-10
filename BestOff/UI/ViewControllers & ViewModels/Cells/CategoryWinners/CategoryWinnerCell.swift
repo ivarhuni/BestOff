@@ -19,6 +19,11 @@ protocol ShowCategoryDetail: AnyObject{
     func didPressCategoryDetail(catDetail: BOCategoryDetail, type: Endpoint?)
 }
 
+protocol ShowCategoryDetailForType: AnyObject{
+    
+    func show(categoryDetail: BOCategoryDetail, catItem: BOCatItem)
+}
+
 class CategoryWinnerCell: UITableViewCell {
     
     

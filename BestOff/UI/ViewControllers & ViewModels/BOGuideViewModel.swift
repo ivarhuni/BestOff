@@ -53,7 +53,7 @@ class BOGuideViewModel: BOViewModel {
     
     private let guideDetailDataSource = Observable<BOCategoryDetailListProtocol?>(BOGuideDetailTableDataSource())
     private let catDetailDataSource = Observable<BOCategoryDetailListProtocol?>(BOGuideDetailTableDataSource())
-    weak var showCatDetailDelegate: ShowCategoryDetail?
+    weak var showCatDetailDelegate: ShowCategoryDetailForType?
     
     private let rvkCategoriesDataSource = Observable<RvkAndIcelandDataSource?>(RvkAndIcelandDataSource(with: .rvk))
     private let icelandCategoriesDataSource = Observable<RvkAndIcelandDataSource?>(RvkAndIcelandDataSource(with: .iceland))
@@ -61,8 +61,6 @@ class BOGuideViewModel: BOViewModel {
     private let subcategoriesListDataSource = Observable<BOSpecificCatWinnersDataSource?>(nil)
     
     private let favDataSource = Observable<BOFavouritesDataSource>(BOFavouritesDataSource())
-    
-
     
     //MARK: Menu
     let menuOpen = Observable<Bool>(false)
@@ -77,6 +75,9 @@ class BOGuideViewModel: BOViewModel {
     private var rvkDining = Observable<BOCategoryModel?>(nil)
     
     var detailCategory = Observable<BOCategoryDetail?>(nil)
+    var detailCategoryCatItem = Observable<BOCatItem?>(nil)
+    
+    private var detailScreenTitle: String = ""
     
     private var iceNorth = Observable<BOCategoryModel?>(nil)
     private var iceEast = Observable<BOCategoryModel?>(nil)
@@ -100,16 +101,23 @@ class BOGuideViewModel: BOViewModel {
     }
 }
 
-extension BOGuideViewModel: ShowCategoryDetail{
+
+
+extension BOGuideViewModel: ShowCategoryDetailForType{
     
-    func didPressCategoryDetail(catDetail: BOCategoryDetail, type: Endpoint?) {
+    func show(categoryDetail: BOCategoryDetail, catItem: BOCatItem) {
         
         guard let delegate = showCatDetailDelegate else {
             print("delegate not set for showcatdetaildelegate in viewmodel")
             return
         }
-        detailCategory.value = catDetail
-        delegate.didPressCategoryDetail(catDetail: catDetail, type: type)
+        detailCategoryCatItem.value = catItem
+        catDetailDataSource.value?.setCatItemTo(item: catItem)
+        delegate.show(categoryDetail: categoryDetail, catItem: catItem)
+    }
+    
+    private func setDetailCategoryTxtFromType(text: String, type: Endpoint){
+        detailScreenTitle = BOGuideViewModel.getHeaderTextFrom(type: type)
     }
 
 }
@@ -150,7 +158,7 @@ extension BOGuideViewModel{
         self.guideListDataSource.value?.didPressListTableDelegate = delegater
     }
     
-    func setCategoryDetailClickDelegate(delegate: ShowCategoryDetail){
+    func setCategoryDetailClickDelegate(delegate: ShowCategoryDetailForType){
         showCatDetailDelegate = delegate
     }
     
@@ -177,6 +185,7 @@ extension BOGuideViewModel{
                 print("catDetailDataSource not set while setting delegate in VM")
                 return
             }
+            
             self.activeTableDelegate.value = categoryDetailDelegate
             
             
@@ -592,6 +601,44 @@ extension BOGuideViewModel{
             
         }
     }
+    
+    static func getHeaderTextFrom(type: Endpoint) -> String{
+        
+        switch type{
+        case .rvkDrink:
+            return "Drinking"
+            
+        case .rvkActivities:
+            return "Activities"
+            
+        case .rvkShopping:
+            return "Shopping"
+            
+        case .rvkDining:
+            return "Dining"
+            
+        case .guides:
+            return "Guides"
+            
+        case .north:
+            return "North"
+            
+        case .east:
+            return "East"
+            
+        case .westfjords:
+            return "Westfjords"
+            
+        case .south:
+            return "South"
+            
+        case .west:
+            return "West"
+            
+        case .reykjanes:
+            return "Reykjanes"
+        }
+    }
 }
 
 extension BOGuideViewModel{
@@ -730,12 +777,12 @@ extension BOGuideViewModel{
     
     private func getCategoryWinnersIce(){
         
-//        getCategoryWinnersFor(endpointType: .north)
-//        getCategoryWinnersFor(endpointType: .south)
-//        getCategoryWinnersFor(endpointType: .east)
-//        getCategoryWinnersFor(endpointType: .west)
-//        getCategoryWinnersFor(endpointType: .westfjords)
-//        getCategoryWinnersFor(endpointType: .reykjanes)
+        getCategoryWinnersFor(endpointType: .north)
+        getCategoryWinnersFor(endpointType: .south)
+        getCategoryWinnersFor(endpointType: .east)
+        getCategoryWinnersFor(endpointType: .west)
+        getCategoryWinnersFor(endpointType: .westfjords)
+        getCategoryWinnersFor(endpointType: .reykjanes)
     }
     
     private func getCategoryWinnersFor(endpointType: Endpoint){

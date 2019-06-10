@@ -108,7 +108,7 @@ extension TopGuideCell{
     
         viewBgIcon.alpha = 1
         lblTitle.alpha = 1
-        lblGrapevine.alpha = 1
+        imgViewIcon.alpha = 1
         
         viewCatAddress.alpha = 0
         viewCategory.alpha = 0
@@ -116,12 +116,9 @@ extension TopGuideCell{
     
     private func showForCategory(){
         
-        viewBgIcon.alpha = 0
         lblTitle.alpha = 0
-        lblGrapevine.alpha = 0
         viewCategory.alpha = 1
         viewCatAddress.alpha = 1
-        
     }
     
     private func setDefaults(){
@@ -129,14 +126,20 @@ extension TopGuideCell{
         lblGrapevine.text = "Reykjavík Grapevine"
         lblDate.text = ""
         imgViewIcon.image = Asset.grapevineIcon.img
-        lblTitle.adjustsFontSizeToFitWidth = true
-        lblTitle.minimumScaleFactor = 0.5
-        lblTitle.numberOfLines = 0
-        lblTitle.lineBreakMode = .byClipping
+        adjustFontsFor(label: lblTitle)
+        adjustFontsFor(label: lblAddress)
         
         lblName.font = UIFont.catDtlItemTitle
         lblAddress.font = UIFont.catDtlItemAddressTitle
         btnFavourite.titleLabel?.font = UIFont.redDirectionText
+    }
+    
+    private func adjustFontsFor(label: UILabel){
+    
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+        label.numberOfLines = 0
+        label.lineBreakMode = .byClipping
     }
     
     private func setColors(){
@@ -162,7 +165,7 @@ extension TopGuideCell{
 //MARK: Guide List Setup
 extension TopGuideCell{
     
-    func setupForGuide(item: BOCatItem) {
+    func setupWith(item: BOCatItem) {
         
         setupDefault()
         
@@ -197,7 +200,7 @@ extension TopGuideCell{
     func setupForCategory(item: BOCatItem, isFavourited: Bool){
         
         setupDefault()
-        showForCategory()
+        showForGuide()
         setImageWithImgURL(url: item.image)
         
         setTextsFrom(item: item)
@@ -219,6 +222,35 @@ extension TopGuideCell{
         
         lblTitle.text = ""
         lblDate.text = ""
+    }
+    
+    private func setTextsFrom(catDetail: BOCategoryDetail){
+        
+//        lblName.text = catDetail.categoryTitle
+//        lblAddress.text = catD
+//
+        
+        lblTitle.text = ""
+        lblDate.text = ""
+    }
+    
+    func setupForCategoryImgAndDesc(catDetail: BOCategoryDetail, isFavourited: Bool){
+        
+        setupDefault()
+        showForCategory()
+        
+        //setImageWithImgURL(url: catDetail.)
+        
+        //setTextsFrom(detailItem: catDetail)
+        
+        imgViewBestOff.image = imgViewBestOff.image?.withRenderingMode(.alwaysTemplate)
+        imgViewBestOff.tintColor = .black
+        
+        if isFavourited{
+            btnFavourite.setBackgroundImage(Asset.heartFilled.img, for: .normal)
+            return
+        }
+        btnFavourite.setBackgroundImage(Asset.heart.img, for: .normal)
     }
     
     func setupForCategoryDetailItem(detailItem: BOCategoryDetailItem, isFavourited: Bool){

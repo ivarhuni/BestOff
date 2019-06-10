@@ -119,7 +119,7 @@ extension BOGuideTableDataSource{
             
             guard let bigCellItem = categoryModel.value?.items[safe: 0] else { return UITableViewCell() }
             let topCell = myTableView.dequeueReusableCell(withIdentifier: TopGuideCell.reuseIdentifier()) as! TopGuideCell
-            topCell.setupForGuide(item: bigCellItem)
+            topCell.setupWith(item: bigCellItem)
             return topCell
         }
         

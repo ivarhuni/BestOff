@@ -123,3 +123,10 @@ extension BOCatItem{
     }
 }
 
+extension BOCatItem{
+    
+    static func getScreenTitleText() -> String{
+        
+        return ""
+    }
+}

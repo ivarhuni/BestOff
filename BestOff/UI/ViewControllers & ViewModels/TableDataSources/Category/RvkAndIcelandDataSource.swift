@@ -72,7 +72,7 @@ class RvkAndIcelandDataSource: NSObject{
     
     
     weak var takeMeThereVMDelegate: TakeMeThereProtocol?
-    weak var catDetailDelegate: ShowCategoryDetail?
+    weak var catDetailDelegate: ShowCategoryDetailForType?
     
     init(with locationDataSource: LocationDataSource){
         
@@ -122,11 +122,28 @@ extension RvkAndIcelandDataSource: ShowCategoryDetail{
     
     func didPressCategoryDetail(catDetail: BOCategoryDetail, type: Endpoint?) {
         
+        guard let myType = type else {
+            print("type not found")
+            return
+        }
+        guard let catItem = getCategoryItemFor(type: myType) else {
+            print("no cat item to display as top item")
+            return
+        }
+//        delegate.didPressCategoryDetail(catDetail: catDetail, type: type)
+        show(categoryDetail: catDetail, catItem: catItem)
+    }
+}
+
+extension RvkAndIcelandDataSource: ShowCategoryDetailForType{
+    
+    func show(categoryDetail: BOCategoryDetail, catItem: BOCatItem) {
+        
         guard let delegate = catDetailDelegate else {
             print("delegate not set in ShowCategoryDetail RvkAndIcelandDataSource")
             return
         }
-        delegate.didPressCategoryDetail(catDetail: catDetail, type: type)
+        delegate.show(categoryDetail: categoryDetail, catItem: catItem)
     }
 }
 
@@ -210,7 +227,10 @@ extension RvkAndIcelandDataSource: BOCategoryWinnerListProtocol{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return rowHeight
     }
-    
+}
+
+//MARK: Custom methods
+extension RvkAndIcelandDataSource{
     
     //
     func setCategoryModelAndRandomIdemForDataSourceType(catModel: BOCategoryModel, type: Endpoint){
@@ -269,6 +289,55 @@ extension RvkAndIcelandDataSource: BOCategoryWinnerListProtocol{
             guard let randomItem = catModel.items.randomItem() else { return }
             randomreykjanesItem = randomItem
         }
+    }
+    
+    func getCategoryItemFor(type: Endpoint) -> BOCatItem?{
         
-    }    
+        switch type {
+        case .rvkDrink:
+            
+            guard let randomItem = self.randomDrinkingItem else { return nil }
+            return randomItem
+            
+        case .rvkActivities:
+            guard let randomItem = self.randomActivitiesItem else { return nil }
+            return randomItem
+            
+        case .rvkShopping:
+            guard let randomItem = self.randomShoppingItem else { return nil }
+            return randomItem
+            
+        case .rvkDining:
+            guard let randomItem = self.randomDiningItem else { return nil }
+            return randomItem
+            
+        case .guides:
+            print("not applicable")
+            
+        case .north:
+            guard let randomItem = self.randomNorthItem else { return nil }
+            return randomItem
+            
+        case .westfjords:
+            guard let randomItem = self.randomWestFjordItem else { return nil }
+            return randomItem
+            
+        case .south:
+            guard let randomItem = self.randomSouthItem else { return nil }
+            return randomItem
+            
+        case .east:
+            guard let randomItem = self.randomEastItem else { return nil }
+            return randomItem
+            
+        case .west:
+            guard let randomItem = self.randomWestItem else { return nil }
+            return randomItem
+            
+        case .reykjanes:
+            guard let randomItem = self.randomreykjanesItem else { return nil }
+            return randomItem
+        }
+        return nil
+    }
 }

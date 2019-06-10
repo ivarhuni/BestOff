@@ -497,6 +497,19 @@ extension BOGuideViewController{
         }
     }
     
+    private func animateHeaderToCatDetail(){
+        
+        UIView.animate(withDuration: self.viewModel.tableDataSourceAnimationDuration, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
+            
+            guard let this = self else { return }
+            
+            
+//            this.viewControllerHeadder.showDetail(withDetailText: viewModel.detail)
+        }) { finished in
+            
+        }
+    }
+    
     private func animateHeaderTo(txtHeader: String){
         
         UIView.animate(withDuration: self.viewModel.tableDataSourceAnimationDuration, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
@@ -550,19 +563,19 @@ extension BOGuideViewController{
 }
 
 //MARK: Setup Content Type Category Detail
-extension BOGuideViewController: ShowCategoryDetail{
+extension BOGuideViewController: ShowCategoryDetailForType{
     
-    func didPressCategoryDetail(catDetail: BOCategoryDetail, type: Endpoint?) {
-        
-        changeTo(catDetail: catDetail, withType: type)
+    
+    func show(categoryDetail: BOCategoryDetail, catItem: BOCatItem) {
+        changeTo(catDetail: categoryDetail)
     }
     
-    func changeTo(catDetail: BOCategoryDetail, withType: Endpoint?){
+    func changeTo(catDetail: BOCategoryDetail){
         viewModel.screenContentType.value = .categoryDetail
     }
-    
+
     func setupForCatDetail(){
-        
+
         disableTableDelegate()
         if let catTitle = viewModel.detailCategory.value?.categoryTitle {
              animateHeaderTo(txtHeader: catTitle)

@@ -52,14 +52,13 @@ class BOGuideDetailTableDataSource: NSObject, BOCategoryDetailListProtocol{
             self.catDetail = detailItem
             self.screenType = .bestof
         }
-        
     }
     
     func setCatDetail(catDetail: BOCategoryDetail){
         self.catDetail = catDetail
         self.screenType = .bestof
     }
-
+    
     func setCatItemTo(item: BOCatItem) {
         self.catItem.value = item
     }
@@ -223,7 +222,7 @@ extension BOGuideDetailTableDataSource{
             }
             
             guard let nextItem = catItem.value?.detailItem?.arrItems[safe: (atIndexPath.row/2) - 1 ] else {
-            
+                
                 print("nextcell returning default cell, img, text")
                 return UITableViewCell()
             }
@@ -234,7 +233,7 @@ extension BOGuideDetailTableDataSource{
         }
         
         return UITableViewCell()
-       
+        
     }
     
     private func getFirstTxtCellIn(tableView: UITableView) -> UITableViewCell{
@@ -262,18 +261,14 @@ extension BOGuideDetailTableDataSource{
     }
     
     private func getTopCellForTableView(tableView: UITableView, type: DetailScreenType = .guide) -> UITableViewCell{
+        
         let topCell = tableView.dequeueReusableCell(withIdentifier: TopGuideCell.reuseIdentifier()) as! TopGuideCell
+        topCell.styleForDetail()
         
         guard let item = catItem.value else {
             return UITableViewCell()
         }
-        topCell.styleForDetail()
-        if type == .guide{
-            topCell.setupForGuide(item: item)
-            return topCell
-        }
-        
-        topCell.setupForCategory(item: item, isFavourited: false)
+        topCell.setupWith(item: item)
         return topCell
     }
     
@@ -308,7 +303,7 @@ extension BOGuideDetailTableDataSource: UITableViewDelegate{
             if indexPath.row == txtDescCell{
                 return getHeightForContentText()
             }
-           
+            
             //ImageCellHeight, guide or runner up
             if indexPath.row.isEven(){
                 return 340
@@ -374,7 +369,7 @@ extension BOGuideDetailTableDataSource{
     private func getHeightForRunnerUp() -> CGFloat{
         
         guard let runnerUpTxt = catItem.value?.detailItem?.arrItems[safe: arrIndexRunner]?.itemDescription else { return 1 }
-       
+        
         return runnerUpTxt.height(withConstrainedWidth: constraintedWidth, font: textDescFont)
     }
     

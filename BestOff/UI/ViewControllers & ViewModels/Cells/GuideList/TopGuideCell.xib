@@ -111,7 +111,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9TQ-ps-ndf">
-                                <rect key="frame" x="40" y="74.5" width="42" height="21"/>
+                                <rect key="frame" x="40" y="74.5" width="186" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -141,6 +141,7 @@
                             <constraint firstItem="9TQ-ps-ndf" firstAttribute="centerY" secondItem="SA8-Ae-62J" secondAttribute="centerY" id="6Sg-QX-gcy"/>
                             <constraint firstItem="SA8-Ae-62J" firstAttribute="top" secondItem="lWB-ag-aDl" secondAttribute="bottom" constant="30" id="7AS-Gf-TIM"/>
                             <constraint firstItem="SA8-Ae-62J" firstAttribute="leading" secondItem="EKB-Ck-E5P" secondAttribute="leading" constant="20" id="Ah3-fY-zre"/>
+                            <constraint firstItem="mTo-LM-BD0" firstAttribute="leading" secondItem="9TQ-ps-ndf" secondAttribute="trailing" constant="10" id="Kx6-oR-dc9"/>
                             <constraint firstItem="lWB-ag-aDl" firstAttribute="leading" secondItem="EKB-Ck-E5P" secondAttribute="leading" constant="20" id="RiU-Nk-Xpf"/>
                             <constraint firstItem="9TQ-ps-ndf" firstAttribute="leading" secondItem="SA8-Ae-62J" secondAttribute="trailing" constant="10" id="csH-FI-YMe"/>
                             <constraint firstItem="Put-f4-dQB" firstAttribute="leading" secondItem="lWB-ag-aDl" secondAttribute="trailing" constant="10" id="dDr-6J-Uq0"/>
