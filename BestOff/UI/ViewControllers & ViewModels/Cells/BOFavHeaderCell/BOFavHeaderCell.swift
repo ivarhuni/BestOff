@@ -64,6 +64,7 @@ extension BOFavHeaderCell{
         
         toFavItems.font = UIFont.cellItemName
         toFavItems.textColor = .colorGreyText
+        selectionStyle = .none
     }
     
     func setupWith(editEnabled: Bool, delegate: EditCellClicked){
@@ -88,6 +89,7 @@ extension BOFavHeaderCell{
         }
         lblEdit.textColor = .colorGreyText
         imgViewEdit.image = Asset.delete.img
+        selectionStyle = .none
     }
     
     func setupGesture(){

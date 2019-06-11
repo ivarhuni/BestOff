@@ -8,16 +8,24 @@
 
 import UIKit
 import SDWebImage
-
+import CoreLocation
 
 protocol FavouritePressed {
     
     func pressedFavouriteWithItem(catDetail: BOCategoryModel)
 }
 
+enum roundCorner{
+    
+    case roundAll
+    case roundBot
+    case roundTop
+    case roundNone
+}
 
 class TopGuideCell: UITableViewCell{
     
+    var cornerRoundType: roundCorner = .roundNone
     //MARK: Properties
     @IBOutlet weak var imgViewBig: UIImageView!
     @IBOutlet weak var lblTitle: UILabel!
@@ -38,29 +46,48 @@ class TopGuideCell: UITableViewCell{
     @IBOutlet weak var lblAddress: UILabel!
     
     @IBOutlet weak var imgViewBestOff: UIImageView!
+    @IBOutlet weak var viewSepDirections: UIView!
     
     @IBOutlet weak var imgViewAddressPin: UIImageView!
+    
+    @IBOutlet weak var btnDirections: UIButton!
+    
+    var address: String = ""
     
     //MARK: Inititialization
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     
     @IBAction func btnFavPressed(_ sender: Any) {
         
-        print("fav pressed")
+        print("btnFavPressed")
     }
     
     @IBAction func btnDirections(_ sender: Any) {
         
-        print("pressed directions")
+        if address != ""{
+            openMap()
+        }
+    }
+    
+    func openMap() {
+        
+        let baseUrl = "http://maps.apple.com/?address="
+        
+        let encodedName = address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        let finalUrl = baseUrl + encodedName
+        if let url = URL(string: finalUrl)
+        {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
     
 }
@@ -86,6 +113,10 @@ extension TopGuideCell{
         viewBgIcon.layer.cornerRadius = viewBgIcon.frame.size.height/2.0
         viewBgIcon.clipsToBounds = true
         viewBlackBackground.addDropShadow(color: .black, opacity: Constants.highShadowOpacity, offset: CGSize(width: 2, height: 2), radius: 3)
+        lblGrapevine.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: .zero, radius: 2)
+        lblDate.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: .zero, radius: 2)
+        
+        //roundCornerForType(roundCorner: self.cornerRoundType)
     }
 }
 
@@ -99,26 +130,35 @@ extension TopGuideCell{
         setDefaults()
         imgViewBig.setClipsAndScales()
         imgViewIcon.setClipsAndScales()
+        viewSepDirections.backgroundColor = .greySep
         
         showForGuide()
         selectionStyle = .none
     }
     
     private func showForGuide(){
-    
+        
         viewBgIcon.alpha = 1
         lblTitle.alpha = 1
         imgViewIcon.alpha = 1
         
         viewCatAddress.alpha = 0
         viewCategory.alpha = 0
+        
+        imgViewIcon.alpha = 1
+        viewBgIcon.alpha = 1
+        lblGrapevine.alpha = 1
     }
     
     private func showForCategory(){
         
         lblTitle.alpha = 0
+        
         viewCategory.alpha = 1
         viewCatAddress.alpha = 1
+        imgViewIcon.alpha = 0
+        viewBgIcon.alpha = 0
+        lblGrapevine.alpha = 0
     }
     
     private func setDefaults(){
@@ -126,18 +166,21 @@ extension TopGuideCell{
         lblGrapevine.text = "Reykjavík Grapevine"
         lblDate.text = ""
         imgViewIcon.image = Asset.grapevineIcon.img
-        adjustFontsFor(label: lblTitle)
-        adjustFontsFor(label: lblAddress)
         
         lblName.font = UIFont.catDtlItemTitle
         lblAddress.font = UIFont.catDtlItemAddressTitle
-        btnFavourite.titleLabel?.font = UIFont.redDirectionText
+        btnDirections.titleLabel?.font = UIFont.redDirectionText
+        
+        adjustFontsFor(label: lblTitle)
+        adjustFontsFor(label: lblAddress)
+        adjustFontsFor(label: lblName)
+        selectionStyle = .none
     }
     
     private func adjustFontsFor(label: UILabel){
-    
+        
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5
+        label.minimumScaleFactor = 0.9
         label.numberOfLines = 0
         label.lineBreakMode = .byClipping
     }
@@ -151,7 +194,7 @@ extension TopGuideCell{
         sep.backgroundColor = .colorGreySep
         lblName.textColor = .black
         lblAddress.textColor = .colorGrayishBrown
-        btnFavourite.setTitleColor(.colorRed, for: .normal)
+        btnDirections.setTitleColor(.colorRed, for: .normal)
     }
     
     private func setFonts(){
@@ -159,6 +202,7 @@ extension TopGuideCell{
         lblTitle.font = UIFont.categoryHeadline
         lblDate.font = UIFont.gvImageText
         lblGrapevine.font = UIFont.gvImageHeadline
+        btnDirections.titleLabel?.font = UIFont.redDirectionText
     }
 }
 
@@ -226,9 +270,9 @@ extension TopGuideCell{
     
     private func setTextsFrom(catDetail: BOCategoryDetail){
         
-//        lblName.text = catDetail.categoryTitle
-//        lblAddress.text = catD
-//
+        //        lblName.text = catDetail.categoryTitle
+        //        lblAddress.text = catD
+        //
         
         lblTitle.text = ""
         lblDate.text = ""
@@ -265,12 +309,47 @@ extension TopGuideCell{
         imgViewBestOff.image = imgViewBestOff.image?.withRenderingMode(.alwaysTemplate)
         imgViewBestOff.tintColor = .black
         
+        address = detailItem.itemAddress
+        
+        if address != ""{
+            btnDirections.alpha = 1
+        }
+        else{
+            btnDirections.alpha = 0
+        }
+        
         if isFavourited{
             btnFavourite.setBackgroundImage(Asset.heartFilled.img, for: .normal)
             return
         }
         btnFavourite.setBackgroundImage(Asset.heart.img, for: .normal)
     }
-    
-    
 }
+
+extension TopGuideCell{
+    func roundCornerForType(roundCorner: roundCorner){
+        
+        switch roundCorner {
+        case .roundNone:
+            imgViewBig.roundCorners(corners: [.topLeft, .topRight, .bottomLeft, .bottomRight], radius: 0)
+            viewBlackBackground.roundCorners(corners: [.topLeft, .topRight, .bottomLeft, .bottomRight], radius: 0)
+            imgViewDropShadow.roundCorners(corners: [.topLeft, .topRight, .bottomLeft, .bottomRight], radius: 0)
+        case .roundAll:
+            imgViewBig.roundCorners(corners: [.topLeft, .topRight, .bottomLeft, .bottomRight], radius: Constants.cornerRadiusGuideDetail)
+            viewBlackBackground.roundCorners(corners: [.topLeft, .topRight, .bottomLeft, .bottomRight], radius: Constants.cornerRadiusGuideDetail)
+            imgViewDropShadow.roundCorners(corners: [.topLeft, .topRight, .bottomLeft, .bottomRight], radius: Constants.cornerRadiusGuideDetail)
+            self.contentView.backgroundColor = .colorRed
+        case .roundBot:
+            imgViewBig.roundCorners(corners: [.bottomLeft, .bottomRight], radius: Constants.cornerRadiusGuideDetail)
+            viewBlackBackground.roundCorners(corners: [.bottomLeft, .bottomRight], radius: Constants.cornerRadiusGuideDetail)
+            imgViewDropShadow.roundCorners(corners: [.bottomLeft, .bottomRight], radius: Constants.cornerRadiusGuideDetail)
+            self.contentView.backgroundColor = .colorRed
+        case .roundTop:
+            imgViewBig.roundCorners(corners: [.topLeft, .topRight], radius: Constants.cornerRadiusGuideDetail)
+            viewBlackBackground.roundCorners(corners: [.topLeft, .topRight], radius: Constants.cornerRadiusGuideDetail)
+            imgViewDropShadow.roundCorners(corners: [.topLeft, .topRight], radius: Constants.cornerRadiusGuideDetail)
+            self.contentView.backgroundColor = .colorRed
+        }
+    }
+}
+

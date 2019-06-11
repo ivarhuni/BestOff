@@ -131,19 +131,19 @@ extension RvkAndIcelandDataSource: ShowCategoryDetail{
             return
         }
 //        delegate.didPressCategoryDetail(catDetail: catDetail, type: type)
-        show(categoryDetail: catDetail, catItem: catItem)
+        show(categoryDetail: catDetail, catItem: catItem, type: myType)
     }
 }
 
 extension RvkAndIcelandDataSource: ShowCategoryDetailForType{
     
-    func show(categoryDetail: BOCategoryDetail, catItem: BOCatItem) {
+    func show(categoryDetail: BOCategoryDetail, catItem: BOCatItem, type: Endpoint) {
         
         guard let delegate = catDetailDelegate else {
             print("delegate not set in ShowCategoryDetail RvkAndIcelandDataSource")
             return
         }
-        delegate.show(categoryDetail: categoryDetail, catItem: catItem)
+        delegate.show(categoryDetail: categoryDetail, catItem: catItem, type: type)
     }
 }
 

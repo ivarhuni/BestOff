@@ -50,7 +50,6 @@ extension BOBigCatImgCell{
         setupDefault()
         lblCatWinner.text = item.itemName
         lblCatTitle.text = item.categoryWinnerOrRunnerTitle
-        
         if let url = item.imageURL{
             UIImageView.setSDImageViewImageWithURL(imageView: bigImgView, strURL: url, nil, contentMode: .scaleAspectFill)
         }
@@ -64,6 +63,7 @@ extension BOBigCatImgCell{
         setupBgView()
         setupImgViews()
         setupLabels()
+        selectionStyle = .none
     }
     
     private func setupVerticalViewWith(type: Endpoint){

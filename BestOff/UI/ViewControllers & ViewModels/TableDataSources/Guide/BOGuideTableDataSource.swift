@@ -28,7 +28,7 @@ class BOGuideTableDataSource: NSObject, BOCategoryListDataSourceProtocol {
     let indexRowCountThreshold = 3
     
     //RowHeights used in both types of tables
-    let bigCellRowHeight:CGFloat = 310
+    let bigCellRowHeight:CGFloat = 330
     
     
     convenience init(categoryModel: BOCategoryModel){

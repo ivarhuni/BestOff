@@ -21,7 +21,7 @@ protocol ShowCategoryDetail: AnyObject{
 
 protocol ShowCategoryDetailForType: AnyObject{
     
-    func show(categoryDetail: BOCategoryDetail, catItem: BOCatItem)
+    func show(categoryDetail: BOCategoryDetail, catItem: BOCatItem, type: Endpoint)
 }
 
 class CategoryWinnerCell: UITableViewCell {
@@ -137,6 +137,7 @@ extension CategoryWinnerCell{
     
     private func setupDefault(){
         style()
+        selectionStyle = .none
     }
     
     private func style(){

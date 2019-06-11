@@ -31,10 +31,10 @@ class BOGuideViewModel: BOViewModel {
     
     let loaderAnimationSpeed = 0.9
     let loaderAlpha = 0.5
-    let loaderDissapearDuration = 1.0
+    let loaderDissapearDuration = 1.25
     let containerDissapearDuration = 1.5
-    let animationDelay:Double = 2.0
-    let viewActivityAlpha:CGFloat = 0.8
+    let animationDelay:Double = 1.8
+    let viewActivityAlpha:CGFloat = 0.7
     
     let tableDataSourceAnimationDuration:Double = 0.3
     
@@ -96,16 +96,22 @@ class BOGuideViewModel: BOViewModel {
         
         super.init()
         self.screenContentType.value = contentType
+        catDetailDataSource.value?.screenType = .bestof
         arrContentHistory.append(screenContentType.value)
         createBonding()
     }
 }
 
-
+extension BOGuideViewModel{
+    
+    func getDetailScreenTitle() -> String{
+        return detailScreenTitle
+    }
+}
 
 extension BOGuideViewModel: ShowCategoryDetailForType{
     
-    func show(categoryDetail: BOCategoryDetail, catItem: BOCatItem) {
+    func show(categoryDetail: BOCategoryDetail, catItem: BOCatItem, type: Endpoint) {
         
         guard let delegate = showCatDetailDelegate else {
             print("delegate not set for showcatdetaildelegate in viewmodel")
@@ -113,10 +119,12 @@ extension BOGuideViewModel: ShowCategoryDetailForType{
         }
         detailCategoryCatItem.value = catItem
         catDetailDataSource.value?.setCatItemTo(item: catItem)
-        delegate.show(categoryDetail: categoryDetail, catItem: catItem)
+        catDetailDataSource.value?.setCatDetail(catDetail: categoryDetail)
+        setDetailCategoryTxtFromType(type: type)
+        delegate.show(categoryDetail: categoryDetail, catItem: catItem, type: type)
     }
     
-    private func setDetailCategoryTxtFromType(text: String, type: Endpoint){
+    private func setDetailCategoryTxtFromType(type: Endpoint){
         detailScreenTitle = BOGuideViewModel.getHeaderTextFrom(type: type)
     }
 
@@ -185,6 +193,7 @@ extension BOGuideViewModel{
                 print("catDetailDataSource not set while setting delegate in VM")
                 return
             }
+            
             
             self.activeTableDelegate.value = categoryDetailDelegate
             
@@ -291,14 +300,14 @@ extension BOGuideViewModel{
     
     private func createBonding(){
         
-        _ = self.detailCategory.observeNext{ [weak self] model in
-            
-            guard let this = self else { return }
-            guard let dataModel = model else{ print("guides model nil from server"); return }
-            guard let catDetailListDatasource = this.catDetailDataSource.value else { print("catDetailListDatasouce not initialized"); return }
-            
-            catDetailListDatasource.setCatDetail(catDetail: dataModel)
-        }
+//        _ = self.detailCategory.observeNext{ [weak self] model in
+//
+//            guard let this = self else { return }
+//            guard let dataModel = model else{ print("guides model nil from server"); return }
+//            guard let catDetailListDatasource = this.catDetailDataSource.value else { print("catDetailListDatasouce not initialized"); return }
+//
+//            catDetailListDatasource.setCatDetail(catDetail: dataModel)
+//        }
         
         _ = self.guides.observeNext{ [weak self] model in
             

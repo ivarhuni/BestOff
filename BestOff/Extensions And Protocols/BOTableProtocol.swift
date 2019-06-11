@@ -38,6 +38,7 @@ protocol BOCategoryWinnerListProtocol: UITableViewDataSource, UITableViewDelegat
 protocol BOCategoryDetailListProtocol: UITableViewDataSource, UITableViewDelegate {
     
     var catItem: Observable<BOCatItem?> { get }
+    var screenType: DetailScreenType { get set }
     func setCatItemTo(item: BOCatItem)
     func setCatDetail(catDetail: BOCategoryDetail)
     func numberOfRows() -> Int

@@ -511,7 +511,7 @@ public final class NVActivityIndicatorView: UIView {
         }
         isHidden = false
         isAnimating = true
-        layer.speed = 0.85
+        layer.speed = 1
         setUpAnimation()
     }
 

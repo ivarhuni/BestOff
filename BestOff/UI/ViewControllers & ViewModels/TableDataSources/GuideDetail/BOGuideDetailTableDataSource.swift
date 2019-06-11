@@ -19,29 +19,32 @@ enum DetailScreenType{
 class BOGuideDetailTableDataSource: NSObject, BOCategoryDetailListProtocol{
     
     var catItem = Observable<BOCatItem?>(nil)
-    var screenType: DetailScreenType? = .guide
-    private var catDetail: BOCategoryDetail?
+    var screenType = DetailScreenType.guide
+    var catDetail: BOCategoryDetail?
     
     let constraintedWidth = (UIScreen.main.bounds.width - 2*20)
+    let constraintedWidthForWinnerOrRunners = (UIScreen.main.bounds.width - 2*20) - 20
     let textDescFont = UIFont.cellItemText
     let arrIndexWinner = 0
     let arrIndexRunner = 1
     let arrIndexRunnerSecond = 2
     
-    let winnerImgIndex = 2
-    let winnerTextIndex = 3
-    let redRunnerIndex = 4
-    let runnerImgIndex = 5
-    let runnerTextIndex = 6
-    let redRunnerSecondIndex = 7
-    let nextRunnerImgIndex = 8
-    let nextRunnerTextIndex = 9
+    let bigImgTopCellIndex = 0
+    let txtDescCell = 1
+    let redWinnerIndex = 2
+    let winnerImgIndex = 3
+    let winnerTextIndex = 4
+    let redRunnerIndex = 5
+    let runnerImgIndex = 6
+    let runnerTextIndex = 7
+    let redRunnerSecondIndex = 8
+    let nextRunnerImgIndex = 9
+    let nextRunnerTextIndex = 10
     let runnerHeight: CGFloat = 63
     
-    //RowHeights used in both types of tables
-    let bigImgCellGuideRowHeight:CGFloat = 310
     
-    let bigImgCellCategoryHeight:CGFloat = 325
+    let bigImgCellCategoryHeight:CGFloat = 360.0
+    let bigImgCellGuideHeight: CGFloat = 320
     
     convenience init(catItem: BOCatItem, type: DetailScreenType = .guide, detailItem: BOCategoryDetail? = nil){
         self.init()
@@ -56,7 +59,6 @@ class BOGuideDetailTableDataSource: NSObject, BOCategoryDetailListProtocol{
     
     func setCatDetail(catDetail: BOCategoryDetail){
         self.catDetail = catDetail
-        self.screenType = .bestof
     }
     
     func setCatItemTo(item: BOCatItem) {
@@ -79,16 +81,25 @@ extension BOGuideDetailTableDataSource{
             return countItems*2 + imgCell + txtDescription
         }
         
-        guard let countItems = self.catDetail?.arrItems.count else { return 0 }
+        guard let countItems = self.catDetail?.arrItems.count else {
+            
+            print("returning 0 count items in boguidedetailtabledatasource")
+            return 0
+        }
         let oneItemIsTwoCells = 2
+        let winnerRedBanner = 1
         let redRunnerUpBanner = 1
         //Winner Only
-        if countItems == 1 { return imgCell + txtDescription + oneItemIsTwoCells + redRunnerUpBanner }
-        //Winner + 1 runner up - has one redbanner like the first one
-        if countItems == 2 { return imgCell + txtDescription + oneItemIsTwoCells*2 + redRunnerUpBanner }
+        if countItems == 1 {
+            return imgCell + txtDescription + oneItemIsTwoCells + winnerRedBanner
+        }
+        //Winner + 1 runner up
+        if countItems == 2 {
+            return imgCell + txtDescription + oneItemIsTwoCells*2 + redRunnerUpBanner + winnerRedBanner
+        }
         
-        //Winner + 2 runner ups - has two redbanners
-        return imgCell + txtDescription + oneItemIsTwoCells*3 + redRunnerUpBanner*2
+        //Winner + 2 runner ups
+        return imgCell + txtDescription + oneItemIsTwoCells*3 + redRunnerUpBanner*2 + winnerRedBanner
     }
     
     func numberOfSections() -> Int {
@@ -126,12 +137,39 @@ extension BOGuideDetailTableDataSource{
             return getNextCellFor(myTableView:myTableView, atIndexPath: indexPath)
         }
         
-        if indexPath.row == redRunnerIndex || indexPath.row == redRunnerSecondIndex{
+        if indexPath.row == redWinnerIndex{
             
-            //TODO: Runner Cell
-            let cell = UITableViewCell()
-            cell.backgroundColor = .purple
-            return UITableViewCell()
+            let redWinnerCell = myTableView.dequeueReusableCell(withIdentifier: RunnerUpCell.reuseIdentifier()) as! RunnerUpCell
+            guard let winnerOrRunnerText = catDetail?.arrItems.first?.categoryWinnerOrRunnerTitle else {
+                
+                print("no winner or runner text")
+                return UITableViewCell()
+            }
+            redWinnerCell.setupWithText(text: winnerOrRunnerText)
+            return redWinnerCell
+        }
+        
+        if indexPath.row == redRunnerIndex{
+            
+            let redRunnerCell = myTableView.dequeueReusableCell(withIdentifier: RunnerUpCell.reuseIdentifier()) as! RunnerUpCell
+            guard let winnerOrRunnerText = catDetail?.arrItems[safe: 1]?.categoryWinnerOrRunnerTitle else {
+                
+                print("no winner or runner text RUNNER UP")
+                return UITableViewCell()
+            }
+            redRunnerCell.setupWithText(text: winnerOrRunnerText)
+            return redRunnerCell
+        }
+        
+        if indexPath.row == redRunnerSecondIndex{
+            let redRunnerCell = myTableView.dequeueReusableCell(withIdentifier: RunnerUpCell.reuseIdentifier()) as! RunnerUpCell
+            guard let winnerOrRunnerText = catDetail?.arrItems[safe: 2]?.categoryWinnerOrRunnerTitle else {
+                
+                print("no winner or runner text RUNNER UP")
+                return UITableViewCell()
+            }
+            redRunnerCell.setupWithText(text: winnerOrRunnerText)
+            return redRunnerCell
         }
         
         if indexPath.row == winnerImgIndex{
@@ -141,6 +179,11 @@ extension BOGuideDetailTableDataSource{
             }
             let topCell = myTableView.dequeueReusableCell(withIdentifier: TopGuideCell.reuseIdentifier()) as! TopGuideCell
             topCell.setupForCategoryDetailItem(detailItem: detailItemWinner, isFavourited: false)
+            if topCell.cornerRoundType != .roundTop{
+                topCell.cornerRoundType = .roundTop
+                topCell.setNeedsLayout()
+                topCell.contentView.setNeedsLayout()
+            }
             return topCell
         }
         if indexPath.row == winnerTextIndex{
@@ -149,7 +192,14 @@ extension BOGuideDetailTableDataSource{
                 return UITableViewCell()
             }
             let txtCell = myTableView.dequeueReusableCell(withIdentifier: BOCatItemTextDescriptionCell.reuseIdentifier()) as! BOCatItemTextDescriptionCell
+            txtCell.changeLeadingConstraintToCatDetail()
             txtCell.setText(text: detailItemWinner.itemDescription)
+            if txtCell.cornerRoundType != .roundBot{
+                txtCell.cornerRoundType = .roundBot
+                txtCell.setNeedsLayout()
+                txtCell.contentView.setNeedsLayout()
+            }
+            
             return txtCell
         }
         if indexPath.row == runnerImgIndex{
@@ -159,6 +209,12 @@ extension BOGuideDetailTableDataSource{
             }
             let topCell = myTableView.dequeueReusableCell(withIdentifier: TopGuideCell.reuseIdentifier()) as! TopGuideCell
             topCell.setupForCategoryDetailItem(detailItem: detailItemRunnerUp, isFavourited: false)
+            if topCell.cornerRoundType != .roundTop{
+                topCell.cornerRoundType = .roundTop
+                topCell.setNeedsLayout()
+                topCell.contentView.setNeedsLayout()
+            }
+
             return topCell
         }
         if indexPath.row == runnerTextIndex{
@@ -168,6 +224,12 @@ extension BOGuideDetailTableDataSource{
             }
             let txtCell = myTableView.dequeueReusableCell(withIdentifier: BOCatItemTextDescriptionCell.reuseIdentifier()) as! BOCatItemTextDescriptionCell
             txtCell.setText(text: detailItemRunnerUp.itemDescription)
+            txtCell.changeLeadingConstraintToCatDetail()
+            if txtCell.cornerRoundType != .roundBot{
+                txtCell.cornerRoundType = .roundBot
+                txtCell.setNeedsLayout()
+                txtCell.contentView.setNeedsLayout()
+            }
             return txtCell
         }
         
@@ -178,6 +240,11 @@ extension BOGuideDetailTableDataSource{
             }
             let topCell = myTableView.dequeueReusableCell(withIdentifier: TopGuideCell.reuseIdentifier()) as! TopGuideCell
             topCell.setupForCategoryDetailItem(detailItem: detailItemRunnerUpSecond, isFavourited: false)
+            if topCell.cornerRoundType != .roundTop{
+                topCell.cornerRoundType = .roundTop
+                topCell.setNeedsLayout()
+                topCell.contentView.setNeedsLayout()
+            }
             return topCell
         }
         if indexPath.row == nextRunnerTextIndex{
@@ -187,10 +254,15 @@ extension BOGuideDetailTableDataSource{
             }
             let txtCell = myTableView.dequeueReusableCell(withIdentifier: BOCatItemTextDescriptionCell.reuseIdentifier()) as! BOCatItemTextDescriptionCell
             txtCell.setText(text: detailItemRunnerUpSecond.itemDescription)
+            txtCell.changeLeadingConstraintToCatDetail()
+            if txtCell.cornerRoundType != .roundBot{
+                txtCell.cornerRoundType = .roundBot
+                txtCell.setNeedsLayout()
+                txtCell.contentView.setNeedsLayout()
+            }
             return txtCell
         }
-        
-        
+        print("returning UITableViewCell in BOGuideDetail")
         return UITableViewCell()
     }
     
@@ -245,6 +317,10 @@ extension BOGuideDetailTableDataSource{
         }
         let txtCell = tableView.dequeueReusableCell(withIdentifier: BOCatItemTextDescriptionCell.reuseIdentifier()) as! BOCatItemTextDescriptionCell
         txtCell.setText(text: nextItem.itemDescription)
+        if screenType == .bestof{
+            txtCell.cornerRoundType = .roundBot
+            txtCell.setBackgroundForCategory()
+        }
         return txtCell
     }
     
@@ -281,6 +357,12 @@ extension BOGuideDetailTableDataSource{
             return UITableViewCell()
         }
         txtCell.setText(text: text)
+        if screenType == .bestof{
+            txtCell.cornerRoundType = .roundBot
+            txtCell.setBackgroundForCategory()
+            txtCell.setNeedsLayout()
+            txtCell.contentView.setNeedsLayout()
+        }
         return txtCell
     }
 }
@@ -290,15 +372,11 @@ extension BOGuideDetailTableDataSource: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        
-        let bigImgTopCellIndex = 0
-        let txtDescCell = 1
-        
+
         if screenType == .guide{
             
             if indexPath.row == bigImgTopCellIndex{
-                return bigImgCellGuideRowHeight
+                return bigImgCellGuideHeight
             }
             if indexPath.row == txtDescCell{
                 return getHeightForContentText()
@@ -314,12 +392,15 @@ extension BOGuideDetailTableDataSource: UITableViewDelegate{
         if screenType == .bestof{
             
             if indexPath.row == bigImgTopCellIndex{
-                return bigImgCellCategoryHeight
+                return bigImgCellGuideHeight
             }
             if indexPath.row == txtDescCell{
                 return getHeightForContentText()
             }
-            
+            if indexPath.row == redWinnerIndex{
+                return runnerHeight
+            }
+
             if indexPath.row == winnerImgIndex{
                 return bigImgCellCategoryHeight
             }
@@ -363,21 +444,21 @@ extension BOGuideDetailTableDataSource{
         
         guard let winnerTxt = catItem.value?.detailItem?.arrItems[safe: arrIndexWinner]?.itemDescription else { return 1 }
         
-        return winnerTxt.height(withConstrainedWidth: constraintedWidth, font: textDescFont)
+        return winnerTxt.height(withConstrainedWidth: constraintedWidthForWinnerOrRunners, font: textDescFont)
     }
     
     private func getHeightForRunnerUp() -> CGFloat{
         
         guard let runnerUpTxt = catItem.value?.detailItem?.arrItems[safe: arrIndexRunner]?.itemDescription else { return 1 }
         
-        return runnerUpTxt.height(withConstrainedWidth: constraintedWidth, font: textDescFont)
+        return runnerUpTxt.height(withConstrainedWidth: constraintedWidthForWinnerOrRunners, font: textDescFont)
     }
     
     private func getHeightForSecondRunnerUp() -> CGFloat{
         
         guard let runnerUpSecondTxt = catItem.value?.detailItem?.arrItems[safe: arrIndexRunnerSecond]?.itemDescription else { return 1 }
         
-        return runnerUpSecondTxt.height(withConstrainedWidth: constraintedWidth, font: textDescFont)
+        return runnerUpSecondTxt.height(withConstrainedWidth: constraintedWidthForWinnerOrRunners, font: textDescFont)
     }
     
     private func getHeightForContentText() -> CGFloat{

@@ -45,6 +45,7 @@ extension GuideItemCell{
         
         style()
         setupImgView()
+        selectionStyle = .none
     }
     
     private func setupImgView(){

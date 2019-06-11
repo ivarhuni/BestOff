@@ -98,10 +98,11 @@ extension BOGuideViewController{
         imgViewGrapevine.image = Asset.grapevineIcon.img
         viewActivity.backgroundColor = .clear
         viewActivity.type = .ballScaleRippleMultiple
-        viewActivity.startAnimating()
         viewActivity.alpha = viewModel.viewActivityAlpha
         viewLoadingScreen.alpha = 1
         viewAnimationBox.backgroundColor = .colorRed
+        viewActivity.startAnimating()
+
     }
     
     private func hideLoadingScreen(){
@@ -277,6 +278,12 @@ extension BOGuideViewController{
         registerGuideDetail()
         registerCategoryWinnerCells()
         registerFavouriteCell()
+        registerCatDetailCells()
+    }
+    
+    private func registerCatDetailCells(){
+        let runnerUpCell = UINib(nibName: RunnerUpCell.nibName(), bundle: nil)
+        tableView.register(runnerUpCell, forCellReuseIdentifier: RunnerUpCell.reuseIdentifier())
     }
     
     private func registerFavouriteCell(){
@@ -502,9 +509,7 @@ extension BOGuideViewController{
         UIView.animate(withDuration: self.viewModel.tableDataSourceAnimationDuration, delay: 0, options: .curveEaseInOut, animations: { [weak self] in
             
             guard let this = self else { return }
-            
-            
-//            this.viewControllerHeadder.showDetail(withDetailText: viewModel.detail)
+            this.viewControllerHeadder.showDetail(withDetailText: this.viewModel.getDetailScreenTitle())
         }) { finished in
             
         }
@@ -566,7 +571,7 @@ extension BOGuideViewController{
 extension BOGuideViewController: ShowCategoryDetailForType{
     
     
-    func show(categoryDetail: BOCategoryDetail, catItem: BOCatItem) {
+    func show(categoryDetail: BOCategoryDetail, catItem: BOCatItem, type: Endpoint) {
         changeTo(catDetail: categoryDetail)
     }
     
@@ -577,6 +582,7 @@ extension BOGuideViewController: ShowCategoryDetailForType{
     func setupForCatDetail(){
 
         disableTableDelegate()
+        animateHeaderToCatDetail()
         if let catTitle = viewModel.detailCategory.value?.categoryTitle {
              animateHeaderTo(txtHeader: catTitle)
         }

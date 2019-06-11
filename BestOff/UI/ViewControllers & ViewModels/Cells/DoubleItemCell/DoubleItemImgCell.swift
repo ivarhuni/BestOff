@@ -73,13 +73,13 @@ extension DoubleItemImgCell{
         
         isEditActive ? showWhiteEditBackground() : hideWhiteEditBackground()
         
+        selectionStyle = .none
+        
         guard let firstCategory = arrCatDetailItems[safe: 0] else { return }
         setupWithLeftItem(categoryDetailItem: firstCategory, isEditActive: isEditActive)
         
         guard let secondCategory = arrCatDetailItems[safe: 1] else { return }
         setupWithRightItem(categoryDetailItem: secondCategory, isEditActive: isEditActive)
-        
-        
     }
     
     private func setVerticalColorFor(type: Endpoint){
@@ -108,7 +108,7 @@ extension DoubleItemImgCell{
         
         lblLeft.text = categoryDetailItem.itemName
         leftItem = categoryDetailItem
-        
+        selectionStyle = .none
         if isEditActive{
             showLeftRemove()
         }else{
@@ -125,6 +125,7 @@ extension DoubleItemImgCell{
         lblRight.text = categoryDetailItem.itemName
         rightItem = categoryDetailItem
         showRight()
+        selectionStyle = .none
         if isEditActive{
             showRightRemove()
         }else{

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,23 +18,33 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="97.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XRh-re-lDq">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="97.5"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VHN-oK-Z6S">
-                        <rect key="frame" x="20" y="0.0" width="280" height="97.5"/>
+                        <rect key="frame" x="20" y="10" width="280" height="77.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="VHN-oK-Z6S" secondAttribute="bottom" id="0DV-6x-5U6"/>
-                    <constraint firstItem="VHN-oK-Z6S" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="DEx-qO-DBA"/>
-                    <constraint firstItem="VHN-oK-Z6S" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="dud-gf-Kzg"/>
-                    <constraint firstAttribute="trailing" secondItem="VHN-oK-Z6S" secondAttribute="trailing" constant="20" id="evV-1y-yu0"/>
+                    <constraint firstItem="VHN-oK-Z6S" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="6jl-Wp-lD6"/>
+                    <constraint firstAttribute="trailing" secondItem="VHN-oK-Z6S" secondAttribute="trailing" constant="20" id="FTs-wN-buS"/>
+                    <constraint firstAttribute="trailing" secondItem="XRh-re-lDq" secondAttribute="trailing" id="Ibs-yE-jez"/>
+                    <constraint firstAttribute="bottom" secondItem="XRh-re-lDq" secondAttribute="bottom" id="gRV-OA-lLc"/>
+                    <constraint firstAttribute="bottom" secondItem="VHN-oK-Z6S" secondAttribute="bottom" constant="10" id="k5x-g4-TMr"/>
+                    <constraint firstItem="XRh-re-lDq" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="vcK-DN-6wH"/>
+                    <constraint firstItem="XRh-re-lDq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="yx6-2r-Um7"/>
+                    <constraint firstItem="VHN-oK-Z6S" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="zgu-Ah-0r0"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="constraintLblLeading" destination="6jl-Wp-lD6" id="sOl-Rh-I7x"/>
                 <outlet property="lblDescription" destination="VHN-oK-Z6S" id="dad-qV-ckT"/>
+                <outlet property="viewBackground" destination="XRh-re-lDq" id="bEL-q7-Shs"/>
             </connections>
             <point key="canvasLocation" x="52.799999999999997" y="72.863568215892059"/>
         </tableViewCell>

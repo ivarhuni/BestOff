@@ -92,4 +92,6 @@ struct Constants{
     
     static let editRowHeight:CGFloat = 40
     static let dummyFavWhiteSpaceCellHeight:CGFloat = 3
+    
+    static let cornerRadiusGuideDetail:CGFloat = 13.0
 }

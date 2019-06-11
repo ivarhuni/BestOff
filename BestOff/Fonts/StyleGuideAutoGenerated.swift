@@ -77,7 +77,7 @@ extension UIFont {
     }
     
     class var cellItemText: UIFont {
-        return UIFont(name: "Poppins-Medium", size: 14.0)!
+        return UIFont(name: "Poppins-Medium", size: 16.0)!
     }
     
     class var favouriteOff: UIFont {

@@ -117,7 +117,7 @@ extension DoubleItemCell{
         
         guard let rightItem = arrItems[safe: 1] else { return }
         setupWithRightItem(item: rightItem)
-    
+        selectionStyle = .none
      }
     
     private func disableSelection(){
@@ -190,6 +190,7 @@ extension DoubleItemCell{
         leftItem = item
         setupTapGestureForLeftView()
         clearRight()
+        selectionStyle = .none
     }
     
     private func clearRight(){
@@ -213,6 +214,7 @@ extension DoubleItemCell{
         
         rightItem = item
         setupTapGestureForRightView()
+        selectionStyle = .none
     }
 }
 

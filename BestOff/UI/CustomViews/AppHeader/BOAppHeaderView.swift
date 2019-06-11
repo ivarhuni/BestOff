@@ -37,11 +37,7 @@ class BOAppHeaderView: UIView {
     @IBOutlet weak var imgViewBackBtn: UIImageView!
     
     @IBOutlet weak var viewLoader: NVActivityIndicatorView!
-    @IBOutlet weak var viewLoaderWidth: NSLayoutConstraint!
-    @IBOutlet weak var viewLoaderHeight: NSLayoutConstraint!
     
-    
-    @IBOutlet weak var viewSep: UIView!
     @IBOutlet weak var cImgViewWidth: NSLayoutConstraint!
     
     //MARK: Properties
@@ -199,7 +195,6 @@ extension BOAppHeaderView{
     func addShadow(){
         
         imgLeftIcon.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: CGSize(width: 1, height: 1), radius: 2)
-        lblTitle.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: CGSize(width: 1, height: 1), radius: 2)
     }
     
     func setupColors(){
@@ -211,7 +206,6 @@ extension BOAppHeaderView{
         
         lblTitle.textColor = .white
         lblBackTitle.textColor = .black
-//        viewSep.backgroundColor = .greySep
     }
     
     private func setupFonts(){
@@ -419,7 +413,7 @@ extension BOAppHeaderView{
 extension BOAppHeaderView{
     
     func showSeperator(){
-        viewSep.isHidden = false
+        
     }
     
     func showDetail(withDetailText: String){
@@ -453,8 +447,6 @@ extension BOAppHeaderView{
     }
     
     private func showDefault(){
-        
-        viewSep.isHidden = true
         
         animateDefault()
         animateToHamburger()
