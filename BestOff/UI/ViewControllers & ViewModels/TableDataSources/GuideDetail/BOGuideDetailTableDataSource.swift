@@ -40,7 +40,7 @@ class BOGuideDetailTableDataSource: NSObject, BOCategoryDetailListProtocol{
     let redRunnerSecondIndex = 8
     let nextRunnerImgIndex = 9
     let nextRunnerTextIndex = 10
-    let runnerHeight: CGFloat = 63
+    let runnerHeight: CGFloat = 70
     
     
     let bigImgCellCategoryHeight:CGFloat = 360.0

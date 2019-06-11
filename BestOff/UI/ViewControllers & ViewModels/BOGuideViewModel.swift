@@ -544,6 +544,7 @@ extension BOGuideViewModel: TakeMeThereProtocol{
         
         screenContentType.value = .subCategories
         subcategoriesListDataSource.value = categoryDataSource
+        subcategoriesListDataSource.value?.catDetailDelegate = self
     }
 }
 

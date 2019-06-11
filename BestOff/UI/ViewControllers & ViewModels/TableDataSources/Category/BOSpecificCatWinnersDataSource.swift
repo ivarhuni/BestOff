@@ -18,6 +18,7 @@ class BOSpecificCatWinnersDataSource: NSObject{
     let category: BOCategoryModel
     let catTitle: String
     let arrDataCatItems = Observable<[BOCatItem]>([])
+    weak var catDetailDelegate: ShowCategoryDetailForType?
     
     required init?(category: BOCategoryModel?, catTitle: String){
         guard let cat = category else { return nil }
@@ -97,20 +98,39 @@ extension BOSpecificCatWinnersDataSource: UITableViewDelegate{
     }
 }
 
-extension BOSpecificCatWinnersDataSource{
+extension BOSpecificCatWinnersDataSource: ShowCategoryDetailForType{
+    
+    func show(categoryDetail: BOCategoryDetail, catItem: BOCatItem, type: Endpoint) {
+        catDetailDelegate?.show(categoryDetail: categoryDetail, catItem: catItem, type: type)
+    }
     
     func didSelectAt(indexPath: IndexPath){
         indexPath.row == 0 ? didSelectTopItem() : print("did not select top item in BOSpecficiCatWinnersDataSource")
     }
     
     func didSelectTopItem(){
-        guard let topItem = self.category.items.first else { return }
-        didSelectSelectWith(item: topItem)
+        guard let item = arrDataCatItems.value.first else {
+            
+            print("No top item to display")
+            return
+        }
+        didSelectSelectWith(item: item)
     }
     
     func didSelectSelectWith(item: BOCatItem){
         print("selected item :")
         print(item.title)
+        guard let catDetail = item.detailItem else{
+            
+            print("no detail item in BOCatItem")
+            return
+        }
+        guard let catType = category.type else {
+            
+            print("no catType in categoryModel")
+            return
+        }
+        show(categoryDetail: catDetail, catItem: item, type: catType)
     }
     
     func getHeightForRowAt(indexPath: IndexPath) -> CGFloat{

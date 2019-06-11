@@ -55,6 +55,9 @@ extension BOFavHeaderCell{
         lblEdit.isHidden = true
         imgViewEdit.isHidden = true
         
+        viewContainer.clipsToBounds = true
+        viewContainer.layer.cornerRadius = 4
+        
         lblNoItems.isHidden = false
         toFavItems.isHidden = false
         imgViewHeart.isHidden = false
@@ -72,6 +75,9 @@ extension BOFavHeaderCell{
         viewContainer.isHidden = false
         lblEdit.isHidden = false
         imgViewEdit.isHidden = false
+        
+        viewContainer.clipsToBounds = true
+        viewContainer.layer.cornerRadius = 4
         
         lblNoItems.isHidden = true
         toFavItems.isHidden = true

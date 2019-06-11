@@ -482,9 +482,7 @@ extension BOGuideViewController{
             
             this.viewModel.shouldSwipeBeEnabled() ? this.enableSwipe() : this.disableSwipe()
             this.tableView.scroll(to: .top, animated: true)
-            
-            
-            
+
             UIView.animate(withDuration: 1.5, animations: {
                 
                 
@@ -647,6 +645,7 @@ extension BOGuideViewController{
         registerDelegateIce()
         viewModel.setTableDelegateFor(contentType: .iceland)
         viewModel.setTableDataSourceFor(contentType: .iceland)
+        viewModel.setCategoryDetailClickDelegate(delegate: self)
         hideMenu()
         disableSwipe()
     }
