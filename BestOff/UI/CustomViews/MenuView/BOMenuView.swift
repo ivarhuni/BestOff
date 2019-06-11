@@ -297,6 +297,19 @@ extension BOMenuView{
                 guard let this = self else { return }
                 this.subCatClicked()
             }
+        case .subCategoriesRvk:
+            UIView.animate(withDuration: viewModel.animationDuration, animations: { [weak self] in
+                
+                guard let this = self else { return }
+                
+                this.configureConstantsReykjavik()
+                this.styleViewFor(screenType: .reykjavik)
+                this.view.layoutIfNeeded()
+                
+            }) {[weak self] finished in
+                guard let this = self else { return }
+                this.subCatClicked()
+            }
             
         default:
             

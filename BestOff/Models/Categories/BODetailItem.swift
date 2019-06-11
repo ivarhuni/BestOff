@@ -78,7 +78,6 @@ struct BOCategoryDetailItem: Codable{
         self.isSecondRunner = isSecondRunner
         
         self.categoryWinnerOrRunnerTitle = categoryWinnerOrRunnerTitle
-        
     }
 }
 

@@ -155,6 +155,10 @@ extension BOGuideViewController: MenuViewClick{
     func subCatClicked(){
         viewControllerHeadder.viewModel.isHamburgerActive.value = true
         viewControllerHeadder.setTitleText(text: "BEST OF REYKJAVÍK")
+        
+        if viewModel.screenContentType.value == .subCategoriesIce{
+            changeToIceland()
+        }
         changeToRvkCategories()
     }
     
@@ -433,9 +437,11 @@ extension BOGuideViewController{
             case .iceland:
                 this.setupForIceland()
                 
-            case .subCategories:
-                this.setupForSubcategories()
-                
+            case .subCategoriesRvk:
+                this.setupForSubcategoriesRvk()
+            
+            case .subCategoriesIce:
+                this.setupForSubcategoriesIce()
             case .favourites:
                 this.setupForFavourites()
             }
@@ -679,22 +685,43 @@ extension BOGuideViewController{
 //MARK: Subcategories
 extension BOGuideViewController{
     
-    private func setupForSubcategories(){
+    private func setupForSubcategoriesIce(){
         
         if viewModel.screenContentType.value == .guideDetail {
             print("guideDetail, not loading sub categories")
             return
         }
         
-        if viewModel.activeTableDataSource.value is BOGuideDetailTableDataSource{
+        if viewModel.activeTableDataSource.value is BOGuideDetailTableDataSource && viewModel.screenContentType.value != .subCategoriesRvk && viewModel.screenContentType.value != .subCategoriesIce{
             print("guideDetail, not loading sub cats")
             return
         }
         
         disableTableDelegate()
         registerDelegateSubcategories()
-        viewModel.setTableDelegateFor(contentType: .subCategories)
-        viewModel.setTableDataSourceFor(contentType: .subCategories)
+        viewModel.setTableDelegateFor(contentType: .subCategoriesIce)
+        viewModel.setTableDataSourceFor(contentType: .subCategoriesIce)
+        hideMenu()
+        disableSwipe()
+        setHeaderToSubcategory()
+    }
+    
+    private func setupForSubcategoriesRvk(){
+        
+        if viewModel.screenContentType.value == .guideDetail {
+            print("guideDetail, not loading sub categories")
+            return
+        }
+        
+        if viewModel.activeTableDataSource.value is BOGuideDetailTableDataSource && viewModel.screenContentType.value != .subCategoriesRvk && viewModel.screenContentType.value != .subCategoriesIce{
+            print("guideDetail, not loading sub cats")
+            return
+        }
+        
+        disableTableDelegate()
+        registerDelegateSubcategories()
+        viewModel.setTableDelegateFor(contentType: .subCategoriesRvk)
+        viewModel.setTableDataSourceFor(contentType: .subCategoriesRvk)
         hideMenu()
         disableSwipe()
         setHeaderToSubcategory()

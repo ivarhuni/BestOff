@@ -8,6 +8,17 @@
 
 import UIKit
 
+enum DoubleItemCellType{
+    
+    case category
+    case favourites
+}
+
+protocol DoubleCellClicked: AnyObject{
+    
+    func didClick(item: BOCatItem)
+}
+
 class DoubleItemImgCell: UITableViewCell {
 
     @IBOutlet weak var viewLeft: UIView!
@@ -29,13 +40,19 @@ class DoubleItemImgCell: UITableViewCell {
     @IBOutlet weak var viewRemoveRight: UIView!
     @IBOutlet weak var viewRemoveLeft: UIView!
     
+    var cellType: DoubleItemCellType?
+    
     var leftItem: BOCategoryDetailItem?
+    var leftCatItem: BOCatItem?
+    
     var rightItem: BOCategoryDetailItem?
+    var rightCatItem: BOCatItem?
     
     var leftGestureRec: UIGestureRecognizer?
     var rightGestureRec: UIGestureRecognizer?
     
     weak var deleteDelegate: DeleteFavouriteItem?
+    weak var delegateDoubleCellClicked: DoubleCellClicked?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -49,6 +66,16 @@ class DoubleItemImgCell: UITableViewCell {
     }
 }
 
+extension DoubleItemImgCell: DoubleCellClicked{
+    
+    func didClick(item: BOCatItem) {
+        guard let delegate = delegateDoubleCellClicked else{
+            print("delegate not set in DoubleItemImgCell")
+            return
+        }
+        delegate.didClick(item: item)
+    }
+}
 
 extension DoubleItemImgCell{
     
@@ -64,7 +91,7 @@ extension DoubleItemImgCell{
 extension DoubleItemImgCell{
     
     
-    func setupWithArrCatDetailItems(arrCatDetailItems: [BOCategoryDetailItem], screenType: Endpoint, isEditActive: Bool = false){
+    func setupWithArrCatDetailItems(arrCatDetailItems: [BOCategoryDetailItem], screenType: Endpoint, isEditActive: Bool = false, type: DoubleItemCellType? = nil){
         
         setupDefault()
         setVerticalColorFor(type: screenType)
@@ -80,6 +107,25 @@ extension DoubleItemImgCell{
         
         guard let secondCategory = arrCatDetailItems[safe: 1] else { return }
         setupWithRightItem(categoryDetailItem: secondCategory, isEditActive: isEditActive)
+    }
+    
+    func setupWithArrCatItems(arrCatDetailItems: [BOCatItem], screenType: Endpoint, isEditActive: Bool = false, type: DoubleItemCellType? = nil){
+        
+        setupDefault()
+        setVerticalColorFor(type: screenType)
+        leftItem = nil
+        rightItem = nil
+        
+        isEditActive ? showWhiteEditBackground() : hideWhiteEditBackground()
+        
+        selectionStyle = .none
+        self.cellType = type
+        
+        guard let firstCategory = arrCatDetailItems[safe: 0] else { return }
+        setupWithLeftCatItem(catItem: firstCategory, isEditActive: isEditActive)
+        
+        guard let secondCategory = arrCatDetailItems[safe: 1] else { return }
+        setupWithRightCatItem(catItem: secondCategory, isEditActive: isEditActive)
     }
     
     private func setVerticalColorFor(type: Endpoint){
@@ -120,6 +166,22 @@ extension DoubleItemImgCell{
         clearRight()
     }
     
+    private func setupWithLeftCatItem(catItem: BOCatItem, isEditActive: Bool){
+        
+        lblLeft.text = catItem.detailItem?.categoryTitle
+        leftCatItem = catItem
+        selectionStyle = .none
+        if isEditActive{
+            showLeftRemove()
+        }else{
+            hideLeftRemove()
+        }
+        
+        setLeftTapGesture()
+        UIImageView.setSDImageViewImageWithURL(imageView: imgViewLeft, strURL: catItem.image)
+        clearRight()
+    }
+    
     private func setupWithRightItem(categoryDetailItem: BOCategoryDetailItem, isEditActive: Bool){
         
         lblRight.text = categoryDetailItem.itemName
@@ -134,6 +196,21 @@ extension DoubleItemImgCell{
         
         guard let url = categoryDetailItem.imageURL else { return }
         UIImageView.setSDImageViewImageWithURL(imageView: imgViewRight, strURL: url)
+    }
+    
+    private func setupWithRightCatItem(catItem: BOCatItem, isEditActive: Bool){
+        
+        lblRight.text = catItem.detailItem?.categoryTitle
+        rightCatItem = catItem
+        showRight()
+        selectionStyle = .none
+        if isEditActive{
+            showRightRemove()
+        }else{
+            hideRightRemove()
+        }
+        setRightTapGesture()
+        UIImageView.setSDImageViewImageWithURL(imageView: imgViewRight, strURL: catItem.image)
     }
     
     private func setupDefault(){
@@ -195,6 +272,25 @@ extension DoubleItemImgCell{
         
         viewLeft.addDropShadow(color: .black, opacity: Constants.highShadowOpacity, offset: .zero, radius: 2)
         rightView.addDropShadow(color: .black, opacity: Constants.highShadowOpacity, offset: .zero, radius: 2)
+    }
+}
+
+extension DoubleItemImgCell{
+    
+    private func setLeftTapGesture(){
+        
+        self.leftGestureRec = UITapGestureRecognizer(target: self, action: #selector(self.tapLeft(_:)))
+        guard let gestRec = self.leftGestureRec else { return }
+        viewLeft.addGestureRecognizer(gestRec)
+        viewLeft.isUserInteractionEnabled = true
+    }
+    
+    private func setRightTapGesture(){
+        
+        self.rightGestureRec = UITapGestureRecognizer(target: self, action: #selector(self.tapRight(_:)))
+        guard let gestRec = self.rightGestureRec else { return }
+        rightView.addGestureRecognizer(gestRec)
+        rightView.isUserInteractionEnabled = true
     }
 }
 
@@ -302,6 +398,15 @@ extension DoubleItemImgCell{
     }
     
     private func tappedLeft(){
+        
+        if let type = self.cellType{
+            if type == .category{
+                guard let item = leftCatItem else { print("no left item"); return }
+                didClick(item: item)
+                return
+            }
+        }
+        
         guard let leftName = leftItem?.itemName else {
             print("leftItem doesn't have name in DoubleItemImgCell")
             return
@@ -314,6 +419,15 @@ extension DoubleItemImgCell{
     }
     
     private func tappedRight(){
+        
+        if let type = self.cellType{
+            if type == .category{
+                guard let item = rightCatItem else { print("no right item"); return }
+                didClick(item: item)
+                return
+            }
+        }
+        
         guard let rightName = rightItem?.itemName else {
             print("rightItem doesn't have name in DoubleItemImgCell")
             return

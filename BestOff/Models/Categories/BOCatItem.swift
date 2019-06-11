@@ -21,6 +21,7 @@ struct BOCatItem : Codable {
     var detailItem: BOCategoryDetail?
     var strTimeStamp: String?
     var superCatName: String?
+    var titleShort: String?
     
     enum CodingKeys: String, CodingKey {
         case contentText = "content_text"
@@ -44,7 +45,7 @@ struct BOCatItem : Codable {
         detailItem = nil
         strTimeStamp = nil
         superCatName = ""
-        
+        titleShort = ""
         tryToSetTimeStamp()
     }
 }
@@ -63,6 +64,7 @@ extension BOCatItem{
                 return
             }
             detailItem = categoryDetail
+            setTitleShort()
             return
         case .guides:
             
@@ -72,6 +74,7 @@ extension BOCatItem{
                 return
             }
             detailItem = guideDetail
+            setTitleShort()
             return
         case .north:
             print("")
@@ -128,5 +131,16 @@ extension BOCatItem{
     static func getScreenTitleText() -> String{
         
         return ""
+    }
+}
+
+extension BOCatItem{
+    
+    mutating func setTitleShort(){
+        
+        guard let titleSplit = detailItem?.categoryTitle.split(separator: ":") else { return }
+        guard let shortTitle = titleSplit[safe: 1] else { return }
+        titleShort = String(shortTitle)
+        print("")
     }
 }

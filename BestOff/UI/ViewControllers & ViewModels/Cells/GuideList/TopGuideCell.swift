@@ -68,7 +68,7 @@ class TopGuideCell: UITableViewCell{
     
     @IBAction func btnFavPressed(_ sender: Any) {
         
-        print("btnFavPressed")
+        
     }
     
     @IBAction func btnDirections(_ sender: Any) {
@@ -115,7 +115,6 @@ extension TopGuideCell{
         viewBlackBackground.addDropShadow(color: .black, opacity: Constants.highShadowOpacity, offset: CGSize(width: 2, height: 2), radius: 3)
         lblGrapevine.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: .zero, radius: 2)
         lblDate.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: .zero, radius: 2)
-        
         //roundCornerForType(roundCorner: self.cornerRoundType)
     }
 }

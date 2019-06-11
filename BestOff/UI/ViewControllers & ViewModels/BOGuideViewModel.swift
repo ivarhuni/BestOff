@@ -15,7 +15,8 @@ enum ContentType{
     case guides
     case guideDetail
     case reykjavik
-    case subCategories
+    case subCategoriesRvk
+    case subCategoriesIce
     case iceland
     case favourites
     case categoryDetail
@@ -193,8 +194,6 @@ extension BOGuideViewModel{
                 print("catDetailDataSource not set while setting delegate in VM")
                 return
             }
-            
-            
             self.activeTableDelegate.value = categoryDetailDelegate
             
             
@@ -219,7 +218,7 @@ extension BOGuideViewModel{
             }
             self.activeTableDelegate.value = rvkDelegate
             
-        case .subCategories:
+        case .subCategoriesRvk, .subCategoriesIce:
             guard let subCategory = self.subcategoriesListDataSource.value else {
                 print("subCategoryListDataSource not set while settings Delegate")
                 return
@@ -273,7 +272,7 @@ extension BOGuideViewModel{
             }
             self.activeTableDataSource.value = rvkDataSource
             
-        case .subCategories:
+        case .subCategoriesRvk, .subCategoriesIce:
             guard let subCategory = self.subcategoriesListDataSource.value else {
                 print("guideListDataSource not set while settings Delegate")
                 return
@@ -542,7 +541,7 @@ extension BOGuideViewModel: TakeMeThereProtocol{
     
     private func changeDataSourceToSpecific(categoryDataSource: BOSpecificCatWinnersDataSource){
         
-        screenContentType.value = .subCategories
+        screenContentType.value = .subCategoriesRvk
         subcategoriesListDataSource.value = categoryDataSource
         subcategoriesListDataSource.value?.catDetailDelegate = self
     }
@@ -603,9 +602,11 @@ extension BOGuideViewModel{
         case .reykjavik:
             return "BEST OF REYKJAVÍK"
             
-        case .subCategories:
+        case .subCategoriesRvk:
             return "BEST OF REYKJAVÍK"
-            
+        
+        case .subCategoriesIce:
+            return "BEST OF ICELAND"
         case .iceland:
             return "BEST OF ICELAND"
             
@@ -709,10 +710,10 @@ extension BOGuideViewModel{
             if lastContentType == .guides { return .left }
             
             guard let nextToLastScreen = getNextToLastContentType() else { return .left }
-            if nextToLastScreen == .subCategories { return .fade }
+            if nextToLastScreen == .subCategoriesRvk { return .fade }
             return .left
             
-        case .subCategories:
+        case .subCategoriesRvk, .subCategoriesIce:
             print("automatic rvksubcategories")
             return .automatic
         case .iceland:

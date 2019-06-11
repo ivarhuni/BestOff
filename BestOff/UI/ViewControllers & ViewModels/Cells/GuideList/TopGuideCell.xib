@@ -80,8 +80,8 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hjs-FA-Lzi">
                         <rect key="frame" x="170" y="0.0" width="150" height="220"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bJv-r1-hp4">
-                                <rect key="frame" x="105" y="25" width="25" height="21"/>
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bJv-r1-hp4">
+                                <rect key="frame" x="105" y="174" width="25" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="25" id="xBr-i8-0gc"/>
                                     <constraint firstAttribute="height" constant="21" id="zkw-E4-nex"/>
@@ -95,7 +95,7 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="150" id="1dg-9C-h6f"/>
                             <constraint firstAttribute="trailing" secondItem="bJv-r1-hp4" secondAttribute="trailing" constant="20" id="SYD-Nm-M84"/>
-                            <constraint firstItem="bJv-r1-hp4" firstAttribute="top" secondItem="hjs-FA-Lzi" secondAttribute="top" constant="25" id="uh7-pV-GsO"/>
+                            <constraint firstAttribute="bottom" secondItem="bJv-r1-hp4" secondAttribute="bottom" constant="25" id="tyN-Ay-wsr"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EKB-Ck-E5P">

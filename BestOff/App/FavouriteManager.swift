@@ -46,7 +46,7 @@ struct FavouriteManager{
         saveArrToFavourites(arrFavourites: arrFavourites)
     }
     
-    static func mockFavs() -> [BOCategoryDetailItem] {
+    static func mockFavs() -> [BOCatItem] {
         
         //MOCK
         print("mocking favourites")
@@ -58,7 +58,9 @@ struct FavouriteManager{
         
         let arrMock = [firstDetailItem, secondDetailItem, thirdItem, forthItem]
         
+        
+        
         saveArrToFavourites(arrFavourites: arrMock)
-        return arrMock
+        return []
     }
 }

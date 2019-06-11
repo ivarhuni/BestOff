@@ -65,8 +65,33 @@ extension BOSpecificCatWinnersDataSource: UITableViewDataSource{
     func getCellForItemAt(indexPath: IndexPath, inTableView: UITableView) -> UITableViewCell{
         
         let cell = inTableView.dequeueReusableCell(withIdentifier: DoubleItemImgCell.reuseIdentifier()) as! DoubleItemImgCell
-        cell.setupWithArrCatDetailItems(arrCatDetailItems: getItemsForIndexPath(indexPath: indexPath), screenType: category.type ?? .rvkDining)
+        //cell.setupWithArrCatDetailItems(arrCatDetailItems: getItemsForIndexPath(indexPath: indexPath), screenType: category.type ?? .rvkDining)
+        cell.setupWithArrCatItems(arrCatDetailItems: getCatItemsForIndexPath(indexPath: indexPath), screenType: category.type ?? .rvkDining, type: .category)
+        cell.delegateDoubleCellClicked = self
         return cell
+    }
+    
+    func getCatItemsForIndexPath(indexPath: IndexPath) -> [BOCatItem]{
+        
+        if indexPath.row == 0{
+            
+            guard let item = arrDataCatItems.value.first else {
+                return []
+            }
+            return [item]
+        }
+        
+        let indexLeft = (indexPath.row * 2) - 1
+        let indexRight = indexPath.row * 2
+        
+        guard let leftItem = arrDataCatItems.value[safe: indexLeft] else{
+            return []
+        }
+        guard let rightItem = arrDataCatItems.value[safe: indexRight] else{
+            return [leftItem]
+        }
+        
+        return [leftItem, rightItem]
     }
     
     func getItemsForIndexPath(indexPath: IndexPath) -> [BOCategoryDetailItem] {
@@ -95,6 +120,16 @@ extension BOSpecificCatWinnersDataSource: UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return getHeightForRowAt(indexPath: indexPath)
+    }
+}
+
+extension BOSpecificCatWinnersDataSource: DoubleCellClicked{
+    
+    func didClick(item: BOCatItem) {
+        
+        guard let catDetail = item.detailItem else { print("not detail item in BOCatItem"); return}
+        guard let catType = category.type else { print("type not set"); return }
+        show(categoryDetail: catDetail, catItem: item, type: catType)
     }
 }
 

@@ -18,18 +18,7 @@ class BOFavouritesDataSource: NSObject{
     
     private let sectionCount = 1
     
-    
-    let arrFavDining = Observable<[BOCategoryDetailItem]>([])
-    let arrFavDrinking = Observable<[BOCategoryDetailItem]>([])
-    let arrFavActivities = Observable<[BOCategoryDetailItem]>([])
-    let arrFavShopping = Observable<[BOCategoryDetailItem]>([])
-    
-    let arrFavourites = Observable<[BOCategoryDetailItem]>(FavouriteManager.mockFavs())
-    
-    private let diningSectionIndex = 0
-    private let drinkingSectionIndex = 1
-    private let shoppingSectionIndex = 2
-    private let activitySectionIndex = 3
+    let arrFavourites = Observable<[BOCatItem]>(FavouriteManager.mockFavs())
     
     weak var deleteDelegate: DeleteFavouriteItem?
     weak var editClickedDelegate: EditCellClicked?
@@ -50,8 +39,8 @@ extension BOFavouritesDataSource: UITableViewDataSource{
         
         let cell = myTableView.dequeueReusableCell(withIdentifier: DoubleItemImgCell.reuseIdentifier()) as! DoubleItemImgCell
         
-        let arrItems = getItemsForIndexPath(indexPath: indexPath)
-        cell.setupWithArrCatDetailItems(arrCatDetailItems: arrItems, screenType: .rvkDining, isEditActive: self.isDeleteActive.value)
+        let arrItems = getCatItemsForIndexPath(indexPath: indexPath)
+        cell.setupWithArrCatItems(arrCatDetailItems: arrItems, screenType: .rvkDining, isEditActive: self.isDeleteActive.value)
         
         if isDeleteActive.value{
             cell.deleteDelegate = self
@@ -62,23 +51,27 @@ extension BOFavouritesDataSource: UITableViewDataSource{
         return cell
     }
     
-    func getItemsForIndexPath(indexPath: IndexPath) -> [BOCategoryDetailItem] {
-
-        if indexPath.row.isEven(){
+    func getCatItemsForIndexPath(indexPath: IndexPath) -> [BOCatItem]{
+        
+        if indexPath.row == 0{
             
-            guard let leftItem = arrFavourites.value[safe: indexPath.row] else {
+            guard let item = arrFavourites.value.first else {
                 return []
             }
-            
-            guard let rightItem = arrFavourites.value[safe: indexPath.row + 1] else { return [leftItem] }
-            return [leftItem, rightItem]
+            guard let rightItem = arrFavourites.value[safe: 1] else { return [item] }
+            return [item, rightItem]
         }
         
-        guard let leftItem = arrFavourites.value[safe: indexPath.row - 1] else {
+        let indexLeft = (indexPath.row * 2)
+        let indexRight = indexPath.row * 2 + 1
+        
+        guard let leftItem = arrFavourites.value[safe: indexLeft] else{
             return []
         }
+        guard let rightItem = arrFavourites.value[safe: indexRight] else{
+            return [leftItem]
+        }
         
-        guard let rightItem = arrFavourites.value[safe: indexPath.row] else { return [leftItem] }
         return [leftItem, rightItem]
     }
     
@@ -163,7 +156,7 @@ extension BOFavouritesDataSource{
     func deleteItemWith(name: String){
         
         FavouriteManager.removeItemWith(name: name)
-        arrFavourites.value = FavouriteManager.getFavouriteItems()
+        //arrFavourites.value = FavouriteManager.getFavouriteItems()
     }
 }
 
