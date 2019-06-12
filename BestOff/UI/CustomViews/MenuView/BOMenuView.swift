@@ -310,6 +310,19 @@ extension BOMenuView{
                 guard let this = self else { return }
                 this.subCatClicked()
             }
+        case .subCategoriesIce:
+            UIView.animate(withDuration: viewModel.animationDuration, animations: { [weak self] in
+                
+                guard let this = self else { return }
+                
+                this.configureConstantsIceland()
+                this.styleViewFor(screenType: .iceland)
+                this.view.layoutIfNeeded()
+                
+            }) {[weak self] finished in
+                guard let this = self else { return }
+                this.subCatClicked()
+            }
             
         default:
             

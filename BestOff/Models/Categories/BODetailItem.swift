@@ -153,6 +153,22 @@ struct DetailItemFactory{
         return BOCategoryDetail(categoryDescription: catDescription, categoryTitle: catName, arrItems: createDetailItemsForRvkWith(arrTextContent: arrText, strHTML: strHTML), type: nil)
     }
     
+    static func createCategoryDetailForIce(categoryItemContentText: String, strHTML: String) -> BOCategoryDetail?{
+        
+        let arrText = categoryItemContentText.components(separatedBy: "\n")
+        
+        guard let catDescription = arrText[safe: arrIndexItemsGuide.catDescription.rawValue] else{
+            print("--!-- MODEL ERROR: CategoryItemDescription unavailable --!-- ")
+            return nil
+        }
+        guard let catName = arrText[safe: arrIndexItemsGuide.categoryName.rawValue] else{
+            print("--!-- MODEL ERROR: CategoryItemName unavailable --!-- ")
+            return nil
+        }
+        
+        return BOCategoryDetail(categoryDescription: catDescription, categoryTitle: catName, arrItems: createDetailItemsForRvkWith(arrTextContent: arrText, strHTML: strHTML), type: nil)
+    }
+    
     
     private static func createDetailItemsForRvkWith(arrTextContent: [String], strHTML: String) -> [BOCategoryDetailItem]{
         

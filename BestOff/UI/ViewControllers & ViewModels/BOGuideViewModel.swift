@@ -56,7 +56,7 @@ class BOGuideViewModel: BOViewModel {
     private let catDetailDataSource = Observable<BOCategoryDetailListProtocol?>(BOGuideDetailTableDataSource())
     weak var showCatDetailDelegate: ShowCategoryDetailForType?
     
-    private let rvkCategoriesDataSource = Observable<RvkAndIcelandDataSource?>(RvkAndIcelandDataSource(with: .rvk))
+    private let rvkCategoriesDataSource = Observable<RvkAndIcelandDataSource?>(RvkAndIcelandDataSource(with: .reykjavik))
     private let icelandCategoriesDataSource = Observable<RvkAndIcelandDataSource?>(RvkAndIcelandDataSource(with: .iceland))
     
     private let subcategoriesListDataSource = Observable<BOSpecificCatWinnersDataSource?>(nil)
@@ -500,48 +500,52 @@ extension BOGuideViewModel: TakeMeThereProtocol{
                 print("no specific category datasource available NORTH")
                 return
             }
-            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
+            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource, location: .iceland)
             
         case .east:
             guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceEast.value, catTitle: "East") else {
                 print("no specific category datasource available EAST")
                 return
             }
-            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
+            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource, location: .iceland)
             
         case .westfjords:
             guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceWestFjords.value, catTitle: "Westfjords") else {
                 print("no specific category datasource available WESTFJORDS")
                 return
             }
-            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
+            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource, location: .iceland)
             
         case .south:
             guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceSouth.value, catTitle: "South") else {
                 print("no specific category datasource available SOUTH")
                 return
             }
-            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
+            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource, location: .iceland)
             
         case .west:
             guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceWest.value, catTitle: "West") else {
                 print("no specific category datasource available WEST")
                 return
             }
-            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
+            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource, location: .iceland)
             
         case .reykjanes:
             guard let specificCategoryDataSource = BOSpecificCatWinnersDataSource(category: self.iceReykjaNes.value, catTitle: "Reykjanes") else {
                 print("no specific category datasource available REYKJANES")
                 return
             }
-            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
+            changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource, location: .iceland)
         }
     }
     
-    private func changeDataSourceToSpecific(categoryDataSource: BOSpecificCatWinnersDataSource){
+    private func changeDataSourceToSpecific(categoryDataSource: BOSpecificCatWinnersDataSource, location: LocationDataSource = .reykjavik){
         
-        screenContentType.value = .subCategoriesRvk
+        if location == .iceland{
+            screenContentType.value = .subCategoriesIce
+        }else{
+            screenContentType.value = .subCategoriesRvk
+        }
         subcategoriesListDataSource.value = categoryDataSource
         subcategoriesListDataSource.value?.catDetailDelegate = self
     }
@@ -714,7 +718,7 @@ extension BOGuideViewModel{
             return .left
             
         case .subCategoriesRvk, .subCategoriesIce:
-            print("automatic rvksubcategories")
+            print("automatic subcategories")
             return .automatic
         case .iceland:
             print("automatic iceland")

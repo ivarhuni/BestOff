@@ -14,7 +14,7 @@ import Bond
 enum LocationDataSource{
     
     case iceland
-    case rvk
+    case reykjavik
 }
 
 //MARK: Properties
@@ -164,7 +164,7 @@ extension RvkAndIcelandDataSource: BOCategoryWinnerListProtocol{
         cell.delegateShowCategoryDetail = self
         
         switch locationType {
-        case .rvk:
+        case .reykjavik:
             if indexPath.row == diningIndex{
                 cell.setupWithCategory(category: dining.value, .rvkDining, randomItem: randomDiningItem, delegate: self)
                 return cell

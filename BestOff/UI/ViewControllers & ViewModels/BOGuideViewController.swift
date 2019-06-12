@@ -153,20 +153,21 @@ extension BOGuideViewController: MenuViewClick{
     }
     
     func subCatClicked(){
-        viewControllerHeadder.viewModel.isHamburgerActive.value = true
-        viewControllerHeadder.setTitleText(text: "BEST OF REYKJAVÍK")
-        
-        if viewModel.screenContentType.value == .subCategoriesIce{
-            changeToIceland()
-        }
-        changeToRvkCategories()
+//        viewControllerHeadder.viewModel.isHamburgerActive.value = true
+//        viewControllerHeadder.setTitleText(text: "BEST OF REYKJAVÍK")
+//
+//        if viewModel.screenContentType.value == .subCategoriesIce{
+//            changeToIceland()
+//        }
+//        changeToRvkCategories()
+        print("")
     }
     
     func iceClicked() {
         
         viewControllerHeadder.viewModel.isHamburgerActive.value = true
         viewControllerHeadder.setTitleText(text: "BEST OF ICELAND")
-        changeToIceland()
+        changeToIcelandCategories()
     }
     
     func favClicked() {
@@ -175,7 +176,7 @@ extension BOGuideViewController: MenuViewClick{
     }
 }
 
-//MARK: Header Methods
+//MARK: Header Methods, navigation
 extension BOGuideViewController: BOAppHeaderViewDelegate{
     
     func setupMenu(){
@@ -207,6 +208,22 @@ extension BOGuideViewController: BOAppHeaderViewDelegate{
             viewMenu.setupWithType(screenType: .guides)
             changeToGuides()
             return
+        }
+        
+        if lastScreenType == .subCategoriesIce{
+            
+            changeToIcelandCategories()
+            return
+        }
+        
+        if lastScreenType == .subCategoriesRvk{
+            
+            changeToRvkCategories()
+            return
+        }
+        
+        if lastScreenType == .categoryDetail{
+            print("ice land or reykjavik")
         }
         
         guard let nextToLastScreenType = self.viewModel.getNextToLastContentType() else {
@@ -641,7 +658,7 @@ extension BOGuideViewController{
 extension BOGuideViewController{
     
     
-    func changeToIceland(){
+    func changeToIcelandCategories(){
         viewModel.screenContentType.value = .iceland
     }
     
@@ -687,12 +704,12 @@ extension BOGuideViewController{
     
     private func setupForSubcategoriesIce(){
         
-        if viewModel.screenContentType.value == .guideDetail {
+        if viewModel.screenContentType.value == .categoryDetail {
             print("guideDetail, not loading sub categories")
             return
         }
         
-        if viewModel.activeTableDataSource.value is BOGuideDetailTableDataSource && viewModel.screenContentType.value != .subCategoriesRvk && viewModel.screenContentType.value != .subCategoriesIce{
+        if viewModel.activeTableDataSource.value is BOGuideDetailTableDataSource &&  viewModel.screenContentType.value != .subCategoriesIce{
             print("guideDetail, not loading sub cats")
             return
         }

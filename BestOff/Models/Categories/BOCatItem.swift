@@ -55,7 +55,7 @@ extension BOCatItem{
     mutating func setDetailItemFor(type: Endpoint){
         
         switch type {
-        case .rvkDrink, .rvkActivities, .rvkShopping, .rvkDining:
+        case .rvkDrink, .rvkActivities, .rvkShopping, .rvkDining, .north, .east, .west, .westfjords, .south, .reykjanes:
             
             
             guard let categoryDetail = DetailItemFactory.createCategoryDetailForRvk(categoryItemContentText: contentText, strHTML: contentHtml) else {
@@ -76,18 +76,6 @@ extension BOCatItem{
             detailItem = guideDetail
             setTitleShort()
             return
-        case .north:
-            print("")
-        case .east:
-            print("")
-        case .westfjords:
-            print("")
-        case .south:
-            print("")
-        case .west:
-            print("")
-        case .reykjanes:
-            print("")
         }
     }
 }
