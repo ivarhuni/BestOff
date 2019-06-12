@@ -18,13 +18,24 @@ class BOFavouritesDataSource: NSObject{
     
     private let sectionCount = 1
     
-    let arrFavourites = Observable<[BOCatItem]>(FavouriteManager.mockFavs())
+    let arrFavourites = Observable<[BOCatItem]>([])
     
     weak var deleteDelegate: DeleteFavouriteItem?
     weak var editClickedDelegate: EditCellClicked?
     
     let isDeleteActive = Observable<Bool>(false)
+    
+    override init(){
+        do{
+            let arrFavs = try FavouriteManager.getFavouriteItems()
+            self.arrFavourites.value = arrFavs
+        } catch{
+            print(error)
+            print("unable to fetch favs")
+        }
+    }
 }
+
 
 extension BOFavouritesDataSource: UITableViewDataSource{
     
@@ -40,7 +51,7 @@ extension BOFavouritesDataSource: UITableViewDataSource{
         let cell = myTableView.dequeueReusableCell(withIdentifier: DoubleItemImgCell.reuseIdentifier()) as! DoubleItemImgCell
         
         let arrItems = getCatItemsForIndexPath(indexPath: indexPath)
-        cell.setupWithArrCatItems(arrCatDetailItems: arrItems, screenType: .rvkDining, isEditActive: self.isDeleteActive.value)
+        cell.setupWithArrCatItems(arrCatItems: arrItems, screenType: .rvkDining, isEditActive: self.isDeleteActive.value)
         
         if isDeleteActive.value{
             cell.deleteDelegate = self
@@ -155,8 +166,7 @@ extension BOFavouritesDataSource{
     
     func deleteItemWith(name: String){
         
-        FavouriteManager.removeItemWith(name: name)
-        //arrFavourites.value = FavouriteManager.getFavouriteItems()
+        FavouriteManager.removeItemWith(strId: name)
     }
 }
 
@@ -171,6 +181,7 @@ extension BOFavouritesDataSource: DeleteFavouriteItem{
         }
         
         deleteItemWith(name: deleteItemName)
+        
         //VC doesn't need to delete the item from the datasource, only update table
         delegate.deleteClicked(deleteItemName: "")
     }

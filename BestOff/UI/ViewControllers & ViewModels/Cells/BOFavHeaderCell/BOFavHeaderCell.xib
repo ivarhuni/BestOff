@@ -49,22 +49,22 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vid-lJ-1s4">
-                        <rect key="frame" x="21" y="37.5" width="38" height="21"/>
+                        <rect key="frame" x="21" y="37.5" width="42" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="38" id="AZY-lW-4uJ"/>
+                            <constraint firstAttribute="width" constant="42" id="AZY-lW-4uJ"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="to favourite items!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vf3-zq-d4X">
-                        <rect key="frame" x="87" y="37.5" width="137.5" height="21"/>
+                        <rect key="frame" x="91" y="37.5" width="137.5" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HeartFilled" translatesAutoresizingMaskIntoConstraints="NO" id="mxR-ur-IBe">
-                        <rect key="frame" x="64" y="40.5" width="15" height="15"/>
+                        <rect key="frame" x="68" y="40.5" width="15" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="MQE-L3-cMY"/>
                             <constraint firstAttribute="width" constant="15" id="aMX-3c-nnC"/>

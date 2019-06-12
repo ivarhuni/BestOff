@@ -51,6 +51,7 @@ extension BOCategoryModel{
             
             var itemCopy = item
             itemCopy.setDetailItemFor(type: type)
+            itemCopy.type = self.type
             arrItemsWithType.append(itemCopy)
         }
         self.items = arrItemsWithType

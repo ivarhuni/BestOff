@@ -347,7 +347,7 @@ extension BOGuideViewController{
     }
 }
 
-//MARK: Delegates
+//MARK: set Delegates
 extension BOGuideViewController{
     
     private func registerDelegateGuides(){
@@ -381,6 +381,10 @@ extension BOGuideViewController{
     
     private func setupDeleteDelegateForFavourites(){
         viewModel.setFavouriteDelegateForFavourites(delegate: self)
+    }
+    
+    private func setupFavDelegate(){
+        viewModel.setFavouriteDelegateForDetailScreens(delegate: self)
     }
 }
 
@@ -609,6 +613,7 @@ extension BOGuideViewController: ShowCategoryDetailForType{
         }
         viewModel.setTableDelegateFor(contentType: .categoryDetail)
         viewModel.setTableDataSourceFor(contentType: .categoryDetail)
+        setupFavDelegate()
         hideMenu()
         disableSwipe()
     }
@@ -625,6 +630,7 @@ extension BOGuideViewController{
         
         disableTableDelegate()
         animateHeaderToGuideDetail()
+        setupFavDelegate()
         viewModel.setTableDelegateFor(contentType: .guideDetail)
         viewModel.setTableDataSourceFor(contentType: .guideDetail)
         hideMenu()
@@ -676,7 +682,11 @@ extension BOGuideViewController{
 
 
 //MARK: Favourites
-extension BOGuideViewController{
+extension BOGuideViewController: FavouritePressed{
+    
+    func pressedFavouriteWithItem(catItem: BOCatItem) {
+        tableView.reloadData()
+    }
     
     private func changeToFavourites(){
         viewModel.screenContentType.value = .favourites

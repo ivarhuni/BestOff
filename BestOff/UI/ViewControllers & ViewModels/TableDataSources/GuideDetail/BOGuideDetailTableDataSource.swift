@@ -42,9 +42,10 @@ class BOGuideDetailTableDataSource: NSObject, BOCategoryDetailListProtocol{
     let nextRunnerTextIndex = 10
     let runnerHeight: CGFloat = 70
     
-    
     let bigImgCellCategoryHeight:CGFloat = 360.0
     let bigImgCellGuideHeight: CGFloat = 320
+    
+    weak var favDelegate: FavouritePressed?
     
     convenience init(catItem: BOCatItem, type: DetailScreenType = .guide, detailItem: BOCategoryDetail? = nil){
         self.init()
@@ -63,6 +64,10 @@ class BOGuideDetailTableDataSource: NSObject, BOCategoryDetailListProtocol{
     
     func setCatItemTo(item: BOCatItem) {
         self.catItem.value = item
+    }
+    
+    func setFavDelegate(delegate: FavouritePressed){
+        self.favDelegate = delegate
     }
 }
 
@@ -340,11 +345,10 @@ extension BOGuideDetailTableDataSource{
         
         let topCell = tableView.dequeueReusableCell(withIdentifier: TopGuideCell.reuseIdentifier()) as! TopGuideCell
         topCell.styleForDetail()
-        
         guard let item = catItem.value else {
             return UITableViewCell()
         }
-        topCell.setupWith(item: item)
+        topCell.setupWith(item: item, forFavourites: true, favDelegate: self)
         return topCell
     }
     
@@ -490,5 +494,18 @@ extension BOGuideDetailTableDataSource{
         guard let itemText = catItem.value?.detailItem?.arrItems[safe: (indexPath.row)/2 - 2]?.itemDescription else { return 1 }
         
         return itemText.height(withConstrainedWidth: constraintedWidth, font: textDescFont) + (2*topAndBotMargin)
+    }
+}
+
+extension BOGuideDetailTableDataSource: FavouritePressed{
+    
+    func pressedFavouriteWithItem(catItem: BOCatItem) {
+        
+        guard let favDeleg = favDelegate else {
+            print("favDelegate not set in DetailTableDataSource")
+            return
+        }
+        favDeleg.pressedFavouriteWithItem(catItem: catItem)
+        FavouriteManager.addOrRemoveToFavs(item: catItem)
     }
 }

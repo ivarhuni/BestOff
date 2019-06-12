@@ -66,7 +66,7 @@ extension BOSpecificCatWinnersDataSource: UITableViewDataSource{
         
         let cell = inTableView.dequeueReusableCell(withIdentifier: DoubleItemImgCell.reuseIdentifier()) as! DoubleItemImgCell
         //cell.setupWithArrCatDetailItems(arrCatDetailItems: getItemsForIndexPath(indexPath: indexPath), screenType: category.type ?? .rvkDining)
-        cell.setupWithArrCatItems(arrCatDetailItems: getCatItemsForIndexPath(indexPath: indexPath), screenType: category.type ?? .rvkDining, type: .category)
+        cell.setupWithArrCatItems(arrCatItems: getCatItemsForIndexPath(indexPath: indexPath), screenType: category.type ?? .rvkDining, type: .category)
         cell.delegateDoubleCellClicked = self
         return cell
     }

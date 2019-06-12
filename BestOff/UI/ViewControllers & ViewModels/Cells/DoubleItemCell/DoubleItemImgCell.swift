@@ -91,25 +91,7 @@ extension DoubleItemImgCell{
 extension DoubleItemImgCell{
     
     
-    func setupWithArrCatDetailItems(arrCatDetailItems: [BOCategoryDetailItem], screenType: Endpoint, isEditActive: Bool = false, type: DoubleItemCellType? = nil){
-        
-        setupDefault()
-        setVerticalColorFor(type: screenType)
-        leftItem = nil
-        rightItem = nil
-        
-        isEditActive ? showWhiteEditBackground() : hideWhiteEditBackground()
-        
-        selectionStyle = .none
-        
-        guard let firstCategory = arrCatDetailItems[safe: 0] else { return }
-        setupWithLeftItem(categoryDetailItem: firstCategory, isEditActive: isEditActive)
-        
-        guard let secondCategory = arrCatDetailItems[safe: 1] else { return }
-        setupWithRightItem(categoryDetailItem: secondCategory, isEditActive: isEditActive)
-    }
-    
-    func setupWithArrCatItems(arrCatDetailItems: [BOCatItem], screenType: Endpoint, isEditActive: Bool = false, type: DoubleItemCellType? = nil){
+    func setupWithArrCatItems(arrCatItems: [BOCatItem], screenType: Endpoint, isEditActive: Bool = false, type: DoubleItemCellType? = nil){
         
         setupDefault()
         setVerticalColorFor(type: screenType)
@@ -121,10 +103,10 @@ extension DoubleItemImgCell{
         selectionStyle = .none
         self.cellType = type
         
-        guard let firstCategory = arrCatDetailItems[safe: 0] else { return }
+        guard let firstCategory = arrCatItems[safe: 0] else { return }
         setupWithLeftCatItem(catItem: firstCategory, isEditActive: isEditActive)
         
-        guard let secondCategory = arrCatDetailItems[safe: 1] else { return }
+        guard let secondCategory = arrCatItems[safe: 1] else { return }
         setupWithRightCatItem(catItem: secondCategory, isEditActive: isEditActive)
     }
     

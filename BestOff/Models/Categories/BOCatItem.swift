@@ -22,6 +22,7 @@ struct BOCatItem : Codable {
     var strTimeStamp: String?
     var superCatName: String?
     var titleShort: String?
+    var type: Endpoint?
     
     enum CodingKeys: String, CodingKey {
         case contentText = "content_text"

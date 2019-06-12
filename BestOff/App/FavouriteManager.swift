@@ -12,22 +12,41 @@ struct FavouriteManager{
     
     static let userDefaultFavsKey = "Favourites"
     
-    static func saveItemToFavourites(item: BOCategoryDetailItem){
+    static func saveCatItemToFavourites(item: BOCatItem){
         
         print("saving an item to favourites")
-        var arrFavourites = getFavouriteItems()
-        arrFavourites.insert(item, at: 0)
-        saveArrToFavourites(arrFavourites: arrFavourites)
+        
+        do{
+            var arrFavourites = try getFavouriteItems()
+            arrFavourites.insert(item, at: 0)
+            saveArrToFavourites(arrFavourites: arrFavourites)
+        } catch{
+            print(error)
+            print("save item item to favs failed")
+        }
     }
     
-    static func saveArrToFavourites(arrFavourites: [BOCategoryDetailItem]){
+    static func saveItemToFavourites(item: BOCatItem){
+        
+        print("saving an item to favourites")
+        do{
+            var arrFavourites = try getFavouriteItems()
+            arrFavourites.insert(item, at: 0)
+            saveArrToFavourites(arrFavourites: arrFavourites)
+        } catch{
+            print(error)
+            print("save error")
+        }
+    }
+    
+    static func saveArrToFavourites(arrFavourites: [BOCatItem]){
         
         print("saving to favourites")
         let data = arrFavourites.map { try? JSONEncoder().encode($0) }
         UserDefaults.standard.set(data, forKey: userDefaultFavsKey)
     }
     
-    static func getFavouriteItems() -> [BOCategoryDetailItem]{
+    static func getFavouriteItems() throws -> [BOCatItem]{
         
         print("loading favourites")
         
@@ -35,32 +54,62 @@ struct FavouriteManager{
             return []
         }
         
-        return encodedData.map { try! JSONDecoder().decode(BOCategoryDetailItem.self, from: $0) }
+        do {
+            let arrItems = try encodedData.map { try JSONDecoder().decode(BOCatItem.self, from: $0) }
+            
+            for item in arrItems{
+                
+                var itemCopy = item
+                
+                if let type = item.type{
+                    itemCopy.setDetailItemFor(type: type)
+                    itemCopy.type = type
+                }
+            }
+            return arrItems
+        }catch {
+            return []
+        }
     }
     
-    static func removeItemWith(name: String){
+    static func removeItemWith(strId: String){
         
-        print("removing an item with name " + name + " from favourites")
-        var arrFavourites = getFavouriteItems()
-        arrFavourites = arrFavourites.filter{ $0.itemName != name }
-        saveArrToFavourites(arrFavourites: arrFavourites)
+        print("removing an item with ID " + strId + " from favourites")
+        
+        do{
+            var arrFavourites = try getFavouriteItems()
+            arrFavourites = arrFavourites.filter{ $0.id != strId }
+            saveArrToFavourites(arrFavourites: arrFavourites)
+        } catch{
+            print(error)
+            print("removeItem error")
+        }
+       
     }
     
-    static func mockFavs() -> [BOCatItem] {
+    static func isItemFavourited(item: BOCatItem) -> Bool{
         
-        //MOCK
-        print("mocking favourites")
-        let burgerURL = "https://www.iheartnaptime.net/wp-content/uploads/2018/05/hamburger-recipe-1200x960.jpg"
-        let firstDetailItem = BOCategoryDetailItem.init(itemName: "First", itemAddress: "First Address", itemDescription: "SomeReallyLong Desc", imageURL: burgerURL)
-        let secondDetailItem = BOCategoryDetailItem.init(itemName: "Second Item", itemAddress: "First Address", itemDescription: "SomeReallyLong Desc", imageURL: burgerURL)
-        let thirdItem = BOCategoryDetailItem.init(itemName: "Third Item Long Name", itemAddress: "First Address", itemDescription: "SomeReallyLong Desc", imageURL: burgerURL)
-        let forthItem = BOCategoryDetailItem.init(itemName: "4 Item Long Name :) Because why not", itemAddress: "First Address", itemDescription: "SomeReallyLong Desc", imageURL: burgerURL)
+        do{
+            let arrFavs = try getFavouriteItems()
+            for favItem in arrFavs{
+                if favItem.id == item.id{
+                    print("item is favourited")
+                    return true
+                }
+            }
+            return false
+        } catch{
+          print("eror isItemFavourited")
+            return false
+        }
+    }
+    
+    static func addOrRemoveToFavs(item: BOCatItem){
         
-        let arrMock = [firstDetailItem, secondDetailItem, thirdItem, forthItem]
-        
-        
-        
-        saveArrToFavourites(arrFavourites: arrMock)
-        return []
+        if isItemFavourited(item: item){
+            removeItemWith(strId: item.id)
+            return
+        }
+        saveItemToFavourites(item: item)
     }
 }

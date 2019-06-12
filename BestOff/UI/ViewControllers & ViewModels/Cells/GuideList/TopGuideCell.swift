@@ -10,9 +10,9 @@ import UIKit
 import SDWebImage
 import CoreLocation
 
-protocol FavouritePressed {
+protocol FavouritePressed: AnyObject {
     
-    func pressedFavouriteWithItem(catDetail: BOCategoryModel)
+    func pressedFavouriteWithItem(catItem: BOCatItem)
 }
 
 enum roundCorner{
@@ -52,6 +52,9 @@ class TopGuideCell: UITableViewCell{
     
     @IBOutlet weak var btnDirections: UIButton!
     
+    var favouriteItem: BOCatItem?
+    weak var favouritePressedDelegate: FavouritePressed?
+    
     var address: String = ""
     
     //MARK: Inititialization
@@ -67,8 +70,11 @@ class TopGuideCell: UITableViewCell{
     }
     
     @IBAction func btnFavPressed(_ sender: Any) {
-        
-        
+        guard let favItem = favouriteItem else {
+            print("no fav item at button press")
+            return
+        }
+        pressedFavouriteWithItem(catItem: favItem)
     }
     
     @IBAction func btnDirections(_ sender: Any) {
@@ -89,7 +95,17 @@ class TopGuideCell: UITableViewCell{
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
+}
+
+extension TopGuideCell: FavouritePressed{
     
+    func pressedFavouriteWithItem(catItem: BOCatItem){
+        guard let delegate = favouritePressedDelegate else{
+            print("delegate not set for fav button in TopCell")
+            return
+        }
+        delegate.pressedFavouriteWithItem(catItem: catItem)
+    }
 }
 
 //MARK: Reuse identifier
@@ -142,7 +158,7 @@ extension TopGuideCell{
         imgViewIcon.alpha = 1
         
         viewCatAddress.alpha = 0
-        viewCategory.alpha = 0
+        viewCategory.alpha = 1
         
         imgViewIcon.alpha = 1
         viewBgIcon.alpha = 1
@@ -208,12 +224,38 @@ extension TopGuideCell{
 //MARK: Guide List Setup
 extension TopGuideCell{
     
-    func setupWith(item: BOCatItem) {
+    func setupWith(item: BOCatItem, forFavourites: Bool = false, favDelegate: FavouritePressed? = nil) {
         
         setupDefault()
         
         setTextsFrom(item: item)
         setImageWithImgURL(url: item.image)
+        favouriteItem = nil
+        if forFavourites{
+            guard let delegate = favDelegate else {
+                print("fav delegate not set for tablecell")
+                return
+            }
+            favouritePressedDelegate = delegate
+            favouriteItem = item
+            setupFavourites()
+            return
+        }
+    }
+    
+    private func setupFavourites(){
+        guard let itemFav = favouriteItem else { return }
+        
+        if checkIsItemFavourited(item: itemFav){
+            btnFavourite.setBackgroundImage(Asset.heartFilled.img, for: .normal)
+            return
+        }
+        btnFavourite.setBackgroundImage(Asset.heart.img, for: .normal)
+    }
+    
+    private func checkIsItemFavourited(item: BOCatItem) -> Bool{
+        
+        return FavouriteManager.isItemFavourited(item: item)
     }
     
     public func styleForDetail(){

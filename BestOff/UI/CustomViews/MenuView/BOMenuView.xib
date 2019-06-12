@@ -112,7 +112,7 @@
                         <constraint firstItem="rf4-Wo-L8N" firstAttribute="leading" secondItem="NIT-c6-LpP" secondAttribute="leading" constant="66" id="vgW-GE-fyt"/>
                     </constraints>
                 </view>
-                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w9H-k6-X4C">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w9H-k6-X4C">
                     <rect key="frame" x="0.0" y="120" width="375" height="40"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hkP-Za-xyM">
