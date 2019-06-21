@@ -40,12 +40,13 @@ class DoubleItemImgCell: UITableViewCell {
     @IBOutlet weak var viewRemoveRight: UIView!
     @IBOutlet weak var viewRemoveLeft: UIView!
     
-    var cellType: DoubleItemCellType?
+    weak var catDetailDelegate: ShowCategoryDetailForType?
     
-    var leftItem: BOCategoryDetailItem?
+    var cellType: DoubleItemCellType?
+    var isEditActive: Bool = false
+    
     var leftCatItem: BOCatItem?
     
-    var rightItem: BOCategoryDetailItem?
     var rightCatItem: BOCatItem?
     
     var leftGestureRec: UIGestureRecognizer?
@@ -71,6 +72,15 @@ extension DoubleItemImgCell: DoubleCellClicked{
     func didClick(item: BOCatItem) {
         guard let delegate = delegateDoubleCellClicked else{
             print("delegate not set in DoubleItemImgCell")
+            guard let catDetailDelegate = self.catDetailDelegate else{
+                print("catDetailDelegate not set in dblimgcell")
+                return
+            }
+            guard let detailItem = item.detailItem else{
+                print("no detail item in favourites for doubleitemimgcell")
+                return
+            }
+            catDetailDelegate.show(categoryDetail: detailItem, catItem: item, type: .rvkDrink)
             return
         }
         delegate.didClick(item: item)
@@ -95,17 +105,17 @@ extension DoubleItemImgCell{
         
         setupDefault()
         setVerticalColorFor(type: screenType)
-        leftItem = nil
-        rightItem = nil
         
         isEditActive ? showWhiteEditBackground() : hideWhiteEditBackground()
-        
+        self.isEditActive = isEditActive
         selectionStyle = .none
         self.cellType = type
         
         guard let firstCategory = arrCatItems[safe: 0] else { return }
+        leftCatItem = nil
         setupWithLeftCatItem(catItem: firstCategory, isEditActive: isEditActive)
         
+        rightCatItem = nil
         guard let secondCategory = arrCatItems[safe: 1] else { return }
         setupWithRightCatItem(catItem: secondCategory, isEditActive: isEditActive)
     }
@@ -132,22 +142,6 @@ extension DoubleItemImgCell{
         viewRemoveRight.isHidden = false
     }
     
-    private func setupWithLeftItem(categoryDetailItem: BOCategoryDetailItem, isEditActive: Bool){
-        
-        lblLeft.text = categoryDetailItem.itemName
-        leftItem = categoryDetailItem
-        selectionStyle = .none
-        if isEditActive{
-            showLeftRemove()
-        }else{
-            hideLeftRemove()
-        }
-        
-        guard let url = categoryDetailItem.imageURL else { return }
-        UIImageView.setSDImageViewImageWithURL(imageView: imgViewLeft, strURL: url)
-        clearRight()
-    }
-    
     private func setupWithLeftCatItem(catItem: BOCatItem, isEditActive: Bool){
         
         lblLeft.text = catItem.detailItem?.categoryTitle
@@ -164,21 +158,7 @@ extension DoubleItemImgCell{
         clearRight()
     }
     
-    private func setupWithRightItem(categoryDetailItem: BOCategoryDetailItem, isEditActive: Bool){
-        
-        lblRight.text = categoryDetailItem.itemName
-        rightItem = categoryDetailItem
-        showRight()
-        selectionStyle = .none
-        if isEditActive{
-            showRightRemove()
-        }else{
-            hideRightRemove()
-        }
-        
-        guard let url = categoryDetailItem.imageURL else { return }
-        UIImageView.setSDImageViewImageWithURL(imageView: imgViewRight, strURL: url)
-    }
+    
     
     private func setupWithRightCatItem(catItem: BOCatItem, isEditActive: Bool){
         
@@ -351,8 +331,8 @@ extension DoubleItemImgCell{
         lblRemoveLeft.font = UIFont.favBtnRemove
         lblRemoveRight.font = UIFont.favBtnRemove
         
-        viewRemoveLeft.addDropShadow(color: .black, opacity: Constants.veryLowShadowOpacity, offset: .zero, radius: 1)
-        viewRemoveRight.addDropShadow(color: .black, opacity: Constants.veryLowShadowOpacity, offset: .zero, radius: 1)
+//        viewRemoveLeft.addDropShadow(color: .black, opacity: Constants.veryLowShadowOpacity, offset: .zero, radius: 1)
+//        viewRemoveRight.addDropShadow(color: .black, opacity: Constants.veryLowShadowOpacity, offset: .zero, radius: 1)
         
     }
     
@@ -382,14 +362,20 @@ extension DoubleItemImgCell{
     private func tappedLeft(){
         
         if let type = self.cellType{
-            if type == .category{
+            if type == .category {
                 guard let item = leftCatItem else { print("no left item"); return }
                 didClick(item: item)
                 return
             }
         }
         
-        guard let leftName = leftItem?.itemName else {
+        if !isEditActive{
+            guard let item = leftCatItem else { print("no left item"); return }
+            didClick(item: item)
+            return
+        }
+        
+        guard let leftName = leftCatItem?.id else {
             print("leftItem doesn't have name in DoubleItemImgCell")
             return
         }
@@ -410,7 +396,13 @@ extension DoubleItemImgCell{
             }
         }
         
-        guard let rightName = rightItem?.itemName else {
+        if !isEditActive{
+            guard let item = rightCatItem else { print("no right item"); return }
+            didClick(item: item)
+            return
+        }
+        
+        guard let rightName = rightCatItem?.id else {
             print("rightItem doesn't have name in DoubleItemImgCell")
             return
         }
@@ -427,5 +419,16 @@ extension DoubleItemImgCell: DeleteFavouriteItem{
             return
         }
         delegate.deleteClicked(deleteItemName: deleteItemName)
+    }
+}
+
+extension DoubleItemImgCell: ShowCategoryDetailForType{
+    
+    func show(categoryDetail: BOCategoryDetail, catItem: BOCatItem, type: Endpoint) {
+        guard let delegate = self.catDetailDelegate else{
+            print("delegate not set in fav for detail showing")
+            return
+        }
+        delegate.show(categoryDetail: categoryDetail, catItem: catItem, type: type)
     }
 }

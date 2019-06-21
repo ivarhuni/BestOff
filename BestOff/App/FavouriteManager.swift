@@ -56,17 +56,17 @@ struct FavouriteManager{
         
         do {
             let arrItems = try encodedData.map { try JSONDecoder().decode(BOCatItem.self, from: $0) }
-            
+            var arrItemsCopy: [BOCatItem] = []
             for item in arrItems{
                 
                 var itemCopy = item
-                
-                if let type = item.type{
-                    itemCopy.setDetailItemFor(type: type)
-                    itemCopy.type = type
-                }
+                itemCopy.type = .rvkDrink
+                itemCopy.setDetailItemFor(type: .rvkDrink)
+                itemCopy.detailItem?.type = .rvkDrink
+                arrItemsCopy.append(itemCopy)
+                print("")
             }
-            return arrItems
+            return arrItemsCopy
         }catch {
             return []
         }
@@ -84,7 +84,7 @@ struct FavouriteManager{
             print(error)
             print("removeItem error")
         }
-       
+        
     }
     
     static func isItemFavourited(item: BOCatItem) -> Bool{
@@ -99,7 +99,7 @@ struct FavouriteManager{
             }
             return false
         } catch{
-          print("eror isItemFavourited")
+            print("eror isItemFavourited")
             return false
         }
     }

@@ -172,7 +172,7 @@ struct DetailItemFactory{
     
     private static func createDetailItemsForRvkWith(arrTextContent: [String], strHTML: String) -> [BOCategoryDetailItem]{
         
-        var arrTxt = filterNonItemsFromRvk(array: arrTextContent)
+        let arrTxt = filterNonItemsFromRvk(array: arrTextContent)
         
         guard let catWinnerTitle = arrTxt[safe: arrIndexForDetailItems.categoryTitle.rawValue] else{
             print("--!-- MODEL ERROR: categoryDetailItem doesn't have winner --!-- ")

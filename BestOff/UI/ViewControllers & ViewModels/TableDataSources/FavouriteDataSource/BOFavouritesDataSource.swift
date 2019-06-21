@@ -22,6 +22,7 @@ class BOFavouritesDataSource: NSObject{
     
     weak var deleteDelegate: DeleteFavouriteItem?
     weak var editClickedDelegate: EditCellClicked?
+    weak var catDetailDelegate: ShowCategoryDetailForType?
     
     let isDeleteActive = Observable<Bool>(false)
     
@@ -52,6 +53,7 @@ extension BOFavouritesDataSource: UITableViewDataSource{
         
         let arrItems = getCatItemsForIndexPath(indexPath: indexPath)
         cell.setupWithArrCatItems(arrCatItems: arrItems, screenType: .rvkDining, isEditActive: self.isDeleteActive.value)
+        cell.catDetailDelegate = self
         
         if isDeleteActive.value{
             cell.deleteDelegate = self
@@ -64,17 +66,25 @@ extension BOFavouritesDataSource: UITableViewDataSource{
     
     func getCatItemsForIndexPath(indexPath: IndexPath) -> [BOCatItem]{
         
-        if indexPath.row == 0{
+        if indexPath.row == 0{ return [] }
+        
+        var indexLeft:Int = 0
+        var indexRight:Int = 1
+        
+        if indexPath.row == 1 {
             
-            guard let item = arrFavourites.value.first else {
+            guard let leftItem = arrFavourites.value[safe: indexLeft] else{
                 return []
             }
-            guard let rightItem = arrFavourites.value[safe: 1] else { return [item] }
-            return [item, rightItem]
+            guard let rightItem = arrFavourites.value[safe: indexRight] else{
+                return [leftItem]
+            }
+            
+            return [leftItem, rightItem]
         }
         
-        let indexLeft = (indexPath.row * 2)
-        let indexRight = indexPath.row * 2 + 1
+        indexLeft = (indexPath.row * 2) - 2
+        indexRight = (indexPath.row * 2) - 1
         
         guard let leftItem = arrFavourites.value[safe: indexLeft] else{
             return []
@@ -119,7 +129,7 @@ extension BOFavouritesDataSource: UITableViewDelegate{
         //Dummy whitespace cell
         if indexPath.row == 0 { return Constants.dummyFavWhiteSpaceCellHeight }
         
-        let normalCellHeightRatio:CGFloat = 176/375
+        let normalCellHeightRatio:CGFloat = 176.0/375.0
         let normalCellHeight:CGFloat = (UIScreen.main.bounds.size.width * normalCellHeightRatio) + 20
         
         return normalCellHeight
@@ -151,6 +161,24 @@ extension BOFavouritesDataSource: UITableViewDelegate{
     }
 }
 
+extension BOFavouritesDataSource: DoubleCellClicked, ShowCategoryDetailForType{
+    
+    func didClick(item: BOCatItem) {
+        
+        guard let catDetail = item.detailItem else { print("not detail item in BOCatItem"); return}
+        show(categoryDetail: catDetail, catItem: item, type: .rvkDrink)
+    }
+    
+    
+    func show(categoryDetail: BOCategoryDetail, catItem: BOCatItem, type: Endpoint) {
+        guard let delegate = self.catDetailDelegate else{
+            print("catdetaildelegate not set in favourites datasource")
+            return
+        }
+        delegate.show(categoryDetail: categoryDetail, catItem: catItem, type: type)
+    }
+}
+
 enum DeleteItem{
     
     case left
@@ -164,9 +192,9 @@ protocol DeleteFavouriteItem: class {
 
 extension BOFavouritesDataSource{
     
-    func deleteItemWith(name: String){
+    func deleteItemWith(id: String){
         
-        FavouriteManager.removeItemWith(strId: name)
+        FavouriteManager.removeItemWith(strId: id)
     }
 }
 
@@ -180,7 +208,7 @@ extension BOFavouritesDataSource: DeleteFavouriteItem{
             return
         }
         
-        deleteItemWith(name: deleteItemName)
+        deleteItemWith(id: deleteItemName)
         
         //VC doesn't need to delete the item from the datasource, only update table
         delegate.deleteClicked(deleteItemName: "")

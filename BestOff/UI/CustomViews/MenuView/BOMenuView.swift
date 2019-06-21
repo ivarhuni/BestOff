@@ -295,7 +295,7 @@ extension BOMenuView{
                 
             }) {[weak self] finished in
                 guard let this = self else { return }
-                this.subCatClicked()
+                this.rvkClicked()
             }
         case .subCategoriesRvk:
             UIView.animate(withDuration: viewModel.animationDuration, animations: { [weak self] in

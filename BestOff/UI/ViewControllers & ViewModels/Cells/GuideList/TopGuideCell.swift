@@ -131,7 +131,6 @@ extension TopGuideCell{
         viewBlackBackground.addDropShadow(color: .black, opacity: Constants.highShadowOpacity, offset: CGSize(width: 2, height: 2), radius: 3)
         lblGrapevine.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: .zero, radius: 2)
         lblDate.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: .zero, radius: 2)
-        //roundCornerForType(roundCorner: self.cornerRoundType)
     }
 }
 
@@ -146,7 +145,7 @@ extension TopGuideCell{
         imgViewBig.setClipsAndScales()
         imgViewIcon.setClipsAndScales()
         viewSepDirections.backgroundColor = .greySep
-        
+        btnFavourite.alpha = 0
         showForGuide()
         selectionStyle = .none
     }
@@ -231,11 +230,13 @@ extension TopGuideCell{
         setTextsFrom(item: item)
         setImageWithImgURL(url: item.image)
         favouriteItem = nil
+    
         if forFavourites{
             guard let delegate = favDelegate else {
                 print("fav delegate not set for tablecell")
                 return
             }
+            btnFavourite.alpha = 1
             favouritePressedDelegate = delegate
             favouriteItem = item
             setupFavourites()
@@ -338,7 +339,7 @@ extension TopGuideCell{
         btnFavourite.setBackgroundImage(Asset.heart.img, for: .normal)
     }
     
-    func setupForCategoryDetailItem(detailItem: BOCategoryDetailItem, isFavourited: Bool){
+    func setupForCategoryDetailItem(detailItem: BOCategoryDetailItem){
         
         setupDefault()
         showForCategory()
@@ -358,12 +359,6 @@ extension TopGuideCell{
         else{
             btnDirections.alpha = 0
         }
-        
-        if isFavourited{
-            btnFavourite.setBackgroundImage(Asset.heartFilled.img, for: .normal)
-            return
-        }
-        btnFavourite.setBackgroundImage(Asset.heart.img, for: .normal)
     }
 }
 

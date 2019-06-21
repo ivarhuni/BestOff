@@ -183,7 +183,7 @@ extension BOGuideDetailTableDataSource{
                 return UITableViewCell()
             }
             let topCell = myTableView.dequeueReusableCell(withIdentifier: TopGuideCell.reuseIdentifier()) as! TopGuideCell
-            topCell.setupForCategoryDetailItem(detailItem: detailItemWinner, isFavourited: false)
+            topCell.setupForCategoryDetailItem(detailItem: detailItemWinner)
             if topCell.cornerRoundType != .roundTop{
                 topCell.cornerRoundType = .roundTop
                 topCell.setNeedsLayout()
@@ -213,7 +213,7 @@ extension BOGuideDetailTableDataSource{
                 return UITableViewCell()
             }
             let topCell = myTableView.dequeueReusableCell(withIdentifier: TopGuideCell.reuseIdentifier()) as! TopGuideCell
-            topCell.setupForCategoryDetailItem(detailItem: detailItemRunnerUp, isFavourited: false)
+            topCell.setupForCategoryDetailItem(detailItem: detailItemRunnerUp)
             if topCell.cornerRoundType != .roundTop{
                 topCell.cornerRoundType = .roundTop
                 topCell.setNeedsLayout()
@@ -244,7 +244,7 @@ extension BOGuideDetailTableDataSource{
                 return UITableViewCell()
             }
             let topCell = myTableView.dequeueReusableCell(withIdentifier: TopGuideCell.reuseIdentifier()) as! TopGuideCell
-            topCell.setupForCategoryDetailItem(detailItem: detailItemRunnerUpSecond, isFavourited: false)
+            topCell.setupForCategoryDetailItem(detailItem: detailItemRunnerUpSecond)
             if topCell.cornerRoundType != .roundTop{
                 topCell.cornerRoundType = .roundTop
                 topCell.setNeedsLayout()

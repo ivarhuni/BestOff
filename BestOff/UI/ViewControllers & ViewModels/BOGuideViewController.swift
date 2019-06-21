@@ -558,8 +558,6 @@ extension BOGuideViewController: didPressListDelegate{
     
     func didPressAtIndexPath(indexPath: IndexPath) {
         
-        print("DidPress, contentType: ")
-        print(viewModel.screenContentType.value)
         viewModel.tableViewPressedAt(indexPath.row)
     }
     
@@ -695,6 +693,7 @@ extension BOGuideViewController: FavouritePressed{
     private func setupForFavourites(){
         
         disableTableDelegate()
+        viewModel.setCategoryDetailClickDelegate(delegate: self)
         viewModel.setTableDelegateFor(contentType: .favourites)
         viewModel.setTableDataSourceFor(contentType: .favourites)
         setHeaderToFavs()

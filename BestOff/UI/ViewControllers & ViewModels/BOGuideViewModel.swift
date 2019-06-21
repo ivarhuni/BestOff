@@ -99,6 +99,7 @@ class BOGuideViewModel: BOViewModel {
         self.screenContentType.value = contentType
         catDetailDataSource.value?.screenType = .bestof
         arrContentHistory.append(screenContentType.value)
+        favDataSource.value.catDetailDelegate = self
         createBonding()
     }
 }
