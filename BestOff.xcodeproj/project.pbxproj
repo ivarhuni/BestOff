@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2216837822BDC8F800FA1B52 /* BOMapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2216837622BDC8F800FA1B52 /* BOMapController.swift */; };
+		2216837922BDC8F800FA1B52 /* BOMapController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2216837722BDC8F800FA1B52 /* BOMapController.xib */; };
 		221EC5AE228A10E50051EC42 /* DoubleItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221EC5AC228A10E50051EC42 /* DoubleItemCell.swift */; };
 		221EC5AF228A10E50051EC42 /* DoubleItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 221EC5AD228A10E50051EC42 /* DoubleItemCell.xib */; };
 		22267C2122654E19007E7B40 /* BOCategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22267C2022654E19007E7B40 /* BOCategoryService.swift */; };
@@ -163,6 +165,8 @@
 
 /* Begin PBXFileReference section */
 		20E0E67D1EEFED2DADD21D2E /* Pods_BestOffTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestOffTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2216837622BDC8F800FA1B52 /* BOMapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOMapController.swift; sourceTree = "<group>"; };
+		2216837722BDC8F800FA1B52 /* BOMapController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BOMapController.xib; sourceTree = "<group>"; };
 		221EC5AC228A10E50051EC42 /* DoubleItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleItemCell.swift; sourceTree = "<group>"; };
 		221EC5AD228A10E50051EC42 /* DoubleItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DoubleItemCell.xib; sourceTree = "<group>"; };
 		22267C2022654E19007E7B40 /* BOCategoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCategoryService.swift; sourceTree = "<group>"; };
@@ -760,6 +764,8 @@
 				22F897942265FC17001E48BE /* BOGuideViewModel.swift */,
 				22326B5F22938EA30056DAC9 /* TableDataSources */,
 				22AA85852277C97F003B15F1 /* Launch Screen */,
+				2216837622BDC8F800FA1B52 /* BOMapController.swift */,
+				2216837722BDC8F800FA1B52 /* BOMapController.xib */,
 			);
 			path = "ViewControllers & ViewModels";
 			sourceTree = "<group>";
@@ -969,6 +975,7 @@
 				22F77A6E22A52F3C0000E554 /* Poppins-ThinItalic.ttf in Resources */,
 				22F77A7122A52F3C0000E554 /* Poppins-Bold.ttf in Resources */,
 				22F77A1722A52D620000E554 /* Montserrat-Bold.ttf in Resources */,
+				2216837922BDC8F800FA1B52 /* BOMapController.xib in Resources */,
 				22F77A4422A52F130000E554 /* Raleway-MediumItalic.ttf in Resources */,
 				22F77A6F22A52F3C0000E554 /* Poppins-SemiBoldItalic.ttf in Resources */,
 				22F77A4322A52F130000E554 /* Raleway-Black.ttf in Resources */,
@@ -1121,6 +1128,7 @@
 				22F8979F226625CF001E48BE /* BOTableProtocol.swift in Sources */,
 				22F897882265FA10001E48BE /* BOCoordinator.swift in Sources */,
 				22446C9B227F29F50017512F /* GuideCell.swift in Sources */,
+				2216837822BDC8F800FA1B52 /* BOMapController.swift in Sources */,
 				22326B6A2293AE7C0056DAC9 /* Extensions+Array.swift in Sources */,
 				22D5739522825C2400748CF1 /* BOMenuViewModel.swift in Sources */,
 				2251583F228CB5E3006BC71B /* BOGuideDetailTableDataSource.swift in Sources */,
