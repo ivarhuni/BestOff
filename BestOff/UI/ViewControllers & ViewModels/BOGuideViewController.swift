@@ -223,7 +223,7 @@ extension BOGuideViewController: BOAppHeaderViewDelegate{
         }
         
         if lastScreenType == .categoryDetail{
-            print("ice land or reykjavik")
+            print("iceland, reykjavik, or favs")
         }
         
         guard let nextToLastScreenType = self.viewModel.getNextToLastContentType() else {
@@ -494,6 +494,7 @@ extension BOGuideViewController{
     private func animateTableReloadData(){
         
         self.view.setNeedsLayout()
+        self.view.setNeedsDisplay()
         UIView.transition(with: self.tableView,
                           duration: self.viewModel.tableDataSourceAnimationDuration,
                           options: .curveLinear,
@@ -504,16 +505,19 @@ extension BOGuideViewController{
                             
                             this.tableView.reloadSections(IndexSet(integer: 0), with: this.viewModel.getTableViewAnimationFor(screenContentType: this.viewModel.screenContentType.value))
                             
+                            
         }) { [weak self] _ in
             guard let this = self else { return }
             
             this.viewModel.shouldSwipeBeEnabled() ? this.enableSwipe() : this.disableSwipe()
             this.tableView.scroll(to: .top, animated: true)
-
-            UIView.animate(withDuration: 1.5, animations: {
-                
-                
-            })
+            
+            if this.viewModel.screenContentType.value == .favourites{
+                DispatchQueue.main.async {
+                    this.tableView.beginUpdates()
+                    this.tableView.endUpdates()
+                }
+            }
         }
     }
     
@@ -680,10 +684,22 @@ extension BOGuideViewController{
 
 
 //MARK: Favourites
-extension BOGuideViewController: FavouritePressed{
+extension BOGuideViewController: FavAndShareDelegate{
     
     func pressedFavouriteWithItem(catItem: BOCatItem) {
         tableView.reloadData()
+    }
+    
+    func pressedShareWithItem(catItem: BOCatItem) {
+        
+        guard let shareURL = URL(string:catItem.url) else{
+            print("no share URL")
+            return
+        }
+        let shareArray = [shareURL]
+        let activityViewController = UIActivityViewController(activityItems: shareArray, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
     }
     
     private func changeToFavourites(){

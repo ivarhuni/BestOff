@@ -24,3 +24,17 @@ struct BOAuthor : Codable {
                 url = try values.decode(String.self, forKey: .url)
         }
 }
+
+struct CustomFields : Codable {
+    
+    let isSponsored : Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case isSponsored = "sponsored_article"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        isSponsored = try values.decode(Bool.self, forKey: .isSponsored)
+    }
+}

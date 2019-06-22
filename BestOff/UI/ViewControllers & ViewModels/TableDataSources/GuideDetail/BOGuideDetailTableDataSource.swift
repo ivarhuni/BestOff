@@ -45,7 +45,7 @@ class BOGuideDetailTableDataSource: NSObject, BOCategoryDetailListProtocol{
     let bigImgCellCategoryHeight:CGFloat = 360.0
     let bigImgCellGuideHeight: CGFloat = 320
     
-    weak var favDelegate: FavouritePressed?
+    weak var favDelegate: FavAndShareDelegate?
     
     convenience init(catItem: BOCatItem, type: DetailScreenType = .guide, detailItem: BOCategoryDetail? = nil){
         self.init()
@@ -66,7 +66,7 @@ class BOGuideDetailTableDataSource: NSObject, BOCategoryDetailListProtocol{
         self.catItem.value = item
     }
     
-    func setFavDelegate(delegate: FavouritePressed){
+    func setFavDelegate(delegate: FavAndShareDelegate){
         self.favDelegate = delegate
     }
 }
@@ -497,7 +497,7 @@ extension BOGuideDetailTableDataSource{
     }
 }
 
-extension BOGuideDetailTableDataSource: FavouritePressed{
+extension BOGuideDetailTableDataSource: FavAndShareDelegate{
     
     func pressedFavouriteWithItem(catItem: BOCatItem) {
         
@@ -507,5 +507,13 @@ extension BOGuideDetailTableDataSource: FavouritePressed{
         }
         favDeleg.pressedFavouriteWithItem(catItem: catItem)
         FavouriteManager.addOrRemoveToFavs(item: catItem)
+    }
+    
+    func pressedShareWithItem(catItem: BOCatItem) {
+        guard let favDeleg = favDelegate else {
+            print("favDelegate not set in DetailTableDataSource")
+            return
+        }
+        favDeleg.pressedShareWithItem(catItem: catItem)
     }
 }

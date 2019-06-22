@@ -10,9 +10,10 @@ import UIKit
 import SDWebImage
 import CoreLocation
 
-protocol FavouritePressed: AnyObject {
+protocol FavAndShareDelegate: AnyObject {
     
     func pressedFavouriteWithItem(catItem: BOCatItem)
+    func pressedShareWithItem(catItem: BOCatItem)
 }
 
 enum roundCorner{
@@ -51,9 +52,10 @@ class TopGuideCell: UITableViewCell{
     @IBOutlet weak var imgViewAddressPin: UIImageView!
     
     @IBOutlet weak var btnDirections: UIButton!
+    @IBOutlet weak var btnShare: UIButton!
     
     var favouriteItem: BOCatItem?
-    weak var favouritePressedDelegate: FavouritePressed?
+    weak var favouritePressedDelegate: FavAndShareDelegate?
     
     var address: String = ""
     
@@ -68,6 +70,15 @@ class TopGuideCell: UITableViewCell{
         
         // Configure the view for the selected state
     }
+    
+    @IBAction func btnSharePressed(_ sender: Any) {
+        guard let shareItem = favouriteItem else{
+            print("no share item at button press")
+            return
+        }
+        pressedShareWithItem(catItem: shareItem)
+    }
+    
     
     @IBAction func btnFavPressed(_ sender: Any) {
         guard let favItem = favouriteItem else {
@@ -97,7 +108,7 @@ class TopGuideCell: UITableViewCell{
     }
 }
 
-extension TopGuideCell: FavouritePressed{
+extension TopGuideCell: FavAndShareDelegate{
     
     func pressedFavouriteWithItem(catItem: BOCatItem){
         guard let delegate = favouritePressedDelegate else{
@@ -105,6 +116,14 @@ extension TopGuideCell: FavouritePressed{
             return
         }
         delegate.pressedFavouriteWithItem(catItem: catItem)
+    }
+    
+    func pressedShareWithItem(catItem: BOCatItem) {
+        guard let delegate = favouritePressedDelegate else{
+            print("delegate not set for fav button in TopCell")
+            return
+        }
+        delegate.pressedShareWithItem(catItem: catItem)
     }
 }
 
@@ -185,6 +204,8 @@ extension TopGuideCell{
         lblAddress.font = UIFont.catDtlItemAddressTitle
         btnDirections.titleLabel?.font = UIFont.redDirectionText
         
+        btnShare.alpha = 0
+        
         adjustFontsFor(label: lblTitle)
         adjustFontsFor(label: lblAddress)
         adjustFontsFor(label: lblName)
@@ -223,7 +244,7 @@ extension TopGuideCell{
 //MARK: Guide List Setup
 extension TopGuideCell{
     
-    func setupWith(item: BOCatItem, forFavourites: Bool = false, favDelegate: FavouritePressed? = nil) {
+    func setupWith(item: BOCatItem, forFavourites: Bool = false, favDelegate: FavAndShareDelegate? = nil) {
         
         setupDefault()
         
@@ -236,7 +257,7 @@ extension TopGuideCell{
                 print("fav delegate not set for tablecell")
                 return
             }
-            btnFavourite.alpha = 1
+            btnShare.alpha = 1
             favouritePressedDelegate = delegate
             favouriteItem = item
             setupFavourites()
@@ -246,6 +267,8 @@ extension TopGuideCell{
     
     private func setupFavourites(){
         guard let itemFav = favouriteItem else { return }
+        
+        btnFavourite.alpha = 1
         
         if checkIsItemFavourited(item: itemFav){
             btnFavourite.setBackgroundImage(Asset.heartFilled.img, for: .normal)

@@ -667,7 +667,7 @@ extension BOGuideViewModel{
         favDataSource.value.deleteDelegate = delegate
     }
     
-    func setFavouriteDelegateForDetailScreens(delegate: FavouritePressed){
+    func setFavouriteDelegateForDetailScreens(delegate: FavAndShareDelegate){
         if let guideDetailDataSource = guideDetailDataSource.value{
             guideDetailDataSource.favDelegate = delegate
         }

@@ -18,6 +18,7 @@ struct BOCatItem : Codable {
     let title : String
     let url : String
     let author: BOAuthor
+//    var sponsored : CustomFields?
     var detailItem: BOCategoryDetail?
     var strTimeStamp: String?
     var superCatName: String?
@@ -32,6 +33,7 @@ struct BOCatItem : Codable {
         case title = "title"
         case url = "url"
         case author = "author"
+//        case sponsored = "custom_fields"
     }
     
     init(from decoder: Decoder) throws {
@@ -43,6 +45,7 @@ struct BOCatItem : Codable {
         title = try values.decode(String.self, forKey: .title)
         url = try values.decode(String.self, forKey: .url)
         author = try values.decode(BOAuthor.self, forKey: .author)
+//        sponsored = try values.decode(CustomFields.self, forKey: .sponsored)
         detailItem = nil
         strTimeStamp = nil
         superCatName = ""

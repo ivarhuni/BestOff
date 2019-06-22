@@ -44,7 +44,7 @@ protocol BOCategoryDetailListProtocol: UITableViewDataSource, UITableViewDelegat
     func numberOfRows() -> Int
     func numberOfSections() -> Int
     func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell
-    var favDelegate: FavouritePressed? { get set }
+    var favDelegate: FavAndShareDelegate? { get set }
 }
 
 protocol BOTableDelegate{
