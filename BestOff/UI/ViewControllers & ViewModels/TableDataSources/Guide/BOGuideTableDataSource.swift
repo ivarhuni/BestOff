@@ -19,6 +19,7 @@ enum ListType{
     
     case guide
     case event
+    case bestOf
 }
 
 class BOGuideTableDataSource: NSObject, BOCategoryListDataSourceProtocol {

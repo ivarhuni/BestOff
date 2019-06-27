@@ -932,6 +932,7 @@ extension BOGuideViewController{
 extension BOGuideViewController: DeleteFavouriteItem{
     
     func deleteClicked(deleteItemName: String) {
+        viewModel.updateFavourites()
         reloadTableForFavDeleteAction()
     }
     

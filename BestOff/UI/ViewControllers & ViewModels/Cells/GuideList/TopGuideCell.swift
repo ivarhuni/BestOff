@@ -265,6 +265,10 @@ extension TopGuideCell{
         }
     }
     
+    func hideFavs(){
+        btnFavourite.alpha = 0
+    }
+    
     func setupForEventDetailWith(item: BOCatItem){
         btnFavourite.alpha = 0
         btnShare.alpha = 0

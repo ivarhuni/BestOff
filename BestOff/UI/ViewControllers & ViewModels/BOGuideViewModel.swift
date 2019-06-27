@@ -263,6 +263,7 @@ extension BOGuideViewModel{
             
         case .favourites:
             
+            favDataSource.value.updateFavourites()
             activeTableDataSource.value = favDataSource.value
             activeTableDelegate.value = favDataSource.value
         }
@@ -333,6 +334,13 @@ extension BOGuideViewModel{
         case .favourites:
             print("no applicable")
         }
+    }
+}
+
+extension BOGuideViewModel{
+    
+    func updateFavourites(){
+        favDataSource.value.updateFavourites()
     }
 }
 
@@ -488,8 +496,13 @@ extension BOGuideViewModel: vmTableViewDelegate{
     
     func changeDataSourceToDetailWith(item: BOCatItem){
         
-        guideDetailDataSource.value = BOGuideDetailTableDataSource(catItem: item)
-        screenContentType.value = .guideDetail
+        if screenContentType.value == .guides{
+            guideDetailDataSource.value = BOGuideDetailTableDataSource(catItem: item)
+            screenContentType.value = .guideDetail
+        }
+        if screenContentType.value == .events || screenContentType.value == .eventsDetail{
+            changeDataSourceToEventWith(item: item)
+        }
     }
     
     func changeDataSourceToEventWith(item: BOCatItem){

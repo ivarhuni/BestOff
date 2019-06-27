@@ -35,6 +35,16 @@ class BOFavouritesDataSource: NSObject{
             print("unable to fetch favs")
         }
     }
+    
+    func updateFavourites(){
+        do{
+            let arrFavs = try FavouriteManager.getFavouriteItems()
+            self.arrFavourites.value = arrFavs
+        } catch{
+            print(error)
+            print("unable to fetch favs")
+        }
+    }
 }
 
 

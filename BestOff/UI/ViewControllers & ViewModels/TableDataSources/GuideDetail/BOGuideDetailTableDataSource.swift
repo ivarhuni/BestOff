@@ -359,6 +359,9 @@ extension BOGuideDetailTableDataSource{
         if screenType == .event{
             topCell.setupForEventDetailWith(item: item)
         }
+        if screenType == .guide{
+            topCell.hideFavs()
+        }
         
         return topCell
     }
