@@ -106,7 +106,9 @@ extension BOMenuView{
         imgViewRvk.image = Asset.hallgrimskirkja.img
         imgViewIceland.image = Asset.Iceland.img
         imgViewFavourites.image = Asset.heart.img
-        
+        let eventImage = Asset.event.img.withRenderingMode(.alwaysTemplate)
+        imgViewEvents.image = eventImage
+        imgViewEvents.tintColor = .white
         
         lblRvk.text = "BEST OF REYKJAVÍK"
         lblIceland.text = "BEST OF ICELAND"

@@ -166,6 +166,7 @@ extension TopGuideCell{
         viewSepDirections.backgroundColor = .greySep
         btnFavourite.alpha = 0
         showForGuide()
+        
         selectionStyle = .none
     }
     
@@ -258,6 +259,9 @@ extension TopGuideCell{
                 return
             }
             btnShare.alpha = 1
+            let image = Asset.share.img.withRenderingMode(.alwaysTemplate)
+            btnShare.setBackgroundImage(image, for: .normal)
+            btnShare.tintColor = .white
             favouritePressedDelegate = delegate
             favouriteItem = item
             setupFavourites()

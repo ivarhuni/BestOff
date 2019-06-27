@@ -25,6 +25,8 @@ enum Asset: String{
     case locationIcon = "Location Icon"
     case mapIcon = "Map Icon"
     case xIcon = "X icon"
+    case share = "Share"
+    case event = "Event"
     
     var img: UIImage{
         return UIImage(asset: self)!

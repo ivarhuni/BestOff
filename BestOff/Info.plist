@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Your location is needed to display on the map. Grapevine does not store or share location data with others.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your location is needed to display on the map. Grapevine does not store or share location data with others.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -23,11 +19,15 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>12</string>
+	<string>13</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Your location is needed to display on the map. Grapevine does not store or share location data with others.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location is needed to display on the map. Grapevine does not store or share location data with others.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Blanco-Regular.otf</string>

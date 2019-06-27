@@ -156,7 +156,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HzV-bJ-5rM">
-                    <rect key="frame" x="0.0" y="186" width="375" height="40"/>
+                    <rect key="frame" x="0.0" y="180" width="375" height="40"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qnf-OS-Ppc">
                             <rect key="frame" x="0.0" y="0.0" width="5" height="40"/>
@@ -167,9 +167,9 @@
                             </constraints>
                         </view>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gKf-vD-U9t">
-                            <rect key="frame" x="20" y="10" width="23" height="20"/>
+                            <rect key="frame" x="20" y="10" width="18" height="20"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="23" id="BzP-88-nd7"/>
+                                <constraint firstAttribute="width" constant="18" id="BzP-88-nd7"/>
                                 <constraint firstAttribute="height" constant="20" id="dDt-2L-Vry"/>
                             </constraints>
                         </imageView>
@@ -198,7 +198,7 @@
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="HzV-bJ-5rM" secondAttribute="trailing" id="Ca0-B6-Ckj"/>
                 <constraint firstItem="NIT-c6-LpP" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="CqL-w9-5ya"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Da9-6C-6Ge" secondAttribute="trailing" id="M2a-5J-780"/>
-                <constraint firstItem="HzV-bJ-5rM" firstAttribute="top" secondItem="w9H-k6-X4C" secondAttribute="bottom" constant="26" id="YTO-MZ-dtq"/>
+                <constraint firstItem="HzV-bJ-5rM" firstAttribute="top" secondItem="w9H-k6-X4C" secondAttribute="bottom" constant="20" id="YTO-MZ-dtq"/>
                 <constraint firstItem="w9H-k6-X4C" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="af9-Zy-D2r"/>
                 <constraint firstItem="w9H-k6-X4C" firstAttribute="top" secondItem="NIT-c6-LpP" secondAttribute="bottom" constant="20" id="bGW-gj-joL"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="NIT-c6-LpP" secondAttribute="trailing" id="e5H-d2-1n7"/>

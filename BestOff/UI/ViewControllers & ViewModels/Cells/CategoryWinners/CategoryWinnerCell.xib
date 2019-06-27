@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -81,11 +81,11 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Mj1-m8-tPj">
-                        <rect key="frame" x="339" y="5" width="30" height="30"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Sponsor" translatesAutoresizingMaskIntoConstraints="NO" id="Mj1-m8-tPj">
+                        <rect key="frame" x="319" y="0.0" width="50" height="50"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="42h-k8-2v0"/>
-                            <constraint firstAttribute="width" constant="30" id="H1B-fz-Vdi"/>
+                            <constraint firstAttribute="height" constant="50" id="42h-k8-2v0"/>
+                            <constraint firstAttribute="width" constant="50" id="H1B-fz-Vdi"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YGy-ch-dhf">
@@ -103,7 +103,7 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Mj1-m8-tPj" firstAttribute="centerY" secondItem="AAb-S5-NjU" secondAttribute="centerY" id="4Gq-a6-QVZ"/>
+                    <constraint firstItem="Mj1-m8-tPj" firstAttribute="centerY" secondItem="AAb-S5-NjU" secondAttribute="centerY" constant="5" id="4Gq-a6-QVZ"/>
                     <constraint firstItem="GlU-6L-Lzc" firstAttribute="centerY" secondItem="JDV-tA-UUm" secondAttribute="centerY" id="547-Lw-Plu"/>
                     <constraint firstAttribute="trailing" secondItem="gR4-WP-Snq" secondAttribute="trailing" constant="20" id="5OA-PG-Svv"/>
                     <constraint firstItem="gR4-WP-Snq" firstAttribute="centerY" secondItem="AAb-S5-NjU" secondAttribute="centerY" constant="3" id="9oG-PT-7nG"/>
@@ -155,4 +155,7 @@
             <point key="canvasLocation" x="282.39999999999998" y="244.22788605697153"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="Sponsor" width="183.33332824707031" height="183.33332824707031"/>
+    </resources>
 </document>

@@ -36,7 +36,7 @@ class BOGuideViewModel: BOViewModel {
     let loaderAlpha = 0.5
     let loaderDissapearDuration = 1.25
     let containerDissapearDuration = 1.5
-    let animationDelay:Double = 1.8
+    let animationDelay:Double = 2.5
     let viewActivityAlpha:CGFloat = 0.7
     
     let tableDataSourceAnimationDuration:Double = 0.3

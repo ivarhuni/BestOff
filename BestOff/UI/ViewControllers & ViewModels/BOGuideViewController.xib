@@ -79,10 +79,19 @@
                                 <constraint firstItem="Ui1-uH-JzM" firstAttribute="centerX" secondItem="tNh-UR-Ekb" secondAttribute="centerX" id="z4C-PZ-Nfz"/>
                             </constraints>
                         </view>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Sponsor" translatesAutoresizingMaskIntoConstraints="NO" id="tVa-S2-1fi">
+                            <rect key="frame" x="162.5" y="445.5" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="1Uk-td-i8w"/>
+                                <constraint firstAttribute="height" constant="50" id="mn0-Kt-D1q"/>
+                            </constraints>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="tNh-UR-Ekb" firstAttribute="centerY" secondItem="UNy-Lv-a5X" secondAttribute="centerY" id="3KV-ZV-Fif"/>
+                        <constraint firstItem="tVa-S2-1fi" firstAttribute="centerX" secondItem="UNy-Lv-a5X" secondAttribute="centerX" id="6Y0-Xx-H4e"/>
+                        <constraint firstItem="tVa-S2-1fi" firstAttribute="top" secondItem="tNh-UR-Ekb" secondAttribute="bottom" constant="50" id="AHf-Kl-nQB"/>
                         <constraint firstItem="tNh-UR-Ekb" firstAttribute="centerX" secondItem="UNy-Lv-a5X" secondAttribute="centerX" id="MHF-pl-gr7"/>
                     </constraints>
                 </view>
@@ -111,5 +120,6 @@
     </objects>
     <resources>
         <image name="Grapevine-icon" width="89" height="100"/>
+        <image name="Sponsor" width="183.33332824707031" height="183.33332824707031"/>
     </resources>
 </document>
