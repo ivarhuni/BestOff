@@ -37,7 +37,6 @@ struct Event{
     public var type = ""
     public var imgUrl = ""
     public var date: Date? = nil
-    public var isStarred = false
 }
 
 extension Event: JSONInitable{
@@ -109,8 +108,6 @@ extension Event: JSONInitable{
         self.isTopEvent = isTop
         
         let arrTime = self.time.components(separatedBy: ":")
-        
-        self.isStarred = Session.manager.isEventStarred(id: self.title)
         
         
         if arrTime.count == 2{

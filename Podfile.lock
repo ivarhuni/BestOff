@@ -1,4 +1,8 @@
 PODS:
+  - Alamofire (4.8.2)
+  - AlamofireObjectMapper (5.2.0):
+    - Alamofire (~> 4.7)
+    - ObjectMapper (~> 3.4)
   - Bond (7.3.3):
     - Differ (~> 1.3)
     - ReactiveKit (~> 3.9)
@@ -6,12 +10,15 @@ PODS:
   - NVActivityIndicatorView (4.6.1):
     - NVActivityIndicatorView/Presenter (= 4.6.1)
   - NVActivityIndicatorView/Presenter (4.6.1)
+  - ObjectMapper (3.4.2)
   - ReactiveKit (3.9.7)
   - SDWebImage (4.4.6):
     - SDWebImage/Core (= 4.4.6)
   - SDWebImage/Core (4.4.6)
 
 DEPENDENCIES:
+  - Alamofire (~> 4.5)
+  - AlamofireObjectMapper
   - Bond
   - NVActivityIndicatorView
   - ReactiveKit
@@ -19,19 +26,25 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - AlamofireObjectMapper
     - Bond
     - Differ
     - NVActivityIndicatorView
+    - ObjectMapper
     - ReactiveKit
     - SDWebImage
 
 SPEC CHECKSUMS:
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  AlamofireObjectMapper: 92b6ce2423a9d159e686f6a1d514a009bf903ddc
   Bond: 48ffda2418dde1da39bad39495c32a55f3ad23b9
   Differ: 9fcee7602542d7c6484ce05a0faec1c11258ed63
   NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
+  ObjectMapper: 0d4402610f4e468903ae64629eec4784531e5c51
   ReactiveKit: 5f4c440715d671901c382ae6b42ed3337ce4699b
   SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
 
-PODFILE CHECKSUM: f5646d440df36a6580184bd1cbb790e07ec23b1d
+PODFILE CHECKSUM: ee8d47b59daff9ba2395a3d963729ae61a53255b
 
 COCOAPODS: 1.6.1

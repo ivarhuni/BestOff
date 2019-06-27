@@ -153,7 +153,10 @@ extension BOGuideViewController: MenuViewClick{
     }
     
     func eventsClicked(){
-        print("events clicked")
+        
+        viewControllerHeadder.viewModel.isHamburgerActive.value = true
+        viewControllerHeadder.setTitleText(text: "Events")
+        changeToEvents()
     }
     
     func subCatClicked(){
@@ -602,6 +605,21 @@ extension BOGuideViewController{
         viewModel.setTableDataSourceFor(contentType: .guides)
         hideMenu()
     }
+
+    private func scrollToTopGuides(){
+        
+        if viewModel.getGuideListDataSourceNumberOfRows() > 0{
+            self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        }
+    }
+}
+
+//MARK: Events
+extension BOGuideViewController{
+    
+    func changeToEvents(){
+        viewModel.screenContentType.value = .events
+    }
     
     func setupForEvents(){
         disableTableDelegate()
@@ -611,12 +629,6 @@ extension BOGuideViewController{
         hideMenu()
     }
     
-    private func scrollToTopGuides(){
-        
-        if viewModel.getGuideListDataSourceNumberOfRows() > 0{
-            self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-        }
-    }
 }
 
 //MARK: Setup Content Type Category Detail

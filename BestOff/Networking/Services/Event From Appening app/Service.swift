@@ -21,11 +21,12 @@ class NetworkingService {
     /*
      * Construct the model, message and result status from the json/error with generics
      */
-    public func resultFromJSON<T: JSONInitable>(_ json: JSON?, _ error: NetworkErrors?) -> Result<T>{
+    public func resultFromJSON<T: JSONInitable>(_ json: JSON?, _ error: NetworkError?) -> Result<T>{
         
         //If we have an error we return immediately with the errors message
         if let error = error {
-            return Result(nil, error.why, false, error.code)
+            print("returning nil")
+            return Result(nil, "", false, HTTPStatusCode.ok)
         }
             
             //else if we have some data we try to init the model with the data

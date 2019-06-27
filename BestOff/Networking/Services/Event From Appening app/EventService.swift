@@ -12,7 +12,7 @@ class EventService: NetworkingService{
     
     public func getEvents(with result: @escaping (_ result: Result<EventList>) -> ()){
         
-        let endpoint = "http://appeningtoday.herokuapp.com/api"
+        let endpoint = "https://appeningtoday.herokuapp.com/api"
         
         let request = NetworkRequest(url: endpoint, method: .get)
         

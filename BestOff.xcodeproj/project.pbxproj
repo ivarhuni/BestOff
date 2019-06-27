@@ -26,6 +26,8 @@
 		2228CB8C22C46788002E1F75 /* NetworkEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2228CB8522C46788002E1F75 /* NetworkEndpoints.swift */; };
 		2228CB8D22C46788002E1F75 /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2228CB8622C46788002E1F75 /* NetworkRequest.swift */; };
 		2228CB8E22C46788002E1F75 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2228CB8722C46788002E1F75 /* NetworkError.swift */; };
+		2228CB9022C46E1D002E1F75 /* BOEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2228CB8F22C46E1D002E1F75 /* BOEventModel.swift */; };
+		2228CB9222C46F2F002E1F75 /* EventHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2228CB9122C46F2F002E1F75 /* EventHelper.swift */; };
 		222D8B98227FC8130039C860 /* BOCatHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D8B96227FC8130039C860 /* BOCatHeaderCell.swift */; };
 		222D8B99227FC8130039C860 /* BOCatHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 222D8B97227FC8130039C860 /* BOCatHeaderCell.xib */; };
 		22326B58229370BB0056DAC9 /* Extension+Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22326B57229370BB0056DAC9 /* Extension+Int.swift */; };
@@ -194,6 +196,8 @@
 		2228CB8522C46788002E1F75 /* NetworkEndpoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEndpoints.swift; sourceTree = "<group>"; };
 		2228CB8622C46788002E1F75 /* NetworkRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
 		2228CB8722C46788002E1F75 /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		2228CB8F22C46E1D002E1F75 /* BOEventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOEventModel.swift; sourceTree = "<group>"; };
+		2228CB9122C46F2F002E1F75 /* EventHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventHelper.swift; sourceTree = "<group>"; };
 		222D8B96227FC8130039C860 /* BOCatHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BOCatHeaderCell.swift; sourceTree = "<group>"; };
 		222D8B97227FC8130039C860 /* BOCatHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BOCatHeaderCell.xib; sourceTree = "<group>"; };
 		22326B57229370BB0056DAC9 /* Extension+Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Int.swift"; sourceTree = "<group>"; };
@@ -618,6 +622,8 @@
 				226E0AD52256B34A006AB3E2 /* BOAuthor.swift */,
 				22267C2222654E8E007E7B40 /* BOCategoryModel.swift */,
 				22F897852265F87C001E48BE /* BOCatItem.swift */,
+				2228CB8F22C46E1D002E1F75 /* BOEventModel.swift */,
+				2228CB9122C46F2F002E1F75 /* EventHelper.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1102,9 +1108,12 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-BestOff/Pods-BestOff-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireObjectMapper/AlamofireObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Bond/Bond.framework",
 				"${BUILT_PRODUCTS_DIR}/Differ/Differ.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
+				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveKit/ReactiveKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 			);
@@ -1112,9 +1121,12 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bond.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differ.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 			);
@@ -1164,6 +1176,7 @@
 				22F897A122662D63001E48BE /* BOGuideTableDataSource.swift in Sources */,
 				2228CB8C22C46788002E1F75 /* NetworkEndpoints.swift in Sources */,
 				22F897AE22663B7F001E48BE /* ViewModelProtocols.swift in Sources */,
+				2228CB9222C46F2F002E1F75 /* EventHelper.swift in Sources */,
 				22C82DE5229CCF6D009B3668 /* BOFavouritesDataSource.swift in Sources */,
 				22D5739722825E9300748CF1 /* BOMenuView.swift in Sources */,
 				22F8979F226625CF001E48BE /* BOTableProtocol.swift in Sources */,
@@ -1185,6 +1198,7 @@
 				22326B73229462BD0056DAC9 /* BOBigCatImgCell.swift in Sources */,
 				22F897AC22663AFF001E48BE /* BOViewModel.swift in Sources */,
 				22D6B8532252A3B4004A33DE /* BODetailItem.swift in Sources */,
+				2228CB9022C46E1D002E1F75 /* BOEventModel.swift in Sources */,
 				22326B58229370BB0056DAC9 /* Extension+Int.swift in Sources */,
 				2228CB8D22C46788002E1F75 /* NetworkRequest.swift in Sources */,
 				22267C262265615E007E7B40 /* Extension+Collection.swift in Sources */,

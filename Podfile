@@ -9,6 +9,8 @@ target 'BestOff' do
   pod 'Bond'
   pod 'SDWebImage'
   pod 'NVActivityIndicatorView'
+  pod 'Alamofire', '~> 4.5'
+  pod 'AlamofireObjectMapper'
 
   target 'BestOffTests' do
     inherit! :search_paths

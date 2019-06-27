@@ -43,9 +43,8 @@ extension NetworkError: LocalizedError {
     
     ///Construct the error message from json
     init(json: JSON, statusCode: HTTPStatusCode?) {
-        
-        //let message = Session.manager.appLanguage().stringFor(json)
-        let message = "someMsg"
+
+        let message = "msg"
         self = .custom(message, statusCode)
     }
     

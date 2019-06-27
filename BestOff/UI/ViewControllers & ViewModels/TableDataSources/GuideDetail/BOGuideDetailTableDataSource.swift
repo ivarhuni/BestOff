@@ -14,6 +14,7 @@ enum DetailScreenType{
     
     case guide
     case bestof
+    case event
 }
 
 class BOGuideDetailTableDataSource: NSObject, BOCategoryDetailListProtocol{
@@ -84,6 +85,11 @@ extension BOGuideDetailTableDataSource{
             guard let countItems = item.detailItem?.arrItems.count else { return 0 }
             
             return countItems*2 + imgCell + txtDescription
+        }
+        
+        if self.screenType == .event {
+            
+            return imgCell + txtDescription
         }
         
         guard let countItems = self.catDetail?.arrItems.count else {
@@ -355,6 +361,21 @@ extension BOGuideDetailTableDataSource{
     private func getDescriptionCellForTableView(tableview: UITableView) -> UITableViewCell{
         
         let txtCell = tableview.dequeueReusableCell(withIdentifier: BOCatItemTextDescriptionCell.reuseIdentifier()) as! BOCatItemTextDescriptionCell
+        
+        if screenType == .event{
+            
+            guard let text = catItem.value?.title else{
+                print("not cat item text for event")
+                return UITableViewCell()
+            }
+            txtCell.setText(text: text)
+            txtCell.cornerRoundType = .roundBot
+            txtCell.setBackgroundForCategory()
+            txtCell.setNeedsLayout()
+            txtCell.contentView.setNeedsLayout()
+            return txtCell
+        }
+        
         guard let text = catItem.value?.detailItem?.categoryDescription else {
             
             print("returning tableviewell instead of txtCell for contentTextDescIndex")
@@ -377,12 +398,15 @@ extension BOGuideDetailTableDataSource: UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
-        if screenType == .guide{
+        if screenType == .guide || screenType == .event{
             
             if indexPath.row == bigImgTopCellIndex{
                 return bigImgCellGuideHeight
             }
             if indexPath.row == txtDescCell{
+                if screenType == .event{
+                    return getHeightForEventText()
+                }
                 return getHeightForContentText()
             }
             
@@ -469,6 +493,15 @@ extension BOGuideDetailTableDataSource{
         
         guard let text = catItem.value?.detailItem?.categoryDescription else { return 1 }
         
+        return text.height(withConstrainedWidth: constraintedWidth, font: textDescFont)
+    }
+    
+    private func getHeightForEventText() -> CGFloat{
+        
+        guard let text = catItem.value?.title else {
+            print("no text for cat item title")
+            return 0
+        }
         return text.height(withConstrainedWidth: constraintedWidth, font: textDescFont)
     }
     

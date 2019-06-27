@@ -649,7 +649,7 @@ extension BOGuideViewModel{
         case .guides:
             return "BEST OF REYKJAVÍK"
         case .events:
-            return "EVENTS IN REYKJAVÍK"
+            return "Events"
             
         case .guideDetail:
             return ""
@@ -675,7 +675,7 @@ extension BOGuideViewModel{
             return "Drinking"
             
         case .events:
-            return "Events in Reykjavík"
+            return "Events"
         case .rvkActivities:
             return "Activities"
             
@@ -831,6 +831,17 @@ extension BOGuideViewModel{
 }
 
 
+extension BOGuideViewModel{
+    
+    func createCatModelFromEventModel(events: [Event]){
+        
+        var fakeCatModel = BOCategoryModel.init(descriptionField: "", feedUrl: "", homePageUrl: "", items: [], title: "", userComment: "", version: "", type: .rvkDrink)
+        
+        fakeCatModel.items = EventHelper.createCatModelFromEventModel(events: events)
+        
+        self.events.value = fakeCatModel
+    }
+}
 
 //MARK: Networking, could use a refactor
 extension BOGuideViewModel{
@@ -845,6 +856,15 @@ extension BOGuideViewModel{
     
     private func getEvents(){
         
+        let eventService = EventService()
+        eventService.getEvents{ [weak self] result in
+    
+            
+            if let events = result.model{
+                guard let this = self else { return }
+                this.createCatModelFromEventModel(events: events.eventList)
+            }
+        }
     }
     
     private func getGuides(){

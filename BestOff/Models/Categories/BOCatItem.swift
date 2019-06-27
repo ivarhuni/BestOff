@@ -52,6 +52,16 @@ struct BOCatItem : Codable {
         titleShort = ""
         tryToSetTimeStamp()
     }
+    
+    init(contentText: String, contentHtml: String, id: String, image: String, title: String, url: String, author: BOAuthor){
+        self.contentText = contentText
+        self.contentHtml = contentHtml
+        self.author = author
+        self.id = id
+        self.image = image
+        self.title = title
+        self.url = url
+    }
 }
 
 extension BOCatItem{

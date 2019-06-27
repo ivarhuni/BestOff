@@ -23,6 +23,12 @@ struct BOAuthor : Codable {
                 name = try values.decode(String.self, forKey: .name)
                 url = try values.decode(String.self, forKey: .url)
         }
+    
+    init(avatar: String, name: String, url: String){
+        self.avatar = avatar
+        self.name = name
+        self.url = url
+    }
 }
 
 struct CustomFields : Codable {
