@@ -355,6 +355,11 @@ extension BOGuideDetailTableDataSource{
             return UITableViewCell()
         }
         topCell.setupWith(item: item, forFavourites: true, favDelegate: self)
+        
+        if screenType == .event{
+            topCell.setupForEventDetailWith(item: item)
+        }
+        
         return topCell
     }
     
@@ -364,7 +369,7 @@ extension BOGuideDetailTableDataSource{
         
         if screenType == .event{
             
-            guard let text = catItem.value?.title else{
+            guard let text = catItem.value?.contentText else{
                 print("not cat item text for event")
                 return UITableViewCell()
             }
@@ -498,7 +503,7 @@ extension BOGuideDetailTableDataSource{
     
     private func getHeightForEventText() -> CGFloat{
         
-        guard let text = catItem.value?.title else {
+        guard let text = catItem.value?.contentText else {
             print("no text for cat item title")
             return 0
         }

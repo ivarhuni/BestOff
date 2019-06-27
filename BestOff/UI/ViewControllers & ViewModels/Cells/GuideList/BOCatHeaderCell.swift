@@ -12,6 +12,7 @@ class BOCatHeaderCell: UITableViewCell {
 
     @IBOutlet weak var lblCategoryTitle: UILabel!
     @IBOutlet weak var lblSwipe: UILabel!
+    @IBOutlet weak var pageControl: UIPageControl!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -47,5 +48,11 @@ extension BOCatHeaderCell{
         lblSwipe.font = UIFont.swipeRightTxt
         
         self.selectionStyle = .none
+    }
+    
+    func setupForEvent(){
+        lblCategoryTitle.text = "Today's Events"
+        lblSwipe.alpha = 0
+        pageControl.alpha = 0
     }
 }

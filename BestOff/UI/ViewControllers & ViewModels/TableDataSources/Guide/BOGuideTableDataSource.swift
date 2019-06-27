@@ -15,9 +15,16 @@ protocol didPressListDelegate: AnyObject {
     func didPressItem(item: BOCatItem)
 }
 
+enum ListType{
+    
+    case guide
+    case event
+}
+
 class BOGuideTableDataSource: NSObject, BOCategoryListDataSourceProtocol {
     
     var categoryModel = Observable<BOCategoryModel?>(nil)
+    var listType: ListType = .guide
     
     weak var didPressListTableDelegate: didPressListDelegate?
     
@@ -111,8 +118,13 @@ extension BOGuideTableDataSource{
         
         if indexPath.row == headerCellIndexRow{
             let headerCell = myTableView.dequeueReusableCell(withIdentifier: BOCatHeaderCell.reuseIdentifier()) as! BOCatHeaderCell
-            headerCell.setup()
+           headerCell.setup()
+            if listType == .event{
+                headerCell.setupForEvent()
+                return headerCell
+            }
             return headerCell
+            
         }
         
         if indexPath.row == BigCellIndexRow {
@@ -120,6 +132,9 @@ extension BOGuideTableDataSource{
             guard let bigCellItem = categoryModel.value?.items[safe: 0] else { return UITableViewCell() }
             let topCell = myTableView.dequeueReusableCell(withIdentifier: TopGuideCell.reuseIdentifier()) as! TopGuideCell
             topCell.setupWith(item: bigCellItem)
+            if(listType == .event){
+                topCell.setupForEventWith(venueName: bigCellItem.author.name)
+            }
             return topCell
         }
         

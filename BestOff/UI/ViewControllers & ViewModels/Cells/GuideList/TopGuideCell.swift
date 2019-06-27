@@ -265,6 +265,17 @@ extension TopGuideCell{
         }
     }
     
+    func setupForEventDetailWith(item: BOCatItem){
+        btnFavourite.alpha = 0
+        btnShare.alpha = 0
+        lblGrapevine.text = "Venue: \n" + item.author.name
+    }
+    
+    func setupForEventWith(venueName: String){
+        lblDate.text = ""
+        lblGrapevine.text = venueName
+    }
+    
     private func setupFavourites(){
         guard let itemFav = favouriteItem else { return }
         

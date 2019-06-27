@@ -627,6 +627,7 @@ extension BOGuideViewController{
         viewModel.setTableDelegateFor(contentType: .events)
         viewModel.setTableDataSourceFor(contentType: .events)
         hideMenu()
+        disableSwipe()
     }
     
 }

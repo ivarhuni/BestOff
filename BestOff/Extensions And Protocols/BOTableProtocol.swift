@@ -17,6 +17,8 @@ import Bond
 protocol BOCategoryListDataSourceProtocol: UITableViewDataSource, UITableViewDelegate{
     
     var categoryModel: Observable<BOCategoryModel?> { get }
+    var listType: ListType { get set }
+    
     
     var didPressListTableDelegate: didPressListDelegate? { get set }
     

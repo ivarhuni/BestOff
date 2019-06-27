@@ -30,6 +30,11 @@ class DoubleItemCell: UITableViewCell {
     @IBOutlet weak var viewBgLeft: UIView!
     @IBOutlet weak var viewBgRight: UIView!
     
+    @IBOutlet weak var lblVenueLeft: UILabel!
+    @IBOutlet weak var lblVenueRight: UILabel!
+    
+    
+    
     private var leftItem: BOCatItem?
     private var rightItem: BOCatItem?
     
@@ -146,6 +151,8 @@ extension DoubleItemCell{
     private func setupLabels(){
         
         setupFonts()
+        lblVenueRight.alpha = 0
+        lblVenueLeft.alpha = 0
         setupLabelScalingForLabel(label: lblLeft)
         setupLabelScalingForLabel(label: lblRight)
     }
@@ -169,19 +176,44 @@ extension DoubleItemCell{
         lblLeftAuthor.textColor = .white
         lblRightAuthor.textColor = .white
         
+        lblVenueLeft.textColor = .white
+        lblVenueRight.textColor = .white
+        
         lblLeft.font = UIFont.guideItem
         lblRight.font = UIFont.guideItem
         lblRightAuthor.font = UIFont.authorName
         lblLeftAuthor.font = UIFont.authorName
+        lblVenueRight.font = UIFont.authorName
+        lblVenueLeft.font = UIFont.authorName
     }
 }
 
 //MARK: Left item
 extension DoubleItemCell{
     
+    private func hideLeftAuthorView(){
+        imgViewAuthorLeft.alpha = 0
+        lblLeftAuthor.alpha = 0
+        lblVenueLeft.alpha = 1
+    }
+    
+    private func hideRightAuthorView(){
+        imgViewAuthorRight.alpha = 0
+        lblRightAuthor.alpha = 0
+        lblVenueRight.alpha = 1
+    }
+    
     private func setupWithLeftItem(item: BOCatItem){
         
-        UIImageView.setSDImageViewImageWithURL(imageView: imgViewAuthorLeft, strURL: item.author.avatar)
+        if item.author.avatar != ""{
+             UIImageView.setSDImageViewImageWithURL(imageView: imgViewAuthorLeft, strURL: item.author.avatar)
+        }
+        else{
+            hideLeftAuthorView()
+            lblVenueLeft.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: .zero, radius: 1)
+            lblVenueLeft.text = "Venue: \n" + item.author.name
+        }
+        
         UIImageView.setSDImageViewImageWithURL(imageView: imgViewLeft, strURL: item.image)
         
         lblLeftAuthor.text = item.author.name
@@ -206,7 +238,15 @@ extension DoubleItemCell{
     
     private func setupWithRightItem(item: BOCatItem){
         
-        UIImageView.setSDImageViewImageWithURL(imageView: imgViewAuthorRight, strURL: item.author.avatar)
+        if item.author.avatar != ""{
+            UIImageView.setSDImageViewImageWithURL(imageView: imgViewAuthorRight, strURL: item.author.avatar)
+        }
+        else{
+            hideRightAuthorView()
+            lblVenueRight.addDropShadow(color: .black, opacity: Constants.lowShadowOpacity, offset: .zero, radius: 1)
+            lblVenueRight.text = "Venue: \n" + item.author.name
+        }
+        
         UIImageView.setSDImageViewImageWithURL(imageView: imgViewRight, strURL: item.image)
         
         lblRightAuthor.text = item.author.name

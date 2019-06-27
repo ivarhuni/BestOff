@@ -16,7 +16,7 @@ struct EventHelper{
         
         for event in events{
             
-            let dummyAuthor = BOAuthor.init(avatar: "", name: "", url: "")
+            let dummyAuthor = BOAuthor.init(avatar: "", name: event.venue, url: "")
             
             let catItem = BOCatItem.init(contentText: event.description, contentHtml: "", id: "", image: event.imgUrl, title: event.title, url: event.imgUrl, author: dummyAuthor)
             catItemArray.append(catItem)

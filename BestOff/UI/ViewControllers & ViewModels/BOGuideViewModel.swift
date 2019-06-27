@@ -106,6 +106,7 @@ class BOGuideViewModel: BOViewModel {
         catDetailDataSource.value?.screenType = .bestof
         arrContentHistory.append(screenContentType.value)
         favDataSource.value.catDetailDelegate = self
+        eventListDataSource.value?.listType = .event
         createBonding()
     }
 }
@@ -473,6 +474,12 @@ extension BOGuideViewModel: vmTableViewDelegate{
         
         let bigGuideCellIndex = 1
         
+        if screenContentType.value == .events{
+            changeDataSourceToFirstEvent()
+            print("first event")
+            return
+        }
+        
         //TODO: FIX FOR EVENTS
         if shouldRespondToTableIndexPress(){
             (index == bigGuideCellIndex) ? changeDataSourceToFirstDetail() : print("nothing")
@@ -488,6 +495,20 @@ extension BOGuideViewModel: vmTableViewDelegate{
     func changeDataSourceToEventWith(item: BOCatItem){
         
         eventDetailDataSource.value = BOGuideDetailTableDataSource(catItem: item)
+        eventDetailDataSource.value?.screenType = .event
+        screenContentType.value = .eventsDetail
+    }
+    
+    func changeDataSourceToFirstEvent(){
+        
+        guard let topCellItem = eventListDataSource.value?.categoryModel.value?.items[safe: 0] else {
+            
+            print("unable to get topcell item events")
+            return
+        }
+        detailScreenTitle = "Events"
+        eventDetailDataSource.value = BOGuideDetailTableDataSource(catItem: topCellItem)
+        eventDetailDataSource.value?.screenType = .event
         screenContentType.value = .eventsDetail
     }
     
