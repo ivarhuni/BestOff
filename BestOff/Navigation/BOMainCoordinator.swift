@@ -33,10 +33,8 @@ extension BOMainCoordinator{
         let guideVM = BOGuideViewModel(with: .guides)
         guideVM.downloadData()
         let guideVC = BOGuideViewController(viewModel: guideVM)
-//        navController.viewControllers = [guideVC]
+        navController.viewControllers = [guideVC]
         
-        let mapVC = BOMapController()
-        navController.viewControllers = [mapVC]
     }
 }
 

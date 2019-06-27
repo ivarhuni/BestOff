@@ -152,6 +152,10 @@ extension BOGuideViewController: MenuViewClick{
         changeToGuides()
     }
     
+    func eventsClicked(){
+        print("events clicked")
+    }
+    
     func subCatClicked(){
 //        viewControllerHeadder.viewModel.isHamburgerActive.value = true
 //        viewControllerHeadder.setTitleText(text: "BEST OF REYKJAVÍK")
@@ -355,6 +359,10 @@ extension BOGuideViewController{
         registerDidPressList()
     }
     
+    private func registerDelegateEvents(){
+        registerDidEventPressList()
+    }
+    
     private func registerDelegateRvk(){
         
         registerDidPressList()
@@ -367,6 +375,10 @@ extension BOGuideViewController{
     
     private func registerDidPressList(){
         viewModel.setDidPressListDelegate(delegater: self)
+    }
+    
+    private func registerDidEventPressList(){
+        viewModel.setDidPressEventListDelegate(delegater: self)
     }
     
     private func registerDelegateSubcategories(){
@@ -442,12 +454,17 @@ extension BOGuideViewController{
             this.viewModel.addContentTypeToHistory(typeToAdd: contentTypeValue)
             
             switch contentTypeValue{
+            
+            case .eventsDetail:
+                this.setupForEventDetail()
                 
             case .categoryDetail:
                 this.setupForCatDetail()
                 
             case .guides:
                 this.setupForGuides()
+            case .events:
+                this.setupForEvents()
                 
             case .guideDetail:
                 this.setupForGuideDetail()
@@ -586,6 +603,14 @@ extension BOGuideViewController{
         hideMenu()
     }
     
+    func setupForEvents(){
+        disableTableDelegate()
+        registerDelegateEvents()
+        viewModel.setTableDelegateFor(contentType: .events)
+        viewModel.setTableDataSourceFor(contentType: .events)
+        hideMenu()
+    }
+    
     private func scrollToTopGuides(){
         
         if viewModel.getGuideListDataSourceNumberOfRows() > 0{
@@ -599,13 +624,13 @@ extension BOGuideViewController: ShowCategoryDetailForType{
     
     
     func show(categoryDetail: BOCategoryDetail, catItem: BOCatItem, type: Endpoint) {
-        changeTo(catDetail: categoryDetail)
+        changeTo(catDetail: categoryDetail, type: type)
     }
     
-    func changeTo(catDetail: BOCategoryDetail){
+    func changeTo(catDetail: BOCategoryDetail, type: Endpoint){
         viewModel.screenContentType.value = .categoryDetail
     }
-
+    
     func setupForCatDetail(){
 
         disableTableDelegate()
@@ -619,7 +644,23 @@ extension BOGuideViewController: ShowCategoryDetailForType{
         hideMenu()
         disableSwipe()
     }
+    
+    func setupForEventDetail(){
+        
+        disableTableDelegate()
+        animateHeaderToCatDetail()
+        if let catTitle = viewModel.detailCategory.value?.categoryTitle {
+            animateHeaderTo(txtHeader: catTitle)
+        }
+        viewModel.setTableDelegateFor(contentType: .eventsDetail)
+        viewModel.setTableDataSourceFor(contentType: .eventsDetail)
+        hideMenu()
+        disableSwipe()
+    }
 }
+
+//MARK: Event Detail
+
 
 //MARK: Setup Content Type Guide Detail
 extension BOGuideViewController{

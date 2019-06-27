@@ -20,6 +20,8 @@ enum ContentType{
     case iceland
     case favourites
     case categoryDetail
+    case events
+    case eventsDetail
 }
 
 class BOGuideViewModel: BOViewModel {
@@ -51,8 +53,11 @@ class BOGuideViewModel: BOViewModel {
     let activeTableDelegate = Observable<UITableViewDelegate?>(nil)
     
     private let guideListDataSource = Observable<BOCategoryListDataSourceProtocol?>(BOGuideTableDataSource())
+    private let eventListDataSource = Observable<BOCategoryListDataSourceProtocol?>(BOGuideTableDataSource())
     
     private let guideDetailDataSource = Observable<BOCategoryDetailListProtocol?>(BOGuideDetailTableDataSource())
+    private let eventDetailDataSource = Observable<BOCategoryDetailListProtocol?>(BOGuideDetailTableDataSource())
+
     private let catDetailDataSource = Observable<BOCategoryDetailListProtocol?>(BOGuideDetailTableDataSource())
     weak var showCatDetailDelegate: ShowCategoryDetailForType?
     
@@ -70,6 +75,7 @@ class BOGuideViewModel: BOViewModel {
     private let disposeBag = DisposeBag()
     
     private var guides = Observable<BOCategoryModel?>(nil)
+    private var events = Observable<BOCategoryModel?>(nil)
     private var rvkDrink = Observable<BOCategoryModel?>(nil)
     private var rvkActivities = Observable<BOCategoryModel?>(nil)
     private var rvkShopping = Observable<BOCategoryModel?>(nil)
@@ -168,6 +174,11 @@ extension BOGuideViewModel{
         self.guideListDataSource.value?.didPressListTableDelegate = delegater
     }
     
+    func setDidPressEventListDelegate(delegater: didPressListDelegate){
+        
+        self.eventListDataSource.value?.didPressListTableDelegate = delegater
+    }
+    
     func setCategoryDetailClickDelegate(delegate: ShowCategoryDetailForType){
         showCatDetailDelegate = delegate
     }
@@ -177,8 +188,8 @@ extension BOGuideViewModel{
         return myGuideListDataSource.numberOfRows()
     }
     
-    func getGuideDetailListDataSourceNumberOfRows() -> Int{
-        guard let myGuideListDataSource = self.guideDetailDataSource.value else { return 0 }
+    func getEventListDataSourceNumberOfRows() -> Int{
+        guard let myGuideListDataSource = self.eventListDataSource.value else { return 0 }
         return myGuideListDataSource.numberOfRows()
     }
 }
@@ -189,6 +200,21 @@ extension BOGuideViewModel{
         
         switch contentType{
             
+        case .eventsDetail:
+            guard let eventDetailDelegate = self.eventDetailDataSource.value else {
+                
+                print("eventDetailDataSource not set while setting delegate in VM")
+                return
+            }
+            self.activeTableDelegate.value = eventDetailDelegate
+            
+        case .events:
+            guard let eventDelegate = self.eventListDataSource.value else {
+                print("eventListDataSource not set while settings Delegate")
+                return
+            }
+            self.activeTableDelegate.value = eventDelegate
+        
         case .categoryDetail:
             guard let categoryDetailDelegate = self.catDetailDataSource.value else {
                 
@@ -245,6 +271,20 @@ extension BOGuideViewModel{
         
         switch contentType{
             
+        case .eventsDetail:
+            guard let eventDetailDataSource = self.eventDetailDataSource.value else {
+                print("eventDetailDatasource not set in VM")
+                return
+            }
+            self.activeTableDataSource.value = eventDetailDataSource
+            
+        case .events:
+            guard let eventDataSource = self.eventListDataSource.value else {
+                print("eventListDataSource not set while settings Delegate")
+                return
+            }
+            self.activeTableDataSource.value = eventDataSource
+            
         case .categoryDetail:
             guard let catDetailDataSource = self.catDetailDataSource.value else {
                 print("catDetailDatasource not set in VM")
@@ -300,15 +340,6 @@ extension BOGuideViewModel{
     
     private func createBonding(){
         
-//        _ = self.detailCategory.observeNext{ [weak self] model in
-//
-//            guard let this = self else { return }
-//            guard let dataModel = model else{ print("guides model nil from server"); return }
-//            guard let catDetailListDatasource = this.catDetailDataSource.value else { print("catDetailListDatasouce not initialized"); return }
-//
-//            catDetailListDatasource.setCatDetail(catDetail: dataModel)
-//        }
-        
         _ = self.guides.observeNext{ [weak self] model in
             
             guard let this = self else { return }
@@ -321,6 +352,15 @@ extension BOGuideViewModel{
                 
                 this.activeTableDataSource.value = this.guideListDataSource.value
             }
+        }
+        
+        _ = self.events.observeNext{ [weak self] model in
+            
+            guard let this = self else { return }
+            guard let dataModel = model else{ print("event model nil from server"); return }
+            guard let eventListdataSource = this.eventListDataSource.value else { print("eventListDataSource not initialized"); return }
+            
+            eventListdataSource.setDataModel(model: dataModel)
         }
         
         _ = self.rvkDining.skip(first: 1).observeNext{ [weak self] model in
@@ -433,6 +473,7 @@ extension BOGuideViewModel: vmTableViewDelegate{
         
         let bigGuideCellIndex = 1
         
+        //TODO: FIX FOR EVENTS
         if shouldRespondToTableIndexPress(){
             (index == bigGuideCellIndex) ? changeDataSourceToFirstDetail() : print("nothing")
         }
@@ -444,8 +485,15 @@ extension BOGuideViewModel: vmTableViewDelegate{
         screenContentType.value = .guideDetail
     }
     
+    func changeDataSourceToEventWith(item: BOCatItem){
+        
+        eventDetailDataSource.value = BOGuideDetailTableDataSource(catItem: item)
+        screenContentType.value = .eventsDetail
+    }
+    
     private func changeDataSourceToFirstDetail(){
         
+        //TODO: FIX FOR EVENTS
         guard let topCellItem = guideListDataSource.value?.categoryModel.value?.items[safe: 0] else {
             
             print("unable to get topcell item")
@@ -493,7 +541,7 @@ extension BOGuideViewModel: TakeMeThereProtocol{
             }
             changeDataSourceToSpecific(categoryDataSource: specificCategoryDataSource)
             
-        case .guides:
+        case .guides, .events:
             print ("not applicable")
             
         case .north:
@@ -591,7 +639,7 @@ extension BOGuideViewModel{
         
         switch screenContentType.value {
             
-        case .categoryDetail:
+        case .categoryDetail, .eventsDetail:
             print("not applicable")
             return ""
             
@@ -600,6 +648,8 @@ extension BOGuideViewModel{
             
         case .guides:
             return "BEST OF REYKJAVÍK"
+        case .events:
+            return "EVENTS IN REYKJAVÍK"
             
         case .guideDetail:
             return ""
@@ -624,6 +674,8 @@ extension BOGuideViewModel{
         case .rvkDrink:
             return "Drinking"
             
+        case .events:
+            return "Events in Reykjavík"
         case .rvkActivities:
             return "Activities"
             
@@ -715,8 +767,8 @@ extension BOGuideViewModel{
             
             return .fade
             
-        case .guideDetail, .categoryDetail:
-            print("fade guidedetail")
+        case .guideDetail, .categoryDetail, .eventsDetail:
+            print("fade detailscreen")
             return .fade
         case .reykjavik:
             
@@ -731,7 +783,9 @@ extension BOGuideViewModel{
             print("automatic subcategories")
             return .automatic
         case .iceland:
-            print("automatic iceland")
+            print("fade iceland")
+            return .fade
+        case .events:
             return .fade
         case .favourites:
             print("favourites automatic")
@@ -745,7 +799,7 @@ extension BOGuideViewModel{
     static func getRoundedCornerFor(screenContentType: ContentType) -> [UIRectCorner]{
         
         switch screenContentType {
-        case .guides:
+        case .guides, .events:
             return [.topLeft]
         case .reykjavik:
             return [.topRight]
@@ -786,6 +840,11 @@ extension BOGuideViewModel{
         getGuides()
         getCategoryWinnersRvk()
         getCategoryWinnersIce()
+        getEvents()
+    }
+    
+    private func getEvents(){
+        
     }
     
     private func getGuides(){
@@ -845,8 +904,9 @@ extension BOGuideViewModel{
         guard model != nil else { return }
         
         switch endpoint{
+        case .events:
+            print("not applicable")
         case .rvkDrink:
-            
             self.rvkDrink.value = model
             
         case .rvkActivities:

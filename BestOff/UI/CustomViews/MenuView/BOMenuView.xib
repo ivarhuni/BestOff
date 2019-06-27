@@ -11,25 +11,32 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BOMenuView" customModule="BestOff" customModuleProvider="target">
             <connections>
+                <outlet property="imgViewEvents" destination="gKf-vD-U9t" id="ROe-gv-zoy"/>
                 <outlet property="imgViewFavourites" destination="ejG-qU-Zgn" id="eeE-ZV-VEG"/>
                 <outlet property="imgViewIceland" destination="cNv-wF-kt2" id="LbM-f8-bdQ"/>
                 <outlet property="imgViewRvk" destination="l8s-v9-8vr" id="9o5-5U-9TE"/>
+                <outlet property="lblEvents" destination="iu0-mt-5tF" id="Dli-pr-SpB"/>
                 <outlet property="lblFavourites" destination="jT2-Sn-8Lm" id="AP1-oN-Ouf"/>
                 <outlet property="lblIceland" destination="rf4-Wo-L8N" id="KY0-Zw-iS5"/>
                 <outlet property="lblRvk" destination="Z8W-6U-7fI" id="ihr-Kv-DLi"/>
+                <outlet property="leadingImgEvents" destination="2eZ-cP-D5C" id="86Z-Xo-U8l"/>
                 <outlet property="leadingImgFav" destination="fJR-6g-rIw" id="GUV-jo-PJA"/>
                 <outlet property="leadingImgIce" destination="ZEh-Ez-TXP" id="qYH-ud-NK0"/>
                 <outlet property="leadingImgRvk" destination="Pj8-19-0uq" id="PeB-1R-Cll"/>
+                <outlet property="leadingLblEvents" destination="ktn-gF-Rcx" id="dno-Zi-cNX"/>
                 <outlet property="leadingLblFav" destination="9M0-0k-rpa" id="k1w-JL-2df"/>
                 <outlet property="leadingLblIce" destination="vgW-GE-fyt" id="kWt-Gx-yGb"/>
                 <outlet property="leadingLblRvk" destination="rvF-Gi-UTm" id="iib-ic-dJf"/>
+                <outlet property="leadingSelEvents" destination="zUl-BI-wFp" id="36D-6S-Wte"/>
                 <outlet property="leadingSelFav" destination="OLY-YW-fJV" id="Jpi-GB-7uN"/>
                 <outlet property="leadingSelectionIce" destination="kee-1E-qUP" id="xMT-ac-UuU"/>
                 <outlet property="leadingSelectionRvk" destination="SSY-1H-pob" id="SdM-iv-YFm"/>
                 <outlet property="view" destination="iN0-l3-epB" id="crp-ho-4pa"/>
+                <outlet property="viewEvents" destination="HzV-bJ-5rM" id="do6-N6-bdI"/>
                 <outlet property="viewFavourites" destination="w9H-k6-X4C" id="y0Q-hn-aew"/>
                 <outlet property="viewIceland" destination="NIT-c6-LpP" id="7cE-bR-bpF"/>
                 <outlet property="viewReykjavik" destination="Da9-6C-6Ge" id="nhR-AM-QT9"/>
+                <outlet property="viewSelEvents" destination="qnf-OS-Ppc" id="TDu-4a-gZM"/>
                 <outlet property="viewSelFavourites" destination="hkP-Za-xyM" id="x9K-TC-xch"/>
                 <outlet property="viewSelIceland" destination="b0x-OQ-LbJ" id="q24-NK-T21"/>
                 <outlet property="viewSelRvk" destination="xR4-4v-ppQ" id="68c-DW-QeK"/>
@@ -37,7 +44,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="153"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="226"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Da9-6C-6Ge">
@@ -148,22 +155,61 @@
                         <constraint firstAttribute="height" constant="40" id="s5g-D4-BWt"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HzV-bJ-5rM">
+                    <rect key="frame" x="0.0" y="186" width="375" height="40"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qnf-OS-Ppc">
+                            <rect key="frame" x="0.0" y="0.0" width="5" height="40"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="Veh-aX-iTN"/>
+                                <constraint firstAttribute="width" constant="5" id="qOl-f0-26X"/>
+                            </constraints>
+                        </view>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gKf-vD-U9t">
+                            <rect key="frame" x="20" y="10" width="23" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="23" id="BzP-88-nd7"/>
+                                <constraint firstAttribute="height" constant="20" id="dDt-2L-Vry"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iu0-mt-5tF">
+                            <rect key="frame" x="61" y="9.5" width="42" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="gKf-vD-U9t" firstAttribute="leading" secondItem="HzV-bJ-5rM" secondAttribute="leading" constant="20" id="2eZ-cP-D5C"/>
+                        <constraint firstItem="iu0-mt-5tF" firstAttribute="centerY" secondItem="gKf-vD-U9t" secondAttribute="centerY" id="CBP-ZT-RCj"/>
+                        <constraint firstItem="gKf-vD-U9t" firstAttribute="centerY" secondItem="HzV-bJ-5rM" secondAttribute="centerY" id="kpu-5z-7ru"/>
+                        <constraint firstItem="iu0-mt-5tF" firstAttribute="leading" secondItem="HzV-bJ-5rM" secondAttribute="leading" constant="61" id="ktn-gF-Rcx"/>
+                        <constraint firstItem="qnf-OS-Ppc" firstAttribute="top" secondItem="HzV-bJ-5rM" secondAttribute="top" id="r5w-Tl-fMJ"/>
+                        <constraint firstAttribute="height" constant="40" id="seI-ZQ-XV3"/>
+                        <constraint firstItem="qnf-OS-Ppc" firstAttribute="leading" secondItem="HzV-bJ-5rM" secondAttribute="leading" id="zUl-BI-wFp"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Da9-6C-6Ge" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="847-A8-vmi"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="HzV-bJ-5rM" secondAttribute="trailing" id="Ca0-B6-Ckj"/>
                 <constraint firstItem="NIT-c6-LpP" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="CqL-w9-5ya"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Da9-6C-6Ge" secondAttribute="trailing" id="M2a-5J-780"/>
+                <constraint firstItem="HzV-bJ-5rM" firstAttribute="top" secondItem="w9H-k6-X4C" secondAttribute="bottom" constant="26" id="YTO-MZ-dtq"/>
                 <constraint firstItem="w9H-k6-X4C" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="af9-Zy-D2r"/>
                 <constraint firstItem="w9H-k6-X4C" firstAttribute="top" secondItem="NIT-c6-LpP" secondAttribute="bottom" constant="20" id="bGW-gj-joL"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="NIT-c6-LpP" secondAttribute="trailing" id="e5H-d2-1n7"/>
                 <constraint firstItem="Da9-6C-6Ge" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="g27-FY-hSU"/>
                 <constraint firstItem="NIT-c6-LpP" firstAttribute="top" secondItem="Da9-6C-6Ge" secondAttribute="bottom" constant="20" id="pTC-lO-7XO"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="w9H-k6-X4C" secondAttribute="trailing" id="sae-Ya-R8e"/>
+                <constraint firstItem="HzV-bJ-5rM" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="sl6-kQ-k2u"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="55.200000000000003" y="279.31034482758622"/>
+            <point key="canvasLocation" x="55.200000000000003" y="312.14392803598201"/>
         </view>
     </objects>
 </document>

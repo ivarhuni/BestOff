@@ -80,6 +80,8 @@ extension BOCatItem{
             detailItem = guideDetail
             setTitleShort()
             return
+        case .events:
+            print("not setting detailitem for events")
         }
     }
 }

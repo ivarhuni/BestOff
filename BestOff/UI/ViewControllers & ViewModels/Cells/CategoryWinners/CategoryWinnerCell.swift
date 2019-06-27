@@ -292,7 +292,7 @@ extension CategoryWinnerCell{
             lblCatName.text = "Activities"
             lblBrowseMore.text = "Browse More Activities"
 
-        case .guides:
+        case .guides, .events:
             print("not applicable")
             
         case .east:

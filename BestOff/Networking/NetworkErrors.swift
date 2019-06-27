@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum NetworkError : Error{
+enum NetworkErrors : Error{
     case URLError
     case dataError
     case jsonParseError

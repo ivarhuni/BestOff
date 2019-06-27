@@ -14,11 +14,15 @@ enum ScreenType{
     case reykjavik
     case iceland
     case favourites
+    case events
 }
 
 struct BOMenuViewModel{
     
     let selectedScreenType = Observable<ContentType>(.reykjavik)
+    
+    //Instead of selectedScreenType
+    let screenType = Observable<ScreenType>(.reykjavik)
     
     let leadingConstantOff: CGFloat = -5.0
     let leadingConstantOn: CGFloat = 0.0
@@ -33,6 +37,12 @@ struct BOMenuViewModel{
         selectedScreenType.value = type
     }
     
+    private func selectFromMenuScreen(screenType: ScreenType){
+        
+        self.screenType.value = screenType
+    }
+    
+    //This is a bug and needs to be set to ScreenType not contentType
     func select(screenType: ContentType){
         
         if screenType == self.selectedScreenType.value { return }

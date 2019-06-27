@@ -100,7 +100,7 @@ extension RvkAndIcelandDataSource: TakeMeThereProtocol{
             takeMeThereVMDelegate?.didPressTakeMeThere(type: .rvkShopping)
         case .rvkActivities:
             takeMeThereVMDelegate?.didPressTakeMeThere(type: .rvkActivities)
-        case .guides:
+        case .guides, .events:
             print("not applicable")
         case .north:
             takeMeThereVMDelegate?.didPressTakeMeThere(type: .north)
@@ -256,7 +256,7 @@ extension RvkAndIcelandDataSource{
             guard let randomItem = catModel.items.randomItem() else { return }
             randomDiningItem = randomItem
             
-        case .guides:
+        case .guides, .events:
             print("not applicable")
             
         case .north:
@@ -311,7 +311,7 @@ extension RvkAndIcelandDataSource{
             guard let randomItem = self.randomDiningItem else { return nil }
             return randomItem
             
-        case .guides:
+        case .guides, .events:
             print("not applicable")
             
         case .north:

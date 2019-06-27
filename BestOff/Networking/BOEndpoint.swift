@@ -17,6 +17,8 @@ enum Endpoint {
     
     case guides
     
+    case events
+    
     case north
     case east
     case westfjords
@@ -52,6 +54,8 @@ extension  Endpoint{
             return URL(string: "https://grapevine.is/best-of-iceland/reykjanes/feed/json")
         case .westfjords:
             return URL(string: "https://grapevine.is/best-of-iceland/westfjords/feed/json")
+        case .events:
+            return URL(string: "https://appeningtoday.herokuapp.com/api")
         }
     }
 }
