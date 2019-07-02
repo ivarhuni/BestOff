@@ -41,7 +41,7 @@ extension  Endpoint{
         case .rvkDining:
             return URL(string: "https://grapevine.is/best-of-reykjavik/2019/dining-2019/feed/json")
         case .guides:
-            return URL(string: "https://grapevine.is/best-of-reykjavik/2019/guides-2019/feed/json")
+            return URL(string: "https://grapevine.is/best-of-reykjavik/guides/feed/json")
         case .north:
             return URL(string: "https://grapevine.is/best-of-iceland/north/feed/json")
         case .east:
