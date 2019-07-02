@@ -25,7 +25,7 @@
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SponsorPDF" translatesAutoresizingMaskIntoConstraints="NO" id="Jfy-Of-6dD">
-                                <rect key="frame" x="162.5" y="443.5" width="50" height="50"/>
+                                <rect key="frame" x="162.5" y="466" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="4tm-DK-bWb"/>
                                     <constraint firstAttribute="height" constant="50" id="Hze-wK-vcF"/>
@@ -34,10 +34,10 @@
                         </subviews>
                         <color key="backgroundColor" red="0.81960784313725488" green="0.25490196078431371" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Jfy-Of-6dD" firstAttribute="top" secondItem="2O0-jD-bbc" secondAttribute="bottom" constant="50" id="1aC-kN-BF1"/>
                             <constraint firstItem="2O0-jD-bbc" firstAttribute="centerY" secondItem="Bcu-3y-fUS" secondAttribute="centerY" id="2ba-YR-52f"/>
                             <constraint firstItem="2O0-jD-bbc" firstAttribute="centerX" secondItem="Bcu-3y-fUS" secondAttribute="centerX" id="Ttd-Yq-PjI"/>
                             <constraint firstItem="Jfy-Of-6dD" firstAttribute="centerX" secondItem="2O0-jD-bbc" secondAttribute="centerX" id="m4W-7W-5Wo"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="Jfy-Of-6dD" secondAttribute="bottom" constant="151" id="sOE-hK-VTS"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                     </view>
