@@ -30,7 +30,7 @@ extension BOMainCoordinator{
     public func start() {
         
         setupNavBar(navController: self.navController)
-        let guideVM = BOGuideViewModel(with: .guides)
+        let guideVM = BOGuideViewModel(with: .reykjavik)
         guideVM.downloadData()
         let guideVC = BOGuideViewController(viewModel: guideVM)
         navController.viewControllers = [guideVC]

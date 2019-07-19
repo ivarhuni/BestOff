@@ -173,7 +173,7 @@ extension UIFont {
     }
     
     class var swipeRightTxt: UIFont {
-        return UIFont(name: "Poppins-Medium", size: 14.0)!
+        return UIFont(name: "Poppins-Medium", size: 17.0)!
     }
     
     class var smallGrayRvg: UIFont {

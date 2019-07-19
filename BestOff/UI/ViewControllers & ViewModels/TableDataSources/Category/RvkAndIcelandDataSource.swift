@@ -36,7 +36,7 @@ class RvkAndIcelandDataSource: NSObject{
     
     private let rowCount: Int
     private let sectionCount = 1
-    private let rowHeight:CGFloat = 350
+    private let rowHeight:CGFloat = 330
     
     private let cellWidthToHeightRatio = 375/350
     

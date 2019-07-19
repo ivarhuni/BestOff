@@ -44,7 +44,7 @@ class BOGuideViewModel: BOViewModel {
     var hasLoadedSomethingOtherThanGuide: Bool = false
     
     //Observables
-    let screenContentType = Observable<ContentType>(.guides)
+    let screenContentType = Observable<ContentType>(.reykjavik)
     
     let shouldBeAnimating = Observable<Bool>(true)
     
@@ -108,6 +108,7 @@ class BOGuideViewModel: BOViewModel {
         favDataSource.value.catDetailDelegate = self
         eventListDataSource.value?.listType = .event
         createBonding()
+        
     }
 }
 
@@ -356,11 +357,7 @@ extension BOGuideViewModel{
             guard let guideListdataSource = this.guideListDataSource.value else { print("guideListDataSource not initialized"); return }
             
             guideListdataSource.setDataModel(model: dataModel)
-            
-            if this.shouldChangeDataSourceToGuideList(){
-                
-                this.activeTableDataSource.value = this.guideListDataSource.value
-            }
+
         }
         
         _ = self.events.observeNext{ [weak self] model in
@@ -372,7 +369,7 @@ extension BOGuideViewModel{
             eventListdataSource.setDataModel(model: dataModel)
         }
         
-        _ = self.rvkDining.skip(first: 1).observeNext{ [weak self] model in
+        _ = self.rvkDining.observeNext{ [weak self] model in
             
             guard let this = self else { return }
             guard let catWinnerDSource = this.rvkCategoriesDataSource.value else { return }
@@ -381,9 +378,14 @@ extension BOGuideViewModel{
             catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .rvkDining)
             catWinnerDSource.takeMeThereVMDelegate = self
             catWinnerDSource.catDetailDelegate = self
+            
+           
+                this.activeTableDataSource.value = catWinnerDSource
+                this.activeTableDelegate.value = catWinnerDSource
+            
         }
         
-        _ = self.rvkDrink.skip(first: 1).observeNext{ [weak self] model in
+        _ = self.rvkDrink.observeNext{ [weak self] model in
             
             guard let this = self else { return }
             guard let catWinnerDSource = this.rvkCategoriesDataSource.value else { return }
@@ -391,9 +393,13 @@ extension BOGuideViewModel{
             catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .rvkDrink)
             catWinnerDSource.takeMeThereVMDelegate = self
             catWinnerDSource.catDetailDelegate = self
+            
+            
+            this.activeTableDataSource.value = catWinnerDSource
+            this.activeTableDelegate.value = catWinnerDSource
         }
         
-        _ = self.rvkShopping.skip(first: 1).observeNext{ [weak self] model in
+        _ = self.rvkShopping.observeNext{ [weak self] model in
             
             guard let this = self else { return }
             guard let catWinnerDSource = this.rvkCategoriesDataSource.value else { return }
@@ -401,9 +407,14 @@ extension BOGuideViewModel{
             catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .rvkShopping)
             catWinnerDSource.takeMeThereVMDelegate = self
             catWinnerDSource.catDetailDelegate = self
+            
+  
+                this.activeTableDataSource.value = catWinnerDSource
+                this.activeTableDelegate.value = catWinnerDSource
+            
         }
         
-        _ = self.rvkActivities.skip(first: 1).observeNext{ [weak self] model in
+        _ = self.rvkActivities.observeNext{ [weak self] model in
             
             guard let this = self else { return }
             guard let catWinnerDSource = this.rvkCategoriesDataSource.value else { return }
@@ -411,9 +422,14 @@ extension BOGuideViewModel{
             catWinnerDSource.setCategoryModelAndRandomIdemForDataSourceType(catModel: model, type: .rvkActivities)
             catWinnerDSource.takeMeThereVMDelegate = self
             catWinnerDSource.catDetailDelegate = self
+            
+           
+                this.activeTableDataSource.value = catWinnerDSource
+                this.activeTableDelegate.value = catWinnerDSource
+            
         }
         
-        _ = self.iceWest.skip(first: 1).observeNext{ [weak self] model in
+        _ = self.iceWest.observeNext{ [weak self] model in
             
             guard let this = self else { return }
             guard let catWinnerDSource = this.icelandCategoriesDataSource.value else { return }
@@ -423,7 +439,7 @@ extension BOGuideViewModel{
             catWinnerDSource.catDetailDelegate = self
         }
         
-        _ = self.iceNorth.skip(first: 1).observeNext{ [weak self] model in
+        _ = self.iceNorth.observeNext{ [weak self] model in
             
             guard let this = self else { return }
             guard let catWinnerDSource = this.icelandCategoriesDataSource.value else { return }
@@ -433,7 +449,7 @@ extension BOGuideViewModel{
             catWinnerDSource.catDetailDelegate = self
         }
         
-        _ = self.iceEast.skip(first: 1).observeNext{ [weak self] model in
+        _ = self.iceEast.observeNext{ [weak self] model in
             
             guard let this = self else { return }
             guard let catWinnerDSource = this.icelandCategoriesDataSource.value else { return }
@@ -443,7 +459,7 @@ extension BOGuideViewModel{
             catWinnerDSource.catDetailDelegate = self
         }
         
-        _ = self.iceSouth.skip(first: 1).observeNext{ [weak self] model in
+        _ = self.iceSouth.observeNext{ [weak self] model in
             
             guard let this = self else { return }
             guard let catWinnerDSource = this.icelandCategoriesDataSource.value else { return }
@@ -453,7 +469,7 @@ extension BOGuideViewModel{
             catWinnerDSource.catDetailDelegate = self
         }
         
-        _ = self.iceWestFjords.skip(first: 1).observeNext{ [weak self] model in
+        _ = self.iceWestFjords.observeNext{ [weak self] model in
             
             guard let this = self else { return }
             guard let catWinnerDSource = this.icelandCategoriesDataSource.value else { return }
@@ -463,7 +479,7 @@ extension BOGuideViewModel{
             catWinnerDSource.catDetailDelegate = self
         }
         
-        _ = self.iceReykjaNes.skip(first: 1).observeNext{ [weak self] model in
+        _ = self.iceReykjaNes.observeNext{ [weak self] model in
             
             guard let this = self else { return }
             guard let catWinnerDSource = this.icelandCategoriesDataSource.value else { return }
@@ -644,6 +660,12 @@ extension BOGuideViewModel{
         return false
     }
     
+    func shouldChangeDataSourceToReykjavik() -> Bool{
+        
+        if activeTableDataSource.value == nil { return true }
+        return false
+    }
+    
     func shouldSwipeBeEnabled() -> Bool{
         
         if (screenContentType.value == .guides) || (screenContentType.value == .reykjavik){
@@ -777,7 +799,7 @@ extension BOGuideViewModel{
             
             guard let lastContentType = getLastContentType() else {
                 
-                return .right
+                return .left
             }
             
             guard let nextToLastContentType = getNextToLastContentType() else {
@@ -807,11 +829,11 @@ extension BOGuideViewModel{
         case .reykjavik:
             
             guard let lastContentType = getLastContentType() else { return .left}
-            if lastContentType == .guides { return .left }
+            if lastContentType == .reykjavik { return .right }
             
             guard let nextToLastScreen = getNextToLastContentType() else { return .left }
             if nextToLastScreen == .subCategoriesRvk { return .fade }
-            return .left
+            return .right
             
         case .subCategoriesRvk, .subCategoriesIce:
             print("automatic subcategories")
@@ -833,9 +855,9 @@ extension BOGuideViewModel{
     static func getRoundedCornerFor(screenContentType: ContentType) -> [UIRectCorner]{
         
         switch screenContentType {
-        case .guides, .events:
+        case .reykjavik, .events:
             return [.topLeft]
-        case .reykjavik:
+        case .guides:
             return [.topRight]
         default:
             return []

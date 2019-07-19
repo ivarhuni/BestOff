@@ -28,7 +28,6 @@ class CategoryWinnerCell: UITableViewCell {
     
     
     @IBOutlet weak var lblCatName: UILabel!
-    @IBOutlet weak var lblBrowseMore: UILabel!
     @IBOutlet weak var lblTakeMeThere: UILabel!
     @IBOutlet weak var lblSwipe: UILabel!
     @IBOutlet weak var imgView: UIImageView!
@@ -75,12 +74,21 @@ extension CategoryWinnerCell{
 extension CategoryWinnerCell: ShowCategoryDetail{
     
     func didPressCategoryDetail(catDetail: BOCategoryDetail, type: Endpoint?) {
-        print("did press category detail")
-        guard let delegate = self.delegateShowCategoryDetail else {
-            print("noshowcategorydetail delegate not set")
+//        print("did press category detail")
+//        guard let delegate = self.delegateShowCategoryDetail else {
+//            print("noshowcategorydetail delegate not set")
+//            return
+//        }
+//        delegate.didPressCategoryDetail(catDetail: catDetail, type: catType)
+        guard let delegate = delegateTakeMeThere else {
+            print("delegate not set for Take Me There")
             return
         }
-        delegate.didPressCategoryDetail(catDetail: catDetail, type: catType)
+        guard let cellType = self.catType else {
+            print("celltype not set")
+            return
+        }
+        delegate.didPressTakeMeThere(type: cellType)
     }
 }
 
@@ -105,6 +113,11 @@ extension CategoryWinnerCell: TakeMeThereProtocol{
         let tapGestureRec = UITapGestureRecognizer(target: self, action: #selector(self.handleTapOnTakeMeThere(_:)))
         lblTakeMeThere.addGestureRecognizer(tapGestureRec)
         lblTakeMeThere.isUserInteractionEnabled = true
+        
+        BOGuideViewController.clearGestureRecForView(view: lblCategoryTitle)
+        let tapGestureRecTitle = UITapGestureRecognizer(target: self, action: #selector(self.handleTapOnTakeMeThere(_:)))
+        lblCatName.addGestureRecognizer(tapGestureRecTitle)
+        lblCatName.isUserInteractionEnabled = true
     }
     
     private func setupOpenRandomItem(){
@@ -151,7 +164,7 @@ extension CategoryWinnerCell{
         
         let borderWidth:CGFloat = 1.0
         lblTakeMeThere.layer.borderWidth = borderWidth
-        lblTakeMeThere.text = "Take Me There"
+        lblTakeMeThere.text = "Browse More"
         lblTakeMeThere.clipsToBounds = true
         lblTakeMeThere.layer.cornerRadius = lblTakeMeThere.frame.size.height/2.0
     }
@@ -160,7 +173,6 @@ extension CategoryWinnerCell{
         
         lblCatName.textColor = .black
         lblSwipe.textColor = .colorGreyDot
-        lblBrowseMore.textColor = .colorGreyBrowse
         lblTakeMeThere.textColor = .colorRed
         lblCategoryTitle.textColor = .white
         lblCatWinnerItem.textColor = .white
@@ -168,7 +180,7 @@ extension CategoryWinnerCell{
         viewSep.backgroundColor = .colorGreySep
         
         viewBgFingersAndLabel.backgroundColor = .black
-        viewBgFingersAndLabel.alpha = 0.3
+        viewBgFingersAndLabel.alpha = 0.05
     }
     
     private func setFonts(){
@@ -176,7 +188,6 @@ extension CategoryWinnerCell{
         lblCategoryTitle.font = UIFont.categoryImageTitle
         lblCatName.font = UIFont.categoryType
         lblSwipe.font = UIFont.swipeRightTxt
-        lblBrowseMore.font = UIFont.browseMoreCatItems
         lblTakeMeThere.font = UIFont.rRedBtnText
         lblCatWinnerItem.font = UIFont.catItemImgNameBigger
     }
@@ -184,7 +195,6 @@ extension CategoryWinnerCell{
     private func setupImgViews(){
         
         imgView.clipsToBounds = true
-        imgView.image = Asset.grapevineIcon.img
         imgView.contentMode = .scaleAspectFill
         
         imgViewFingers.setClipsAndScales()
@@ -204,6 +214,7 @@ extension CategoryWinnerCell{
         setupDefault()
         self.catType = styleType
         setupForType(type: styleType)
+        setupTakeMeThereGestureRec()
         guard let item = randomItem else {
             
                 guard let tryNewRandomItem = category?.items.randomItem() else { return }
@@ -233,7 +244,6 @@ extension CategoryWinnerCell{
         self.randomItem = detailItem
         lblCategoryTitle.text = detailItem.arrItems.first?.categoryWinnerOrRunnerTitle
         
-        setupTakeMeThereGestureRec()
         setupOpenRandomItem()
         
         //Sometimes the BOCategoryDetailItem doesn't have a categoryTitle
@@ -249,7 +259,10 @@ extension CategoryWinnerCell{
         guard let imgView = self.imgView else { return }
         guard let url = URL(string: randomItem.image) else { return }
         
-        imgView.sd_setImage(with: url) { (image, error, _, _) in }
+        imgView.sd_setImage(with: url) { (image, error, _, _) in
+            
+            
+        }
     }
     
     private func addShadows(){
@@ -271,7 +284,6 @@ extension CategoryWinnerCell{
             
         case .rvkDining:
             lblCatName.text = "Dining"
-            lblBrowseMore.text = "Browse More Restaurants"
             
             showSwipeAndPageCtrl()
             
@@ -280,49 +292,37 @@ extension CategoryWinnerCell{
             
         case .rvkDrink:
             lblCatName.text = "Drinking"
-            lblBrowseMore.text = "Browse More Bars"
-            
             showImgViewSponsor()
             
         case .rvkShopping:
             lblCatName.text = "Shopping"
-            lblBrowseMore.text = "Browse More Shops"
-            
         case .rvkActivities:
             lblCatName.text = "Activities"
-            lblBrowseMore.text = "Browse More Activities"
 
         case .guides, .events:
             print("not applicable")
             
         case .east:
             lblCatName.text = "East"
-            lblBrowseMore.text = "Browse more items"
         case .north:
             lblCatName.text = "North"
-            lblBrowseMore.text = "Browse more items"
 
         case .westfjords:
             lblCatName.text = "Westfjords"
-            lblBrowseMore.text = "Browse more items"
             
         case .south:
             lblCatName.text = "South"
-            lblBrowseMore.text = "Browse more items"
             
         case .west:
             lblCatName.text = "West"
-            lblBrowseMore.text = "Browse more items"
         case .reykjanes:
-            lblCatName.text = "Reykjanes"
-            lblBrowseMore.text = "Browse more items"
-        }
+            lblCatName.text = "Reykjanes"        }
         
-        lblSwipe.text = "Swipe Left"
+        lblSwipe.text = "Swipe Right"
     }
     
     private func hideSwipeLblAndPageCtrl(){
-        lblSwipe.text = "Swipe Left"
+        lblSwipe.text = "Swipe Right"
         lblSwipe.isHidden = true
         pageControl.isHidden = true
     }

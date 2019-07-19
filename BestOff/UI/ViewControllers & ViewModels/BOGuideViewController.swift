@@ -149,7 +149,12 @@ extension BOGuideViewController: MenuViewClick{
         
         viewControllerHeadder.viewModel.isHamburgerActive.value = true
         viewControllerHeadder.setTitleText(text: "BEST OF REYKJAVÍK")
-        changeToGuides()
+        
+        if viewModel.screenContentType.value == .guides{
+            changeToGuides()
+            return
+        }
+        changeToRvkCategories()
     }
     
     func eventsClicked(){
@@ -206,14 +211,14 @@ extension BOGuideViewController: BOAppHeaderViewDelegate{
         viewControllerHeadder.viewModel.isDetailActive.value = false
         guard let lastScreenType = self.viewModel.getLastContentType() else {
             
-            viewMenu.setupWithType(screenType: .guides)
-            changeToGuides()
+            viewMenu.setupWithType(screenType: .reykjavik)
+            changeToRvkCategories()
             return
         }
         if lastScreenType == .favourites{
             
-            viewMenu.setupWithType(screenType: .guides)
-            changeToGuides()
+            viewMenu.setupWithType(screenType: .reykjavik)
+            changeToRvkCategories()
             return
         }
         
@@ -235,8 +240,8 @@ extension BOGuideViewController: BOAppHeaderViewDelegate{
         
         guard let nextToLastScreenType = self.viewModel.getNextToLastContentType() else {
             
-            viewMenu.setupWithType(screenType: .guides)
-            changeToGuides()
+            viewMenu.setupWithType(screenType: .reykjavik)
+            changeToRvkCategories()
             return
         }
         
@@ -522,7 +527,6 @@ extension BOGuideViewController{
                             
                             guard let this = self else { return }
                             
-                            
                             this.tableView.reloadSections(IndexSet(integer: 0), with: this.viewModel.getTableViewAnimationFor(screenContentType: this.viewModel.screenContentType.value))
                             
                             
@@ -699,9 +703,7 @@ extension BOGuideViewController{
     
     private func changeToRvkCategories() {
         
-        if tableView.delegate != nil{
-            viewModel.screenContentType.value = .reykjavik
-        }
+        viewModel.screenContentType.value = .reykjavik
     }
     
     private func setupForRvk(){
@@ -886,10 +888,10 @@ extension BOGuideViewController{
         guard let swipeGesture = gesture as? UISwipeGestureRecognizer else { return }
         switch swipeGesture.direction {
             
-        case .right:
+        case .left:
             changeToGuides()
             
-        case .left:
+        case .right:
             if viewModel.shouldChangeToRvkCategoriesFor(tableView: self.tableView){
                 print("changeToRvkCategories()")
                 changeToRvkCategories()

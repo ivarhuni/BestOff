@@ -448,6 +448,21 @@ extension DetailItemFactory{
         arrText = arrText.filter{
             !$0.contains("Loading&#")
         }
+        arrText = arrText.filter{
+            !$0.contains("&#8217;s")
+        }
+        arrText = arrText.filter{
+            !$0.contains("&#8217")
+        }
+        arrText = arrText.filter{
+            !$0.contains("M&#038;M")
+        }
+        arrText = arrText.filter{
+            !$0.contains("&#038;")
+        }
+        arrText = arrText.filter{
+            !$0.contains("&#8211;")
+        }
         
         guard let _ = arrText[safe: 3] else { return arrText }
         guard let _ = arrText[safe: 4] else { return arrText }

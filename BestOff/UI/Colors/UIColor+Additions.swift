@@ -19,7 +19,7 @@ extension UIColor {
   }
 
   @nonobjc class var colorGreyDot: UIColor {
-    return UIColor(white: 175.0 / 255.0, alpha: 1.0)
+    return .gray
   }
 
   @nonobjc class var colorGreySep: UIColor {

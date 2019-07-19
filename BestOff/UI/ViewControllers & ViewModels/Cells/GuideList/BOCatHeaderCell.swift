@@ -44,7 +44,7 @@ extension BOCatHeaderCell{
         lblCategoryTitle.font = UIFont.categoryType
         
         lblSwipe.textColor = .colorGreyDot
-        lblSwipe.text = "Swipe Right"
+        lblSwipe.text = "Swipe Left"
         lblSwipe.font = UIFont.swipeRightTxt
         
         self.selectionStyle = .none
