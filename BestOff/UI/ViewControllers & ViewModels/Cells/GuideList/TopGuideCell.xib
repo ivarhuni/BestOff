@@ -58,8 +58,11 @@
                             <constraint firstAttribute="height" constant="17" id="w5m-02-BoK"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1O8-q8-gB7">
-                        <rect key="frame" x="47" y="23.5" width="42" height="20.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1O8-q8-gB7">
+                        <rect key="frame" x="47" y="23.5" width="150" height="20.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="150" id="Ah4-xf-2dG"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -139,7 +142,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NN7-MT-ipY">
-                                <rect key="frame" x="28" y="114" width="272" height="1"/>
+                                <rect key="frame" x="0.0" y="114" width="300" height="1"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="XSM-EZ-O6u"/>
@@ -156,13 +159,13 @@
                             <constraint firstItem="lWB-ag-aDl" firstAttribute="leading" secondItem="EKB-Ck-E5P" secondAttribute="leading" id="RiU-Nk-Xpf"/>
                             <constraint firstItem="lWB-ag-aDl" firstAttribute="top" secondItem="EKB-Ck-E5P" secondAttribute="top" constant="20" id="fKF-Lb-ffQ"/>
                             <constraint firstItem="mTo-LM-BD0" firstAttribute="centerY" secondItem="SA8-Ae-62J" secondAttribute="centerY" id="gFY-2u-9o7"/>
-                            <constraint firstItem="NN7-MT-ipY" firstAttribute="leading" secondItem="Put-f4-dQB" secondAttribute="leading" id="iUl-hT-Bu4"/>
                             <constraint firstAttribute="trailing" secondItem="NN7-MT-ipY" secondAttribute="trailing" id="j3f-Z5-dhV"/>
                             <constraint firstItem="Put-f4-dQB" firstAttribute="leading" secondItem="EKB-Ck-E5P" secondAttribute="leading" constant="28" id="ldo-hh-iwJ"/>
                             <constraint firstItem="9TQ-ps-ndf" firstAttribute="leading" secondItem="EKB-Ck-E5P" secondAttribute="leading" constant="28" id="of9-hT-Ew3"/>
                             <constraint firstAttribute="trailing" secondItem="Put-f4-dQB" secondAttribute="trailing" constant="20" id="ozY-ds-Zl1"/>
                             <constraint firstAttribute="trailing" secondItem="mTo-LM-BD0" secondAttribute="trailing" constant="20" id="pJ9-QJ-PI5"/>
                             <constraint firstItem="Put-f4-dQB" firstAttribute="centerY" secondItem="lWB-ag-aDl" secondAttribute="centerY" constant="2" id="pMa-h8-Ysn"/>
+                            <constraint firstItem="NN7-MT-ipY" firstAttribute="leading" secondItem="SA8-Ae-62J" secondAttribute="leading" id="rdY-Ho-NZ1"/>
                             <constraint firstItem="SA8-Ae-62J" firstAttribute="top" secondItem="Put-f4-dQB" secondAttribute="bottom" constant="20" id="wND-ly-eyk"/>
                         </constraints>
                     </view>

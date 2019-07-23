@@ -62,7 +62,7 @@ extension BOCatItemTextDescriptionCell{
     }
     
     func changeLeadingConstraintToCatDetail(){
-        constraintLblLeading.constant = 48
+        constraintLblLeading.constant = 20
         self.setNeedsLayout()
         self.layoutIfNeeded()
     }

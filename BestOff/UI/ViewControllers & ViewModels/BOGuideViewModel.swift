@@ -36,7 +36,7 @@ class BOGuideViewModel: BOViewModel {
     let loaderAlpha = 0.5
     let loaderDissapearDuration = 1.25
     let containerDissapearDuration = 1.5
-    let animationDelay:Double = 2.5
+    let animationDelay:Double = 3.5
     let viewActivityAlpha:CGFloat = 0.7
     
     let tableDataSourceAnimationDuration:Double = 0.3
@@ -808,7 +808,7 @@ extension BOGuideViewModel{
             
             if lastContentType == .guides {
                 
-                if nextToLastContentType == .reykjavik { return .right }
+                if nextToLastContentType == .reykjavik { return .left }
                 
                 return .fade
             }
@@ -828,11 +828,19 @@ extension BOGuideViewModel{
             return .fade
         case .reykjavik:
             
-            guard let lastContentType = getLastContentType() else { return .left}
-            if lastContentType == .reykjavik { return .right }
+            guard let lastContentType = getLastContentType() else {
+                return .none
+            }
+            if lastContentType == .reykjavik {
+                return .right
+            }
             
-            guard let nextToLastScreen = getNextToLastContentType() else { return .left }
-            if nextToLastScreen == .subCategoriesRvk { return .fade }
+            guard let nextToLastScreen = getNextToLastContentType() else {
+                return .left
+            }
+            if nextToLastScreen == .subCategoriesRvk {
+                return .fade
+            }
             return .right
             
         case .subCategoriesRvk, .subCategoriesIce:
