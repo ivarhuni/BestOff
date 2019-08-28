@@ -31,8 +31,6 @@ final class Networking: NSObject {
             return
         }
         
-        print("URL: \(url.absoluteString)")
-        
         let method = request.method
         let params = request.params
         

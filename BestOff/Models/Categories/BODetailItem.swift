@@ -53,7 +53,7 @@ struct BOCategoryDetailItem: Codable{
     let itemName: String
     let itemAddress: String
     let itemDescription: String
-    let imageURL: String?
+    var imageURL: String?
     let isWinner: Bool
     let isFirstRunner: Bool
     let isSecondRunner: Bool
@@ -78,6 +78,10 @@ struct BOCategoryDetailItem: Codable{
         self.isSecondRunner = isSecondRunner
         
         self.categoryWinnerOrRunnerTitle = categoryWinnerOrRunnerTitle
+    }
+    
+    mutating func setImageURL(imgUrl: String){
+        self.imageURL = imgUrl
     }
 }
 

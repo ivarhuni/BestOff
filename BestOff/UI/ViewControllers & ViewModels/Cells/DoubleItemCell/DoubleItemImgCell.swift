@@ -145,6 +145,16 @@ extension DoubleItemImgCell{
     private func setupWithLeftCatItem(catItem: BOCatItem, isEditActive: Bool){
         
         lblLeft.text = catItem.detailItem?.categoryTitle
+        
+        if lblLeft.text == ""{
+            lblLeft.text = catItem.titleShort
+        }
+        
+        if lblLeft.text == "" {
+            lblLeft.text = catItem.detailItem?.categoryTitle
+        }
+    
+        
         leftCatItem = catItem
         selectionStyle = .none
         if isEditActive{
@@ -158,11 +168,23 @@ extension DoubleItemImgCell{
         clearRight()
     }
     
+    private func tryToGetTitle(){
+        
+    }
     
     
     private func setupWithRightCatItem(catItem: BOCatItem, isEditActive: Bool){
         
         lblRight.text = catItem.detailItem?.categoryTitle
+        
+        if lblRight.text == ""{
+            lblRight.text = catItem.titleShort
+        }
+        
+        if lblRight.text == "" {
+            lblRight.text = catItem.detailItem?.categoryTitle
+        }
+        
         rightCatItem = catItem
         showRight()
         selectionStyle = .none

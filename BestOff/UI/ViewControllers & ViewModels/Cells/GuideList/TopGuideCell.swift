@@ -307,7 +307,7 @@ extension TopGuideCell{
     
     private func setTextsFrom(item: BOCatItem){
         lblTitle.text = item.title
-        lblDate.text = item.id
+        lblDate.text = item.strTimeStamp
         
         lblName.text = ""
         lblAddress.text = ""

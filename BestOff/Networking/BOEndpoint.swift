@@ -27,11 +27,19 @@ enum Endpoint {
     case reykjanes
 }
 
+struct TestStruct{
+    
+    var name: String
+}
+
 extension  Endpoint{
     
     func getURLforType() -> URL?{
         
         switch self {
+            
+            
+            
         case .rvkDrink:
             return URL(string: "https://grapevine.is/best-of-reykjavik/2019/drinking-2019/feed/json")
         case .rvkActivities:
@@ -53,7 +61,7 @@ extension  Endpoint{
         case .reykjanes:
             return URL(string: "https://grapevine.is/best-of-iceland/reykjanes/feed/json")
         case .westfjords:
-            return URL(string: "https://grapevine.is/best-of-iceland/westfjords/feed/json")
+            return URL(string: "https://grapevine.is/best-of-iceland/reykjanes/feed/json")
         case .events:
             return URL(string: "https://appeningtoday.herokuapp.com/api")
         }

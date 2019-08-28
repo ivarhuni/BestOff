@@ -24,6 +24,7 @@ struct BOCatItem : Codable {
     var superCatName: String?
     var titleShort: String?
     var type: Endpoint?
+    var imageList : [String]?
     
     enum CodingKeys: String, CodingKey {
         case contentText = "content_text"
@@ -33,6 +34,7 @@ struct BOCatItem : Codable {
         case title = "title"
         case url = "url"
         case author = "author"
+        case imageList = "image_list"
 //        case sponsored = "custom_fields"
     }
     
@@ -45,6 +47,16 @@ struct BOCatItem : Codable {
         title = try values.decode(String.self, forKey: .title)
         url = try values.decode(String.self, forKey: .url)
         author = try values.decode(BOAuthor.self, forKey: .author)
+        
+        let unfilteredImgList: [String]? = try values.decodeIfPresent([String].self, forKey: .imageList)
+        if let imgList = unfilteredImgList{
+            imageList = filteredImageArray(imgUrlArray: imgList)
+        }else{
+            print("images failed for:")
+            print(self.id)
+            imageList = []
+        }
+        
 //        sponsored = try values.decode(CustomFields.self, forKey: .sponsored)
         detailItem = nil
         strTimeStamp = nil
@@ -53,7 +65,7 @@ struct BOCatItem : Codable {
         tryToSetTimeStamp()
     }
     
-    init(contentText: String, contentHtml: String, id: String, image: String, title: String, url: String, author: BOAuthor){
+    init(contentText: String, contentHtml: String, id: String, image: String, title: String, url: String, author: BOAuthor, timeStamp: String, imageList: [String]?){
         self.contentText = contentText
         self.contentHtml = contentHtml
         self.author = author
@@ -61,6 +73,22 @@ struct BOCatItem : Codable {
         self.image = image
         self.title = title
         self.url = url
+        self.imageList = imageList
+        strTimeStamp = timeStamp
+    }
+    
+    func filteredImageArray(imgUrlArray: [String]) -> [String]{
+        
+        guard let firstImage = imgUrlArray[safe: 0] else{
+            return imgUrlArray
+        }
+        guard let secondImage = imgUrlArray[safe: imgUrlArray.count/2] else{
+            return imgUrlArray
+        }
+        guard let thirdImage = imgUrlArray.last else{
+            return imgUrlArray
+        }
+        return [firstImage, secondImage, thirdImage]
     }
 }
 
@@ -78,6 +106,33 @@ extension BOCatItem{
                 return
             }
             detailItem = categoryDetail
+            
+            if self.id == "https://grapevine.is/best-of-iceland/north/2019/06/10/best-of-north-iceland-2019-best-cafe/"{
+                print("")
+            }
+            
+            if type == .north || type == .east || type == .west || type == .westfjords || type == .south || type == .reykjanes{
+                
+                if var firstItem = detailItem?.arrItems.first, var secondItem = detailItem?.arrItems[safe: 1], var thirdItem = detailItem?.arrItems[safe: 2]{
+                    if let firstImage = self.imageList?.first, let secondImage = self.imageList?[safe: 1], let thirdImage = self.imageList?[safe: 2]{
+                        
+                        thirdItem.imageURL = firstImage
+                        secondItem.imageURL = secondImage
+                        firstItem.imageURL = thirdImage
+
+                        self.detailItem?.arrItems = [firstItem, secondItem, thirdItem]
+                        print("")
+                        
+                    }else{
+                        print("images failed for:")
+                        print(self.id)
+                    }
+                }else{
+                    print("item failed for:")
+                    print(self.id)
+                }
+            }
+            
             setTitleShort()
             return
         case .guides:
@@ -142,9 +197,10 @@ extension BOCatItem{
     
     mutating func setTitleShort(){
         
+        
         guard let titleSplit = detailItem?.categoryTitle.split(separator: ":") else { return }
-        guard let shortTitle = titleSplit[safe: 1] else { return }
+        guard let shortTitle = titleSplit[safe: 0] else { return }
         titleShort = String(shortTitle)
-        print("")
+       
     }
 }

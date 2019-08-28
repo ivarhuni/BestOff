@@ -18,7 +18,6 @@ struct BOCategoryService{
             return
         }
         
-        print("Fetching URL " + categoryURL.absoluteString)
         URLSession.shared.dataTask(with: categoryURL) { (data, response, err) in
             do {
                 

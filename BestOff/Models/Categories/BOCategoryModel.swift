@@ -17,6 +17,7 @@ struct BOCategoryModel: Codable{
     let title : String
     let userComment : String
     let version : String
+    var imageList : [String]?
     var type: Endpoint?
     
     enum CodingKeys: String, CodingKey {
@@ -27,6 +28,7 @@ struct BOCategoryModel: Codable{
         case title = "title"
         case userComment = "user_comment"
         case version = "version"
+        case imageList = "image_list"
     }
     
     init(from decoder: Decoder) throws {
@@ -38,6 +40,7 @@ struct BOCategoryModel: Codable{
         title = try values.decode(String.self, forKey: .title)
         userComment = try values.decode(String.self, forKey: .userComment)
         version = try values.decode(String.self, forKey: .version)
+        imageList = try values.decodeIfPresent([String].self, forKey: .imageList)
     }
     
     init(descriptionField: String,
@@ -47,7 +50,8 @@ struct BOCategoryModel: Codable{
          title: String,
          userComment: String,
          version: String,
-         type: Endpoint){
+         type: Endpoint,
+         imageList: [String]?){
         
         self.descriptionField = descriptionField
         self.feedUrl = feedUrl
@@ -57,6 +61,7 @@ struct BOCategoryModel: Codable{
         self.userComment = userComment
         self.version = version
         self.type = type
+        self.imageList = imageList
     }
 }
 

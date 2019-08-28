@@ -36,7 +36,7 @@ class BOGuideViewModel: BOViewModel {
     let loaderAlpha = 0.5
     let loaderDissapearDuration = 1.25
     let containerDissapearDuration = 1.5
-    let animationDelay:Double = 3.5
+    let animationDelay:Double = 4
     let viewActivityAlpha:CGFloat = 0.7
     
     let tableDataSourceAnimationDuration:Double = 0.3
@@ -899,7 +899,7 @@ extension BOGuideViewModel{
     
     func createCatModelFromEventModel(events: [Event]){
         
-        var fakeCatModel = BOCategoryModel.init(descriptionField: "", feedUrl: "", homePageUrl: "", items: [], title: "", userComment: "", version: "", type: .rvkDrink)
+        var fakeCatModel = BOCategoryModel.init(descriptionField: "", feedUrl: "", homePageUrl: "", items: [], title: "", userComment: "", version: "", type: .rvkDrink, imageList: nil)
         
         fakeCatModel.items = EventHelper.createCatModelFromEventModel(events: events)
         
@@ -963,6 +963,7 @@ extension BOGuideViewModel{
             guard let this = self else{
                 return
             }
+            
             if let nError = error{
                 print(nError)
                 this.showDataError()
