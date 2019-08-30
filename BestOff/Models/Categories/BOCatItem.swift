@@ -116,9 +116,9 @@ extension BOCatItem{
                 if var firstItem = detailItem?.arrItems.first, var secondItem = detailItem?.arrItems[safe: 1], var thirdItem = detailItem?.arrItems[safe: 2]{
                     if let firstImage = self.imageList?.first, let secondImage = self.imageList?[safe: 1], let thirdImage = self.imageList?[safe: 2]{
                         
-                        thirdItem.imageURL = firstImage
+                        thirdItem.imageURL = thirdImage
                         secondItem.imageURL = secondImage
-                        firstItem.imageURL = thirdImage
+                        firstItem.imageURL = firstImage
 
                         self.detailItem?.arrItems = [firstItem, secondItem, thirdItem]
                         print("")
