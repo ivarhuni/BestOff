@@ -66,4 +66,14 @@ extension  Endpoint{
             return URL(string: "https://appeningtoday.herokuapp.com/api")
         }
     }
+    
+    func isIcelandEndpoint() -> Bool{
+        
+        switch self {
+        case .rvkDrink, .rvkDining, .rvkShopping, .rvkActivities, .events, .guides:
+            return false
+        default:
+            return true
+        }
+    }
 }

@@ -164,7 +164,11 @@ extension DoubleItemImgCell{
         }
         
         setLeftTapGesture()
-        UIImageView.setSDImageViewImageWithURL(imageView: imgViewLeft, strURL: catItem.image)
+
+        if let imgURL = catItem.detailItem?.arrItems.first?.imageURL{
+            UIImageView.setSDImageViewImageWithURL(imageView: imgViewLeft, strURL: imgURL)
+        }
+        
         clearRight()
     }
     
@@ -194,7 +198,11 @@ extension DoubleItemImgCell{
             hideRightRemove()
         }
         setRightTapGesture()
-        UIImageView.setSDImageViewImageWithURL(imageView: imgViewRight, strURL: catItem.image)
+        
+        if let imgURL = catItem.detailItem?.arrItems.first?.imageURL{
+            UIImageView.setSDImageViewImageWithURL(imageView: imgViewRight, strURL: imgURL)
+        }
+        
     }
     
     private func setupDefault(){

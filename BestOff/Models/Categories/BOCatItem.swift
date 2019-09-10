@@ -82,10 +82,10 @@ struct BOCatItem : Codable {
         guard let firstImage = imgUrlArray[safe: 0] else{
             return imgUrlArray
         }
-        guard let secondImage = imgUrlArray[safe: imgUrlArray.count/2] else{
+        guard let secondImage = imgUrlArray[safe: 1] else{
             return imgUrlArray
         }
-        guard let thirdImage = imgUrlArray.last else{
+        guard let thirdImage = imgUrlArray[safe: 2] else{
             return imgUrlArray
         }
         return [firstImage, secondImage, thirdImage]
@@ -116,9 +116,9 @@ extension BOCatItem{
                 if var firstItem = detailItem?.arrItems.first, var secondItem = detailItem?.arrItems[safe: 1], var thirdItem = detailItem?.arrItems[safe: 2]{
                     if let firstImage = self.imageList?.first, let secondImage = self.imageList?[safe: 1], let thirdImage = self.imageList?[safe: 2]{
                         
-                        thirdItem.imageURL = thirdImage
+                        thirdItem.imageURL = firstImage
                         secondItem.imageURL = secondImage
-                        firstItem.imageURL = firstImage
+                        firstItem.imageURL = thirdImage
 
                         self.detailItem?.arrItems = [firstItem, secondItem, thirdItem]
                         print("")

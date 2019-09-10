@@ -109,6 +109,12 @@ extension BOGuideDetailTableDataSource{
             return imgCell + txtDescription + oneItemIsTwoCells*2 + redRunnerUpBanner + winnerRedBanner
         }
         
+        if let type = self.catItem.value?.type{
+            if type.isIcelandEndpoint(){
+                return oneItemIsTwoCells*3 + redRunnerUpBanner*2
+            }
+        }
+        
         //Winner + 2 runner ups
         return imgCell + txtDescription + oneItemIsTwoCells*3 + redRunnerUpBanner*2 + winnerRedBanner
     }
@@ -118,6 +124,143 @@ extension BOGuideDetailTableDataSource{
     }
     
     func cellForRowAtIndexPathIn(myTableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+        
+        if let type = self.catItem.value?.type{
+            
+            if type.isIcelandEndpoint(){
+                
+                let winnerImg = 0
+                let winnerDesc = 1
+                let firstRedRunner = 2
+                let secondImg = 3
+                let secondDesc = 4
+                let redRunnerSecond = 5
+                let thirdImg = 6
+                let thirdDesc = 7
+                
+                if indexPath.row == winnerImg{
+                    
+                    guard let detailItemWinner = catDetail?.arrItems[safe: arrIndexWinner] else {
+                        print("detailitemwinnerImg not available in categorydetail")
+                        return UITableViewCell()
+                    }
+                    let topCell = myTableView.dequeueReusableCell(withIdentifier: TopGuideCell.reuseIdentifier()) as! TopGuideCell
+                    topCell.setupForCategoryDetailItem(detailItem: detailItemWinner)
+                    if topCell.cornerRoundType != .roundTop{
+                        topCell.cornerRoundType = .roundTop
+                        topCell.setNeedsLayout()
+                        topCell.contentView.setNeedsLayout()
+                    }
+                    return topCell
+                }
+                
+                if indexPath.row == winnerDesc{
+                    
+                    guard let detailItemWinner = catDetail?.arrItems[safe: arrIndexWinner] else {
+                        print("detailitemwinnerTxt not available in categorydetail")
+                        return UITableViewCell()
+                    }
+                    let txtCell = myTableView.dequeueReusableCell(withIdentifier: BOCatItemTextDescriptionCell.reuseIdentifier()) as! BOCatItemTextDescriptionCell
+                    txtCell.changeLeadingConstraintToCatDetail()
+                    txtCell.setText(text: detailItemWinner.itemDescription)
+                    if txtCell.cornerRoundType != .roundBot{
+                        txtCell.cornerRoundType = .roundBot
+                        txtCell.setNeedsLayout()
+                        txtCell.contentView.setNeedsLayout()
+                    }
+                    
+                    return txtCell
+                }
+                
+                if indexPath.row == firstRedRunner{
+                    let redRunnerCell = myTableView.dequeueReusableCell(withIdentifier: RunnerUpCell.reuseIdentifier()) as! RunnerUpCell
+                    guard let redRunner = catDetail?.arrItems[safe: 1]?.categoryWinnerOrRunnerTitle else {
+                        
+                        print("no winner or runner text RUNNER UP")
+                        return UITableViewCell()
+                    }
+                    redRunnerCell.setupWithText(text: redRunner)
+                    return redRunnerCell
+                }
+                
+                if indexPath.row == secondImg{
+                    guard let detailItemRunnerUp = catDetail?.arrItems[safe: arrIndexRunner] else {
+                        print("detailItemRunnerUp not available in categorydetail")
+                        return UITableViewCell()
+                    }
+                    let topCell = myTableView.dequeueReusableCell(withIdentifier: TopGuideCell.reuseIdentifier()) as! TopGuideCell
+                    topCell.setupForCategoryDetailItem(detailItem: detailItemRunnerUp)
+                    if topCell.cornerRoundType != .roundTop{
+                        topCell.cornerRoundType = .roundTop
+                        topCell.setNeedsLayout()
+                        topCell.contentView.setNeedsLayout()
+                    }
+                    
+                    return topCell
+                }
+                
+                if indexPath.row == secondDesc{
+                    
+                    guard let detailItemRunnerUp = catDetail?.arrItems[safe: arrIndexRunner] else {
+                        print("detailItemRunnerUp not available in categorydetail")
+                        return UITableViewCell()
+                    }
+                    let txtCell = myTableView.dequeueReusableCell(withIdentifier: BOCatItemTextDescriptionCell.reuseIdentifier()) as! BOCatItemTextDescriptionCell
+                    txtCell.setText(text: detailItemRunnerUp.itemDescription)
+                    txtCell.changeLeadingConstraintToCatDetail()
+                    if txtCell.cornerRoundType != .roundBot{
+                        txtCell.cornerRoundType = .roundBot
+                        txtCell.setNeedsLayout()
+                        txtCell.contentView.setNeedsLayout()
+                    }
+                    return txtCell
+                }
+                
+                if indexPath.row == redRunnerSecond{
+                    let redRunnerCell = myTableView.dequeueReusableCell(withIdentifier: RunnerUpCell.reuseIdentifier()) as! RunnerUpCell
+                    guard let winnerOrRunnerText = catDetail?.arrItems[safe: 2]?.categoryWinnerOrRunnerTitle else {
+                        
+                        print("no winner or runner text RUNNER UP")
+                        return UITableViewCell()
+                    }
+                    redRunnerCell.setupWithText(text: winnerOrRunnerText)
+                    return redRunnerCell
+                }
+                
+                if indexPath.row == thirdImg{
+                    
+                    guard let detailItemRunnerUpSecond = catDetail?.arrItems[safe: arrIndexRunnerSecond] else {
+                        print("detailItemRunnerUp not available in categorydetail")
+                        return UITableViewCell()
+                    }
+                    let topCell = myTableView.dequeueReusableCell(withIdentifier: TopGuideCell.reuseIdentifier()) as! TopGuideCell
+                    topCell.setupForCategoryDetailItem(detailItem: detailItemRunnerUpSecond)
+                    if topCell.cornerRoundType != .roundTop{
+                        topCell.cornerRoundType = .roundTop
+                        topCell.setNeedsLayout()
+                        topCell.contentView.setNeedsLayout()
+                    }
+                    return topCell
+                }
+                
+                if indexPath.row == thirdDesc{
+                    guard let detailItemRunnerUpSecond = catDetail?.arrItems[safe: arrIndexRunnerSecond] else {
+                        print("detailItemRunnerUp not available in categorydetail")
+                        return UITableViewCell()
+                    }
+                    let txtCell = myTableView.dequeueReusableCell(withIdentifier: BOCatItemTextDescriptionCell.reuseIdentifier()) as! BOCatItemTextDescriptionCell
+                    txtCell.setText(text: detailItemRunnerUpSecond.itemDescription)
+                    txtCell.changeLeadingConstraintToCatDetail()
+                    if txtCell.cornerRoundType != .roundBot{
+                        txtCell.cornerRoundType = .roundBot
+                        txtCell.setNeedsLayout()
+                        txtCell.contentView.setNeedsLayout()
+                    }
+                    return txtCell
+                }
+            }
+        }
+        
         
         let topBigImgCellIndex = 0
         let contentTextDescIndex = 1
@@ -406,6 +549,41 @@ extension BOGuideDetailTableDataSource: UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
+        if let type = self.catItem.value?.type{
+            if type.isIcelandEndpoint(){
+                
+                let winnerImg = 0
+                let winnerDesc = 1
+                let firstRedRunner = 2
+                let secondImg = 3
+                let secondDesc = 4
+                let redRunnerSecond = 5
+                let thirdImg = 6
+                let thirdDesc = 7
+                
+                if indexPath.row == winnerImg || indexPath.row == secondImg || indexPath.row == thirdImg{
+                   return bigImgCellCategoryHeight
+                }
+                
+                if indexPath.row == firstRedRunner || indexPath.row == redRunnerSecond{
+                    return runnerHeight
+                }
+                
+                if indexPath.row == winnerDesc{
+                    return getHeightForWinner()
+                }
+                
+                if indexPath.row == secondDesc{
+                    return getHeightForRunnerUp()
+                }
+                
+                if indexPath.row == thirdDesc{
+                    return getHeightForSecondRunnerUp()
+                }
+            }
+        }
+        
+        
         if screenType == .guide || screenType == .event{
             
             if indexPath.row == bigImgTopCellIndex{
